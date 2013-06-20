@@ -1,0 +1,9 @@
+
+#git上でコミット対象のコードを設定するためのファイル
+#適宜修正のこと
+build/
+dist/
+nbproject/*
+!*.properties
+
+
