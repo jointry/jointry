@@ -41,5 +41,3 @@ Thumbs.db
 ######################
 build/
 dist/
-nbproject/*
-!*.properties
