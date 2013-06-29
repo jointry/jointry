@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="400.999977929685" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.LangController">
+    <children>
+        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="14.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleExecuteBtnAct" prefHeight="37.0" prefWidth="203.0" text="コードを実行してみる" textAlignment="LEFT" textOverrun="WORD_ELLIPSIS" />
+        <TabPane layoutX="0.0" layoutY="14.0" prefHeight="422.0" prefWidth="387.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="スクリプト">
+                    <content>
+                        <AnchorPane id="Content" fx:id="lang_pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+                <Tab text="コスチューム">
+                    <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <HBox prefHeight="30.0" prefWidth="387.0">
+                                    <children>
+                                        <Label text="新しいやつ　">
+                                            <font>
+                                                <Font size="29.0" />
+                                            </font>
+                                        </Label>
+                                        <Button mnemonicParsing="false" onAction="#handleAddBtnAct" prefHeight="47.0" prefWidth="62.0" text="追加" />
+                                        <Button onAction="#handlePaintBtnAct" prefHeight="49.0" prefWidth="48.0">
+                                            <graphic>
+                                                <ImageView fitHeight="42.0" fitWidth="55.0">
+                                                    <Image url="@../images/Paint_SoftWare.png" />
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button id="capture" mnemonicParsing="false" onAction="#handleCamBtnAct" prefHeight="49.0" prefWidth="75.0">
+                                            <graphic>
+                                                <ImageView fitHeight="42.0" fitWidth="55.0">
+                                                    <Image url="@../images/cam.jpg" />
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <ScrollPane prefHeight="361.0" prefWidth="228.0">
+                                    <content>
+                                        <VBox fx:id="vbox" prefHeight="360.0" prefWidth="386.0" />
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="音">
+                    <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

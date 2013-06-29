@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.main;
+package jp.ac.aiit.jointry.controllers;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;

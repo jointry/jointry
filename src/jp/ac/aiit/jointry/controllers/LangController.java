@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.main;
+package jp.ac.aiit.jointry.controllers;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

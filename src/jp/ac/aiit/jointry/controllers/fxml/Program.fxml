@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import reference.*?>
 
-<AnchorPane id="AnchorPane" minHeight="43.0" minWidth="64.0" prefHeight="433.0" prefWidth="454.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.main.ProgramController">
+<AnchorPane id="AnchorPane" minHeight="43.0" minWidth="64.0" prefHeight="433.0" prefWidth="454.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.ProgramController">
     <children>
         <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
             <image>

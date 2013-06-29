@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.main;
+package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,34 +13,27 @@ import jp.ac.aiit.jointry.statics.TestData;
  *
  * @author kanemoto
  */
-public class ProgramController implements Initializable {
+public class CostumeCntroller implements Initializable {
 
     @FXML
-    private static ImageView image;
+    private ImageView images;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         TestData data = new TestData();
 
         if (data.getCameraFile() != null) {
             WritableImage buf = SwingFXUtils.toFXImage(data.getCameraFile(), null);
-            image.setImage(buf);
+            images.setImage(buf);
         }
     }
 
-    public static ImageView getImage() {
-        return image;
-    }
-
-    public static void refresh() {
+    public void refresh() {
         TestData data = new TestData();
 
         if (data.getCameraFile() != null) {
             WritableImage buf = SwingFXUtils.toFXImage(data.getCameraFile(), null);
-            image.setImage(buf);
+            images.setImage(buf);
         }
     }
 }

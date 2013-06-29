@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="445.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.main.CostumeCntroller">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="445.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.CostumeCntroller">
     <children>
         <ImageView fx:id="images" fitHeight="125.0" fitWidth="167.0" layoutX="55.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
         <Label layoutX="14.0" layoutY="15.0" text="No." />
