@@ -41,6 +41,7 @@ Thumbs.db
 ######################
 # https://github.com/github/gitignore/blob/master/Global/NetBeans.gitignore
 nbproject/private/
+nbproject/jfx-impl_backup.xml
 build/
 nbbuild/
 dist/
