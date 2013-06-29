@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.controllers;
 
+import jp.ac.aiit.jointry.parser.LangReader;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
