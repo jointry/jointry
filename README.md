@@ -14,11 +14,11 @@
 
 秋口忠三、角征典、金本真左也
 
-# License
+## License
 
 See LICENSE.txt
 
-# Contributors
+## Contributors
 
 Welcome to your PR!!
 
