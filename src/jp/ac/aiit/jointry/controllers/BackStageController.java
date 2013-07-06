@@ -47,11 +47,11 @@ public class BackStageController implements Initializable {
     private VBox vbox;
     @FXML
     private AnchorPane lang_pane;
-    private CostumeCntroller ctrl;
+    private CostumeCntroller costume;
 
     @FXML
     protected void handleAddBtnAct(ActionEvent event) throws Exception {
-        ctrl.refresh();
+        costume.refresh();
         FrontStageController.refresh();
     }
 
@@ -95,7 +95,7 @@ public class BackStageController implements Initializable {
                             .getResource("fxml/Costume.fxml"));
                     vbox.getChildren().add((Parent) fxmlLoader.load());
 
-                    ctrl = (CostumeCntroller) fxmlLoader.getController();
+                    costume = (CostumeCntroller) fxmlLoader.getController();
                 } catch (IOException ex) {
                 }
             }
