@@ -52,7 +52,7 @@ public class BackStageController implements Initializable {
     @FXML
     protected void handleAddBtnAct(ActionEvent event) throws Exception {
         ctrl.refresh();
-        ProgramController.refresh();
+        FrontStageController.refresh();
     }
 
     @FXML
@@ -119,7 +119,7 @@ public class BackStageController implements Initializable {
     }
 
     private void execute() {
-        ImageView image = ProgramController.getImage();
+        ImageView image = FrontStageController.getImage();
         String code = "";
         for (Node node : lang_pane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {

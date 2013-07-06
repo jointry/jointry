@@ -13,7 +13,7 @@ import jp.ac.aiit.jointry.statics.TestData;
  *
  * @author kanemoto
  */
-public class ProgramController implements Initializable {
+public class FrontStageController implements Initializable {
 
     @FXML
     private static ImageView image;
