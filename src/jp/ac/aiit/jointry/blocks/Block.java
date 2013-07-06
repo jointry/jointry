@@ -130,7 +130,11 @@ public class Block extends AnchorPane {
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("rotate");
-        sb.append(" " + tf.getText() + "\n");
+        String arg = tf.getText();
+        if (arg == null) {
+            arg = "0";
+        }
+        sb.append(" " + arg + "\n");
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }
