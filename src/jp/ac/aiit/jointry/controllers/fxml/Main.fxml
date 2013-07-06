@@ -17,14 +17,10 @@
     </ImageView>
   </bottom>
   <center>
-    <fx:include source="BackStage.fxml" minWidth="300.0" prefHeight="600.0" prefWidth="-1.0" />
+    <fx:include source="BackStage.fxml" minWidth="200.0" prefHeight="600.0" prefWidth="-1.0" />
   </center>
   <left>
-    <Label alignment="CENTER" prefHeight="600.0" prefWidth="150.0" text="ブロック領域" textAlignment="LEFT" wrapText="false">
-      <font>
-        <Font size="20.0" fx:id="x1" />
-      </font>
-    </Label>
+    <fx:include source="Blocks.fxml" minWidth="-1.0" prefHeight="600.0" prefWidth="150.0" />
   </left>
   <right>
     <fx:include source="FrontStage.fxml" minHeight="-1.0" minWidth="-1.0" prefHeight="600.0" prefWidth="400.0" />
