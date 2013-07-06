@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.blocks.BlockMenuItem;
 
 public class BlocksController implements Initializable {
