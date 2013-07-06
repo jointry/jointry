@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+<BorderPane fx:id="pane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
     <bottom>
         <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
             <image>
