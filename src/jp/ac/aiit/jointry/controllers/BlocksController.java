@@ -1,25 +1,25 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.blocks.BlockMenuItem;
 
 public class BlocksController implements Initializable {
 
     @FXML
-    private Rectangle round;
+    private AnchorPane blockMenu;
+    private MainController mainController;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        blockMenu.getChildren().addAll(new BlockMenuItem());
+    }
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
     }
 }

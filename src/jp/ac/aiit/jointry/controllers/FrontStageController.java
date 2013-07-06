@@ -3,6 +3,7 @@ package jp.ac.aiit.jointry.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ public class FrontStageController implements Initializable {
 
     @FXML
     private static ImageView image;
+    private MainController mainController;
 
     /**
      * Initializes the controller class.
@@ -42,5 +44,14 @@ public class FrontStageController implements Initializable {
             WritableImage buf = SwingFXUtils.toFXImage(data.getCameraFile(), null);
             image.setImage(buf);
         }
+    }
+
+    @FXML
+    protected void handleExecuteBtnAct(ActionEvent event) {
+        this.mainController.getBackStageController().execute();
+    }
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
     }
 }

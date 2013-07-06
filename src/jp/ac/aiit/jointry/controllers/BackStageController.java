@@ -47,11 +47,12 @@ public class BackStageController implements Initializable {
     private VBox vbox;
     @FXML
     private AnchorPane scriptPane;
-    private CostumeCntroller costume;
+    private CostumeCntroller costumeController;
+    private MainController mainController;
 
     @FXML
     protected void handleAddBtnAct(ActionEvent event) throws Exception {
-        costume.refresh();
+        costumeController.refresh();
         FrontStageController.refresh();
     }
 
@@ -95,7 +96,7 @@ public class BackStageController implements Initializable {
                             .getResource("fxml/Costume.fxml"));
                     vbox.getChildren().add((Parent) fxmlLoader.load());
 
-                    costume = (CostumeCntroller) fxmlLoader.getController();
+                    costumeController = (CostumeCntroller) fxmlLoader.getController();
                 } catch (IOException ex) {
                 }
             }
@@ -103,11 +104,6 @@ public class BackStageController implements Initializable {
 
         newStage.show();
 
-    }
-
-    @FXML
-    protected void handleExecuteBtnAct(ActionEvent event) {
-        execute();
     }
 
     @Override
@@ -118,7 +114,7 @@ public class BackStageController implements Initializable {
         scriptPane.getChildren().addAll(b1, b2, b3);
     }
 
-    private void execute() {
+    public void execute() {
         ImageView image = FrontStageController.getImage();
         String code = "";
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
@@ -146,5 +142,9 @@ public class BackStageController implements Initializable {
             }
         } catch (ParseException ex) {
         }
+    }
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
     }
 }
