@@ -46,7 +46,7 @@ public class BackStageController implements Initializable {
     @FXML
     private VBox vbox;
     @FXML
-    private AnchorPane script_pane;
+    private AnchorPane scriptPane;
     private CostumeCntroller costume;
 
     @FXML
@@ -115,13 +115,13 @@ public class BackStageController implements Initializable {
         Block b1 = new Block(0, 0, Color.RED);
         Block b2 = new Block(0, 150, Color.BLUE);
         Block b3 = new Block(0, 300, Color.YELLOW);
-        script_pane.getChildren().addAll(b1, b2, b3);
+        scriptPane.getChildren().addAll(b1, b2, b3);
     }
 
     private void execute() {
         ImageView image = FrontStageController.getImage();
         String code = "";
-        for (Node node : script_pane.getChildrenUnmodifiable()) {
+        for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
                 if (!block.existPrevBlock()) {

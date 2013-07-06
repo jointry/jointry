@@ -13,7 +13,7 @@
     <tabs>
         <Tab text="スクリプト">
             <content>
-                <AnchorPane id="Content" fx:id="script_pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane id="Content" fx:id="scriptPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
                         <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" onAction="#handleExecuteBtnAct" prefHeight="37.0" prefWidth="126.0" text="Run" textAlignment="LEFT" textOverrun="WORD_ELLIPSIS" />
                     </children>
