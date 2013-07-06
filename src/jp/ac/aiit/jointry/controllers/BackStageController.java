@@ -41,7 +41,7 @@ import jp.ac.aiit.jointry.paint.QuickPaint;
  *
  * @author kanemoto
  */
-public class LangController implements Initializable {
+public class BackStageController implements Initializable {
 
     @FXML
     private VBox vbox;
