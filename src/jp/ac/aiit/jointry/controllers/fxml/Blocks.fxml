@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-
-<SplitPane dividerPositions="0.1588628762541806" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="150.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.BlocksController">
-    <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="150.0" />
-        <AnchorPane fx:id="blockMenu" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="150.0"/>
-    </items>
+<SplitPane dividerPositions="0.1588628762541806" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="150.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.BlocksController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="150.0" />
+    <AnchorPane fx:id="blockMenu" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="150.0" />
+  </items>
 </SplitPane>

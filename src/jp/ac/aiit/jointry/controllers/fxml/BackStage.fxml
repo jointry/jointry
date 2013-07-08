@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane prefHeight="422.0" prefWidth="387.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.BackStageController">
+<TabPane prefHeight="422.0" prefWidth="387.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.BackStageController">
   <tabs>
     <Tab text="スクリプト">
       <content>
