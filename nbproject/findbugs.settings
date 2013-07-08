@@ -1,5 +1,5 @@
 #FindBugs User Preferences
-#Sat Jun 29 21:51:38 JST 2013
+#Sat Jul 06 16:30:40 JST 2013
 detectorAbnormalFinallyBlockReturn=AbnormalFinallyBlockReturn|false
 detectorAbstractClassEmptyMethods=AbstractClassEmptyMethods|false
 detectorAbstractOverriddenMethod=AbstractOverriddenMethod|false
@@ -82,7 +82,7 @@ detectorFindNakedNotify=FindNakedNotify|true
 detectorFindNonSerializableStoreIntoSession=FindNonSerializableStoreIntoSession|true
 detectorFindNonSerializableValuePassedToWriteObject=FindNonSerializableValuePassedToWriteObject|true
 detectorFindNonShortCircuit=FindNonShortCircuit|true
-detectorFindNullDeref=FindNullDeref|true
+detectorFindNullDeref=FindNullDeref|false
 detectorFindNullDerefsInvolvingNonShortCircuitEvaluation=FindNullDerefsInvolvingNonShortCircuitEvaluation|true
 detectorFindOpenStream=FindOpenStream|true
 detectorFindPuzzlers=FindPuzzlers|true

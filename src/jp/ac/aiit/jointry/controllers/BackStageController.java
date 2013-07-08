@@ -1,12 +1,9 @@
 package jp.ac.aiit.jointry.controllers;
 
 import jp.ac.aiit.jointry.parser.LangReader;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.SwingUtilities;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import jp.ac.aiit.jointry.ast.ASTree;
@@ -33,8 +31,6 @@ import jp.ac.aiit.jointry.parser.ParseException;
 import jp.ac.aiit.jointry.parser.Token;
 import jp.ac.aiit.jointry.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.parser.env.Environment;
-import jp.ac.aiit.jointry.statics.TestData;
-import jp.ac.aiit.jointry.paint.QuickPaint;
 
 /**
  *
@@ -57,16 +53,18 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                TestData data = new TestData();
-                BufferedImage readImage = data.getCameraFile();
+        //Paintツール画面
+        Stage paintStage = new Stage(StageStyle.TRANSPARENT);
 
-                QuickPaint paint = new QuickPaint(readImage);
-                paint.main();
-            }
-        });
+        //オーナー設定
+        paintStage.initModality(Modality.APPLICATION_MODAL);
+        paintStage.initOwner((Stage) scriptPane.getScene().getWindow());
+
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/Paint.fxml"));
+
+        // 新しいウインドウを表示
+        paintStage.setScene(new Scene(root));
+        paintStage.show();
     }
 
     @FXML
@@ -102,7 +100,6 @@ public class BackStageController implements Initializable {
         });
 
         newStage.show();
-
     }
 
     @Override
