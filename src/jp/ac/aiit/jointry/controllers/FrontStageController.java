@@ -37,6 +37,13 @@ public class FrontStageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        URL path = getClass().getResource("images/scratch_cat.png");
+        Image image = new Image(path.toString());
+
+        ImageView sprite = new DraggableImage(0, 0, image, stage);
+        stage.getChildren().add(sprite);
+
+        currentSprite = sprite;
     }
 
     public ImageView getBackground() {
