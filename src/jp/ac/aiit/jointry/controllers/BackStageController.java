@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -48,7 +47,6 @@ public class BackStageController implements Initializable {
     @FXML
     protected void handleAddBtnAct(ActionEvent event) throws Exception {
         costumeController.refresh();
-        FrontStageController.refresh();
     }
 
     @FXML
@@ -112,7 +110,7 @@ public class BackStageController implements Initializable {
     }
 
     public void execute() {
-        ImageView image = FrontStageController.getImage();
+        ImageView image = mainController.getFrontStageController().getSprite();
         String code = "";
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {

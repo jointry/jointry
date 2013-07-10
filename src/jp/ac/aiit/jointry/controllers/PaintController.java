@@ -11,9 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import jp.ac.aiit.jointry.paint.IPaint;
 
@@ -33,6 +35,7 @@ public class PaintController implements Initializable, IPaint {
     private Point window = new Point();
     private Point pS = new Point();
     private Point pE = new Point();
+    private FrontStageController ctrl;
 
     //画面移動
     @FXML
@@ -69,6 +72,13 @@ public class PaintController implements Initializable, IPaint {
     @FXML
     protected void handleSaveButtonAction(ActionEvent event) {
         System.out.println("Save the Dummy");
+        //単純な透過処理
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        ctrl.setSprite(canvas.snapshot(params, null));
+
+        stage = (Stage) canvas.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -91,5 +101,9 @@ public class PaintController implements Initializable, IPaint {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         clear.paint(canvas, null, null, null);
+    }
+
+    public void setController(FrontStageController ctrl) {
+        this.ctrl = ctrl;
     }
 }

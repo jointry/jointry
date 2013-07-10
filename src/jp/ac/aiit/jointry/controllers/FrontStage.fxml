@@ -7,17 +7,18 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
-    <children>
-        <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="42.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/hito.png" />
-            </image>
-        </ImageView>
-        <HBox layoutX="2.0" layoutY="2.0" prefHeight="24.0" prefWidth="200.0">
-            <children>
-                <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExecuteBtnAct" text="Run" />
-            </children>
-        </HBox>
-    </children>
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="480" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
+  <children>
+    <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="200.0">
+      <children>
+        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExecuteBtnAct" text="Run" />
+      </children>
+    </HBox>
+    <AnchorPane fx:id="stage" layoutX="8.0" layoutY="31.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
+      <children>
+        <ImageView id="stage" fx:id="background" fitHeight="342.375" fitWidth="456.5" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      </children>
+    </AnchorPane>
+    <Button layoutX="14.0" layoutY="384.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="新しいスプライト" />
+  </children>
 </AnchorPane>
