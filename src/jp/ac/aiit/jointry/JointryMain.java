@@ -11,7 +11,7 @@ public class JointryMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader;
-        loader = new FXMLLoader(getClass().getResource("controllers/fxml/Main.fxml"));
+        loader = new FXMLLoader(getClass().getResource("controllers/Main.fxml"));
         Parent parent = (Parent) loader.load();
 
         Scene scene = new Scene(parent);

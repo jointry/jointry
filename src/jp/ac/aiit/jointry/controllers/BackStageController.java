@@ -79,7 +79,7 @@ public class BackStageController implements Initializable {
         // newStage.initOwner(stageTheLabelBelongs);
 
         // 新しいウインドウ内に配置するコンテンツを生成
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/Camera.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Camera.fxml"));
 
         // 新しいウインドウを表示
         newStage.setScene(new Scene(root));
@@ -90,7 +90,7 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                            .getResource("fxml/Costume.fxml"));
+                            .getResource("Costume.fxml"));
                     vbox.getChildren().add((Parent) fxmlLoader.load());
 
                     costumeController = (CostumeCntroller) fxmlLoader.getController();

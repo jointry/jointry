@@ -27,7 +27,7 @@ public class MainController implements Initializable {
             Class<? extends MainController> klass = getClass();
 
             // FrontStage
-            ld = new FXMLLoader(klass.getResource("fxml/FrontStage.fxml"));
+            ld = new FXMLLoader(klass.getResource("FrontStage.fxml"));
             Parent front = (Parent) ld.load();
             FrontStageController fsc = ld.<FrontStageController>getController();
             fsc.setMainController(this);
@@ -35,7 +35,7 @@ public class MainController implements Initializable {
             setFrontStageController(fsc);
 
             // BackStage
-            ld = new FXMLLoader(klass.getResource("fxml/BackStage.fxml"));
+            ld = new FXMLLoader(klass.getResource("BackStage.fxml"));
             Parent back = (Parent) ld.load();
             BackStageController bsc = ld.<BackStageController>getController();
             fsc.setMainController(this);
@@ -43,7 +43,7 @@ public class MainController implements Initializable {
             setBackStageController(bsc);
 
             // Blocks
-            ld = new FXMLLoader(klass.getResource("fxml/Blocks.fxml"));
+            ld = new FXMLLoader(klass.getResource("Blocks.fxml"));
             Parent blocks = (Parent) ld.load();
             BlocksController bc = ld.<BlocksController>getController();
             bc.setMainController(this);
