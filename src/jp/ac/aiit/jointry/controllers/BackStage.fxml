@@ -30,7 +30,7 @@
                                 <Button onAction="#handlePaintBtnAct" prefHeight="49.0" prefWidth="48.0">
                                     <graphic>
                                         <ImageView fitHeight="42.0" fitWidth="55.0">
-                                            <Image url="@../images/Paint_SoftWare.png" />
+                                            <Image url="@images/Paint_SoftWare.png" />
                                         </ImageView>
                                     </graphic>
                                 </Button>
