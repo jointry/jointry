@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.apache.commons.lang3.SerializationUtils;
 
 public class BlockMenuItem extends Rectangle implements Serializable {
 
