@@ -71,7 +71,7 @@ public class BlockMenuItem extends Rectangle implements Serializable {
         BorderPane root = (BorderPane) getScene().getRoot();
         TabPane centerPane = (TabPane) root.getCenter();
         for (Tab t : centerPane.getTabs()) {
-            if (t.getContent().getId().equals("scriptPane")) {
+            if ("scriptPane".equals(t.getContent().getId())) {
                 AnchorPane ap = (AnchorPane) t.getContent();
                 ap.getChildren().add(node);
             }
