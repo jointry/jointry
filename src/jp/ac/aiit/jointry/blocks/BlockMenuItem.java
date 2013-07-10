@@ -6,37 +6,53 @@ import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BlockMenuItem extends Rectangle implements Serializable {
+public class BlockMenuItem extends AnchorPane {
 
-    private double anchorX;
-    private double anchorY;
-    private BlockMenuItem me;
+    public BlockMenuItem(final Class blockClass) {
+        Rectangle rect = new Rectangle();
+        rect.setWidth(100);
+        rect.setHeight(30);
+        rect.setFill(Color.AQUA);
+        Block block = null;
+        try {
+            block = (Block) blockClass.newInstance();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Label lb = block.getLabel();
 
-    public BlockMenuItem() {
-        this.me = this;
-        this.setWidth(100);
-        this.setHeight(30);
+        AnchorPane.setTopAnchor(rect, 0.0);
+        AnchorPane.setTopAnchor(lb, 10.0);
+        AnchorPane.setLeftAnchor(lb, 0.0);
+        getChildren().addAll(rect, lb);
 
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                anchorX = getLayoutX() - mouseEvent.getSceneX();
-                anchorY = getLayoutY() - mouseEvent.getSceneY();
-
-                Block b1 = new Block(0, 0, Color.RED);
-                addToScriptPane(b1);
-                setCursor(Cursor.MOVE);
+                try {
+                    final Block block = (Block) blockClass.newInstance();
+                    addToScriptPane(block);
+                    setCursor(Cursor.MOVE);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+
 
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
@@ -48,9 +64,6 @@ public class BlockMenuItem extends Rectangle implements Serializable {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                double dx = mouseEvent.getSceneX() + anchorX;
-                double dy = mouseEvent.getSceneY() + anchorY;
-                me.move(dx, dy);
             }
         });
 
@@ -60,11 +73,7 @@ public class BlockMenuItem extends Rectangle implements Serializable {
                 setCursor(Cursor.HAND);
             }
         });
-    }
 
-    private void move(double dx, double dy) {
-        setLayoutX(dx);
-        setLayoutY(dy);
     }
 
     private void addToScriptPane(Node node) {

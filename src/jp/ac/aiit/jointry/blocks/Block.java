@@ -8,40 +8,38 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 public class Block extends AnchorPane {
 
-    private double anchorX;
-    private double anchorY;
-    private Block me;
-    private Block prevBlock;
-    private Block nextBlock;
-    private TextField tf;
+    protected double anchorX;
+    protected double anchorY;
+    protected Block me;
+    protected Block prevBlock;
+    protected Block nextBlock;
+    protected TextField tf;
 
-    public Block(double x, double y, Color color) {
-        setLayoutX(x);
-        setLayoutY(y);
+    public Block() {
+        me = this;
+        setLayoutX(0);
+        setLayoutY(0);
 
         Rectangle rect = new Rectangle();
         rect.setWidth(250);
         rect.setHeight(60);
-        rect.setFill(color);
+        rect.setFill(getColor());
 
         tf = new TextField();
         tf.setMaxWidth(50.0);
-        Label label = new Label("度回転する");
 
         AnchorPane.setTopAnchor(rect, 0.0);
         AnchorPane.setTopAnchor(tf, 10.0);
         AnchorPane.setLeftAnchor(tf, 80.0);
-        AnchorPane.setTopAnchor(label, 10.0);
-        AnchorPane.setLeftAnchor(label, 150.0);
+        AnchorPane.setTopAnchor(getLabel(), 10.0);
+        AnchorPane.setLeftAnchor(getLabel(), 150.0);
 
-        getChildren().addAll(rect, tf, label);
-
-        me = this;
-        setStyle("-fx-background-color: green;");
+        getChildren().addAll(rect, tf, getLabel());
 
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -143,5 +141,13 @@ public class Block extends AnchorPane {
 
     public boolean existPrevBlock() {
         return prevBlock != null;
+    }
+
+    public Color getColor() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Label getLabel() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
