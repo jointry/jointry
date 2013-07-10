@@ -60,7 +60,7 @@ public class BackStageController implements Initializable {
         paintStage.initModality(Modality.APPLICATION_MODAL);
         paintStage.initOwner((Stage) scriptPane.getScene().getWindow());
 
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/Paint.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Paint.fxml"));
 
         // 新しいウインドウを表示
         paintStage.setScene(new Scene(root));
