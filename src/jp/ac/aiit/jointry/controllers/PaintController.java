@@ -35,7 +35,7 @@ public class PaintController implements Initializable, IPaint {
     private Point window = new Point();
     private Point pS = new Point();
     private Point pE = new Point();
-    private FrontStageController ctrl;
+    private FrontStageController frontStageController;
 
     //画面移動
     @FXML
@@ -75,7 +75,7 @@ public class PaintController implements Initializable, IPaint {
         //単純な透過処理
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
-        ctrl.setSprite(canvas.snapshot(params, null));
+        frontStageController.setSprite(canvas.snapshot(params, null));
 
         stage = (Stage) canvas.getScene().getWindow();
         stage.close();
@@ -104,6 +104,6 @@ public class PaintController implements Initializable, IPaint {
     }
 
     public void setController(FrontStageController ctrl) {
-        this.ctrl = ctrl;
+        this.frontStageController = ctrl;
     }
 }

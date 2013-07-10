@@ -38,7 +38,7 @@ public class MainController implements Initializable {
             ld = new FXMLLoader(klass.getResource("BackStage.fxml"));
             Parent back = (Parent) ld.load();
             BackStageController bsc = ld.<BackStageController>getController();
-            fsc.setMainController(this);
+            bsc.setMainController(this);
             rootPane.setCenter(back);
             setBackStageController(bsc);
 
