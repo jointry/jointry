@@ -36,10 +36,11 @@ public class Block extends AnchorPane {
         AnchorPane.setTopAnchor(rect, 0.0);
         AnchorPane.setTopAnchor(tf, 10.0);
         AnchorPane.setLeftAnchor(tf, 80.0);
-        AnchorPane.setTopAnchor(getLabel(), 10.0);
-        AnchorPane.setLeftAnchor(getLabel(), 150.0);
+        Label lb = getLabel();
+        AnchorPane.setTopAnchor(lb, 10.0);
+        AnchorPane.setLeftAnchor(lb, 150.0);
 
-        getChildren().addAll(rect, tf, getLabel());
+        getChildren().addAll(rect, tf, lb);
 
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
