@@ -8,33 +8,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="pane" center="$null" prefHeight="600.0" prefWidth="800.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
-  <bottom>
-    <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@../images/join.png" />
-      </image>
-    </ImageView>
-  </bottom>
-  <top>
-    <MenuBar>
-      <menus>
-        <Menu mnemonicParsing="false" text="ファイル">
-          <items>
-            <MenuItem mnemonicParsing="false" text="閉じる" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="編集">
-          <items>
-            <MenuItem mnemonicParsing="false" text="削除" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="ヘルプ">
-          <items>
-            <MenuItem mnemonicParsing="false" text="バージョン情報" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-  </top>
+<BorderPane fx:id="rootPane" center="$null" prefHeight="600.0" prefWidth="800.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+    <bottom>
+        <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/join.png" />
+            </image>
+        </ImageView>
+    </bottom>
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="ファイル">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="閉じる" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="編集">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="削除" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="ヘルプ">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="バージョン情報" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
 </BorderPane>

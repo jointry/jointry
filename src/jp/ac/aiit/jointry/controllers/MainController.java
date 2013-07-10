@@ -15,7 +15,7 @@ import javafx.scene.layout.BorderPane;
 public class MainController implements Initializable {
 
     @FXML
-    private BorderPane pane;
+    private BorderPane rootPane;
     private BackStageController backStageController;
     private FrontStageController frontStageController;
     private BlocksController blocksController;
@@ -31,23 +31,23 @@ public class MainController implements Initializable {
             Parent front = (Parent) ld.load();
             FrontStageController fsc = ld.<FrontStageController>getController();
             fsc.setMainController(this);
-            pane.setRight(front);
+            rootPane.setRight(front);
             setFrontStageController(fsc);
 
             // BackStage
             ld = new FXMLLoader(klass.getResource("fxml/BackStage.fxml"));
             Parent back = (Parent) ld.load();
             BackStageController bsc = ld.<BackStageController>getController();
-            bsc.setMainController(this);
-            pane.setCenter(back);
+            fsc.setMainController(this);
+            rootPane.setCenter(back);
             setBackStageController(bsc);
 
-            // BackStage
+            // Blocks
             ld = new FXMLLoader(klass.getResource("fxml/Blocks.fxml"));
             Parent blocks = (Parent) ld.load();
             BlocksController bc = ld.<BlocksController>getController();
             bc.setMainController(this);
-            pane.setLeft(blocks);
+            rootPane.setLeft(blocks);
             setBlocksController(bc);
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);

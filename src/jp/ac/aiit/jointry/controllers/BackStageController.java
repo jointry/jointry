@@ -104,10 +104,11 @@ public class BackStageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Block b1 = new Block(0, 0, Color.RED);
-        Block b2 = new Block(0, 150, Color.BLUE);
-        Block b3 = new Block(0, 300, Color.YELLOW);
-        scriptPane.getChildren().addAll(b1, b2, b3);
+        // dummy blocks...
+        //Block b1 = new Block(0, 0, Color.RED);
+        //Block b2 = new Block(0, 150, Color.BLUE);
+        //Block b3 = new Block(0, 300, Color.YELLOW);
+        //scriptPane.getChildren().addAll(b1, b2, b3);
     }
 
     public void execute() {

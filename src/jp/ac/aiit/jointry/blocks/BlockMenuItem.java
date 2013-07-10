@@ -1,15 +1,22 @@
 package jp.ac.aiit.jointry.blocks;
 
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.apache.commons.lang3.SerializationUtils;
 
-public class BlockMenuItem extends Rectangle {
+public class BlockMenuItem extends Rectangle implements Serializable {
 
     private double anchorX;
     private double anchorY;
@@ -25,6 +32,9 @@ public class BlockMenuItem extends Rectangle {
             public void handle(MouseEvent mouseEvent) {
                 anchorX = getLayoutX() - mouseEvent.getSceneX();
                 anchorY = getLayoutY() - mouseEvent.getSceneY();
+
+                Block b1 = new Block(0, 0, Color.RED);
+                addToScriptPane(b1);
                 setCursor(Cursor.MOVE);
             }
         });
@@ -56,5 +66,16 @@ public class BlockMenuItem extends Rectangle {
     private void move(double dx, double dy) {
         setLayoutX(dx);
         setLayoutY(dy);
+    }
+
+    private void addToScriptPane(Node node) {
+        BorderPane root = (BorderPane) getScene().getRoot();
+        TabPane centerPane = (TabPane) root.getCenter();
+        for (Tab t : centerPane.getTabs()) {
+            if (t.getContent().getId().equals("scriptPane")) {
+                AnchorPane ap = (AnchorPane) t.getContent();
+                ap.getChildren().add(node);
+            }
+        }
     }
 }
