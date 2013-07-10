@@ -101,6 +101,7 @@ public class PaintController implements Initializable, IPaint {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         clear.paint(canvas, null, null, null);
+        color.setValue(Color.RED);
     }
 
     public void setController(FrontStageController ctrl) {
