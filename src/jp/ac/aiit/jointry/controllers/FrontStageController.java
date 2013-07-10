@@ -142,8 +142,9 @@ public class FrontStageController implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     if (!dragRange(event.getSceneX(), event.getSceneY())) {
-                        setTranslateX(mouseX);
-                        setTranslateY(mouseY);
+                        setX(mouseX);
+                        setY(mouseY);
+                        
                     }
 
                     setEffect(null);
