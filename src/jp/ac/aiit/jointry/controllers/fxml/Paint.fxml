@@ -20,9 +20,6 @@
       </children>
     </AnchorPane>
   </bottom>
-  <center>
-    <Canvas fx:id="canvas" height="500.0" onMouseDragged="#handleCanvasDragged" onMousePressed="#handleCanvasPressed" width="600.0" />
-  </center>
   <left>
     <AnchorPane prefHeight="518.0" prefWidth="357.8125">
       <children>
@@ -32,6 +29,17 @@
       </children>
     </AnchorPane>
   </left>
+  <center>
+    <AnchorPane>
+      <children>
+        <AnchorPane layoutX="61.0" layoutY="72.0" minHeight="345.0" minWidth="458.0" prefHeight="358.0" prefWidth="466.0" style="-fx-border-color: rgb(49, 89, 23);">
+          <children>
+            <Canvas fx:id="canvas" height="350.0" layoutX="7.0" layoutY="4.0" onMouseDragged="#handleCanvasDragged" onMousePressed="#handleCanvasPressed" width="450.0" />
+          </children>
+        </AnchorPane>
+      </children>
+    </AnchorPane>
+  </center>
   <top>
     <Label alignment="CENTER" onMouseDragged="#handleWindowMoveDragged" onMousePressed="#handleWindowMovePressed" prefHeight="43.0" prefWidth="999.0" style="-fx-background-color: #CCFF99;" text="ペイントツール" />
   </top>
