@@ -47,8 +47,8 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handleAddBtnAct(ActionEvent event) throws Exception {
-        costumeController.refresh();
-        FrontStageController.refresh();
+//        costumeController.refresh();
+//        FrontStageController.refresh();
     }
 
     @FXML
