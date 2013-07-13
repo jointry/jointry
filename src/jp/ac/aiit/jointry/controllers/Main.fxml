@@ -17,7 +17,7 @@
         </ImageView>
     </bottom>
     <top>
-        <MenuBar>
+        <MenuBar useSystemMenuBar="true" >
             <menus>
                 <Menu mnemonicParsing="false" text="ファイル">
                     <items>
