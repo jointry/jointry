@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+<BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
     <bottom>
         <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -17,7 +22,7 @@
         </ImageView>
     </bottom>
     <top>
-        <MenuBar useSystemMenuBar="true" >
+        <MenuBar useSystemMenuBar="true">
             <menus>
                 <Menu mnemonicParsing="false" text="ファイル">
                     <items>

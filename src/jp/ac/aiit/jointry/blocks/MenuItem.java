@@ -26,18 +26,17 @@ public class MenuItem extends AnchorPane {
 
         Block block = null;
         try {
-            Color color = (Color) blockClass.getMethod("getColor").invoke(null);
-            rect.setFill(color);
+            rect.setFill((Color) blockClass.getMethod("getColor").invoke(null));
             block = (Block) blockClass.newInstance();
         } catch (InstantiationException ex) {
-            Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
+            Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);

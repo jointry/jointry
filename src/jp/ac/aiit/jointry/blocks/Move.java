@@ -10,6 +10,10 @@ public class Move extends Block {
         rect.setFill(getColor());
     }
 
+    public static Color getColor() {
+        return Color.YELLOW;
+    }
+
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("move");
@@ -22,10 +26,6 @@ public class Move extends Block {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
-    }
-
-    public static Color getColor() {
-        return Color.YELLOW;
     }
 
     public Label getLabel() {

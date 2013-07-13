@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -28,7 +27,6 @@ public class Block extends AnchorPane {
         rect = new Rectangle();
         rect.setWidth(250);
         rect.setHeight(60);
-        rect.setFill(getColor());
 
         tf = new TextField();
         tf.setMaxWidth(50.0);
@@ -142,10 +140,6 @@ public class Block extends AnchorPane {
 
     public boolean existPrevBlock() {
         return prevBlock != null;
-    }
-
-    public static Color getColor() {
-        return Color.BLACK;
     }
 
     public Label getLabel() {

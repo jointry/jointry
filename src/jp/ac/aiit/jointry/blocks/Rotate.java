@@ -10,6 +10,10 @@ public class Rotate extends Block {
         rect.setFill(getColor());
     }
 
+    public static Color getColor() {
+        return Color.RED;
+    }
+
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("rotate");
@@ -22,10 +26,6 @@ public class Rotate extends Block {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
-    }
-
-    public static Color getColor() {
-        return Color.RED;
     }
 
     public Label getLabel() {
