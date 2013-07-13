@@ -4,10 +4,7 @@ import java.util.HashMap;
 import javafx.scene.image.ImageView;
 
 /**
- * Accessor.
  * 木構造に対するアクセス方法を提供
- * 
- * @author kanemoto
  */
 public class BasicEnv implements Environment {
 

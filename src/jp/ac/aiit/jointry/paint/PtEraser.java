@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.paint;
 
 import java.awt.Point;
@@ -13,10 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.paint.ListSelectOption.ToolOption;
 
-/**
- *
- * @author kanemoto
- */
 public class PtEraser extends PaintTool {
 
     private CheckBox isColorEraser = new CheckBox("カラ消し");

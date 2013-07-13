@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.blocks.MenuItem;
 import jp.ac.aiit.jointry.blocks.Move;

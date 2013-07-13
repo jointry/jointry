@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.paint;
 
 import java.io.File;
@@ -16,8 +12,6 @@ import javafx.stage.Window;
 
 /**
  * 外部ファイルのopen close.
- *
- * @author kanemoto
  */
 public class FileExt {
 

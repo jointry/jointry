@@ -19,10 +19,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- *
- * @author kanemoto
- */
 public class FrontStageController implements Initializable {
 
     @FXML
@@ -144,7 +140,7 @@ public class FrontStageController implements Initializable {
                     if (!dragRange(event.getSceneX(), event.getSceneY())) {
                         setX(mouseX);
                         setY(mouseY);
-                        
+
                     }
 
                     setEffect(null);

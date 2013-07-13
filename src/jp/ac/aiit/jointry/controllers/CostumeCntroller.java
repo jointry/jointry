@@ -9,10 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import jp.ac.aiit.jointry.statics.TestData;
 
-/**
- *
- * @author kanemoto
- */
 public class CostumeCntroller implements Initializable {
 
     @FXML

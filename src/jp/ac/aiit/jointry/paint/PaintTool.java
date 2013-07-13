@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.paint;
 
 import java.awt.Point;
@@ -14,10 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-/**
- *
- * @author kanemoto
- */
 public abstract class PaintTool extends Button implements IOptionPane {
 
     public abstract void paint(Canvas canvas, Point pS, Point pE, Color color);

@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * lang read.
  * 文字列形式のバッファを単語単位で読み出す
- * 
- * @author kanemoto
  */
 public class LangReader extends Reader {
 
@@ -19,7 +16,7 @@ public class LangReader extends Reader {
         if (buffer == null) {
             return -1;
         }
-        
+
         pos = 0;
 
         int size = 0;

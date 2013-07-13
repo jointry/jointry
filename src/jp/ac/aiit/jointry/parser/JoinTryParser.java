@@ -1,9 +1,7 @@
 package jp.ac.aiit.jointry.parser;
 
 import static jp.ac.aiit.jointry.parser.Parser.*;
-
 import java.util.HashSet;
-
 import jp.ac.aiit.jointry.ast.ASTree;
 import jp.ac.aiit.jointry.ast.BinaryExpr;
 import jp.ac.aiit.jointry.ast.BlockStmnt;

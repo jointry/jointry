@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.controllers;
 
-import com.sun.javafx.css.BorderPaint;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

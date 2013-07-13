@@ -24,10 +24,6 @@ import javafx.scene.image.WritableImage;
 
 import jp.ac.aiit.jointry.statics.TestData;
 
-/**
- *
- * @author kanemoto
- */
 public class CameraController implements Initializable {
 
     /**

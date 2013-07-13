@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.paint;
 
 import java.net.URL;
@@ -15,8 +11,6 @@ import javafx.scene.layout.VBox;
 
 /**
  * List Type UI Template.
- * 
- * @author kanemoto
  */
 public class ListSelectOption {
 

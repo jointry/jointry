@@ -31,10 +31,6 @@ import jp.ac.aiit.jointry.parser.Token;
 import jp.ac.aiit.jointry.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.parser.env.Environment;
 
-/**
- *
- * @author kanemoto
- */
 public class BackStageController implements Initializable {
 
     @FXML

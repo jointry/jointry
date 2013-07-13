@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.controllers;
 
 import java.awt.Point;
@@ -20,10 +16,6 @@ import jp.ac.aiit.jointry.paint.FileExt;
 import jp.ac.aiit.jointry.paint.PtClear;
 import jp.ac.aiit.jointry.paint.Save;
 
-/**
- *
- * @author kanemoto
- */
 public class PaintController implements Initializable {
 
     @FXML

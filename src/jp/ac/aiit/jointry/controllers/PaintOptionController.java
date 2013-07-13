@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
@@ -21,10 +17,6 @@ import jp.ac.aiit.jointry.paint.PaintTool;
 import jp.ac.aiit.jointry.paint.PtEraser;
 import jp.ac.aiit.jointry.paint.PtPencil;
 
-/**
- *
- * @author kanemoto
- */
 public class PaintOptionController implements Initializable {
 
     @FXML
