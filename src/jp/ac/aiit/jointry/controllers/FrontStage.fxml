@@ -14,15 +14,15 @@
         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExecuteBtnAct" text="じっこう" />
       </children>
     </HBox>
-    <AnchorPane layoutX="8.0" layoutY="31.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
+    <AnchorPane layoutX="8.0" layoutY="36.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
       <children>
-        <AnchorPane fx:id="stage" layoutX="1.0" layoutY="1.0" prefHeight="350.0" prefWidth="450.0">
+        <AnchorPane fx:id="stage" layoutX="1.0" layoutY="2.0" prefHeight="350.0" prefWidth="450.0">
           <children>
             <ImageView fx:id="background" pickOnBounds="true" preserveRatio="true" />
           </children>
         </AnchorPane>
       </children>
     </AnchorPane>
-    <Button layoutX="14.0" layoutY="384.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
+    <Button layoutX="14.0" layoutY="402.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
   </children>
 </AnchorPane>
