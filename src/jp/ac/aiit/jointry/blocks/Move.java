@@ -5,6 +5,11 @@ import javafx.scene.paint.Color;
 
 public class Move extends Block {
 
+    public Move() {
+        super();
+        rect.setFill(getColor());
+    }
+
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("move");
@@ -19,7 +24,7 @@ public class Move extends Block {
         return sb.toString();
     }
 
-    public Color getColor() {
+    public static Color getColor() {
         return Color.YELLOW;
     }
 

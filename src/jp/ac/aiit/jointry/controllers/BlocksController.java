@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.blocks.MenuItem;
 import jp.ac.aiit.jointry.blocks.Move;
@@ -19,6 +21,7 @@ public class BlocksController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         blockMenu.getChildren().addAll(
                 new MenuItem(Move.class),
+                new Separator(),
                 new MenuItem(Rotate.class));
     }
 

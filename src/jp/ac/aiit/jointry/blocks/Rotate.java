@@ -5,6 +5,11 @@ import javafx.scene.paint.Color;
 
 public class Rotate extends Block {
 
+    public Rotate() {
+        super();
+        rect.setFill(getColor());
+    }
+
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("rotate");
@@ -19,7 +24,7 @@ public class Rotate extends Block {
         return sb.toString();
     }
 
-    public Color getColor() {
+    public static Color getColor() {
         return Color.RED;
     }
 

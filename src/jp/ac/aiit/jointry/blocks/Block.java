@@ -19,13 +19,13 @@ public class Block extends AnchorPane {
     protected Block prevBlock;
     protected Block nextBlock;
     protected TextField tf;
+    protected final Rectangle rect;
 
     public Block() {
         me = this;
         setLayoutX(0);
         setLayoutY(0);
-
-        Rectangle rect = new Rectangle();
+        rect = new Rectangle();
         rect.setWidth(250);
         rect.setHeight(60);
         rect.setFill(getColor());
@@ -144,8 +144,8 @@ public class Block extends AnchorPane {
         return prevBlock != null;
     }
 
-    public Color getColor() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static Color getColor() {
+        return Color.BLACK;
     }
 
     public Label getLabel() {

@@ -7,9 +7,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<SplitPane dividerPositions="0.2408026755852843" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="150.0" xmlns:fx="http://javafx.com/fxml/" fx:controller="jp.ac.aiit.jointry.controllers.BlocksController">
-    <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="150.0" />
-        <VBox fx:id="blockMenu" prefHeight="100.0" prefWidth="200.0" />
-    </items>
-</SplitPane>
+<TabPane prefHeight="598.0" prefWidth="148.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.BlocksController">
+    <tabs>
+        <Tab text="きほん">
+            <content>
+                <VBox fx:id="blockMenu" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
+        <Tab text="おうよう">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
