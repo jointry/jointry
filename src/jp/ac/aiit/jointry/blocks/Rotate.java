@@ -11,7 +11,7 @@ public class Rotate extends Block {
     }
 
     public static Color getColor() {
-        return Color.RED;
+        return Color.ORANGERED;
     }
 
     public String intern() {
@@ -29,6 +29,6 @@ public class Rotate extends Block {
     }
 
     public Label getLabel() {
-        return new Label("回転する");
+        return new Label("かいてんする");
     }
 }

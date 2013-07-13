@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.blocks;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -21,8 +19,11 @@ public class MenuItem extends AnchorPane {
 
     public MenuItem(final Class blockClass) {
         Rectangle rect = new Rectangle();
-        rect.setWidth(180);
+        rect.setWidth(140);
         rect.setHeight(30);
+        rect.setArcWidth(15);
+        rect.setArcHeight(15);
+        rect.setStroke(Color.GRAY);
 
         Block block = null;
         try {

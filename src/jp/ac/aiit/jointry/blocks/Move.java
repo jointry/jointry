@@ -11,7 +11,7 @@ public class Move extends Block {
     }
 
     public static Color getColor() {
-        return Color.YELLOW;
+        return Color.LEMONCHIFFON;
     }
 
     public String intern() {
@@ -29,6 +29,6 @@ public class Move extends Block {
     }
 
     public Label getLabel() {
-        return new Label("移動する");
+        return new Label("いどうする");
     }
 }
