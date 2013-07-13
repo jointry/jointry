@@ -14,10 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import jp.ac.aiit.jointry.paint.IPaint;
+import jp.ac.aiit.jointry.paint.PtSave;
 
 /**
  *
@@ -72,10 +76,11 @@ public class PaintController implements Initializable, IPaint {
     @FXML
     protected void handleSaveButtonAction(ActionEvent event) {
         System.out.println("Save the Dummy");
-        //単純な透過処理
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-        frontStageController.setSprite(canvas.snapshot(params, null));
+
+        PtSave save = new PtSave(null, null);
+        save.paint(canvas, null, null, null);
+
+        frontStageController.setSprite(save.getImage());
 
         stage = (Stage) canvas.getScene().getWindow();
         stage.close();
