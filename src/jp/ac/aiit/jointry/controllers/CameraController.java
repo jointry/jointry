@@ -49,7 +49,7 @@ public class CameraController implements Initializable {
             @Override
             public Void call() {
                 bCapture = true;
-                retrieveAndDisplay(200, 300);
+                retrieveAndDisplay(450, 350);
 
                 return null;
             }

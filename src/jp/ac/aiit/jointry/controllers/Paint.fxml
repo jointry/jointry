@@ -34,7 +34,7 @@
       <children>
         <AnchorPane layoutX="61.0" layoutY="72.0" minHeight="345.0" minWidth="458.0" prefHeight="358.0" prefWidth="466.0" style="-fx-border-color: rgb(49, 89, 23);">
           <children>
-            <Canvas fx:id="canvas" height="350.0" layoutX="7.0" layoutY="4.0" onMouseDragged="#handleCanvasDragged" onMousePressed="#handleCanvasPressed" width="450.0" />
+            <Canvas fx:id="canvas" width="450.0" height="350.0" layoutX="7.0" layoutY="4.0" onMouseDragged="#handleCanvasDragged" onMousePressed="#handleCanvasPressed" />
           </children>
         </AnchorPane>
       </children>

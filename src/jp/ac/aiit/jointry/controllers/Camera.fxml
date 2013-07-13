@@ -9,8 +9,8 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="594.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.CameraController">
     <children>
-        <ImageView fx:id="camview" fitHeight="390.0" fitWidth="521.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-        <Button layoutX="311.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStartAct" prefHeight="37.0" text="カメラスタート" />
-        <Button layoutX="420.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStopAct" prefHeight="37.0" text="ストップ" />
+        <ImageView fx:id="camview" fitWidth="450.0" fitHeight="350.0"  layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+        <Button layoutX="332.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStartAct" prefHeight="37.0" text="パシャリ" />
+        <Button layoutX="420.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStopAct" prefHeight="37.0" text="終了" />
     </children>
 </AnchorPane>
