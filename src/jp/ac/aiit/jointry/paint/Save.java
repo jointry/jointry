@@ -16,20 +16,15 @@ import javafx.scene.paint.Color;
  *
  * @author kanemoto
  */
-public class PtSave extends PaintTool {
+public class Save {
 
     private Image image;
-
-    public PtSave(String resource, String tip) {
-        super(resource, tip);
-    }
 
     public Image getImage() {
         return image;
     }
 
-    @Override
-    public void paint(Canvas canvas, Point pS, Point pE, Color color) {
+    public void action(Canvas canvas) {
         //単純な透過処理
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
@@ -44,11 +39,6 @@ public class PtSave extends PaintTool {
         int startY = getStartY(reader, canvasWidth, canvasHeight);
         int endX = getEndX(reader, canvasWidth, canvasHeight);
         int endY = getEndY(reader, canvasWidth, canvasHeight);
-
-        System.out.println("StartX :" + startX);
-        System.out.println("StartY :" + startY);
-        System.out.println("endX :" + endX);
-        System.out.println("endY :" + endY);
 
         //何も描かれていないキャンバス
         if (startX == 0 && startY == 0 && endX == 0 && endY == 0) {

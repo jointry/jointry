@@ -11,23 +11,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import jp.ac.aiit.jointry.paint.IPaint;
-import jp.ac.aiit.jointry.paint.PtSave;
+import jp.ac.aiit.jointry.paint.FileExt;
+import jp.ac.aiit.jointry.paint.PtClear;
+import jp.ac.aiit.jointry.paint.Save;
 
 /**
  *
  * @author kanemoto
  */
-public class PaintController implements Initializable, IPaint {
+public class PaintController implements Initializable {
 
     @FXML
     private Canvas canvas;
@@ -35,25 +32,25 @@ public class PaintController implements Initializable, IPaint {
     private ColorPicker color;
     @FXML
     private PaintOptionController paintOptionController;
+    private FrontStageController frontStageController;
     private Stage stage;
-    private Point window = new Point();
+    private Point windowPoint = new Point();
     private Point pS = new Point();
     private Point pE = new Point();
-    private FrontStageController frontStageController;
 
     //画面移動
     @FXML
     protected void handleWindowMovePressed(MouseEvent event) {
         stage = (Stage) canvas.getScene().getWindow();
         Scene scene = stage.getScene();
-        window.x = (int) (event.getSceneX() + scene.getX());
-        window.y = (int) (event.getSceneY() + scene.getY());
+        windowPoint.x = (int) (event.getSceneX() + scene.getX());
+        windowPoint.y = (int) (event.getSceneY() + scene.getY());
     }
 
     @FXML
     protected void handleWindowMoveDragged(MouseEvent event) {
-        stage.setX(event.getScreenX() - window.x);
-        stage.setY(event.getScreenY() - window.y);
+        stage.setX(event.getScreenX() - windowPoint.x);
+        stage.setY(event.getScreenY() - windowPoint.y);
     }
 
     //マウス描画
@@ -75,38 +72,41 @@ public class PaintController implements Initializable, IPaint {
     //ボタン
     @FXML
     protected void handleSaveButtonAction(ActionEvent event) {
-        System.out.println("Save the Dummy");
-
-        PtSave save = new PtSave(null, null);
-        save.paint(canvas, null, null, null);
+        Save save = new Save();
+        save.action(canvas);
 
         frontStageController.setSprite(save.getImage());
 
-        stage = (Stage) canvas.getScene().getWindow();
-        stage.close();
+        windowClose();
     }
 
     @FXML
     protected void handleExitButtonAction(ActionEvent event) {
-        stage = (Stage) canvas.getScene().getWindow();
-        stage.close();
+        windowClose();
     }
 
     @FXML
     protected void handleFileExtButtonAction(ActionEvent event) {
-        fileExt.showOpenDialog(null);
-        fileExt.paint(canvas, null, null, null);
+        FileExt fileExt = new FileExt();
+        fileExt.showOpenDialog(null, canvas);
     }
 
     @FXML
     protected void handleClearButtonAction(ActionEvent event) {
+        PtClear clear = new PtClear(null, null);
         clear.paint(canvas, null, null, null);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        PtClear clear = new PtClear(null, null);
         clear.paint(canvas, null, null, null);
         color.setValue(Color.RED);
+    }
+
+    private void windowClose() {
+        stage = (Stage) canvas.getScene().getWindow();
+        stage.close();
     }
 
     public void setController(FrontStageController ctrl) {
