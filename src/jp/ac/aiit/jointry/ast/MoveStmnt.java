@@ -24,7 +24,7 @@ public class MoveStmnt extends ASTList {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
             ImageView image = env.getImage();
-            image.setTranslateX((Integer) c);
+            image.setTranslateX(image.getTranslateX() + (Integer) c);
         }
         return c;
     }

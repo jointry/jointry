@@ -16,9 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BlockMenuItem extends AnchorPane {
+public class MenuItem extends AnchorPane {
 
-    public BlockMenuItem(final Class blockClass) {
+    public MenuItem(final Class blockClass) {
         Rectangle rect = new Rectangle();
         rect.setWidth(100);
         rect.setHeight(30);
@@ -27,9 +27,9 @@ public class BlockMenuItem extends AnchorPane {
         try {
             block = (Block) blockClass.newInstance();
         } catch (InstantiationException ex) {
-            Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         }
         Label lb = block.getLabel();
 
@@ -46,9 +46,9 @@ public class BlockMenuItem extends AnchorPane {
                     addToScriptPane(block);
                     setCursor(Cursor.MOVE);
                 } catch (InstantiationException ex) {
-                    Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(BlockMenuItem.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

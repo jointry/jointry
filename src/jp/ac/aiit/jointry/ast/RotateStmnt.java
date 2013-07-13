@@ -6,8 +6,7 @@ import javafx.scene.image.ImageView;
 import jp.ac.aiit.jointry.parser.env.Environment;
 
 /**
- * RotateStatement.
- * 言語仕様rotateに対応するステートメント.
+ * RotateStatement. 言語仕様rotateに対応するステートメント.
  *
  * @author kanemoto
  */
@@ -30,10 +29,8 @@ public class RotateStmnt extends ASTList {
     public Object eval(Environment env) {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
-            //何度回転させるかの処理
             ImageView image = env.getImage();
-            image.setRotate((Integer) c);
-            //System.out.println("RotateStmnt " + c.toString());
+            image.setRotate(image.getRotate() + (Integer) c);
         }
 
         return c;

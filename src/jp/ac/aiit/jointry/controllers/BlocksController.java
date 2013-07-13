@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
-import jp.ac.aiit.jointry.blocks.BlockMenuItem;
+import jp.ac.aiit.jointry.blocks.MenuItem;
 import jp.ac.aiit.jointry.blocks.Move;
 import jp.ac.aiit.jointry.blocks.Rotate;
 
@@ -18,8 +18,8 @@ public class BlocksController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         blockMenu.getChildren().addAll(
-                new BlockMenuItem(Move.class),
-                new BlockMenuItem(Rotate.class));
+                new MenuItem(Move.class),
+                new MenuItem(Rotate.class));
     }
 
     public void setMainController(MainController controller) {
