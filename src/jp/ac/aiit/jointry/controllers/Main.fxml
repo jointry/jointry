@@ -15,11 +15,13 @@
         <URL value="@style.css" />
     </stylesheets>
     <bottom>
+        <!--
         <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/join.png" />
             </image>
         </ImageView>
+        -->
     </bottom>
     <top>
         <MenuBar useSystemMenuBar="true">
