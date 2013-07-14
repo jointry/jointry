@@ -27,6 +27,8 @@ public class MenuItem extends AnchorPane {
 
         Block block = null;
         try {
+            // TODO: Node#getStyleClassでObservableListにクラスaddすれば、
+            // sytle.cssで色を管理できる……と思う。
             rect.setFill((Color) blockClass.getMethod("getColor").invoke(null));
             block = (Block) blockClass.newInstance();
         } catch (InstantiationException ex) {
@@ -42,12 +44,12 @@ public class MenuItem extends AnchorPane {
         } catch (InvocationTargetException ex) {
             Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Label lb = block.getLabel();
+        Label label = block.getLabel();
 
         AnchorPane.setTopAnchor(rect, 0.0);
-        AnchorPane.setTopAnchor(lb, 10.0);
-        AnchorPane.setLeftAnchor(lb, 0.0);
-        getChildren().addAll(rect, lb);
+        AnchorPane.setTopAnchor(label, 10.0);
+        AnchorPane.setLeftAnchor(label, 0.0);
+        getChildren().addAll(rect, label);
 
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

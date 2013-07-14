@@ -3,7 +3,7 @@ package jp.ac.aiit.jointry.blocks;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
-public class Move extends Block {
+public class Move extends Statement {
 
     public Move() {
         super();

@@ -3,7 +3,7 @@ package jp.ac.aiit.jointry.blocks;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
-public class Rotate extends Block {
+public class Rotate extends Statement {
 
     public Rotate() {
         super();

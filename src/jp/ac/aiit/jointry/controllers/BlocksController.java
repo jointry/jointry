@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.blocks.MenuItem;
 import jp.ac.aiit.jointry.blocks.Move;
 import jp.ac.aiit.jointry.blocks.Rotate;
+import jp.ac.aiit.jointry.blocks.While;
 
 public class BlocksController implements Initializable {
 
@@ -21,7 +22,9 @@ public class BlocksController implements Initializable {
         blockMenu.getChildren().addAll(
                 new MenuItem(Move.class),
                 new Separator(),
-                new MenuItem(Rotate.class));
+                new MenuItem(Rotate.class),
+                new Separator(),
+                new MenuItem(While.class));
     }
 
     public void setMainController(MainController controller) {
