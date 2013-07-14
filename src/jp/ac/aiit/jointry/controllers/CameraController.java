@@ -3,9 +3,7 @@ package jp.ac.aiit.jointry.controllers;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import com.sleepingdumpling.jvideoinput.VideoInputException;
-
 import javafx.animation.AnimationTimer;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
@@ -14,14 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import jp.ac.aiit.jointry.camera.CameraService;
-
+import jp.ac.aiit.jointry.services.CameraService;
 import jp.ac.aiit.jointry.statics.TestData;
 
-/**
- *
- * @author kanemoto
- */
 public class CameraController implements Initializable {
 
     /**

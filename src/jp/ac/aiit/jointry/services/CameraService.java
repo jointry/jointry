@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package jp.ac.aiit.jointry.camera;
+package jp.ac.aiit.jointry.services;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -15,10 +11,6 @@ import com.sleepingdumpling.jvideoinput.VideoFrame;
 import com.sleepingdumpling.jvideoinput.VideoInput;
 import com.sleepingdumpling.jvideoinput.VideoInputException;
 
-/**
- *
- * @author kanemoto
- */
 public class CameraService {
 
     private final VideoInput videoInput;
