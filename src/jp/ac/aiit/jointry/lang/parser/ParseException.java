@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.parser;
+package jp.ac.aiit.jointry.lang.parser;
 
 import java.io.IOException;
 

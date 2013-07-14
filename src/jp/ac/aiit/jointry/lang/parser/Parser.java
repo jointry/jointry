@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.parser;
+package jp.ac.aiit.jointry.lang.parser;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
 
-import jp.ac.aiit.jointry.ast.ASTLeaf;
-import jp.ac.aiit.jointry.ast.ASTList;
-import jp.ac.aiit.jointry.ast.ASTree;
+import jp.ac.aiit.jointry.lang.ast.*;
 
 public class Parser {
 

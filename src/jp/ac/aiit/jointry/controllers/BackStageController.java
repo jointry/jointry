@@ -1,6 +1,6 @@
 package jp.ac.aiit.jointry.controllers;
 
-import jp.ac.aiit.jointry.parser.LangReader;
+import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,15 +21,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import jp.ac.aiit.jointry.ast.ASTree;
-import jp.ac.aiit.jointry.ast.NullStmnt;
+import jp.ac.aiit.jointry.lang.ast.ASTree;
+import jp.ac.aiit.jointry.lang.ast.NullStmnt;
 import jp.ac.aiit.jointry.blocks.Block;
-import jp.ac.aiit.jointry.parser.JoinTryParser;
-import jp.ac.aiit.jointry.parser.Lexer;
-import jp.ac.aiit.jointry.parser.ParseException;
-import jp.ac.aiit.jointry.parser.Token;
-import jp.ac.aiit.jointry.parser.env.BasicEnv;
-import jp.ac.aiit.jointry.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
+import jp.ac.aiit.jointry.lang.parser.Lexer;
+import jp.ac.aiit.jointry.lang.parser.ParseException;
+import jp.ac.aiit.jointry.lang.parser.Token;
+import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
+import jp.ac.aiit.jointry.lang.parser.env.Environment;
 
 public class BackStageController implements Initializable {
 

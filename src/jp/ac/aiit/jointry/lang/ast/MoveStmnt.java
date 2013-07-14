@@ -1,12 +1,12 @@
-package jp.ac.aiit.jointry.ast;
+package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
 import javafx.scene.image.ImageView;
-import jp.ac.aiit.jointry.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.env.Environment;
 
-public class RotateStmnt extends ASTList {
+public class MoveStmnt extends ASTList {
 
-    public RotateStmnt(List<ASTree> list) {
+    public MoveStmnt(List<ASTree> list) {
         super(list);
     }
 
@@ -16,7 +16,7 @@ public class RotateStmnt extends ASTList {
 
     @Override
     public String toString() {
-        return "(rotate " + condition() + ")";
+        return "(move " + condition() + ")";
     }
 
     @Override
@@ -24,9 +24,8 @@ public class RotateStmnt extends ASTList {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
             ImageView image = env.getImage();
-            image.setRotate(image.getRotate() + (Integer) c);
+            image.setTranslateX(image.getTranslateX() + (Integer) c);
         }
-
         return c;
     }
 }

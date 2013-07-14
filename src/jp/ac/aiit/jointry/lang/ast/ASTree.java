@@ -1,7 +1,7 @@
-package jp.ac.aiit.jointry.ast;
+package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.Iterator;
-import jp.ac.aiit.jointry.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.env.Environment;
 
 public abstract class ASTree implements Iterable<ASTree> {
 

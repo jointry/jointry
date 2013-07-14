@@ -1,21 +1,8 @@
-package jp.ac.aiit.jointry.parser;
+package jp.ac.aiit.jointry.lang.parser;
 
-import static jp.ac.aiit.jointry.parser.Parser.*;
+import static jp.ac.aiit.jointry.lang.parser.Parser.*;
 import java.util.HashSet;
-import jp.ac.aiit.jointry.ast.ASTree;
-import jp.ac.aiit.jointry.ast.BinaryExpr;
-import jp.ac.aiit.jointry.ast.BlockStmnt;
-import jp.ac.aiit.jointry.ast.IfStmnt;
-import jp.ac.aiit.jointry.ast.MoveStmnt;
-import jp.ac.aiit.jointry.ast.Name;
-import jp.ac.aiit.jointry.ast.NegativeExpr;
-import jp.ac.aiit.jointry.ast.NullStmnt;
-import jp.ac.aiit.jointry.ast.NumberLiteral;
-import jp.ac.aiit.jointry.ast.PrimaryExpr;
-import jp.ac.aiit.jointry.ast.RotateStmnt;
-import jp.ac.aiit.jointry.ast.StringLiteral;
-import jp.ac.aiit.jointry.ast.WhileStmnt;
-import jp.ac.aiit.jointry.parser.Parser.Operators;
+import jp.ac.aiit.jointry.lang.ast.*;
 
 public class JoinTryParser {
 

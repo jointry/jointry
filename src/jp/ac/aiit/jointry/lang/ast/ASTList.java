@@ -1,9 +1,9 @@
-package jp.ac.aiit.jointry.ast;
+package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
 import java.util.Iterator;
-import jp.ac.aiit.jointry.parser.env.Environment;
-import jp.ac.aiit.jointry.parser.JoinTryException;
+import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.JoinTryException;
 
 public class ASTList extends ASTree {
 

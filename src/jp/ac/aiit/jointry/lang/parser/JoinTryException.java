@@ -1,6 +1,6 @@
-package jp.ac.aiit.jointry.parser;
+package jp.ac.aiit.jointry.lang.parser;
 
-import jp.ac.aiit.jointry.ast.ASTree;
+import jp.ac.aiit.jointry.lang.ast.ASTree;
 
 public class JoinTryException extends RuntimeException {
 

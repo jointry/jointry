@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.parser.env;
+package jp.ac.aiit.jointry.lang.parser.env;
 
 import javafx.scene.image.ImageView;
 

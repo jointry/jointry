@@ -1,7 +1,7 @@
-package jp.ac.aiit.jointry.ast;
+package jp.ac.aiit.jointry.lang.ast;
 
-import jp.ac.aiit.jointry.parser.env.Environment;
-import jp.ac.aiit.jointry.parser.Token;
+import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.Token;
 
 public class NumberLiteral extends ASTLeaf {
 

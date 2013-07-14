@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.ast;
+package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
 
