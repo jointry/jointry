@@ -28,7 +28,6 @@
                     <Font size="25.0" />
                   </font>
                 </Label>
-                <Button mnemonicParsing="false" onAction="#handleAddBtnAct" prefHeight="47.0" prefWidth="62.0" text="追加" />
                 <Button onAction="#handlePaintBtnAct" prefHeight="49.0" prefWidth="48.0">
                   <graphic>
                     <ImageView fitHeight="42.0" fitWidth="55.0">

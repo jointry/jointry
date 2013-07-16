@@ -41,11 +41,6 @@ public class BackStageController implements Initializable {
     private MainController mainController;
 
     @FXML
-    protected void handleAddBtnAct(ActionEvent event) throws Exception {
-        costumeController.refresh();
-    }
-
-    @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
         //Paintツール画面
         Stage paintStage = new Stage(StageStyle.TRANSPARENT);
