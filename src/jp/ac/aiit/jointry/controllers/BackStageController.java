@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,7 @@ import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.statics.TestData;
 
 public class BackStageController implements Initializable {
 
@@ -43,6 +45,18 @@ public class BackStageController implements Initializable {
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
         Stage paintStage = createStage("Paint.fxml", null);
+
+        //新規コスチューム追加
+        paintStage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                TestData<Image> data = new TestData();
+                if (data.get("paintImage") != null) {
+                    setCostume("costume", data.get("paintImage"));
+                }
+            }
+        });
+
         paintStage.show();
     }
 
@@ -55,13 +69,9 @@ public class BackStageController implements Initializable {
         cameraStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                            .getResource("Costume.fxml"));
-                    vbox.getChildren().add((Parent) fxmlLoader.load());
-
-                    costumeController = (CostumeCntroller) fxmlLoader.getController();
-                } catch (IOException ex) {
+                TestData<Image> data = new TestData();
+                if (data.get("cameraImage") != null) {
+                    setCostume("costume", data.get("cameraImage"));
                 }
             }
         });
@@ -126,5 +136,20 @@ public class BackStageController implements Initializable {
         stage.setScene(new Scene(root));
 
         return stage;
+    }
+
+    private void setCostume(String title, Image image) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                    .getResource("Costume.fxml"));
+            vbox.getChildren().add((Parent) fxmlLoader.load());
+
+            costumeController = (CostumeCntroller) fxmlLoader.getController();
+
+            if (image != null) {
+                costumeController.setInfo(title, image);
+            }
+        } catch (IOException ex) {
+        }
     }
 }

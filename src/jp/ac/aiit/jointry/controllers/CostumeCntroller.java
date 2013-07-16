@@ -2,34 +2,25 @@ package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import jp.ac.aiit.jointry.statics.TestData;
 
 public class CostumeCntroller implements Initializable {
 
     @FXML
     private ImageView images;
+    @FXML
+    private TextField title;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        TestData data = new TestData();
-
-        if (data.getCameraFile() != null) {
-            WritableImage buf = SwingFXUtils.toFXImage(data.getCameraFile(), null);
-            images.setImage(buf);
-        }
     }
 
-    public void refresh() {
-        TestData data = new TestData();
-
-        if (data.getCameraFile() != null) {
-            WritableImage buf = SwingFXUtils.toFXImage(data.getCameraFile(), null);
-            images.setImage(buf);
-        }
+    public void setInfo(String title, Image image) {
+        this.title.setText(title);
+        images.setImage(image);
     }
 }

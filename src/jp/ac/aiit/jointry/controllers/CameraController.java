@@ -44,7 +44,7 @@ public class CameraController implements Initializable {
         stop();
 
         TestData data = new TestData();
-        data.setCameraFile(displayImage);
+        data.put("cameraImage", camview.getImage());
 
         windowClose();
     }
@@ -52,6 +52,10 @@ public class CameraController implements Initializable {
     @FXML
     protected void handleStopAct(ActionEvent event) throws Exception {
         stop();
+
+        TestData data = new TestData();
+        data.put("cameraImage", null);
+
         windowClose();
     }
 
