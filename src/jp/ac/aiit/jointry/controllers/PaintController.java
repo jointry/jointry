@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -77,7 +79,7 @@ public class PaintController implements Initializable {
     protected void handleExitButtonAction(ActionEvent event) {
         TestData data = new TestData();
         data.put("paintImage", null);
-        
+
         windowClose();
 
     }
@@ -98,6 +100,14 @@ public class PaintController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         PtClear clear = new PtClear(null, null);
         clear.paint(canvas, null, null, null);
+
+        TestData<Image> data = new TestData();
+
+        if (data.get("editImage") != null) {
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            gc.drawImage(data.get("editImage"), 0, 0);
+        }
+
         color.setValue(Color.RED);
     }
 

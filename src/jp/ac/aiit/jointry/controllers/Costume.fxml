@@ -12,7 +12,7 @@
     <ImageView fx:id="images" fitHeight="110.0" fitWidth="150.0" layoutX="55.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
     <Label layoutX="14.0" layoutY="15.0" text="No." />
     <TextField fx:id="title" layoutX="231.0" layoutY="14.0" prefHeight="22.0" prefWidth="200.0" />
-    <Button layoutX="231.0" layoutY="98.0" mnemonicParsing="false" text="編集" />
+    <Button layoutX="231.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleEditButtonAction" text="編集" />
     <Button layoutX="304.0" layoutY="99.0" mnemonicParsing="false" text="コピー" />
     <Button layoutX="376.0" layoutY="99.0" mnemonicParsing="false" text="削除" />
   </children>
