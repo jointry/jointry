@@ -42,39 +42,17 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        //Paintツール画面
-        Stage paintStage = new Stage(StageStyle.TRANSPARENT);
-
-        //オーナー設定
-        paintStage.initModality(Modality.APPLICATION_MODAL);
-        paintStage.initOwner((Stage) scriptPane.getScene().getWindow());
-
-        Parent root = FXMLLoader.load(getClass().getResource("Paint.fxml"));
-
-        // 新しいウインドウを表示
-        paintStage.setScene(new Scene(root));
+        Stage paintStage = createStage("Paint.fxml", null);
         paintStage.show();
     }
 
     @FXML
     protected void handleCamBtnAct(ActionEvent event) throws Exception {
-        //ウィンドウ用ステージ
-        Stage newStage = new Stage();
 
-        // 元のウィンドウは操作できないように設定
-        newStage.initModality(Modality.APPLICATION_MODAL);
-        // オーナーを設定
-        // Stage stageTheLabelBelongs = (Stage) code.getScene().getWindow();
-        // newStage.initOwner(stageTheLabelBelongs);
-
-        // 新しいウインドウ内に配置するコンテンツを生成
-        Parent root = FXMLLoader.load(getClass().getResource("Camera.fxml"));
-
-        // 新しいウインドウを表示
-        newStage.setScene(new Scene(root));
+        Stage cameraStage = createStage("Camera.fxml", new Stage());
 
         //新規コスチューム追加
-        newStage.setOnHidden(new EventHandler<WindowEvent>() {
+        cameraStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 try {
@@ -88,7 +66,7 @@ public class BackStageController implements Initializable {
             }
         });
 
-        newStage.show();
+        cameraStage.show();
     }
 
     @Override
@@ -132,5 +110,21 @@ public class BackStageController implements Initializable {
 
     public void setMainController(MainController controller) {
         this.mainController = controller;
+    }
+
+    private Stage createStage(String fxml, Stage stage) throws IOException {
+        if (stage == null) {
+            stage = new Stage(StageStyle.TRANSPARENT);
+        }
+
+        //オーナー設定
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) scriptPane.getScene().getWindow());
+
+        //UI読み込み
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        stage.setScene(new Scene(root));
+
+        return stage;
     }
 }
