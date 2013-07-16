@@ -18,6 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import jp.ac.aiit.jointry.statics.TestData;
 
 public class FrontStageController implements Initializable {
 
@@ -42,14 +44,6 @@ public class FrontStageController implements Initializable {
         currentSprite = sprite;
     }
 
-    public ImageView getBackground() {
-        return background;
-    }
-
-    public ImageView getSprite() {
-        return currentSprite;
-    }
-
     @FXML
     protected void handleExecuteBtnAct(ActionEvent event) {
         this.mainController.getBackStageController().execute();
@@ -68,8 +62,16 @@ public class FrontStageController implements Initializable {
                 .getResource("Paint.fxml"));
         Parent root = (Parent) fxmlLoader.load();
 
-        PaintController ctrl = (PaintController) fxmlLoader.getController();
-        ctrl.setController(this);
+        //ペイント書き終えた
+        paintStage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                TestData<Image> data = new TestData();
+                if (data.get("paintImage") != null) {
+                    setSprite(data.get("paintImage"));
+                }
+            }
+        });
 
         // 新しいウインドウを表示
         paintStage.setScene(new Scene(root));
@@ -78,6 +80,14 @@ public class FrontStageController implements Initializable {
 
     public void setMainController(MainController controller) {
         this.mainController = controller;
+    }
+
+    public ImageView getBackground() {
+        return background;
+    }
+
+    public ImageView getSprite() {
+        return currentSprite;
     }
 
     public void setSprite(Image image) {

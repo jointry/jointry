@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import jp.ac.aiit.jointry.paint.FileExt;
 import jp.ac.aiit.jointry.paint.PtClear;
 import jp.ac.aiit.jointry.paint.Save;
+import jp.ac.aiit.jointry.statics.TestData;
 
 public class PaintController implements Initializable {
 
@@ -24,7 +25,6 @@ public class PaintController implements Initializable {
     private ColorPicker color;
     @FXML
     private PaintOptionController paintOptionController;
-    private FrontStageController frontStageController;
     private Stage stage;
     private Point windowPoint = new Point();
     private Point pS = new Point();
@@ -67,14 +67,19 @@ public class PaintController implements Initializable {
         Save save = new Save();
         save.action(canvas);
 
-        frontStageController.setSprite(save.getImage());
+        TestData data = new TestData();
+        data.put("paintImage", save.getImage());
 
         windowClose();
     }
 
     @FXML
     protected void handleExitButtonAction(ActionEvent event) {
+        TestData data = new TestData();
+        data.put("paintImage", null);
+        
         windowClose();
+
     }
 
     @FXML
@@ -99,9 +104,5 @@ public class PaintController implements Initializable {
     private void windowClose() {
         stage = (Stage) canvas.getScene().getWindow();
         stage.close();
-    }
-
-    public void setController(FrontStageController ctrl) {
-        this.frontStageController = ctrl;
     }
 }
