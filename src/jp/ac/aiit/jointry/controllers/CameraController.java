@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.stage.Stage;
 import jp.ac.aiit.jointry.services.CameraService;
 import jp.ac.aiit.jointry.statics.TestData;
 
@@ -44,11 +45,19 @@ public class CameraController implements Initializable {
 
         TestData data = new TestData();
         data.setCameraFile(displayImage);
+
+        windowClose();
     }
 
     @FXML
     protected void handleStopAct(ActionEvent event) throws Exception {
         stop();
+        windowClose();
+    }
+
+    private void windowClose() {
+        Stage stage = (Stage) camview.getScene().getWindow();
+        stage.close();
     }
 
     private void stop() {
