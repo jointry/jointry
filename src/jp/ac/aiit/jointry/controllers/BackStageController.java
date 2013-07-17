@@ -3,9 +3,12 @@ package jp.ac.aiit.jointry.controllers;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,11 +40,12 @@ import jp.ac.aiit.jointry.statics.TestData;
 public class BackStageController implements Initializable {
 
     @FXML
-    private VBox costumeList;
+    private ScrollPane costumeList;
     @FXML
     private AnchorPane scriptPane;
     private CostumeCntroller costumeController;
     private MainController mainController;
+    private Map<ImageView, VBox> map = new HashMap();
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -77,6 +82,13 @@ public class BackStageController implements Initializable {
         });
 
         cameraStage.show();
+    }
+
+    @FXML
+    protected void handleCostumeSelected(Event event) {
+        //コスチューム更新
+        setCurrentCostume(mainController.getFrontStageController().getSprite());
+
     }
 
     @Override
@@ -122,6 +134,16 @@ public class BackStageController implements Initializable {
         this.mainController = controller;
     }
 
+    public void setCurrentCostume(ImageView image) {
+        if (map.get(image) == null) {
+            map.put(image, new VBox()); //対応がなければ作る
+            costumeList.setContent(map.get(image));
+            setCostume("costume", image.getImage());
+        }
+
+        costumeList.setContent(map.get(image));
+    }
+
     private Stage createStage(String fxml, Stage stage) throws IOException {
         if (stage == null) {
             stage = new Stage(StageStyle.TRANSPARENT);
@@ -140,14 +162,17 @@ public class BackStageController implements Initializable {
 
     private void setCostume(String title, Image image) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                    .getResource("Costume.fxml"));
-            costumeList.getChildren().add((Parent) fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
+
+            VBox list = (VBox) costumeList.getContent();
+            list.getChildren().add((Parent) fxmlLoader.load());
 
             costumeController = (CostumeCntroller) fxmlLoader.getController();
 
             if (image != null) {
                 costumeController.setInfo(title, image);
+                costumeController.setController(mainController.getFrontStageController());
+                mainController.getFrontStageController().getSprite().setImage(image);
             }
         } catch (IOException ex) {
         }

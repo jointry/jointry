@@ -35,6 +35,7 @@ public class FrontStageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //まだ初期化されていないので
         URL path = getClass().getResource("images/scratch_cat.png");
         Image image = new Image(path.toString());
 
@@ -90,13 +91,18 @@ public class FrontStageController implements Initializable {
         return currentSprite;
     }
 
-    public void setSprite(Image image) {
+    private void setSprite(Image image) {
         if (image != null) {
             ImageView sprite = new DraggableImage(0, 0, image, stage);
             stage.getChildren().add(sprite);
 
-            currentSprite = sprite;
+            setCurrentSprite(sprite);
         }
+    }
+
+    private void setCurrentSprite(ImageView sprite) {
+        currentSprite = sprite;
+        mainController.getBackStageController().setCurrentCostume(currentSprite);
     }
 
     private class DraggableImage extends ImageView {
@@ -120,6 +126,8 @@ public class FrontStageController implements Initializable {
             setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    FrontStageController.this.setCurrentSprite(DraggableImage.this);
+
                     mouseX = event.getSceneX() - getTranslateX();
                     mouseY = event.getSceneY() - getTranslateY();
 

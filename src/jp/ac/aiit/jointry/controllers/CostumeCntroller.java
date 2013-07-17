@@ -11,8 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,6 +27,12 @@ public class CostumeCntroller implements Initializable {
     private ImageView images;
     @FXML
     private TextField title;
+    private FrontStageController ctrl;
+
+    @FXML
+    protected void handleImageSelected(MouseEvent event) {
+        ctrl.getSprite().setImage(images.getImage());
+    }
 
     @FXML
     protected void handleEditButtonAction(ActionEvent event) throws Exception {
@@ -40,6 +48,7 @@ public class CostumeCntroller implements Initializable {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
                     images.setImage(data.get("paintImage"));
+                    ctrl.getSprite().setImage(images.getImage());
                 }
             }
         });
@@ -55,6 +64,10 @@ public class CostumeCntroller implements Initializable {
     public void setInfo(String title, Image image) {
         this.title.setText(title);
         images.setImage(image);
+    }
+
+    public void setController(FrontStageController ctrl) {
+        this.ctrl = ctrl;
     }
 
     private Stage createStage(String fxml, Stage stage) throws IOException {
