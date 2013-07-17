@@ -35,5 +35,8 @@ public class Statement extends Block {
         AnchorPane.setLeftAnchor(lb, 150.0);
 
         getChildren().addAll(rect, tf, lb);
+
+        // コネクタを全面に出すために
+        rect.toBack();
     }
 }

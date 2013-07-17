@@ -28,6 +28,7 @@ public abstract class Block extends AnchorPane {
     protected Connector lCon;
     protected Connector rCon;
     protected While targetWhile;
+    protected Connector con;
 
     public Block() {
         myBlock = this;
@@ -37,37 +38,35 @@ public abstract class Block extends AnchorPane {
 
         this.tCon = new Connector();
         this.bCon = new Connector();
+        this.lCon = new Connector();
+        this.rCon = new Connector();
 
         // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
         tCon.setFill(Color.TRANSPARENT);
-        tCon.setWidth(300);
+        tCon.setWidth(250);
         tCon.setHeight(10);
-        tCon.setHolder(this);
+        tCon.setHolder(myBlock);
         tCon.setPosition(Connector.Position.TOP);
         AnchorPane.setTopAnchor(tCon, 0.0);
 
         bCon.setFill(Color.TRANSPARENT);
-        bCon.setWidth(300);
+        bCon.setWidth(250);
         bCon.setHeight(10);
-        bCon.setHolder(this);
+        bCon.setHolder(myBlock);
         bCon.setPosition(Connector.Position.BOTTOM);
         AnchorPane.setBottomAnchor(bCon, 0.0);
-
-
-        this.lCon = new Connector();
-        this.rCon = new Connector();
 
         lCon.setFill(Color.TRANSPARENT);
         lCon.setWidth(10);
         lCon.setHeight(50);
-        lCon.setHolder(this);
+        lCon.setHolder(myBlock);
         lCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(lCon, 0.0);
 
         rCon.setFill(Color.TRANSPARENT);
         rCon.setWidth(10);
         rCon.setHeight(50);
-        rCon.setHolder(this);
+        rCon.setHolder(myBlock);
         rCon.setPosition(Connector.Position.RIGHT);
         AnchorPane.setRightAnchor(rCon, 0.0);
 
@@ -99,10 +98,12 @@ public abstract class Block extends AnchorPane {
                 if (con == null) {
                     return;
                 }
+                myBlock.con = con;
 
                 // 包含の接続
                 if (con.getPosition() == Connector.Position.RIGHT) {
                     if (con.getHolder() instanceof While) {
+                        con.setFill(Color.GOLD);
                         While target = (While) con.getHolder();
                         target.addChild(myBlock);
                         int power = target.childBlocks.size() - 1;
@@ -119,11 +120,11 @@ public abstract class Block extends AnchorPane {
                 if (con.getPosition() == Connector.Position.BOTTOM) {
                     Block target = (Block) con.getHolder();
                     if (target != nextBlock) {
+                        con.setFill(Color.GOLD);
                         target.addLink(myBlock);
                         myBlock.move(target.getLayoutX(),
                                 target.getLayoutY() + target.getHeight());
                     }
-                    return;
                 }
             }
         });
@@ -143,6 +144,11 @@ public abstract class Block extends AnchorPane {
                     myBlock.targetWhile = null;
                 }
                 setCursor(Cursor.HAND);
+
+                if (myBlock.con != null) {
+                    myBlock.con.setFill(Color.TRANSPARENT);
+                }
+                myBlock.con = null;
             }
         });
     }
@@ -176,14 +182,14 @@ public abstract class Block extends AnchorPane {
                     if (n instanceof Connector) {
                         Connector con = (Connector) n;
                         Shape intersect = null;
-                        // 上下の接続
+                        // 上下の接触
                         intersect = Shape.intersect(con, myBlock.tCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             connector = con;
                             break;
                         }
 
-                        // 親子の接続
+                        // 包含の接触
                         intersect = Shape.intersect(con, myBlock.lCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             connector = con;
@@ -197,8 +203,13 @@ public abstract class Block extends AnchorPane {
     }
 
     protected void addLink(Block next) {
+        Block tmp = this.nextBlock;
         this.nextBlock = next;
         next.prevBlock = this;
+        if (tmp != null) {
+            next.nextBlock = tmp;
+            tmp.prevBlock = next;
+        }
     }
 
     public void move(double dx, double dy) {
