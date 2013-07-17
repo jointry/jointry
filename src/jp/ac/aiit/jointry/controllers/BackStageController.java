@@ -45,7 +45,7 @@ public class BackStageController implements Initializable {
     private AnchorPane scriptPane;
     private CostumeCntroller costumeController;
     private MainController mainController;
-    private Map<ImageView, VBox> map = new HashMap();
+    private Map<ImageView, VBox> spriteCostumes = new HashMap();
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -57,7 +57,7 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    setCostume("costume", data.get("paintImage"));
+                    createCostume("costume", data.get("paintImage"));
                 }
             }
         });
@@ -76,7 +76,7 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("cameraImage") != null) {
-                    setCostume("costume", data.get("cameraImage"));
+                    createCostume("costume", data.get("cameraImage"));
                 }
             }
         });
@@ -93,11 +93,6 @@ public class BackStageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // dummy blocks...
-        //Block b1 = new Block(0, 0, Color.RED);
-        //Block b2 = new Block(0, 150, Color.BLUE);
-        //Block b3 = new Block(0, 300, Color.YELLOW);
-        //scriptPane.getChildren().addAll(b1, b2, b3);
     }
 
     public void execute() {
@@ -134,14 +129,13 @@ public class BackStageController implements Initializable {
         this.mainController = controller;
     }
 
-    public void setCurrentCostume(ImageView image) {
-        if (map.get(image) == null) {
-            map.put(image, new VBox()); //対応がなければ作る
-            costumeList.setContent(map.get(image));
-            setCostume("costume", image.getImage());
+    public void setCurrentCostume(ImageView sprite) {
+        if (spriteCostumes.get(sprite) == null) {
+            spriteCostumes.put(sprite, new VBox()); //対応がなければ作る
         }
 
-        costumeList.setContent(map.get(image));
+        costumeList.setContent(spriteCostumes.get(sprite));
+        createCostume("costume", sprite.getImage());
     }
 
     private Stage createStage(String fxml, Stage stage) throws IOException {
@@ -160,7 +154,7 @@ public class BackStageController implements Initializable {
         return stage;
     }
 
-    private void setCostume(String title, Image image) {
+    private void createCostume(String title, Image image) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
 
