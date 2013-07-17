@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models;
 
 import javafx.scene.image.ImageView;
 
