@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.blocks;
+package jp.ac.aiit.jointry.models.blocks;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

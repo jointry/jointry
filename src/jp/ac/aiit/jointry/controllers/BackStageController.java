@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
 
 import jp.ac.aiit.jointry.lang.ast.ASTree;
 import jp.ac.aiit.jointry.lang.ast.NullStmnt;
-import jp.ac.aiit.jointry.blocks.Block;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;

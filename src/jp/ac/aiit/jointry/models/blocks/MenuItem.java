@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.blocks;
+package jp.ac.aiit.jointry.models.blocks;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;

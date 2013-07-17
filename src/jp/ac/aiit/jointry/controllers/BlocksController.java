@@ -6,10 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
-import jp.ac.aiit.jointry.blocks.MenuItem;
-import jp.ac.aiit.jointry.blocks.Move;
-import jp.ac.aiit.jointry.blocks.Rotate;
-import jp.ac.aiit.jointry.blocks.While;
+import jp.ac.aiit.jointry.models.blocks.MenuItem;
+import jp.ac.aiit.jointry.models.blocks.Move;
+import jp.ac.aiit.jointry.models.blocks.Rotate;
+import jp.ac.aiit.jointry.models.blocks.While;
 
 public class BlocksController implements Initializable {
 
