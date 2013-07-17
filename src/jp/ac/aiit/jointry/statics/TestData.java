@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.statics;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 

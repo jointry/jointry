@@ -21,7 +21,7 @@ public class NegativeExpr extends ASTList {
     public Object eval(Environment env) {
         Object v = ((ASTree) operand()).eval(env);
         if (v instanceof Integer) {
-            return new Integer(-((Integer) v).intValue());
+            return Integer.valueOf(-((Integer) v).intValue());
         }
         throw new JoinTryException("bad type for -", this);
     }
