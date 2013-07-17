@@ -36,7 +36,7 @@ import jp.ac.aiit.jointry.statics.TestData;
 public class BackStageController implements Initializable {
 
     @FXML
-    private VBox vbox;
+    private VBox costumeList;
     @FXML
     private AnchorPane scriptPane;
     private CostumeCntroller costumeController;
@@ -142,7 +142,7 @@ public class BackStageController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                     .getResource("Costume.fxml"));
-            vbox.getChildren().add((Parent) fxmlLoader.load());
+            costumeList.getChildren().add((Parent) fxmlLoader.load());
 
             costumeController = (CostumeCntroller) fxmlLoader.getController();
 
