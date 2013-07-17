@@ -97,16 +97,16 @@ public class BackStageController implements Initializable {
 
     public void execute() {
         ImageView image = mainController.getFrontStageController().getSprite();
-        String code = "";
+        StringBuilder code = new StringBuilder();
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
                 if (!block.existPrevBlock()) {
-                    code += block.intern();
+                    code.append(block.intern());
                 }
             }
         }
-        Lexer lexer = new Lexer(new LangReader(code));
+        Lexer lexer = new Lexer(new LangReader(code.toString()));
         JoinTryParser parser = new JoinTryParser();
 
         Environment env = new BasicEnv();
