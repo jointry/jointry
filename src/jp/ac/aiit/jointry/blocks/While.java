@@ -20,12 +20,13 @@ public class While extends Block {
         p = new Polygon();
         resize();
         p.setFill(getColor());
+        p.setStroke(Color.GRAY);
 
         getChildren().addAll(p);
     }
 
     public static Color getColor() {
-        return Color.CORAL;
+        return Color.LIGHTGREEN;
     }
 
     @Override
@@ -100,6 +101,6 @@ public class While extends Block {
     }
 
     public Label getLabel() {
-        return new Label("WHILE");
+        return new Label("くりかえす");
     }
 }
