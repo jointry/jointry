@@ -18,11 +18,10 @@ public class Statement extends Block {
 
         rect = new Rectangle();
         rect.setWidth(250);
-        rect.setHeight(60);
-        rect.setArcWidth(35);
-        rect.setArcHeight(35);
+        rect.setHeight(50);
+        rect.setArcWidth(10);
+        rect.setArcHeight(10);
         rect.setStroke(Color.GRAY);
-        rect.setOnMouseDragged(getLinkEvent());
 
         tf = new TextField();
         tf.setMaxWidth(50.0);

@@ -27,6 +27,7 @@ public abstract class Block extends AnchorPane {
     protected Connector bCon;
     protected Connector lCon;
     protected Connector rCon;
+    protected While targetWhile;
 
     public Block() {
         myBlock = this;
@@ -36,8 +37,6 @@ public abstract class Block extends AnchorPane {
 
         this.tCon = new Connector();
         this.bCon = new Connector();
-        this.lCon = new Connector();
-        this.rCon = new Connector();
 
         // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
         tCon.setFill(Color.TRANSPARENT);
@@ -54,16 +53,20 @@ public abstract class Block extends AnchorPane {
         bCon.setPosition(Connector.Position.BOTTOM);
         AnchorPane.setBottomAnchor(bCon, 0.0);
 
+
+        this.lCon = new Connector();
+        this.rCon = new Connector();
+
         lCon.setFill(Color.TRANSPARENT);
         lCon.setWidth(10);
-        lCon.setHeight(60);
+        lCon.setHeight(50);
         lCon.setHolder(this);
         lCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(lCon, 0.0);
 
         rCon.setFill(Color.TRANSPARENT);
         rCon.setWidth(10);
-        rCon.setHeight(60);
+        rCon.setHeight(50);
         rCon.setHolder(this);
         rCon.setPosition(Connector.Position.RIGHT);
         AnchorPane.setRightAnchor(rCon, 0.0);
@@ -97,24 +100,28 @@ public abstract class Block extends AnchorPane {
                     return;
                 }
 
-                // 上下の接続
-                if (con.getPosition() == Connector.Position.BOTTOM) {
-                    Block target = (Block) con.getHolder();
-                    if (target != nextBlock) {
-                        target.setLink(myBlock);
-                        myBlock.move(target.getLayoutX(),
-                                target.getLayoutY() + target.getHeight());
+                // 包含の接続
+                if (con.getPosition() == Connector.Position.RIGHT) {
+                    if (con.getHolder() instanceof While) {
+                        While target = (While) con.getHolder();
+                        target.addChild(myBlock);
+                        int power = target.childBlocks.size() - 1;
+                        myBlock.move(
+                                target.getLayoutX() + target.wLeft,
+                                target.getLayoutY() + target.hUpper
+                                + myBlock.getHeight() * power);
+                        targetWhile = target;
                     }
                     return;
                 }
 
-                // TODO: 包含の接続
-                if (con.getPosition() == Connector.Position.RIGHT) {
+                // 上下の接続
+                if (con.getPosition() == Connector.Position.BOTTOM) {
                     Block target = (Block) con.getHolder();
-                    if (!childBlocks.contains(target)) {
-                        //target.setLink(myBlock);
-                        //myBlock.move(target.getLayoutX(),
-                        //        target.getLayoutY() + target.getHeight());
+                    if (target != nextBlock) {
+                        target.addLink(myBlock);
+                        myBlock.move(target.getLayoutX(),
+                                target.getLayoutY() + target.getHeight());
                     }
                     return;
                 }
@@ -131,40 +138,13 @@ public abstract class Block extends AnchorPane {
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                if (myBlock.targetWhile != null) {
+                    myBlock.targetWhile.resize();
+                    myBlock.targetWhile = null;
+                }
                 setCursor(Cursor.HAND);
             }
         });
-    }
-
-    protected EventHandler getLinkEvent() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                /*
-                 if (con.getPosition() == Connector.Position.RIGHT) {
-                 While target = (While) con.getHolder();
-                 if (target != parentBlock) {
-                 target.addChild(myBlock);
-                 myBlock.move(target.getLayoutX() + target.getWidth(),
-                 target.getLayoutY());
-                 }
-                 return;
-                 }
-                 */
-
-                /*
-                 if (target instanceof While) {
-                 if (target != parentBlock) {
-                 target.addChild(myBlock);
-                 // TODO: move somewhere
-                 myBlock.move(target.getLayoutX() + target.getWidth(),
-                 target.getLayoutY());
-                 }
-                 return;
-                 }
-                 */
-            }
-        };
     }
 
     protected Connector getCollision() {
@@ -216,7 +196,7 @@ public abstract class Block extends AnchorPane {
         return connector;
     }
 
-    protected void setLink(Block next) {
+    protected void addLink(Block next) {
         this.nextBlock = next;
         next.prevBlock = this;
     }
@@ -224,17 +204,17 @@ public abstract class Block extends AnchorPane {
     public void move(double dx, double dy) {
         setLayoutX(dx);
         setLayoutY(dy);
-
         if (nextBlock != null) {
             nextBlock.move(dx, dy + getHeight());
         }
-        /*
-         if (childBlocks.size() != 0) {
-         for (Block b : childBlocks) {
-         b.move(dx + getWidth(), dy);
-         }
-         }
-         */
+    }
+
+    public double getAllHeight() {
+        double height = getHeight();
+        if (nextBlock != null) {
+            height += nextBlock.getAllHeight();
+        }
+        return height;
     }
 
     protected void initializeLink() {
@@ -242,8 +222,6 @@ public abstract class Block extends AnchorPane {
             prevBlock.nextBlock = null;
         }
         prevBlock = null;
-        parentBlock = null;
-        childBlocks.clear();
     }
 
     public boolean existPrevBlock() {

@@ -1,46 +1,57 @@
 package jp.ac.aiit.jointry.blocks;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public class While extends Block {
 
-    private double hUpper = 40.0;
-    private double hConcave = 80.0;
-    private double hLower = 40.0;
-    private double height = hUpper + hConcave + hLower;
+    protected double hUpper = 30.0;
+    protected double hConcave = 50.0;
+    protected double hLower = 30.0;
+    protected double wLeft = 30.0;
+    protected double pHeight = hUpper + hConcave + hLower;
+    private Polygon p;
 
     public While() {
         super();
 
-        // Visible Block
-        Polygon p = new Polygon();
-        Double[] ds = resize(10.0);
-        p.getPoints().addAll(ds);
+        p = new Polygon();
+        resize();
         p.setFill(getColor());
-        p.setOnMouseDragged(getLinkEvent());
 
-        // Invisible Block
-        AnchorPane invisibleBlock = new AnchorPane();
-        invisibleBlock.setMinWidth(70);
-        double blockHeight = 30;
-        invisibleBlock.setMinHeight(blockHeight);
-        AnchorPane.setTopAnchor(invisibleBlock, height / 2 - blockHeight / 2); //centering
-        AnchorPane.setRightAnchor(invisibleBlock, 0.0);
-
-        // add children
-        getChildren().addAll(p, invisibleBlock);
+        getChildren().addAll(p);
     }
 
     public static Color getColor() {
-        return Color.PURPLE;
+        return Color.CORAL;
+    }
+
+    @Override
+    public void move(double dx, double dy) {
+        super.move(dx, dy);
+
+        if (childBlocks.isEmpty()) {
+            return;
+        }
+
+        int i = 0;
+        for (Block b : childBlocks) {
+            b.move(dx + wLeft,
+                    dy + hUpper + (b.getHeight() * i));
+            i++;
+        }
+    }
+
+    @Override
+    protected void initializeLink() {
+        super.initializeLink();
+
+        if (parentBlock != null) {
+            parentBlock.childBlocks.remove(this);
+        }
+        parentBlock = null;
     }
 
     public void addChild(Block block) {
@@ -48,27 +59,44 @@ public class While extends Block {
         block.parentBlock = this;
     }
 
-    public final Double[] resize(double innerBlockHeight) {
+    public final void resize() {
+        double innerBlockHeight = 0.0;
+        for (Block b : childBlocks) {
+            innerBlockHeight += b.getAllHeight();
+        }
         if (hConcave < innerBlockHeight) {
             hConcave = innerBlockHeight;
         }
-        height = hUpper + hConcave + hLower;
+
+        pHeight = hUpper + hConcave + hLower;
+        setHeight(pHeight);
 
         Double[] polygon = new Double[]{
             0.0, 0.0,
             100.0, 0.0,
             100.0, hUpper,
-            30.0, hUpper,
-            30.0, hUpper + hConcave,
+            wLeft, hUpper,
+            wLeft, hUpper + hConcave,
             100.0, hUpper + hConcave,
-            100.0, height,
-            0.0, height
+            100.0, pHeight,
+            0.0, pHeight
         };
-        return polygon;
+        p.getPoints().clear();
+        p.getPoints().addAll(polygon);
     }
 
     public String intern() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringBuilder sb = new StringBuilder();
+        sb.append("index = 0\n");
+        sb.append("while index < 10 {\n");
+        for (Block b : childBlocks) {
+            sb.append(b.intern());
+            sb.append("\n");
+        }
+        sb.append("index = index + 1\n");
+        sb.append("}\n");
+        sb.append("index = 0\n");
+        return sb.toString();
     }
 
     public Label getLabel() {
