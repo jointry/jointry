@@ -233,6 +233,11 @@ public abstract class Block extends AnchorPane {
             prevBlock.nextBlock = null;
         }
         prevBlock = null;
+
+        if (parentBlock != null) {
+            parentBlock.childBlocks.remove(this);
+        }
+        parentBlock = null;
     }
 
     public boolean existPrevBlock() {

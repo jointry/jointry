@@ -23,6 +23,9 @@ public class While extends Block {
         p.setStroke(Color.GRAY);
 
         getChildren().addAll(p);
+
+        // コネクタを全面にするために
+        p.toBack();
     }
 
     public static Color getColor() {
@@ -45,16 +48,6 @@ public class While extends Block {
         }
     }
 
-    @Override
-    protected void initializeLink() {
-        super.initializeLink();
-
-        if (parentBlock != null) {
-            parentBlock.childBlocks.remove(this);
-        }
-        parentBlock = null;
-    }
-
     public void addChild(Block block) {
         childBlocks.add(block);
         block.parentBlock = this;
@@ -74,12 +67,12 @@ public class While extends Block {
 
         Double[] polygon = new Double[]{
             0.0, 0.0,
-            100.0, 0.0,
-            100.0, hUpper,
+            250.0, 0.0,
+            250.0, hUpper,
             wLeft, hUpper,
             wLeft, hUpper + hConcave,
-            100.0, hUpper + hConcave,
-            100.0, pHeight,
+            250.0, hUpper + hConcave,
+            250.0, pHeight,
             0.0, pHeight
         };
         p.getPoints().clear();
@@ -97,6 +90,9 @@ public class While extends Block {
         sb.append("index = index + 1\n");
         sb.append("}\n");
         sb.append("index = 0\n");
+        if (nextBlock != null) {
+            sb.append(nextBlock.intern());
+        }
         return sb.toString();
     }
 
