@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import jp.ac.aiit.jointry.models.Splite;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class CostumeCntroller implements Initializable {
@@ -26,11 +28,19 @@ public class CostumeCntroller implements Initializable {
     private ImageView splite;
     @FXML
     private TextField title;
+    @FXML
+    private Label number;
     private FrontStageController ctrl;
 
     @FXML
     protected void handleImageSelected(MouseEvent event) {
         ctrl.getCurrentSplite().setImage(splite.getImage());
+    }
+
+    @FXML
+    protected void handleCopyButtonAction(ActionEvent event) {
+        Splite splite = ctrl.getCurrentSplite();
+        splite.copyCostume(title.getText(), splite.getImage());
     }
 
     @FXML
@@ -60,9 +70,10 @@ public class CostumeCntroller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void setInfo(String title, Image image) {
+    public void setInfo(int num, String title, Image image) {
         this.title.setText(title);
-        splite.setImage(image);
+        this.splite.setImage(image);
+        this.number.setText(Integer.toString(num));
     }
 
     public void setController(FrontStageController ctrl) {

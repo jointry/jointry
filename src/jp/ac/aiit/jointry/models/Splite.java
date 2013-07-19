@@ -1,8 +1,6 @@
 package jp.ac.aiit.jointry.models;
 
-import java.io.IOException;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.effect.InnerShadow;
@@ -27,7 +25,7 @@ public final class Splite extends ImageView {
         backStageCtrl = mainCtrl.getBackStageController();
         frontStageCtrl = mainCtrl.getFrontStageController();
 
-        addCostume(backStageCtrl.createCostume("costume", image));
+        addCostume(backStageCtrl.createCostume(getNumber(), "costume", image));
 
         setMouseEvent();
         sendActiveSpliteEvent();
@@ -41,6 +39,14 @@ public final class Splite extends ImageView {
         if (costume != null) {
             costumeList.getChildren().add(costume);
         }
+    }
+
+    public void copyCostume(String title, Image image) {
+        addCostume(backStageCtrl.createCostume(getNumber(), title, image));
+    }
+    
+    public int getNumber() {
+        return costumeList.getChildren().size() + 1;
     }
 
     private void sendActiveSpliteEvent() {

@@ -56,7 +56,8 @@ public class BackStageController implements Initializable {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
                     Splite splite = mainController.getFrontStageController().getCurrentSplite();
-                    splite.addCostume(createCostume("costume", data.get("paintImage")));
+                    splite.addCostume(createCostume(splite.getNumber(),
+                            "costume", data.get("paintImage")));
                 }
             }
         });
@@ -64,7 +65,7 @@ public class BackStageController implements Initializable {
         paintStage.show();
     }
 
-    public Parent createCostume(String title, Image image) {
+    public Parent createCostume(int num, String title, Image image) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
 
         Parent result = null;
@@ -75,10 +76,12 @@ public class BackStageController implements Initializable {
         }
 
         CostumeCntroller costumeController = (CostumeCntroller) fxmlLoader.getController();
-
-        costumeController.setInfo(title, image);
+        
         FrontStageController frontStageCtrl = mainController.getFrontStageController();
         costumeController.setController(frontStageCtrl);
+        costumeController.setInfo(num, title, image);
+
+
 
         return result;
     }
@@ -95,7 +98,8 @@ public class BackStageController implements Initializable {
                 TestData<Image> data = new TestData();
                 if (data.get("cameraImage") != null) {
                     Splite splite = mainController.getFrontStageController().getCurrentSplite();
-                    splite.addCostume(createCostume("costume", data.get("paintImage")));
+                    splite.addCostume(createCostume(splite.getNumber(),
+                            "costume", data.get("paintImage")));
                 }
             }
         });
