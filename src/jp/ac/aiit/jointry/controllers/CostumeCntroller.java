@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,20 +23,20 @@ import jp.ac.aiit.jointry.statics.TestData;
 public class CostumeCntroller implements Initializable {
 
     @FXML
-    private ImageView images;
+    private ImageView splite;
     @FXML
     private TextField title;
     private FrontStageController ctrl;
 
     @FXML
     protected void handleImageSelected(MouseEvent event) {
-        ctrl.getSprite().setImage(images.getImage());
+        ctrl.getCurrentSplite().setImage(splite.getImage());
     }
 
     @FXML
     protected void handleEditButtonAction(ActionEvent event) throws Exception {
         TestData data = new TestData();
-        data.put("editImage", images.getImage());
+        data.put("editImage", splite.getImage());
 
         Stage paintStage = createStage("Paint.fxml", null);
 
@@ -47,8 +46,8 @@ public class CostumeCntroller implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    images.setImage(data.get("paintImage"));
-                    ctrl.getSprite().setImage(images.getImage());
+                    splite.setImage(data.get("paintImage"));
+                    ctrl.getCurrentSplite().setImage(splite.getImage());
                 }
             }
         });
@@ -63,7 +62,7 @@ public class CostumeCntroller implements Initializable {
 
     public void setInfo(String title, Image image) {
         this.title.setText(title);
-        images.setImage(image);
+        splite.setImage(image);
     }
 
     public void setController(FrontStageController ctrl) {
@@ -77,7 +76,7 @@ public class CostumeCntroller implements Initializable {
 
         //オーナー設定
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) images.getScene().getWindow());
+        stage.initOwner((Stage) splite.getScene().getWindow());
 
         //UI読み込み
         Parent root = FXMLLoader.load(getClass().getResource(fxml));

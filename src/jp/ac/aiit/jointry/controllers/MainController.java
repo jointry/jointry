@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 
 public class MainController implements Initializable {
@@ -51,6 +52,12 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        //初期スプライト
+        URL path = getClass().getResource("images/scratch_cat.png");
+        Image image = new Image(path.toString());
+
+        frontStageController.addNewSplite(image);
     }
 
     public void setBackStageController(BackStageController controller) {

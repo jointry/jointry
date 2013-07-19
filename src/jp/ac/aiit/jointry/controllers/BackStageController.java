@@ -20,7 +20,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -28,13 +27,14 @@ import javafx.stage.WindowEvent;
 
 import jp.ac.aiit.jointry.lang.ast.ASTree;
 import jp.ac.aiit.jointry.lang.ast.NullStmnt;
-import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.models.Splite;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class BackStageController implements Initializable {
@@ -43,9 +43,7 @@ public class BackStageController implements Initializable {
     private ScrollPane costumeList;
     @FXML
     private AnchorPane scriptPane;
-    private CostumeCntroller costumeController;
     private MainController mainController;
-    private Map<ImageView, VBox> spriteCostumes = new HashMap();
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -57,12 +55,32 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    createCostume("costume", data.get("paintImage"));
+                    Splite splite = mainController.getFrontStageController().getCurrentSplite();
+                    splite.addCostume(createCostume("costume", data.get("paintImage")));
                 }
             }
         });
 
         paintStage.show();
+    }
+
+    public Parent createCostume(String title, Image image) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
+
+        Parent result = null;
+        try {
+            result = (Parent) fxmlLoader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        CostumeCntroller costumeController = (CostumeCntroller) fxmlLoader.getController();
+
+        costumeController.setInfo(title, image);
+        FrontStageController frontStageCtrl = mainController.getFrontStageController();
+        costumeController.setController(frontStageCtrl);
+
+        return result;
     }
 
     @FXML
@@ -76,7 +94,8 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("cameraImage") != null) {
-                    createCostume("costume", data.get("cameraImage"));
+                    Splite splite = mainController.getFrontStageController().getCurrentSplite();
+                    splite.addCostume(createCostume("costume", data.get("paintImage")));
                 }
             }
         });
@@ -87,16 +106,21 @@ public class BackStageController implements Initializable {
     @FXML
     protected void handleCostumeSelected(Event event) {
         //コスチューム更新
-        setCurrentCostume(mainController.getFrontStageController().getSprite());
-
+        Splite splite = mainController.getFrontStageController().getCurrentSplite();
+        costumeList.setContent(splite.getCostumeList());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    public void changeCurrentSplite(Splite splite) {
+        //コスチューム更新
+        costumeList.setContent(splite.getCostumeList());
+    }
+
     public void execute() {
-        ImageView image = mainController.getFrontStageController().getSprite();
+        ImageView image = mainController.getFrontStageController().getCurrentSplite();
         StringBuilder code = new StringBuilder();
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {
@@ -129,15 +153,6 @@ public class BackStageController implements Initializable {
         this.mainController = controller;
     }
 
-    public void setCurrentCostume(ImageView sprite) {
-        if (spriteCostumes.get(sprite) == null) {
-            spriteCostumes.put(sprite, new VBox()); //対応がなければ作る
-        }
-
-        costumeList.setContent(spriteCostumes.get(sprite));
-        createCostume("costume", sprite.getImage());
-    }
-
     private Stage createStage(String fxml, Stage stage) throws IOException {
         if (stage == null) {
             stage = new Stage(StageStyle.TRANSPARENT);
@@ -152,23 +167,5 @@ public class BackStageController implements Initializable {
         stage.setScene(new Scene(root));
 
         return stage;
-    }
-
-    private void createCostume(String title, Image image) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
-
-            VBox list = (VBox) costumeList.getContent();
-            list.getChildren().add((Parent) fxmlLoader.load());
-
-            costumeController = (CostumeCntroller) fxmlLoader.getController();
-
-            if (image != null) {
-                costumeController.setInfo(title, image);
-                costumeController.setController(mainController.getFrontStageController());
-                mainController.getFrontStageController().getSprite().setImage(image);
-            }
-        } catch (IOException ex) {
-        }
     }
 }
