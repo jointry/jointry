@@ -21,13 +21,13 @@ public abstract class Block extends AnchorPane {
     protected Block myBlock;
     protected Block prevBlock;
     protected Block nextBlock;
-    protected Block parentBlock;
+    protected CodeBlock parentBlock;
     protected Set<Block> childBlocks;
     protected Connector tCon;
     protected Connector bCon;
     protected Connector lCon;
     protected Connector rCon;
-    protected While targetWhile;
+    protected CodeBlock targetCodeBlock;
     protected Connector con;
 
     public Block() {
@@ -102,15 +102,15 @@ public abstract class Block extends AnchorPane {
 
                 // 包含の接続
                 if (con.getPosition() == Connector.Position.RIGHT) {
-                    if (con.getHolder() instanceof While) {
-                        While target = (While) con.getHolder();
+                    if (con.getHolder() instanceof CodeBlock) {
+                        CodeBlock target = (CodeBlock) con.getHolder();
                         target.addChild(myBlock);
                         int power = target.childBlocks.size() - 1;
                         myBlock.move(
                                 target.getLayoutX() + target.wLeft,
                                 target.getLayoutY() + target.hUpper
                                 + myBlock.getHeight() * power);
-                        targetWhile = target;
+                        targetCodeBlock = target;
                         con.setFill(Color.GOLD);
                     }
                     return;
@@ -140,9 +140,9 @@ public abstract class Block extends AnchorPane {
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (myBlock.targetWhile != null) {
-                    myBlock.targetWhile.resize();
-                    myBlock.targetWhile = null;
+                if (myBlock.targetCodeBlock != null) {
+                    myBlock.targetCodeBlock.resize();
+                    myBlock.targetCodeBlock = null;
                 }
                 setCursor(Cursor.HAND);
 
