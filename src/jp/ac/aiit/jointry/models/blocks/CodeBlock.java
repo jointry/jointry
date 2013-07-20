@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks;
 
+import java.util.Iterator;
 import javafx.scene.shape.Polygon;
 
 public class CodeBlock extends Block {
@@ -26,18 +27,18 @@ public class CodeBlock extends Block {
         }
     }
 
-    public void addChild(Block block) {
-        childBlocks.add(block);
-        block.parentBlock = this;
+    public void addChild(Block child) {
+        childBlocks.add(child);
+        child.parentBlock = this;
     }
 
     public final void resize() {
-        double innerBlockHeight = 0.0;
+        double hConcave = 0;
         for (Block b : childBlocks) {
-            innerBlockHeight += b.getAllHeight();
+            hConcave += b.getHeight();
         }
-        if (hConcave < innerBlockHeight) {
-            hConcave = innerBlockHeight;
+        if (hConcave < 50) {
+            hConcave = 50;
         }
 
         pHeight = hUpper + hConcave + hLower;
@@ -55,5 +56,8 @@ public class CodeBlock extends Block {
         };
         p.getPoints().clear();
         p.getPoints().addAll(polygon);
+
+        // 念のため
+        this.toBack();
     }
 }
