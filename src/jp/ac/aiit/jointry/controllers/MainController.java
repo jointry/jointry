@@ -57,7 +57,7 @@ public class MainController implements Initializable {
         URL path = getClass().getResource("images/scratch_cat.png");
         Image image = new Image(path.toString());
 
-        frontStageController.addNewSplite(image);
+        frontStageController.addNewSprite(image);
     }
 
     public void setBackStageController(BackStageController controller) {

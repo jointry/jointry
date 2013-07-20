@@ -1,5 +1,5 @@
 #FindBugs User Preferences
-#Sat Jul 06 16:30:40 JST 2013
+#Sat Jul 20 12:28:51 JST 2013
 detectorAbnormalFinallyBlockReturn=AbnormalFinallyBlockReturn|false
 detectorAbstractClassEmptyMethods=AbstractClassEmptyMethods|false
 detectorAbstractOverriddenMethod=AbstractOverriddenMethod|false
@@ -221,7 +221,7 @@ detectorUncallableMethodOfAnonymousClass=UncallableMethodOfAnonymousClass|true
 detectorUnnecessaryMath=UnnecessaryMath|true
 detectorUnnecessaryNewNullCheck=UnnecessaryNewNullCheck|false
 detectorUnnecessaryStoreBeforeReturn=UnnecessaryStoreBeforeReturn|false
-detectorUnreadFields=UnreadFields|true
+detectorUnreadFields=UnreadFields|false
 detectorUnrelatedCollectionContents=UnrelatedCollectionContents|false
 detectorUnrelatedReturnValues=UnrelatedReturnValues|false
 detectorUseAddAll=UseAddAll|false

@@ -12,7 +12,7 @@ import jp.ac.aiit.jointry.controllers.BackStageController;
 import jp.ac.aiit.jointry.controllers.FrontStageController;
 import jp.ac.aiit.jointry.controllers.MainController;
 
-public final class Splite extends ImageView {
+public final class Sprite extends ImageView {
 
     private VBox costumeList = new VBox();
     private BackStageController backStageCtrl;
@@ -20,7 +20,7 @@ public final class Splite extends ImageView {
     private double mouseX, mouseY; //マウス位置 x, y
     private Node dragNode; //ドラッグ範囲をノードで指定
 
-    public Splite(Image image, MainController mainCtrl) {
+    public Sprite(Image image, MainController mainCtrl) {
         super(image);
         backStageCtrl = mainCtrl.getBackStageController();
         frontStageCtrl = mainCtrl.getFrontStageController();
@@ -28,7 +28,7 @@ public final class Splite extends ImageView {
         addCostume(backStageCtrl.createCostume(getNumber(), "costume", image));
 
         setMouseEvent();
-        sendActiveSpliteEvent();
+        sendActiveSpriteEvent();
     }
 
     public VBox getCostumeList() {
@@ -44,21 +44,21 @@ public final class Splite extends ImageView {
     public void copyCostume(String title, Image image) {
         addCostume(backStageCtrl.createCostume(getNumber(), title, image));
     }
-    
+
     public int getNumber() {
         return costumeList.getChildren().size() + 1;
     }
 
-    private void sendActiveSpliteEvent() {
-        backStageCtrl.changeCurrentSplite(this);
-        frontStageCtrl.setCurrentSplite(this);
+    private void sendActiveSpriteEvent() {
+        backStageCtrl.changeCurrentSprite(this);
+        frontStageCtrl.setCurrentSprite(this);
     }
 
     private void setMouseEvent() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                sendActiveSpliteEvent();
+                sendActiveSpriteEvent();
                 mouseX = event.getSceneX() - getTranslateX();
                 mouseY = event.getSceneY() - getTranslateY();
 

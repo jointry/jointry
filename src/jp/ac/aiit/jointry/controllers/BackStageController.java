@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -33,7 +35,8 @@ import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
-import jp.ac.aiit.jointry.models.Splite;
+import jp.ac.aiit.jointry.models.Costume;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.statics.TestData;
 
@@ -55,8 +58,8 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    Splite splite = mainController.getFrontStageController().getCurrentSplite();
-                    splite.addCostume(createCostume(splite.getNumber(),
+                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                    sprite.addCostume(createCostume(sprite.getNumber(),
                             "costume", data.get("paintImage")));
                 }
             }
@@ -72,16 +75,12 @@ public class BackStageController implements Initializable {
         try {
             result = (Parent) fxmlLoader.load();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        CostumeCntroller costumeController = (CostumeCntroller) fxmlLoader.getController();
-        
-        FrontStageController frontStageCtrl = mainController.getFrontStageController();
-        costumeController.setFrontStageController(frontStageCtrl);
-        costumeController.setInfo(num, title, image);
-
-
+        CostumeCntroller controller = (CostumeCntroller) fxmlLoader.getController();
+        controller.setFrontStageController(mainController.getFrontStageController());
+        controller.setInfo(num, title, image);
 
         return result;
     }
@@ -97,8 +96,8 @@ public class BackStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("cameraImage") != null) {
-                    Splite splite = mainController.getFrontStageController().getCurrentSplite();
-                    splite.addCostume(createCostume(splite.getNumber(),
+                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                    sprite.addCostume(createCostume(sprite.getNumber(),
                             "costume", data.get("paintImage")));
                 }
             }
@@ -110,21 +109,21 @@ public class BackStageController implements Initializable {
     @FXML
     protected void handleCostumeSelected(Event event) {
         //コスチューム更新
-        Splite splite = mainController.getFrontStageController().getCurrentSplite();
-        costumeList.setContent(splite.getCostumeList());
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        costumeList.setContent(sprite.getCostumeList());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void changeCurrentSplite(Splite splite) {
+    public void changeCurrentSprite(Sprite sprite) {
         //コスチューム更新
-        costumeList.setContent(splite.getCostumeList());
+        costumeList.setContent(sprite.getCostumeList());
     }
 
     public void execute() {
-        ImageView image = mainController.getFrontStageController().getCurrentSplite();
+        ImageView image = mainController.getFrontStageController().getCurrentSprite();
         StringBuilder code = new StringBuilder();
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {

@@ -19,13 +19,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import jp.ac.aiit.jointry.models.Splite;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class CostumeCntroller implements Initializable {
 
     @FXML
-    private ImageView splite;
+    private ImageView sprite;
     @FXML
     private TextField title;
     @FXML
@@ -34,19 +34,19 @@ public class CostumeCntroller implements Initializable {
 
     @FXML
     protected void handleImageSelected(MouseEvent event) {
-        frontStageController.getCurrentSplite().setImage(splite.getImage());
+        frontStageController.getCurrentSprite().setImage(sprite.getImage());
     }
 
     @FXML
     protected void handleCopyButtonAction(ActionEvent event) {
-        Splite splite = frontStageController.getCurrentSplite();
-        splite.copyCostume(title.getText() + "のコピー", splite.getImage());
+        Sprite sprite = frontStageController.getCurrentSprite();
+        sprite.copyCostume(title.getText() + "のコピー", sprite.getImage());
     }
 
     @FXML
     protected void handleEditButtonAction(ActionEvent event) throws Exception {
         TestData data = new TestData();
-        data.put("editImage", splite.getImage());
+        data.put("editImage", sprite.getImage());
 
         Stage paintStage = createStage("Paint.fxml", null);
 
@@ -56,8 +56,8 @@ public class CostumeCntroller implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    splite.setImage(data.get("paintImage"));
-                    frontStageController.getCurrentSplite().setImage(splite.getImage());
+                    sprite.setImage(data.get("paintImage"));
+                    frontStageController.getCurrentSprite().setImage(sprite.getImage());
                 }
             }
         });
@@ -72,7 +72,7 @@ public class CostumeCntroller implements Initializable {
 
     public void setInfo(int num, String title, Image image) {
         this.title.setText(title);
-        this.splite.setImage(image);
+        this.sprite.setImage(image);
         this.number.setText(Integer.toString(num));
     }
 
@@ -87,7 +87,7 @@ public class CostumeCntroller implements Initializable {
 
         //オーナー設定
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) splite.getScene().getWindow());
+        stage.initOwner((Stage) sprite.getScene().getWindow());
 
         //UI読み込み
         Parent root = FXMLLoader.load(getClass().getResource(fxml));

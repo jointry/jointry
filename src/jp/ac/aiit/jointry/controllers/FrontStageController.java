@@ -15,14 +15,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import jp.ac.aiit.jointry.models.Splite;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class FrontStageController implements Initializable {
 
     @FXML
     private AnchorPane stage;
-    private Splite currentSplite;
+    private Sprite currentSprite;
     private MainController mainController;
 
     /**
@@ -56,7 +56,7 @@ public class FrontStageController implements Initializable {
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    addNewSplite(data.get("paintImage"));
+                    addNewSprite(data.get("paintImage"));
                 }
             }
         });
@@ -70,18 +70,18 @@ public class FrontStageController implements Initializable {
         this.mainController = controller;
     }
 
-    public Splite getCurrentSplite() {
-        return currentSplite;
+    public Sprite getCurrentSprite() {
+        return currentSprite;
     }
 
-    public void setCurrentSplite(Splite splite) {
-        currentSplite = splite;
+    public void setCurrentSprite(Sprite sprite) {
+        currentSprite = sprite;
     }
 
-    public void addNewSplite(Image image) {
-        Splite splite = new Splite(image, mainController);
-        stage.getChildren().add(splite);
+    public void addNewSprite(Image image) {
+        Sprite sprite = new Sprite(image, mainController);
+        stage.getChildren().add(sprite);
 
-        setCurrentSplite(splite);
+        setCurrentSprite(sprite);
     }
 }
