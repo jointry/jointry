@@ -14,6 +14,10 @@
 
 秋口忠三、角征典、金本真左也
 
+## Contact
+
+pbl2013akiguchi@aiit.ac.jp
+
 ## License
 
 See LICENSE.txt
