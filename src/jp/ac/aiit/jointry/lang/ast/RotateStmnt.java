@@ -1,8 +1,6 @@
 package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
