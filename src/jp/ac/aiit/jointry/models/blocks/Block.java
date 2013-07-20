@@ -103,7 +103,6 @@ public abstract class Block extends AnchorPane {
                 // 包含の接続
                 if (con.getPosition() == Connector.Position.RIGHT) {
                     if (con.getHolder() instanceof While) {
-                        con.setFill(Color.GOLD);
                         While target = (While) con.getHolder();
                         target.addChild(myBlock);
                         int power = target.childBlocks.size() - 1;
@@ -112,6 +111,7 @@ public abstract class Block extends AnchorPane {
                                 target.getLayoutY() + target.hUpper
                                 + myBlock.getHeight() * power);
                         targetWhile = target;
+                        con.setFill(Color.GOLD);
                     }
                     return;
                 }
@@ -124,6 +124,7 @@ public abstract class Block extends AnchorPane {
                         target.addLink(myBlock);
                         myBlock.move(target.getLayoutX(),
                                 target.getLayoutY() + target.getHeight());
+                        con.setFill(Color.GOLD);
                     }
                 }
             }

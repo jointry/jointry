@@ -30,17 +30,17 @@ public class CostumeCntroller implements Initializable {
     private TextField title;
     @FXML
     private Label number;
-    private FrontStageController ctrl;
+    private FrontStageController frontStageController;
 
     @FXML
     protected void handleImageSelected(MouseEvent event) {
-        ctrl.getCurrentSplite().setImage(splite.getImage());
+        frontStageController.getCurrentSplite().setImage(splite.getImage());
     }
 
     @FXML
     protected void handleCopyButtonAction(ActionEvent event) {
-        Splite splite = ctrl.getCurrentSplite();
-        splite.copyCostume(title.getText(), splite.getImage());
+        Splite splite = frontStageController.getCurrentSplite();
+        splite.copyCostume(title.getText() + "のコピー", splite.getImage());
     }
 
     @FXML
@@ -57,7 +57,7 @@ public class CostumeCntroller implements Initializable {
                 TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
                     splite.setImage(data.get("paintImage"));
-                    ctrl.getCurrentSplite().setImage(splite.getImage());
+                    frontStageController.getCurrentSplite().setImage(splite.getImage());
                 }
             }
         });
@@ -76,8 +76,8 @@ public class CostumeCntroller implements Initializable {
         this.number.setText(Integer.toString(num));
     }
 
-    public void setController(FrontStageController ctrl) {
-        this.ctrl = ctrl;
+    public void setFrontStageController(FrontStageController controller) {
+        this.frontStageController = controller;
     }
 
     private Stage createStage(String fxml, Stage stage) throws IOException {

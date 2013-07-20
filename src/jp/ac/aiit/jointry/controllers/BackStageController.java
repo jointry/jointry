@@ -78,7 +78,7 @@ public class BackStageController implements Initializable {
         CostumeCntroller costumeController = (CostumeCntroller) fxmlLoader.getController();
         
         FrontStageController frontStageCtrl = mainController.getFrontStageController();
-        costumeController.setController(frontStageCtrl);
+        costumeController.setFrontStageController(frontStageCtrl);
         costumeController.setInfo(num, title, image);
 
 
