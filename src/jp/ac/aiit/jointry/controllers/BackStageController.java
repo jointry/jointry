@@ -3,8 +3,6 @@ package jp.ac.aiit.jointry.controllers;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -127,11 +125,15 @@ public class BackStageController implements Initializable {
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
-                if (!block.existPrevBlock()) {
+                if (block.isTopLevelBlock()) {
                     code.append(block.intern());
                 }
             }
         }
+
+        // Debug
+        System.out.println(code);
+
         Lexer lexer = new Lexer(new LangReader(code.toString()));
         JoinTryParser parser = new JoinTryParser();
 

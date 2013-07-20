@@ -299,8 +299,8 @@ public abstract class Block extends AnchorPane {
         parentBlock = null;
     }
 
-    public boolean existPrevBlock() {
-        return prevBlock != null;
+    public boolean isTopLevelBlock() {
+        return (prevBlock == null && parentBlock == null);
     }
 
     public String intern() {
