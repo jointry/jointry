@@ -80,6 +80,7 @@ public class FrontStageController implements Initializable {
 
     public void addNewSprite(Image image) {
         Sprite sprite = new Sprite(image, mainController);
+        sprite.setDragRange(stage);
         stage.getChildren().add(sprite);
 
         setCurrentSprite(sprite);

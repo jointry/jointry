@@ -18,6 +18,7 @@ public final class Sprite extends ImageView {
     private BackStageController backStageCtrl;
     private FrontStageController frontStageCtrl;
     private double mouseX, mouseY; //マウス位置 x, y
+    private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragNode; //ドラッグ範囲をノードで指定
 
     public Sprite(Image image, MainController mainCtrl) {
@@ -29,6 +30,10 @@ public final class Sprite extends ImageView {
 
         setMouseEvent();
         sendActiveSpriteEvent();
+    }
+
+    public void setDragRange(Node node) {
+        this.dragNode = node;
     }
 
     public VBox getCostumeList() {
@@ -61,6 +66,8 @@ public final class Sprite extends ImageView {
                 sendActiveSpriteEvent();
                 mouseX = event.getSceneX() - getTranslateX();
                 mouseY = event.getSceneY() - getTranslateY();
+                pressX = event.getSceneX() - mouseX;
+                pressY = event.getSceneY() - mouseY;
 
                 //ドラッグ中のエフェクト効果
                 InnerShadow is = new InnerShadow();
@@ -87,9 +94,8 @@ public final class Sprite extends ImageView {
             @Override
             public void handle(MouseEvent event) {
                 if (!dragRange(event.getSceneX(), event.getSceneY())) {
-                    setX(mouseX);
-                    setY(mouseY);
-
+                    setTranslateX(pressX);
+                    setTranslateY(pressY);
                 }
 
                 setEffect(null);
