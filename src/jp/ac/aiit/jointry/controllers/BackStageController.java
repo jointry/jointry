@@ -95,7 +95,7 @@ public class BackStageController implements Initializable {
                 if (data.get("cameraImage") != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
                     sprite.addCostume(createCostume(sprite.getNumber(),
-                            "costume", data.get("paintImage")));
+                            "costume", data.get("cameraImage")));
                 }
             }
         });

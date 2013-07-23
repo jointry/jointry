@@ -1,11 +1,15 @@
 package jp.ac.aiit.jointry.controllers;
 
 import java.awt.Point;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,7 +17,10 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.paint.FileExt;
 import jp.ac.aiit.jointry.paint.PtClear;
 import jp.ac.aiit.jointry.paint.Save;
@@ -88,6 +95,36 @@ public class PaintController implements Initializable {
     protected void handleFileExtButtonAction(ActionEvent event) {
         FileExt fileExt = new FileExt();
         fileExt.showOpenDialog(null, canvas);
+    }
+
+    @FXML
+    protected void handleCameraButtonAction(ActionEvent event) throws IOException {
+        //Paintツール画面
+        Stage camStage = new Stage();
+
+        //オーナー設定
+        camStage.initModality(Modality.APPLICATION_MODAL);
+        camStage.initOwner((Stage) canvas.getScene().getWindow());
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                .getResource("Camera.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+
+        //カメラ撮り終えた
+        camStage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                TestData<Image> data = new TestData();
+                if (data.get("cameraImage") != null) {
+                    GraphicsContext gc = canvas.getGraphicsContext2D();
+                    gc.drawImage(data.get("cameraImage"), 0, 0);
+                }
+            }
+        });
+
+        // 新しいウインドウを表示
+        camStage.setScene(new Scene(root));
+        camStage.show();
     }
 
     @FXML
