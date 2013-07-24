@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.lang.parser.env;
 
+import javafx.animation.SequentialTransition;
 import javafx.scene.image.ImageView;
 
 public interface Environment {
@@ -17,4 +18,8 @@ public interface Environment {
     ImageView getImage();
 
     public void setImage(ImageView image);
+
+    SequentialTransition getSequentialTransition();
+
+    public void setSequentialTransition(SequentialTransition sequentialTransition);
 }

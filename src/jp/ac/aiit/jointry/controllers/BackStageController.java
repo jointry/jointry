@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.SequentialTransition;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -139,6 +140,8 @@ public class BackStageController implements Initializable {
 
         Environment env = new BasicEnv();
         env.setImage(image);
+        SequentialTransition st = new SequentialTransition();
+        env.setSequentialTransition(st);
 
         try {
             while (lexer.peek(0) != Token.EOF) {
@@ -151,6 +154,8 @@ public class BackStageController implements Initializable {
             }
         } catch (ParseException ex) {
         }
+
+        st.play();
     }
 
     public void setMainController(MainController controller) {

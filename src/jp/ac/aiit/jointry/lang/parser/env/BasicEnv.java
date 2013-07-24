@@ -1,6 +1,7 @@
 package jp.ac.aiit.jointry.lang.parser.env;
 
 import java.util.HashMap;
+import javafx.animation.SequentialTransition;
 import javafx.scene.image.ImageView;
 
 /**
@@ -10,6 +11,7 @@ public class BasicEnv implements Environment {
 
     protected HashMap<String, Object> values;
     private ImageView image;
+    private SequentialTransition sequentialTransition;
 
     @Override
     public ImageView getImage() {
@@ -33,6 +35,16 @@ public class BasicEnv implements Environment {
     @Override
     public Object get(String name) {
         return values.get(name);
+    }
+
+    @Override
+    public SequentialTransition getSequentialTransition() {
+        return sequentialTransition;
+    }
+
+    @Override
+    public void setSequentialTransition(SequentialTransition sequentialTransition) {
+        this.sequentialTransition = sequentialTransition;
     }
 
     //↓↓↓↓↓とりあえずオーバーライド↓↓↓↓↓
