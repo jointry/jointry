@@ -29,8 +29,11 @@ public class While extends CodeBlock {
         sb.append("index = 0\n");
         sb.append("while index < 10 {\n");
         for (Block b : childBlocks) {
-            sb.append(b.intern());
-            sb.append("\n");
+            if (b.prevBlock == null) {
+                sb.append(b.intern());
+                sb.append("\n");
+                break;
+            }
         }
         sb.append("index = index + 1\n");
         sb.append("}\n");
