@@ -19,34 +19,37 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class CostumeCntroller implements Initializable {
 
     @FXML
-    private ImageView sprite;
+    private ImageView image;
     @FXML
     private TextField title;
     @FXML
     private Label number;
-    private FrontStageController frontStageController;
+    private MainController mainController;
 
     @FXML
     protected void handleImageSelected(MouseEvent event) {
-        frontStageController.getCurrentSprite().setImage(sprite.getImage());
+        mainController.getFrontStageController()
+                .getCurrentSprite().setImage(image.getImage());
     }
 
     @FXML
     protected void handleCopyButtonAction(ActionEvent event) {
-        Sprite sprite = frontStageController.getCurrentSprite();
-        sprite.copyCostume(title.getText() + "のコピー", sprite.getImage());
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        sprite.copyCostume(Integer.valueOf(number.getText()));
+        mainController.getBackStageController().showCostumes(sprite);
     }
 
     @FXML
     protected void handleEditButtonAction(ActionEvent event) throws Exception {
         TestData data = new TestData();
-        data.put("editImage", sprite.getImage());
+        data.put("editImage", image.getImage());
 
         Stage paintStage = createStage("Paint.fxml", null);
 
@@ -55,10 +58,17 @@ public class CostumeCntroller implements Initializable {
             @Override
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
-                if (data.get("paintImage") != null) {
-                    sprite.setImage(data.get("paintImage"));
-                    frontStageController.getCurrentSprite().setImage(sprite.getImage());
+                Image img = data.get("paintImage");
+                if (img == null) {
+                    return;
                 }
+
+                Sprite sprite = mainController.getFrontStageController()
+                        .getCurrentSprite();
+                sprite.updateCostume(Integer.valueOf(number.getText()), img);
+                image.setImage(img);
+                mainController.getFrontStageController().
+                        getCurrentSprite().setImage(img);
             }
         });
 
@@ -70,14 +80,14 @@ public class CostumeCntroller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void setInfo(int num, String title, Image image) {
-        this.title.setText(title);
-        this.sprite.setImage(image);
-        this.number.setText(Integer.toString(num));
+    public void setInfo(Costume costume) {
+        this.title.setText(costume.getTitle());
+        this.image.setImage(costume.getImage());
+        this.number.setText(Integer.toString(costume.getNumber()));
     }
 
-    public void setFrontStageController(FrontStageController controller) {
-        this.frontStageController = controller;
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
     }
 
     private Stage createStage(String fxml, Stage stage) throws IOException {
@@ -87,7 +97,7 @@ public class CostumeCntroller implements Initializable {
 
         //オーナー設定
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) sprite.getScene().getWindow());
+        stage.initOwner((Stage) image.getScene().getWindow());
 
         //UI読み込み
         Parent root = FXMLLoader.load(getClass().getResource(fxml));

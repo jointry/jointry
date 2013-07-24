@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import jp.ac.aiit.jointry.models.Sprite;
 
 public class MainController implements Initializable {
 
@@ -49,15 +50,15 @@ public class MainController implements Initializable {
             bc.setMainController(this);
             rootPane.setLeft(blocks);
             setBlocksController(bc);
+
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //初期スプライト
         URL path = getClass().getResource("images/scratch_cat.png");
-        Image image = new Image(path.toString());
-
-        frontStageController.addNewSprite(image);
+        Sprite sprite = new Sprite(path.toString(), this);
+        frontStageController.showSprite(sprite);
     }
 
     public void setBackStageController(BackStageController controller) {

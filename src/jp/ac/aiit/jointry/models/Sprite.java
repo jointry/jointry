@@ -1,33 +1,28 @@
 package jp.ac.aiit.jointry.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import jp.ac.aiit.jointry.controllers.BackStageController;
-import jp.ac.aiit.jointry.controllers.FrontStageController;
 import jp.ac.aiit.jointry.controllers.MainController;
 
 public final class Sprite extends ImageView {
 
-    private VBox costumeList = new VBox();
-    private BackStageController backStageCtrl;
-    private FrontStageController frontStageCtrl;
+    private List<Costume> costumes = new ArrayList<>();
     private double mouseX, mouseY; //マウス位置 x, y
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragNode; //ドラッグ範囲をノードで指定
+    private MainController mainController;
 
-    public Sprite(Image image, MainController mainCtrl) {
-        super(image);
-        backStageCtrl = mainCtrl.getBackStageController();
-        frontStageCtrl = mainCtrl.getFrontStageController();
+    public Sprite(String url, MainController mainController) {
+        super(url);
 
-        addCostume(backStageCtrl.createCostume(getNumber(), "costume", image));
-
+        this.mainController = mainController;
+        createCostume(getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
     }
@@ -36,27 +31,45 @@ public final class Sprite extends ImageView {
         this.dragNode = node;
     }
 
-    public VBox getCostumeList() {
-        return costumeList;
-    }
-
-    public void addCostume(Parent costume) {
+    public void addCostume(Costume costume) {
         if (costume != null) {
-            costumeList.getChildren().add(costume);
+            costumes.add(costume);
         }
     }
 
-    public void copyCostume(String title, Image image) {
-        addCostume(backStageCtrl.createCostume(getNumber(), title, image));
+    public void createCostume(Image image) {
+        Costume costume = new Costume(getNumber(), "costume", image);
+        addCostume(costume);
+    }
+
+    public void copyCostume(int number) {
+        for (Costume cos : costumes) {
+            if (cos.getNumber() == number) {
+                Costume costume = new Costume(getNumber(),
+                        cos.getTitle() + "のコピー",
+                        cos.getImage());
+                addCostume(costume);
+                break;
+            }
+        }
+    }
+
+    public void updateCostume(int number, Image image) {
+        for (Costume cos : costumes) {
+            if (cos.getNumber() == number) {
+                cos.setImage(image);
+                break;
+            }
+        }
     }
 
     public int getNumber() {
-        return costumeList.getChildren().size() + 1;
+        return costumes.size() + 1;
     }
 
     private void sendActiveSpriteEvent() {
-        backStageCtrl.changeCurrentSprite(this);
-        frontStageCtrl.setCurrentSprite(this);
+        mainController.getFrontStageController().setCurrentSprite(this);
+        mainController.getBackStageController().setCurrentSprite(this);
     }
 
     private void setMouseEvent() {
@@ -110,5 +123,9 @@ public final class Sprite extends ImageView {
         }
         return dragNode.getLayoutBounds().contains(
                 dragNode.sceneToLocal(sceneX, sceneY));
+    }
+
+    public Iterable<Costume> getCostumes() {
+        return costumes;
     }
 }

@@ -21,6 +21,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,6 +35,7 @@ import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.statics.TestData;
@@ -55,32 +57,36 @@ public class BackStageController implements Initializable {
             @Override
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
-                if (data.get("paintImage") != null) {
-                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.addCostume(createCostume(sprite.getNumber(),
-                            "costume", data.get("paintImage")));
+                Image image = data.get("paintImage");
+                if (image == null) {
+                    return;
                 }
+                Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                sprite.createCostume(image);
+                showCostumes(sprite);
             }
         });
 
         paintStage.show();
     }
 
-    public Parent createCostume(int num, String title, Image image) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
+    public void showCostumes(Sprite sprite) {
+        VBox vbox = new VBox();
+        for (Costume costume : sprite.getCostumes()) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
+            Parent parent = null;
+            try {
+                parent = (Parent) fxmlLoader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        Parent result = null;
-        try {
-            result = (Parent) fxmlLoader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
+            CostumeCntroller controller = (CostumeCntroller) fxmlLoader.getController();
+            controller.setInfo(costume);
+            controller.setMainController(mainController);
+            vbox.getChildren().add(parent);
         }
-
-        CostumeCntroller controller = (CostumeCntroller) fxmlLoader.getController();
-        controller.setFrontStageController(mainController.getFrontStageController());
-        controller.setInfo(num, title, image);
-
-        return result;
+        costumeList.setContent(vbox);
     }
 
     @FXML
@@ -93,11 +99,13 @@ public class BackStageController implements Initializable {
             @Override
             public void handle(WindowEvent t) {
                 TestData<Image> data = new TestData();
-                if (data.get("cameraImage") != null) {
-                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.addCostume(createCostume(sprite.getNumber(),
-                            "costume", data.get("cameraImage")));
+                Image image = data.get("cameraImage");
+                if (image == null) {
+                    return;
                 }
+                Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                sprite.createCostume(image);
+                showCostumes(sprite);
             }
         });
 
@@ -106,18 +114,16 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handleCostumeSelected(Event event) {
-        //コスチューム更新
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        costumeList.setContent(sprite.getCostumeList());
+        setCurrentSprite(sprite);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void changeCurrentSprite(Sprite sprite) {
-        //コスチューム更新
-        costumeList.setContent(sprite.getCostumeList());
+    public void setCurrentSprite(Sprite sprite) {
+        showCostumes(sprite);
     }
 
     public void execute() {
