@@ -31,9 +31,8 @@ public class RotateStmnt extends ASTList {
             ImageView image = env.getImage();
             SequentialTransition st = env.getSequentialTransition();
             RotateTransition rt = new RotateTransition(Duration.millis(1000), image);
-            rt.setByAngle(image.getRotate() + (Integer) c);
+            rt.setByAngle((Integer) c);
             rt.setAutoReverse(true);
-            image.setRotate((Integer) c);
             st.getChildren().add(rt);
         }
 
