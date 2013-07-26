@@ -1,25 +1,40 @@
 package jp.ac.aiit.jointry.lang.parser.env;
 
+import java.util.HashMap;
 import javafx.animation.SequentialTransition;
-import javafx.scene.image.ImageView;
+import jp.ac.aiit.jointry.models.Sprite;
 
-public interface Environment {
+public class Environment {
 
-    void put(String name, Object value);
+    protected HashMap<String, Object> values;
+    private Sprite sprite;
+    private SequentialTransition sequentialTransition;
 
-    Object get(String name);
+    public Environment() {
+        values = new HashMap<>();
+    }
 
-    void putNew(String name, Object value);
+    public Sprite getSprite() {
+        return sprite;
+    }
 
-    Environment where(String name);
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
 
-    void setOuter(Environment e);
+    public void put(String name, Object value) {
+        values.put(name, value);
+    }
 
-    ImageView getImage();
+    public Object get(String name) {
+        return values.get(name);
+    }
 
-    public void setImage(ImageView image);
+    public SequentialTransition getSequentialTransition() {
+        return sequentialTransition;
+    }
 
-    SequentialTransition getSequentialTransition();
-
-    public void setSequentialTransition(SequentialTransition sequentialTransition);
+    public void setSequentialTransition(SequentialTransition sequentialTransition) {
+        this.sequentialTransition = sequentialTransition;
+    }
 }

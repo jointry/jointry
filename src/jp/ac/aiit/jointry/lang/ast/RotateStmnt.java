@@ -1,13 +1,11 @@
 package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
-import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.models.Sprite;
 
 public class RotateStmnt extends ASTList {
 
@@ -28,9 +26,9 @@ public class RotateStmnt extends ASTList {
     public Object eval(Environment env) {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
-            ImageView image = env.getImage();
+            Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
-            RotateTransition rt = new RotateTransition(Duration.millis(1000), image);
+            RotateTransition rt = new RotateTransition(Duration.millis(1000), sprite);
             rt.setByAngle((Integer) c);
             rt.setAutoReverse(true);
             st.getChildren().add(rt);

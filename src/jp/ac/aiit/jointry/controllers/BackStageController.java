@@ -19,7 +19,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -33,7 +32,6 @@ import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
-import jp.ac.aiit.jointry.lang.parser.env.BasicEnv;
 import jp.ac.aiit.jointry.lang.parser.env.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
@@ -127,7 +125,7 @@ public class BackStageController implements Initializable {
     }
 
     public void execute() {
-        ImageView image = mainController.getFrontStageController().getCurrentSprite();
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         StringBuilder code = new StringBuilder();
         for (Node node : scriptPane.getChildrenUnmodifiable()) {
             if (node instanceof Block) {
@@ -144,8 +142,8 @@ public class BackStageController implements Initializable {
         Lexer lexer = new Lexer(new LangReader(code.toString()));
         JoinTryParser parser = new JoinTryParser();
 
-        Environment env = new BasicEnv();
-        env.setImage(image);
+        Environment env = new Environment();
+        env.setSprite(sprite);
         SequentialTransition st = new SequentialTransition();
         env.setSequentialTransition(st);
 

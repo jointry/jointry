@@ -1,9 +1,6 @@
 package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
@@ -29,7 +26,7 @@ public class MoveStmnt extends ASTList {
     public Object eval(Environment env) {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
-            ImageView image = env.getImage();
+            ImageView image = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
             TranslateTransition tt =
                     new TranslateTransition(Duration.millis(1000), image);
