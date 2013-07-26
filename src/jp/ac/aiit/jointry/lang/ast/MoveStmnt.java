@@ -3,9 +3,9 @@ package jp.ac.aiit.jointry.lang.ast;
 import java.util.List;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import jp.ac.aiit.jointry.lang.parser.Environment;
+import jp.ac.aiit.jointry.models.Sprite;
 
 public class MoveStmnt extends ASTList {
 
@@ -26,10 +26,10 @@ public class MoveStmnt extends ASTList {
     public Object eval(Environment env) {
         Object c = ((ASTree) condition()).eval(env);
         if (c instanceof Integer) {
-            ImageView image = env.getSprite();
+            Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
             TranslateTransition tt =
-                    new TranslateTransition(Duration.millis(1000), image);
+                    new TranslateTransition(Duration.millis(1000), sprite);
             tt.setByX((Integer) c);
             st.getChildren().add(tt);
         }

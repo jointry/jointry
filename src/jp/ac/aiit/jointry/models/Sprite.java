@@ -17,11 +17,13 @@ public final class Sprite extends ImageView {
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragNode; //ドラッグ範囲をノードで指定
     private MainController mainController;
+    private int costumeNumber;
 
     public Sprite(String url, MainController mainController) {
         super(url);
 
         this.mainController = mainController;
+        this.costumeNumber = 1;
         createCostume(getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
@@ -38,14 +40,14 @@ public final class Sprite extends ImageView {
     }
 
     public void createCostume(Image image) {
-        Costume costume = new Costume(getNumber(), "costume", image);
+        Costume costume = new Costume(getNewNumber(), "costume", image);
         addCostume(costume);
     }
 
     public void copyCostume(int number) {
         for (Costume cos : costumes) {
             if (cos.getNumber() == number) {
-                Costume costume = new Costume(getNumber(),
+                Costume costume = new Costume(getNewNumber(),
                         cos.getTitle() + "のコピー",
                         cos.getImage());
                 addCostume(costume);
@@ -58,12 +60,13 @@ public final class Sprite extends ImageView {
         for (Costume cos : costumes) {
             if (cos.getNumber() == number) {
                 cos.setImage(image);
+                setCostume(cos);
                 break;
             }
         }
     }
 
-    public int getNumber() {
+    public int getNewNumber() {
         return costumes.size() + 1;
     }
 
@@ -127,5 +130,27 @@ public final class Sprite extends ImageView {
 
     public Iterable<Costume> getCostumes() {
         return costumes;
+    }
+
+    public void changeCostume(int number) {
+        for (Costume cos : costumes) {
+            if (cos.getNumber() == number) {
+                setCostume(cos);
+                break;
+            }
+        }
+    }
+
+    public void changeNextCostume() {
+        int nextNumber = this.costumeNumber + 1;
+        if (nextNumber > costumes.size()) {
+            nextNumber = 1; // initialize
+        }
+        setCostume(costumes.get(nextNumber - 1));
+    }
+
+    public void setCostume(Costume costume) {
+        this.setImage(costume.getImage());
+        this.costumeNumber = costume.getNumber();
     }
 }

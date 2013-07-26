@@ -1,9 +1,8 @@
 package jp.ac.aiit.jointry.models;
 
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
-public class Costume extends Parent {
+public class Costume {
 
     private int number;
     private String title;

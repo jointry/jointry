@@ -66,9 +66,8 @@ public class CostumeCntroller implements Initializable {
                 Sprite sprite = mainController.getFrontStageController()
                         .getCurrentSprite();
                 sprite.updateCostume(Integer.valueOf(number.getText()), img);
+
                 image.setImage(img);
-                mainController.getFrontStageController().
-                        getCurrentSprite().setImage(img);
             }
         });
 
