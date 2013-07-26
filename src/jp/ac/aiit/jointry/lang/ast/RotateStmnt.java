@@ -4,7 +4,7 @@ import java.util.List;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.util.Duration;
-import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Sprite;
 
 public class RotateStmnt extends ASTList {

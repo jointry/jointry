@@ -1,7 +1,7 @@
 package jp.ac.aiit.jointry.lang.ast;
 
 import java.util.List;
-import jp.ac.aiit.jointry.lang.parser.env.Environment;
+import jp.ac.aiit.jointry.lang.parser.Environment;
 
 public class WhileStmnt extends ASTList {
 
