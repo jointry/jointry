@@ -31,7 +31,7 @@ public class CostumeStmnt extends ASTList {
             final Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
             TranslateTransition tt =
-                    new TranslateTransition(Duration.millis(1000), sprite);
+                    new TranslateTransition(Duration.millis(0), sprite);
             tt.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
