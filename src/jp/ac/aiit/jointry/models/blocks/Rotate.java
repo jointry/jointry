@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks;
 
+import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
@@ -8,6 +9,8 @@ public class Rotate extends Statement {
     public Rotate() {
         super();
         rect.setFill(getColor());
+        cb.setItems(FXCollections.observableArrayList(
+                "0", "30", "60", "90", "120", "150", "180"));
     }
 
     public static Color getColor() {
@@ -17,7 +20,7 @@ public class Rotate extends Statement {
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("rotate");
-        String arg = tf.getText();
+        String arg = (String) cb.getValue();
         if (arg == null) {
             arg = "0";
         }
