@@ -19,7 +19,7 @@ public abstract class PaintTool extends Button implements IOptionPane {
         setTooltip(new Tooltip(tip));
 
         if (resource != null) {
-            URL url = getClass().getResource("img/" + resource + ".png");
+            URL url = getClass().getResource("images/" + resource + ".png");
             this.setGraphic(new ImageView(new Image(url.toString())));
         }
     }

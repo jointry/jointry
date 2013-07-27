@@ -81,7 +81,7 @@ public class ListSelectOption {
     }
 
     private Image makeImageIcon(String resource) {
-        URL url = getClass().getResource("img/" + resource + ".png");
+        URL url = getClass().getResource("images/" + resource + ".png");
         return new Image(url.toString());
     }
 }
