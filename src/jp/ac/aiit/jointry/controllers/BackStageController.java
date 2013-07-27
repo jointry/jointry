@@ -3,6 +3,8 @@ package jp.ac.aiit.jointry.controllers;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -43,8 +46,9 @@ public class BackStageController implements Initializable {
     @FXML
     private ScrollPane costumeList;
     @FXML
-    private AnchorPane scriptPane;
+    private Tab scriptTab;
     private MainController mainController;
+    private Map<Sprite, AnchorPane> scriptPanes = new HashMap();
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -122,12 +126,15 @@ public class BackStageController implements Initializable {
 
     public void setCurrentSprite(Sprite sprite) {
         showCostumes(sprite);
+        showBlocks(sprite);
     }
 
     public void execute() {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         StringBuilder code = new StringBuilder();
-        for (Node node : scriptPane.getChildrenUnmodifiable()) {
+
+        //for (Node node : scriptPane.getChildrenUnmodifiable()) {
+        for (Node node : scriptPanes.get(sprite).getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
                 if (block.isTopLevelBlock()) {
@@ -173,12 +180,24 @@ public class BackStageController implements Initializable {
 
         //オーナー設定
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) scriptPane.getScene().getWindow());
+        stage.initOwner((Stage) costumeList.getScene().getWindow());
 
         //UI読み込み
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         stage.setScene(new Scene(root));
 
         return stage;
+    }
+
+    private void showBlocks(Sprite sprite) {
+        if (scriptPanes.get(sprite) == null) {
+            //ブロックを組み立てる領域を生成
+            AnchorPane scriptArea = new AnchorPane();
+            scriptArea.setId("scriptPane");
+            scriptPanes.put(sprite, scriptArea);
+        }
+
+        //組み立てたブロックを表示
+        scriptTab.setContent(scriptPanes.get(sprite));
     }
 }
