@@ -6,11 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
-import jp.ac.aiit.jointry.models.blocks.If;
-import jp.ac.aiit.jointry.models.blocks.MenuItem;
-import jp.ac.aiit.jointry.models.blocks.Move;
-import jp.ac.aiit.jointry.models.blocks.Rotate;
-import jp.ac.aiit.jointry.models.blocks.While;
+import jp.ac.aiit.jointry.models.blocks.*;
 
 public class BlocksController implements Initializable {
 
@@ -27,7 +23,9 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(While.class),
                 new Separator(),
-                new MenuItem(If.class));
+                new MenuItem(If.class),
+                new Separator(),
+                new MenuItem(Costume.class));
     }
 
     public void setMainController(MainController controller) {

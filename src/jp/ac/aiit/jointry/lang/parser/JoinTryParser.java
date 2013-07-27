@@ -20,7 +20,8 @@ public class JoinTryParser {
      *  statement : "if" expr block [ "else" block ]
      *            | "while" expr block
      *            | "rotate" expr
-     *            | "move"
+     *            | "move" expr
+     *            | "costume" expr
      *            | simple
      *  program   : [ defclass | def | statemnet ] ( ";" | EOL )
      */
@@ -45,6 +46,7 @@ public class JoinTryParser {
             rule(WhileStmnt.class).sep("while").ast(expr).ast(block),
             rule(RotateStmnt.class).sep("rotate").ast(expr),
             rule(MoveStmnt.class).sep("move").ast(expr),
+            rule(CostumeStmnt.class).sep("costume").ast(expr),
             simple);
     Parser program =
             rule().or(statement, rule(NullStmnt.class)).sep(";", Token.EOL);

@@ -142,7 +142,9 @@ public final class Sprite extends ImageView {
 
     public void changeCostume(int number) {
         for (Costume cos : costumes) {
+            System.out.println(cos.getNumber());
             if (cos.getNumber() == number) {
+                System.out.println(number);
                 setCostume(cos);
                 break;
             }
@@ -158,7 +160,7 @@ public final class Sprite extends ImageView {
     }
 
     public void setCostume(Costume costume) {
-        this.setImage(costume.getImage());
         this.costumeNumber = costume.getNumber();
+        this.setImage(costume.getImage());
     }
 }
