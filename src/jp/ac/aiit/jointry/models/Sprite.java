@@ -17,7 +17,7 @@ public final class Sprite extends ImageView {
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragNode; //ドラッグ範囲をノードで指定
     private MainController mainController;
-    private int costumeNumber;
+    private int currentCostumeNumber;
 
     public Sprite(String url, MainController mainController) {
         super(url);
@@ -130,7 +130,7 @@ public final class Sprite extends ImageView {
 
     private void initialize(MainController mainController) {
         this.mainController = mainController;
-        this.costumeNumber = 1;
+        this.currentCostumeNumber = 1;
         createCostume(getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
@@ -142,9 +142,7 @@ public final class Sprite extends ImageView {
 
     public void changeCostume(int number) {
         for (Costume cos : costumes) {
-            System.out.println(cos.getNumber());
             if (cos.getNumber() == number) {
-                System.out.println(number);
                 setCostume(cos);
                 break;
             }
@@ -152,7 +150,7 @@ public final class Sprite extends ImageView {
     }
 
     public void changeNextCostume() {
-        int nextNumber = this.costumeNumber + 1;
+        int nextNumber = this.currentCostumeNumber + 1;
         if (nextNumber > costumes.size()) {
             nextNumber = 1; // initialize
         }
@@ -160,7 +158,7 @@ public final class Sprite extends ImageView {
     }
 
     public void setCostume(Costume costume) {
-        this.costumeNumber = costume.getNumber();
+        this.currentCostumeNumber = costume.getNumber();
         this.setImage(costume.getImage());
     }
 }
