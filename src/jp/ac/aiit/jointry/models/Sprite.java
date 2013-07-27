@@ -21,12 +21,12 @@ public final class Sprite extends ImageView {
 
     public Sprite(String url, MainController mainController) {
         super(url);
+        initialize(mainController);
+    }
 
-        this.mainController = mainController;
-        this.costumeNumber = 1;
-        createCostume(getImage());
-        setMouseEvent();
-        sendActiveSpriteEvent();
+    public Sprite(Image image, MainController mainController) {
+        super(image);
+        initialize(mainController);
     }
 
     public void setDragRange(Node node) {
@@ -126,6 +126,14 @@ public final class Sprite extends ImageView {
         }
         return dragNode.getLayoutBounds().contains(
                 dragNode.sceneToLocal(sceneX, sceneY));
+    }
+
+    private void initialize(MainController mainController) {
+        this.mainController = mainController;
+        this.costumeNumber = 1;
+        createCostume(getImage());
+        setMouseEvent();
+        sendActiveSpriteEvent();
     }
 
     public Iterable<Costume> getCostumes() {

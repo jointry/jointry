@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,9 +54,10 @@ public class FrontStageController implements Initializable {
         paintStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                TestData<Sprite> data = new TestData();
+                TestData<Image> data = new TestData();
                 if (data.get("paintImage") != null) {
-                    showSprite(data.get("paintImage"));
+                    Sprite sprite = new Sprite(data.get("paintImage"), mainController);
+                    showSprite(sprite);
                 }
             }
         });
