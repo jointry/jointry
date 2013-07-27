@@ -381,7 +381,7 @@ public class Parser {
     }
 
     protected boolean match(Lexer lexer) throws ParseException {
-        if (elements.size() == 0) {
+        if (elements.isEmpty()) {
             return true;
         }
         Element e = elements.get(0);
