@@ -8,11 +8,13 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import jp.ac.aiit.jointry.controllers.MainController;
 
 public final class Sprite extends ImageView {
 
     private List<Costume> costumes = new ArrayList<>();
+    private AnchorPane scriptPane;
     private double mouseX, mouseY; //マウス位置 x, y
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragNode; //ドラッグ範囲をノードで指定
@@ -131,6 +133,8 @@ public final class Sprite extends ImageView {
     private void initialize(MainController mainController) {
         this.mainController = mainController;
         this.currentCostumeNumber = 1;
+        this.scriptPane = new AnchorPane();
+        scriptPane.setId("scriptPane");
         createCostume(getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
@@ -160,5 +164,9 @@ public final class Sprite extends ImageView {
     public void setCostume(Costume costume) {
         this.currentCostumeNumber = costume.getNumber();
         this.setImage(costume.getImage());
+    }
+    
+    public AnchorPane getScriptPane() {
+        return scriptPane;
     }
 }

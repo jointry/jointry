@@ -48,7 +48,6 @@ public class BackStageController implements Initializable {
     @FXML
     private Tab scriptTab;
     private MainController mainController;
-    private Map<Sprite, AnchorPane> scriptPanes = new HashMap();
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -133,8 +132,7 @@ public class BackStageController implements Initializable {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         StringBuilder code = new StringBuilder();
 
-        //for (Node node : scriptPane.getChildrenUnmodifiable()) {
-        for (Node node : scriptPanes.get(sprite).getChildrenUnmodifiable()) {
+        for (Node node :sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
                 if (block.isTopLevelBlock()) {
@@ -190,14 +188,7 @@ public class BackStageController implements Initializable {
     }
 
     private void showBlocks(Sprite sprite) {
-        if (scriptPanes.get(sprite) == null) {
-            //ブロックを組み立てる領域を生成
-            AnchorPane scriptArea = new AnchorPane();
-            scriptArea.setId("scriptPane");
-            scriptPanes.put(sprite, scriptArea);
-        }
-
         //組み立てたブロックを表示
-        scriptTab.setContent(scriptPanes.get(sprite));
+        scriptTab.setContent(sprite.getScriptPane());
     }
 }
