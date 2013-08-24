@@ -47,6 +47,7 @@ public class JoinTryParser {
             rule(RotateStmnt.class).sep("rotate").ast(expr),
             rule(MoveStmnt.class).sep("move").ast(expr),
             rule(CostumeStmnt.class).sep("costume").ast(expr),
+            rule(ReboundStmnt.class).sep("rebound").ast(expr),
             simple);
     Parser program =
             rule().or(statement, rule(NullStmnt.class)).sep(";", Token.EOL);

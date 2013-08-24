@@ -17,9 +17,10 @@ public final class Sprite extends ImageView {
     private AnchorPane scriptPane;
     private double mouseX, mouseY; //マウス位置 x, y
     private double pressX, pressY; //スプライトがクリックされた時の位置
-    private Node dragNode; //ドラッグ範囲をノードで指定
+    private Node dragRange; //ドラッグ範囲をノードで指定
     private MainController mainController;
     private int currentCostumeNumber;
+    private Integer direction = 1;
 
     public Sprite(String url, MainController mainController) {
         super(url);
@@ -32,7 +33,7 @@ public final class Sprite extends ImageView {
     }
 
     public void setDragRange(Node node) {
-        this.dragNode = node;
+        this.dragRange = node;
     }
 
     public void addCostume(Costume costume) {
@@ -111,7 +112,7 @@ public final class Sprite extends ImageView {
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!dragRange(event.getSceneX(), event.getSceneY())) {
+                if (!isInsideDragRange(event.getSceneX(), event.getSceneY())) {
                     setTranslateX(pressX);
                     setTranslateY(pressY);
                 }
@@ -122,12 +123,12 @@ public final class Sprite extends ImageView {
         });
     }
 
-    private boolean dragRange(double sceneX, double sceneY) {
-        if (dragNode == null) {
+    public boolean isInsideDragRange(double sceneX, double sceneY) {
+        if (dragRange == null) {
             return true;
         }
-        return dragNode.getLayoutBounds().contains(
-                dragNode.sceneToLocal(sceneX, sceneY));
+        return dragRange.getLayoutBounds().contains(
+                dragRange.sceneToLocal(sceneX, sceneY));
     }
 
     private void initialize(MainController mainController) {
@@ -165,8 +166,16 @@ public final class Sprite extends ImageView {
         this.currentCostumeNumber = costume.getNumber();
         this.setImage(costume.getImage());
     }
-    
+
     public AnchorPane getScriptPane() {
         return scriptPane;
+    }
+
+    public double moveBy(double x) {
+        return x * this.direction;
+    }
+
+    public void changeDirection() {
+        this.direction *= -1;
     }
 }

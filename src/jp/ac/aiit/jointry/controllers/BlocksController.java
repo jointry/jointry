@@ -25,7 +25,9 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(If.class),
                 new Separator(),
-                new MenuItem(Costume.class));
+                new MenuItem(Costume.class),
+                new Separator(),
+                new MenuItem(Rebound.class));
     }
 
     public void setMainController(MainController controller) {

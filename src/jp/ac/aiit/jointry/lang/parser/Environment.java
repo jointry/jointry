@@ -9,6 +9,8 @@ public class Environment {
     protected HashMap<String, Object> values;
     private Sprite sprite;
     private SequentialTransition sequentialTransition;
+    private double x = 0.0;
+    private double y = 0.0;
 
     public Environment() {
         values = new HashMap<>();
@@ -36,5 +38,21 @@ public class Environment {
 
     public void setSequentialTransition(SequentialTransition sequentialTransition) {
         this.sequentialTransition = sequentialTransition;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

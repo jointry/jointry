@@ -149,18 +149,17 @@ public class BackStageController implements Initializable {
         env.setSprite(sprite);
         SequentialTransition st = new SequentialTransition();
         env.setSequentialTransition(st);
-
         try {
             while (lexer.peek(0) != Token.EOF) {
                 ASTree t = parser.parse(lexer);
                 if (!(t instanceof NullStmnt)) {
                     Object r = t.eval(env);
-                    //Debug用
-                    //System.out.println(r);
                 }
             }
         } catch (ParseException ex) {
+            Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
         st.play();
     }
