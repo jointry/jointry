@@ -3,8 +3,6 @@ package jp.ac.aiit.jointry.controllers;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,6 +45,7 @@ public class BackStageController implements Initializable {
     @FXML
     private Tab scriptTab;
     private MainController mainController;
+    private Environment env;
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -128,11 +126,11 @@ public class BackStageController implements Initializable {
         showBlocks(sprite);
     }
 
-    public void execute() {
+    public void start() {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         StringBuilder code = new StringBuilder();
 
-        for (Node node :sprite.getScriptPane().getChildrenUnmodifiable()) {
+        for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (node instanceof Block) {
                 Block block = (Block) node;
                 if (block.isTopLevelBlock()) {
@@ -147,7 +145,7 @@ public class BackStageController implements Initializable {
         Lexer lexer = new Lexer(new LangReader(code.toString()));
         JoinTryParser parser = new JoinTryParser();
 
-        Environment env = new Environment();
+        this.env = new Environment();
         env.setSprite(sprite);
         SequentialTransition st = new SequentialTransition();
         env.setSequentialTransition(st);
@@ -165,6 +163,10 @@ public class BackStageController implements Initializable {
         }
 
         st.play();
+    }
+
+    public void stop() {
+        env.getSequentialTransition().stop();
     }
 
     public void setMainController(MainController controller) {

@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -33,8 +34,13 @@ public class FrontStageController implements Initializable {
     }
 
     @FXML
-    protected void handleExecuteBtnAct(ActionEvent event) {
-        this.mainController.getBackStageController().execute();
+    protected void start(ActionEvent event) {
+        this.mainController.getBackStageController().start();
+    }
+
+    @FXML
+    protected void stop(ActionEvent event) throws Exception {
+        this.mainController.getBackStageController().stop();
     }
 
     @FXML

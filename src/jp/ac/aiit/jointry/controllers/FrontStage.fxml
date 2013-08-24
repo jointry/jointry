@@ -11,7 +11,8 @@
   <children>
     <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="200.0">
       <children>
-        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExecuteBtnAct" text="じっこう" />
+        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#start" text="じっこう" />
+        <Button id="stop" mnemonicParsing="false" onAction="#stop" text="ていし" />
       </children>
     </HBox>
     <AnchorPane layoutX="8.0" layoutY="36.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
