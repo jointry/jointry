@@ -24,55 +24,54 @@ public abstract class Block extends AnchorPane {
     protected Block prevBlock;
     protected Block nextBlock;
     protected CodeBlock parentBlock;
-    protected Set<Block> childBlocks;
-    protected Connector tCon;
-    protected Connector bCon;
-    protected Connector lCon;
-    protected Connector rCon;
-    protected CodeBlock targetCodeBlock;
+    protected Connector topCon;
+    protected Connector bottomCon;
+    protected Connector leftCon;
+    protected Connector rightCon;
     protected Connector con;
+    protected Set<Block> childBlocks;
 
     public Block() {
         myBlock = this;
         setLayoutX(0);
         setLayoutY(0);
+
+        this.topCon = new Connector();
+        this.bottomCon = new Connector();
+        this.leftCon = new Connector();
+        this.rightCon = new Connector();
         this.childBlocks = new LinkedHashSet<>();
 
-        this.tCon = new Connector();
-        this.bCon = new Connector();
-        this.lCon = new Connector();
-        this.rCon = new Connector();
-
         // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
-        tCon.setFill(Color.TRANSPARENT);
-        tCon.setWidth(250);
-        tCon.setHeight(10);
-        tCon.setHolder(myBlock);
-        tCon.setPosition(Connector.Position.TOP);
-        AnchorPane.setTopAnchor(tCon, 0.0);
+        topCon.setFill(Color.TRANSPARENT);
+        topCon.setWidth(250);
+        topCon.setHeight(10);
+        topCon.setHolder(myBlock);
+        topCon.setPosition(Connector.Position.TOP);
+        AnchorPane.setTopAnchor(topCon, 0.0);
 
-        bCon.setFill(Color.TRANSPARENT);
-        bCon.setWidth(250);
-        bCon.setHeight(10);
-        bCon.setHolder(myBlock);
-        bCon.setPosition(Connector.Position.BOTTOM);
-        AnchorPane.setBottomAnchor(bCon, 0.0);
+        bottomCon.setFill(Color.TRANSPARENT);
+        bottomCon.setWidth(250);
+        bottomCon.setHeight(10);
+        bottomCon.setHolder(myBlock);
+        bottomCon.setPosition(Connector.Position.BOTTOM);
+        AnchorPane.setBottomAnchor(bottomCon, 0.0);
 
-        lCon.setFill(Color.TRANSPARENT);
-        lCon.setWidth(10);
-        lCon.setHeight(50);
-        lCon.setHolder(myBlock);
-        lCon.setPosition(Connector.Position.LEFT);
-        AnchorPane.setLeftAnchor(lCon, 0.0);
+        leftCon.setFill(Color.TRANSPARENT);
+        leftCon.setWidth(10);
+        leftCon.setHeight(50);
+        leftCon.setHolder(myBlock);
+        leftCon.setPosition(Connector.Position.LEFT);
+        AnchorPane.setLeftAnchor(leftCon, 0.0);
 
-        rCon.setFill(Color.TRANSPARENT);
-        rCon.setWidth(10);
-        rCon.setHeight(50);
-        rCon.setHolder(myBlock);
-        rCon.setPosition(Connector.Position.RIGHT);
-        AnchorPane.setRightAnchor(rCon, 0.0);
+        rightCon.setFill(Color.TRANSPARENT);
+        rightCon.setWidth(10);
+        rightCon.setHeight(50);
+        rightCon.setHolder(myBlock);
+        rightCon.setPosition(Connector.Position.RIGHT);
+        AnchorPane.setRightAnchor(rightCon, 0.0);
 
-        getChildren().addAll(tCon, bCon, lCon, rCon);
+        getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
 
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -85,7 +84,7 @@ public abstract class Block extends AnchorPane {
                 System.out.println("prev:" + prevBlock);
                 System.out.println("next:" + nextBlock);
                 System.out.println("parent:" + parentBlock);
-                System.out.println("children" + childBlocks);
+                System.out.println("children:" + childBlocks);
                 System.out.println("----------------------");
             }
         });
@@ -125,13 +124,19 @@ public abstract class Block extends AnchorPane {
                     if (con.getHolder() instanceof CodeBlock) {
                         CodeBlock target = (CodeBlock) con.getHolder();
                         target.addChild(myBlock);
-                        int power = target.childBlocks.size() - 1;
+
+                        // 子供要素
+                        Block next = myBlock.nextBlock;
+                        while (next != null) {
+                            target.addChild(next);
+                            next = next.nextBlock;
+                        }
+
                         myBlock.move(
                                 target.getLayoutX() + target.wLeft,
-                                target.getLayoutY() + target.hUpper
-                                + myBlock.getHeight() * power);
-                        targetCodeBlock = target;
+                                target.getLayoutY() + target.hUpper);
                         con.setFill(Color.GOLD);
+                        target.resize();
                     }
                     return;
                 }
@@ -149,12 +154,6 @@ public abstract class Block extends AnchorPane {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 setCursor(Cursor.HAND);
-
-                if (myBlock.targetCodeBlock != null) {
-                    myBlock.targetCodeBlock.resize();
-                    myBlock.targetCodeBlock = null;
-                }
-
                 if (myBlock.con != null) {
                     myBlock.con.setFill(Color.TRANSPARENT);
                 }
@@ -218,13 +217,13 @@ public abstract class Block extends AnchorPane {
                         Shape intersect = null;
 
                         // 上下の接触
-                        intersect = Shape.intersect(con, myBlock.tCon);
+                        intersect = Shape.intersect(con, myBlock.topCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             connector = con;
                             break;
                         }
                         // 包含の接触
-                        intersect = Shape.intersect(con, myBlock.lCon);
+                        intersect = Shape.intersect(con, myBlock.leftCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             connector = con;
                             break;
@@ -247,10 +246,13 @@ public abstract class Block extends AnchorPane {
         }
 
         // 包含関係も考慮する
-        Block topPrev = fetchTopPrev();
-        if (topPrev.parentBlock != null) {
-            topPrev.parentBlock.addChild(next);
-            topPrev.parentBlock.resize();
+        Block prevTop = fetchPrevTopBlock();
+        if (prevTop.parentBlock != null) {
+            prevTop.parentBlock.addChild(next);
+            for (Block b : next.fetchAllNextBlocks()) {
+                prevTop.parentBlock.addChild(b);
+            }
+            prevTop.parentBlock.resize();
         }
     }
 
@@ -262,14 +264,6 @@ public abstract class Block extends AnchorPane {
         }
     }
 
-    public List<Block> fetchAllNextBlocks() {
-        List<Block> list = new ArrayList<>();
-        if (nextBlock != null) {
-            list.addAll(nextBlock.fetchAllNextBlocks());
-        }
-        return list;
-    }
-
     public double fetchAllHeight() {
         double height = getHeight();
         if (nextBlock != null) {
@@ -278,22 +272,43 @@ public abstract class Block extends AnchorPane {
         return height;
     }
 
-    public Block fetchTopPrev() {
+    public List<Block> fetchAllNextBlocks() {
+        List<Block> list = new ArrayList<>();
+        Block b = nextBlock;
+        if (b != null) {
+            list.add(b);
+            if (b.nextBlock != null) {
+                b = b.nextBlock;
+            } else {
+                b = null;
+            }
+        }
+        return list;
+    }
+
+    public Block fetchPrevTopBlock() {
         if (prevBlock == null) {
             return this;
         } else {
-            return prevBlock.fetchTopPrev();
+            return prevBlock.fetchPrevTopBlock();
         }
     }
 
+    /**
+     * ドラッグするブロックを先頭にする.
+     */
     protected void initializeLink() {
+        // 前のブロックを外す
         if (prevBlock != null) {
             prevBlock.nextBlock = null;
         }
         prevBlock = null;
 
+        // 親のブロックを外す
         if (parentBlock != null) {
-            parentBlock.childBlocks.remove(this);
+            List<Block> blocks = this.fetchAllNextBlocks();
+            blocks.add(this);
+            parentBlock.childBlocks.removeAll(blocks);
             parentBlock.resize();
         }
         parentBlock = null;

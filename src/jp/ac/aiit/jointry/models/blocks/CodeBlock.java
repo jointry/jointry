@@ -1,6 +1,10 @@
 package jp.ac.aiit.jointry.models.blocks;
 
-import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
 public class CodeBlock extends Block {
@@ -11,6 +15,10 @@ public class CodeBlock extends Block {
     protected double wLeft = 30.0;
     protected double pHeight = hUpper + hConcave + hLower;
     protected Polygon p;
+
+    public CodeBlock() {
+        super();
+    }
 
     @Override
     public void move(double dx, double dy) {
@@ -33,7 +41,7 @@ public class CodeBlock extends Block {
     }
 
     public final void resize() {
-        double hConcave = 0;
+        hConcave = 0;
         for (Block b : childBlocks) {
             hConcave += b.getHeight();
         }
