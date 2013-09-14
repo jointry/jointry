@@ -24,14 +24,13 @@ public class CodeBlock extends Block {
     public void move(double dx, double dy) {
         super.move(dx, dy);
 
-        if (childBlocks.isEmpty()) {
-            return;
-        }
-
-        int i = 0;
-        for (Block b : childBlocks) {
-            b.move(dx + wLeft, dy + hUpper + (b.getHeight() * i));
-            i++;
+        double prevBlockHeight = 0;
+        if (!childBlocks.isEmpty()) {
+            for (Block b : childBlocks) {
+                b.move(dx + wLeft,
+                        dy + hUpper + prevBlockHeight);
+                prevBlockHeight += b.getHeight();
+            }
         }
     }
 

@@ -274,14 +274,10 @@ public abstract class Block extends AnchorPane {
 
     public List<Block> fetchAllNextBlocks() {
         List<Block> list = new ArrayList<>();
-        Block b = nextBlock;
-        if (b != null) {
-            list.add(b);
-            if (b.nextBlock != null) {
-                b = b.nextBlock;
-            } else {
-                b = null;
-            }
+        Block nb = this.nextBlock;
+        while (nb != null) {
+            list.add(nb);
+            nb = nb.nextBlock;
         }
         return list;
     }
