@@ -23,11 +23,13 @@
   <center>
     <AnchorPane>
       <children>
-        <AnchorPane layoutX="61.0" layoutY="72.0" minHeight="345.0" minWidth="458.0" prefHeight="358.0" prefWidth="466.0" style="-fx-border-color: rgb(49, 89, 23);">
-          <children>
+        <ScrollPane layoutX="61.0" layoutY="72.0" minHeight="345.0" minWidth="458.0" prefHeight="358.0" prefWidth="466.0" style="-fx-border-color: rgb(49, 89, 23);">
+          <content>
             <Canvas fx:id="canvas" height="350.0" layoutX="7.0" layoutY="4.0" onMouseDragged="#handleCanvasDragged" onMousePressed="#handleCanvasPressed" width="450.0" />
-          </children>
-        </AnchorPane>
+          </content>
+        </ScrollPane>
+        <Button layoutX="558.0" layoutY="77.0" onAction="#handleExpansionButtonAction" prefHeight="42.0" text="大" />
+        <Button layoutX="558.0" layoutY="147.0" onAction="#handleReductionButtonAction" prefHeight="42.0" text="小" />
       </children>
     </AnchorPane>
   </center>

@@ -132,6 +132,22 @@ public class PaintController implements Initializable {
         clear.paint(canvas, null, null, null);
     }
 
+    @FXML
+    protected void handleExpansionButtonAction(ActionEvent event) {
+        if (canvas.getScaleX() < 2.0) {
+            canvas.setScaleX(canvas.getScaleX() + 0.1);
+            canvas.setScaleY(canvas.getScaleY() + 0.1);
+        }
+    }
+
+    @FXML
+    protected void handleReductionButtonAction(ActionEvent event) {
+        if (canvas.getScaleX() > 1.0) {
+            canvas.setScaleX(canvas.getScaleX() - 0.1);
+            canvas.setScaleY(canvas.getScaleY() - 0.1);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PtClear clear = new PtClear(null, null);
