@@ -128,14 +128,13 @@ public class BackStageController implements Initializable {
     }
 
     public void start() {
-        //TODO: 複数のスプライトを同時に動かす必要がある。
-        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        SpriteTask task = new SpriteTask();
-        task.setSprite(sprite);
-
-        Thread th = new Thread(task);
-        th.setDaemon(true);
-        th.start();
+        for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
+            SpriteTask task = new SpriteTask();
+            task.setSprite(sprite);
+            Thread th = new Thread(task);
+            th.setDaemon(true);
+            th.start();
+        }
     }
 
     public void stop() {

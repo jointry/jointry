@@ -1,15 +1,18 @@
 package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -75,6 +78,16 @@ public class FrontStageController implements Initializable {
 
     public void setMainController(MainController controller) {
         this.mainController = controller;
+    }
+
+    public List<Sprite> getSprites() {
+        List<Sprite> sprites = new ArrayList<>();
+        for (Node i : stage.getChildren()) {
+            if (i instanceof Sprite) {
+                sprites.add((Sprite) i);
+            }
+        }
+        return sprites;
     }
 
     public Sprite getCurrentSprite() {
