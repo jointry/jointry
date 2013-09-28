@@ -132,7 +132,10 @@ public class BackStageController implements Initializable {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         SpriteTask task = new SpriteTask();
         task.setSprite(sprite);
-        task.run();
+
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
     }
 
     public void stop() {
