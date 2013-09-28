@@ -35,6 +35,7 @@ import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.SpriteTask;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.statics.TestData;
 
@@ -127,41 +128,11 @@ public class BackStageController implements Initializable {
     }
 
     public void start() {
+        //TODO: 複数のスプライトを同時に動かす必要がある。
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        StringBuilder code = new StringBuilder();
-
-        for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-            if (node instanceof Block) {
-                Block block = (Block) node;
-                if (block.isTopLevelBlock()) {
-                    code.append(block.intern());
-                }
-            }
-        }
-
-        // Debug
-        System.out.println(code);
-
-        Lexer lexer = new Lexer(new LangReader(code.toString()));
-        JoinTryParser parser = new JoinTryParser();
-
-        this.env = new Environment();
-        env.setSprite(sprite);
-        SequentialTransition st = new SequentialTransition();
-        env.setSequentialTransition(st);
-        try {
-            while (lexer.peek(0) != Token.EOF) {
-                ASTree t = parser.parse(lexer);
-                if (!(t instanceof NullStmnt)) {
-                    Object r = t.eval(env);
-                }
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-        st.play();
+        SpriteTask task = new SpriteTask();
+        task.setSprite(sprite);
+        task.run();
     }
 
     public void stop() {
