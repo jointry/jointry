@@ -11,9 +11,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
-    <stylesheets>
-        <URL value="@style.css" />
-    </stylesheets>
+    <Label fx:id="dummylabel"></Label>
     <bottom>
         <!--
         <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
@@ -23,11 +21,15 @@
         </ImageView>
         -->
     </bottom>
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
     <top>
-        <MenuBar useSystemMenuBar="true">
+        <MenuBar fx:id="menu" useSystemMenuBar="true">
             <menus>
                 <Menu mnemonicParsing="false" text="ファイル">
                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
                         <MenuItem mnemonicParsing="false" text="閉じる" />
                     </items>
                 </Menu>
