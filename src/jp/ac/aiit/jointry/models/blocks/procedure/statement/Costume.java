@@ -1,26 +1,31 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.statement;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import static jp.ac.aiit.jointry.models.blocks.procedure.statement.Move.getColor;
 
-public class Move extends Statement {
+public class Costume extends Statement {
 
-    public Move() {
+    // TODO: dummy
+    public Costume() {
         super();
         rect.setFill(getColor());
         cb.setItems(FXCollections.observableArrayList(
-                "0", "10", "20", "30", "40", "50", "60"));
+                "1", "2", "3")); // TODO
     }
 
     public static Color getColor() {
-        return Color.LEMONCHIFFON;
+        return Color.AQUA;
+    }
+
+    public Label getLabel() {
+        return new Label("コスチューム");
     }
 
     public String intern() {
         StringBuilder sb = new StringBuilder();
-        sb.append("move");
-        //String arg = tf.getText();
+        sb.append("costume");
         String arg = (String) cb.getValue();
         if (arg == null) {
             arg = "0";
@@ -30,9 +35,5 @@ public class Move extends Statement {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
-    }
-
-    public Label getLabel() {
-        return new Label("いどうする");
     }
 }

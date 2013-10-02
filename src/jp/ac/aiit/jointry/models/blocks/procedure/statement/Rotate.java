@@ -1,31 +1,25 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.statement;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import static jp.ac.aiit.jointry.models.blocks.Move.getColor;
 
-public class Costume extends Statement {
+public class Rotate extends Statement {
 
-    // TODO: dummy
-    public Costume() {
+    public Rotate() {
         super();
         rect.setFill(getColor());
         cb.setItems(FXCollections.observableArrayList(
-                "1", "2", "3")); // TODO
+                "0", "30", "60", "90", "120", "150", "180"));
     }
 
     public static Color getColor() {
-        return Color.AQUA;
-    }
-
-    public Label getLabel() {
-        return new Label("コスチューム");
+        return Color.ORANGERED;
     }
 
     public String intern() {
         StringBuilder sb = new StringBuilder();
-        sb.append("costume");
+        sb.append("rotate");
         String arg = (String) cb.getValue();
         if (arg == null) {
             arg = "0";
@@ -35,5 +29,9 @@ public class Costume extends Statement {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
+    }
+
+    public Label getLabel() {
+        return new Label("かいてんする");
     }
 }

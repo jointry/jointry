@@ -1,25 +1,26 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.statement;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
-public class Rotate extends Statement {
+public class Move extends Statement {
 
-    public Rotate() {
+    public Move() {
         super();
         rect.setFill(getColor());
         cb.setItems(FXCollections.observableArrayList(
-                "0", "30", "60", "90", "120", "150", "180"));
+                "0", "10", "20", "30", "40", "50", "60"));
     }
 
     public static Color getColor() {
-        return Color.ORANGERED;
+        return Color.LEMONCHIFFON;
     }
 
     public String intern() {
         StringBuilder sb = new StringBuilder();
-        sb.append("rotate");
+        sb.append("move");
+        //String arg = tf.getText();
         String arg = (String) cb.getValue();
         if (arg == null) {
             arg = "0";
@@ -32,6 +33,6 @@ public class Rotate extends Statement {
     }
 
     public Label getLabel() {
-        return new Label("かいてんする");
+        return new Label("いどうする");
     }
 }

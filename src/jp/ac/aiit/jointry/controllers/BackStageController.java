@@ -1,12 +1,10 @@
 package jp.ac.aiit.jointry.controllers;
 
-import jp.ac.aiit.jointry.lang.parser.LangReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.SequentialTransition;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -14,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -26,17 +23,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import jp.ac.aiit.jointry.lang.ast.ASTree;
-import jp.ac.aiit.jointry.lang.ast.NullStmnt;
-import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
-import jp.ac.aiit.jointry.lang.parser.Lexer;
-import jp.ac.aiit.jointry.lang.parser.ParseException;
-import jp.ac.aiit.jointry.lang.parser.Token;
 import jp.ac.aiit.jointry.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
-import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.statics.TestData;
 
 public class BackStageController implements Initializable {

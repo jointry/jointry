@@ -1,6 +1,5 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.statement;
 
-import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 

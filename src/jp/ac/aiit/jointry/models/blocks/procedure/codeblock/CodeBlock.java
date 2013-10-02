@@ -1,18 +1,23 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import jp.ac.aiit.jointry.models.blocks.Block;
+import jp.ac.aiit.jointry.models.blocks.Connector;
+import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
-public class CodeBlock extends Block {
+public class CodeBlock extends Procedure {
 
-    protected double hUpper = 30.0;
-    protected double hConcave = 50.0;
-    protected double hLower = 30.0;
-    protected double wLeft = 30.0;
+    public Set<Block> childBlocks = new LinkedHashSet<>();
+    public double hUpper = 30.0;
+    public double hConcave = 50.0;
+    public double hLower = 30.0;
+    public double wLeft = 60.0;
     protected double pHeight = hUpper + hConcave + hLower;
     protected Polygon p;
 
@@ -34,7 +39,22 @@ public class CodeBlock extends Block {
         }
     }
 
-    public void addChild(Block child) {
+    /**
+     * ドラッグするブロックを先頭にする.
+     */
+    public void initializeLink() {
+        super.initializeLink();
+        // 親のブロックを外す
+        if (parentBlock != null) {
+            List<Procedure> blocks = this.fetchAllNextBlocks();
+            blocks.add(this);
+            parentBlock.childBlocks.removeAll(blocks);
+            parentBlock.resize();
+        }
+        parentBlock = null;
+    }
+
+    public void addChild(Procedure child) {
         childBlocks.add(child);
         child.parentBlock = this;
     }

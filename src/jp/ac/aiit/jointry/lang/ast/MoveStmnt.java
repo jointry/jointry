@@ -29,7 +29,7 @@ public class MoveStmnt extends ASTList {
             Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
             TranslateTransition tt =
-                    new TranslateTransition(Duration.millis(1000), sprite);
+                    new TranslateTransition(Duration.millis(100), sprite);
             double x = sprite.moveBy((Integer) c);
             tt.setByX(x);
             env.setX(sprite.getX() + env.getX() + x);

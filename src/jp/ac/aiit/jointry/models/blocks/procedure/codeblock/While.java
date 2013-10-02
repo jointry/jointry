@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.models.blocks;
+package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
 
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -28,19 +28,21 @@ public class While extends CodeBlock {
         StringBuilder sb = new StringBuilder();
         sb.append("index = 0\n");
         sb.append("while index < 10 {\n");
-        for (Block b : childBlocks) {
-            if (b.prevBlock == null) {
-                sb.append(b.intern());
-                sb.append("\n");
-                break;
-            }
-        }
-        sb.append("index = index + 1\n");
-        sb.append("}\n");
-        sb.append("index = 0\n");
-        if (nextBlock != null) {
-            sb.append(nextBlock.intern());
-        }
+        /*
+         for (Block b : childBlocks) {
+         if (b.prevBlock == null) {
+         sb.append(b.intern());
+         sb.append("\n");
+         break;
+         }
+         }
+         sb.append("index = index + 1\n");
+         sb.append("}\n");
+         sb.append("index = 0\n");
+         if (nextBlock != null) {
+         sb.append(nextBlock.intern());
+         }
+         * */
         return sb.toString();
     }
 
