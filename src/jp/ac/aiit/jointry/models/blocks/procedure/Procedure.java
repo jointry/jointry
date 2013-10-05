@@ -30,41 +30,7 @@ public abstract class Procedure extends Block {
         super();
         this.myBlock = this;
 
-        this.topCon = new Connector();
-        this.bottomCon = new Connector();
-        this.leftCon = new Connector();
-        this.rightCon = new Connector();
-
-        // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
-        topCon.setFill(Color.TRANSPARENT);
-        topCon.setWidth(250);
-        topCon.setHeight(10);
-        topCon.setHolder(myBlock);
-        topCon.setPosition(Connector.Position.TOP);
-        AnchorPane.setTopAnchor(topCon, 0.0);
-
-        bottomCon.setFill(Color.TRANSPARENT);
-        bottomCon.setWidth(250);
-        bottomCon.setHeight(10);
-        bottomCon.setHolder(myBlock);
-        bottomCon.setPosition(Connector.Position.BOTTOM);
-        AnchorPane.setBottomAnchor(bottomCon, 0.0);
-
-        leftCon.setFill(Color.TRANSPARENT);
-        leftCon.setWidth(10);
-        leftCon.setHeight(50);
-        leftCon.setHolder(myBlock);
-        leftCon.setPosition(Connector.Position.LEFT);
-        AnchorPane.setLeftAnchor(leftCon, 0.0);
-
-        rightCon.setFill(Color.TRANSPARENT);
-        rightCon.setWidth(10);
-        rightCon.setHeight(50);
-        rightCon.setHolder(myBlock);
-        rightCon.setPosition(Connector.Position.RIGHT);
-        AnchorPane.setRightAnchor(rightCon, 0.0);
-
-        getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
+        makeConnectors();
 
         // Use Filter (not Handler) to fire first.
         addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -256,5 +222,43 @@ public abstract class Procedure extends Block {
 
     public boolean isTopLevelBlock() {
         return (prevBlock == null && parentBlock == null);
+    }
+
+    private void makeConnectors() {
+        this.topCon = new Connector();
+        this.bottomCon = new Connector();
+        this.leftCon = new Connector();
+        this.rightCon = new Connector();
+
+        // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
+        topCon.setFill(Color.TRANSPARENT);
+        topCon.setWidth(250);
+        topCon.setHeight(10);
+        topCon.setHolder(myBlock);
+        topCon.setPosition(Connector.Position.TOP);
+        AnchorPane.setTopAnchor(topCon, 0.0);
+
+        bottomCon.setFill(Color.TRANSPARENT);
+        bottomCon.setWidth(250);
+        bottomCon.setHeight(10);
+        bottomCon.setHolder(myBlock);
+        bottomCon.setPosition(Connector.Position.BOTTOM);
+        AnchorPane.setBottomAnchor(bottomCon, 0.0);
+
+        leftCon.setFill(Color.TRANSPARENT);
+        leftCon.setWidth(10);
+        leftCon.setHeight(50);
+        leftCon.setHolder(myBlock);
+        leftCon.setPosition(Connector.Position.LEFT);
+        AnchorPane.setLeftAnchor(leftCon, 0.0);
+
+        rightCon.setFill(Color.TRANSPARENT);
+        rightCon.setWidth(10);
+        rightCon.setHeight(50);
+        rightCon.setHolder(myBlock);
+        rightCon.setPosition(Connector.Position.RIGHT);
+        AnchorPane.setRightAnchor(rightCon, 0.0);
+
+        getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
     }
 }

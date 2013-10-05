@@ -1,7 +1,7 @@
 package jp.ac.aiit.jointry.controllers;
 
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Costume;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.Condition;
+import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Condition;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While;
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Rotate;

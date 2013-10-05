@@ -3,12 +3,8 @@ package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.blocks.Block;
-import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
 public class CodeBlock extends Procedure {

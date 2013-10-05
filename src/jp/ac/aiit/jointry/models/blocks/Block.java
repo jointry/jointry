@@ -44,6 +44,7 @@ public abstract class Block extends AnchorPane {
                 }
             }
         });
+
     }
 
     public void move(double dx, double dy) {
