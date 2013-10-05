@@ -9,7 +9,7 @@ import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
 public class CodeBlock extends Procedure {
 
-    public Set<Block> childBlocks = new LinkedHashSet<>();
+    public Set<Procedure> childBlocks = new LinkedHashSet<>();
     public double hUpper = 30.0;
     public double hConcave = 50.0;
     public double hLower = 30.0;
