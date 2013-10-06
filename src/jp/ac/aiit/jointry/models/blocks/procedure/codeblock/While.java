@@ -45,6 +45,20 @@ public class While extends CodeBlock {
         return sb.toString();
     }
 
+    public String blockIntern() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName()).append(" index < 10\n");
+
+        for (Procedure block : childBlocks) {
+            sb.append(block.blockIntern());
+            break;
+        }
+
+        if (nextBlock != null) sb.append(nextBlock.blockIntern());
+
+        return sb.toString();
+    }
+
     public Label getLabel() {
         return new Label("くりかえす");
     }

@@ -60,6 +60,10 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public String blockIntern() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public Label getLabel() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

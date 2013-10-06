@@ -30,6 +30,7 @@
                 <Menu mnemonicParsing="false" text="ファイル">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSaveBtnAct" text="保存" />
                         <MenuItem mnemonicParsing="false" text="閉じる" />
                     </items>
                 </Menu>

@@ -32,6 +32,18 @@ public class Move extends Statement {
         return sb.toString();
     }
 
+    public String blockIntern() {
+        String arg = (String) cb.getValue();
+        if (arg == null) arg = "0";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName()).append(" ").append(arg).append("\n");
+
+        if (nextBlock != null) sb.append(nextBlock.blockIntern());
+
+        return sb.toString();
+    }
+
     public Label getLabel() {
         return new Label("いどうする");
     }

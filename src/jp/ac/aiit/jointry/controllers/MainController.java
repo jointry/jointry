@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.FileManager;
 
 public class MainController implements Initializable {
 
@@ -70,6 +71,16 @@ public class MainController implements Initializable {
         URL costume_path = getClass().getResource("images/scratch_cat2.gif");
         sprite.createCostume(new Image(costume_path.toString()));
         frontStageController.showSprite(sprite);
+    }
+
+    @FXML
+    protected void handleSaveBtnAct(ActionEvent event) {
+        FileManager manager = new FileManager();
+        try {
+            manager.save(frontStageController.getSprites());
+        } catch (Exception ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setBackStageController(BackStageController controller) {

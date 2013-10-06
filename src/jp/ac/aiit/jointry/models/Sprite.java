@@ -141,6 +141,10 @@ public final class Sprite extends ImageView {
         sendActiveSpriteEvent();
     }
 
+    public int getCostumeNumber() {
+        return currentCostumeNumber;
+   }
+    
     public Iterable<Costume> getCostumes() {
         return costumes;
     }
