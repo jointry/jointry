@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.lang.parser;
+package jp.ac.aiit.jointry.util;
 
 import jp.ac.aiit.jointry.lang.ast.ASTree;
 

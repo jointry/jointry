@@ -3,7 +3,7 @@ package jp.ac.aiit.jointry.lang.ast;
 import java.util.Iterator;
 import java.util.ArrayList;
 import jp.ac.aiit.jointry.lang.parser.Environment;
-import jp.ac.aiit.jointry.lang.parser.JoinTryException;
+import jp.ac.aiit.jointry.util.JoinTryException;
 import jp.ac.aiit.jointry.lang.parser.Token;
 
 public class ASTLeaf extends ASTree {

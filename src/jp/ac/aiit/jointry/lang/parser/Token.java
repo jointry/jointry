@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.lang.parser;
 
+import jp.ac.aiit.jointry.util.JoinTryException;
+
 public abstract class Token {
 
     public static final Token EOF = new Token(-1) {
