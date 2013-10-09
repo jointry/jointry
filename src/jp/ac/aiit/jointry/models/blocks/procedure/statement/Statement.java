@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
-public class Statement extends Procedure {
+public abstract class Statement extends Procedure {
 
     protected ComboBox cb;
     protected final Rectangle rect;

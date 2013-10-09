@@ -7,7 +7,7 @@ import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
-public class CodeBlock extends Procedure {
+public abstract class CodeBlock extends Procedure {
 
     public Set<Procedure> childBlocks = new LinkedHashSet<>();
     public double hUpper = 30.0;
