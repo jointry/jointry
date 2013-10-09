@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.models.blocks.*;
+import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Eq;
 
 public class BlocksController implements Initializable {
 
@@ -36,7 +37,7 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Rebound.class),
                 new Separator(),
-                new MenuItem(Condition.class));
+                new MenuItem(Eq.class));
     }
 
     public void setMainController(MainController controller) {

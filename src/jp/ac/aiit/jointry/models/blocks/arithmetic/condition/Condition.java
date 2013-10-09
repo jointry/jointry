@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -13,9 +14,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
+import jp.ac.aiit.jointry.models.blocks.arithmetic.Value;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
 
-public class Condition extends Block {
+public abstract class Condition extends Block {
 
     protected final Rectangle rect;
     public If mother;
@@ -24,6 +26,11 @@ public class Condition extends Block {
     public Connector bottomCon;
     public Connector leftCon;
     public Connector rightCon;
+    protected Value arg1;
+    protected Value arg2;
+    protected TextField tf1;
+    protected TextField tf2;
+    protected Label op;
 
     public Condition() {
         super();
@@ -54,19 +61,28 @@ public class Condition extends Block {
         });
 
         rect = new Rectangle();
-        rect.setWidth(100);
-        rect.setHeight(30);
+        rect.setWidth(200);
+        rect.setHeight(50);
         rect.setArcWidth(10);
         rect.setArcHeight(10);
         rect.setStroke(Color.GRAY);
         rect.setFill(getColor());
-
         AnchorPane.setTopAnchor(rect, 0.0);
+
         Label lb = getLabel();
         AnchorPane.setTopAnchor(lb, 5.0);
         AnchorPane.setLeftAnchor(lb, 10.0);
 
-        getChildren().addAll(rect, lb);
+        tf1 = new TextField();
+        tf1.setPrefWidth(50.0);
+        AnchorPane.setTopAnchor(tf1, 22.0);
+        AnchorPane.setLeftAnchor(tf1, 10.0);
+        tf2 = new TextField();
+        tf2.setPrefWidth(50.0);
+        AnchorPane.setTopAnchor(tf2, 22.0);
+        AnchorPane.setRightAnchor(tf2, 10.0);
+
+        getChildren().addAll(rect, lb, tf1, tf2);
 
         // コネクタを全面に出すために
         rect.toBack();
@@ -80,7 +96,7 @@ public class Condition extends Block {
     }
 
     public static Color getColor() {
-        return Color.GREEN;
+        return Color.LIGHTGREEN;
     }
 
     public final Label getLabel() {
@@ -144,5 +160,34 @@ public class Condition extends Block {
         leftCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(leftCon, 0.0);
         getChildren().addAll(leftCon);
+    }
+
+    public String intern() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ");
+        if (arg1 != null) {
+            sb.append(arg1);
+        } else {
+            sb.append(tf1.getText());
+        }
+        sb.append(getOp());
+        if (arg2 != null) {
+            sb.append(arg2);
+        } else {
+            sb.append(tf2.getText());
+        }
+        return sb.toString();
+    }
+
+    public String getOp() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public String blockIntern() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" ");
+        sb.append(arg1).append(",").append(arg2);
+        return sb.toString();
     }
 }

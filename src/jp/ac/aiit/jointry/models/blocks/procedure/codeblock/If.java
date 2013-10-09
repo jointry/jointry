@@ -4,9 +4,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Condition;
+import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 import static jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While.getColor;
 
 public class If extends CodeBlock {
@@ -61,5 +61,45 @@ public class If extends CodeBlock {
             embryo.toFront();
             embryo.move(dx + 50, dy + 20);
         }
+    }
+
+    public String intern() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("if");
+        if (this.embryo != null) {
+            sb.append(this.embryo.intern());
+        }
+        sb.append("{\n");
+        for (Procedure p : childBlocks) {
+            if (p.prevBlock == null) {
+                sb.append("\t");
+                sb.append(p.intern());
+                sb.append("\n");
+                break;
+            }
+        }
+        sb.append("}\n");
+        if (nextBlock != null) {
+            sb.append(nextBlock.intern());
+        }
+        return sb.toString();
+    }
+
+    public String blockIntern() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName()).append(" index < 10\n");
+
+        for (Procedure p : childBlocks) {
+            if (p.prevBlock == null) {
+                sb.append(p.blockIntern());
+                break;
+            }
+        }
+
+        if (nextBlock != null) {
+            sb.append(nextBlock.blockIntern());
+        }
+
+        return sb.toString();
     }
 }
