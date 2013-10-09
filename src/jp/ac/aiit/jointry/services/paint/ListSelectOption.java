@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.paint;
+package jp.ac.aiit.jointry.services.paint;
 
 import java.net.URL;
 import javafx.event.ActionEvent;

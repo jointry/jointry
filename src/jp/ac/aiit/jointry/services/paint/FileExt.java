@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.paint;
+package jp.ac.aiit.jointry.services.paint;
 
 import java.io.File;
 import java.net.MalformedURLException;

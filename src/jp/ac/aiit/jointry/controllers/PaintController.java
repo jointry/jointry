@@ -7,9 +7,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,15 +15,17 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import jp.ac.aiit.jointry.paint.FileExt;
-import jp.ac.aiit.jointry.paint.PtClear;
-import jp.ac.aiit.jointry.paint.Save;
-import jp.ac.aiit.jointry.statics.TestData;
+import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.paint.FileExt;
+import jp.ac.aiit.jointry.services.paint.PtClear;
+import jp.ac.aiit.jointry.services.paint.Save;
+import jp.ac.aiit.jointry.util.ParameterAware;
+import jp.ac.aiit.jointry.util.StageUtil;
 
-public class PaintController implements Initializable {
+public class PaintController implements Initializable, ParameterAware<Image> {
 
     @FXML
     private Canvas canvas;
@@ -37,6 +37,7 @@ public class PaintController implements Initializable {
     private Point windowPoint = new Point();
     private Point pS = new Point();
     private Point pE = new Point();
+    private Image result;
 
     //画面移動
     @FXML
@@ -75,17 +76,13 @@ public class PaintController implements Initializable {
         Save save = new Save();
         save.action(canvas);
 
-        TestData data = new TestData();
-        data.put("paintImage", save.getImage());
+        result = save.getImage();
 
         windowClose();
     }
 
     @FXML
     protected void handleExitButtonAction(ActionEvent event) {
-        TestData data = new TestData();
-        data.put("paintImage", null);
-
         windowClose();
 
     }
@@ -98,32 +95,25 @@ public class PaintController implements Initializable {
 
     @FXML
     protected void handleCameraButtonAction(ActionEvent event) throws IOException {
-        //Paintツール画面
-        Stage camStage = new Stage();
-
-        //オーナー設定
-        camStage.initModality(Modality.APPLICATION_MODAL);
-        camStage.initOwner((Stage) canvas.getScene().getWindow());
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                .getResource("Camera.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
+        Window owner = canvas.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Camera.fxml"); //表示するfxml
+        final StageUtil cameraStage = new StageUtil(null, owner, fxml, null);
 
         //カメラ撮り終えた
-        camStage.setOnHidden(new EventHandler<WindowEvent>() {
+        cameraStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                TestData<Image> data = new TestData();
-                if (data.get("cameraImage") != null) {
+                CameraController ctrl = (CameraController) cameraStage.getController();
+
+                if (ctrl.getResult() != null) {
                     GraphicsContext gc = canvas.getGraphicsContext2D();
-                    gc.drawImage(data.get("cameraImage"), 0, 0);
+                    gc.drawImage(ctrl.getResult(), 0, 0);
                 }
             }
         });
 
         // 新しいウインドウを表示
-        camStage.setScene(new Scene(root));
-        camStage.show();
+        cameraStage.getStage().show();
     }
 
     @FXML
@@ -153,14 +143,19 @@ public class PaintController implements Initializable {
         PtClear clear = new PtClear(null, null);
         clear.paint(canvas, null, null, null);
 
-        TestData<Image> data = new TestData();
-
-        if (data.get("editImage") != null) {
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.drawImage(data.get("editImage"), 0, 0);
-        }
-
         color.setValue(Color.RED);
+    }
+
+    @Override
+    public void setParameter(Image param) {
+        if (param != null) {
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            gc.drawImage(param, 0, 0);
+        }
+    }
+
+    public Image getResult() {
+        return result;
     }
 
     private void windowClose() {

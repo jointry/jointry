@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.services;
+package jp.ac.aiit.jointry.services.camera;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;

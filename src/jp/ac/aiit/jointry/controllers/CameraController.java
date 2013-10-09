@@ -4,17 +4,19 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
 import com.sleepingdumpling.jvideoinput.VideoInputException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
-import jp.ac.aiit.jointry.services.CameraService;
-import jp.ac.aiit.jointry.statics.TestData;
+import jp.ac.aiit.jointry.services.camera.CameraService;
 
 public class CameraController implements Initializable {
 
@@ -28,7 +30,8 @@ public class CameraController implements Initializable {
      */
     private CameraRetrieve retrieveTask;
     private CameraDisplay displayTask;
-    private BufferedImage displayImage = null;
+    private BufferedImage displayImage;
+    private Image result;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,9 +45,7 @@ public class CameraController implements Initializable {
     @FXML
     protected void handleStartAct(ActionEvent event) throws Exception {
         stop();
-
-        TestData data = new TestData();
-        data.put("cameraImage", camview.getImage());
+        result = camview.getImage();
 
         windowClose();
     }
@@ -52,11 +53,13 @@ public class CameraController implements Initializable {
     @FXML
     protected void handleStopAct(ActionEvent event) throws Exception {
         stop();
-
-        TestData data = new TestData();
-        data.put("cameraImage", null);
+        result = camview.getImage();
 
         windowClose();
+    }
+    
+    public Image getResult() {
+        return result;
     }
 
     private void windowClose() {
@@ -85,29 +88,24 @@ public class CameraController implements Initializable {
         private boolean bCapture = true;
 
         @Override
-        protected Void call() throws Exception {
-
+        protected Void call() {
             CameraService camServ = null;
 
             try {
                 camServ = new CameraService(450, 350);
 
-                while (bCapture) {
-                    //カメラからの画像を取り続ける
-                    displayImage = camServ.retrieve();
-                }
+                while (bCapture)
+                    displayImage = camServ.retrieve(); //カメラからの画像を取り続ける
             } catch (VideoInputException ex) {
-                return null;
+                Logger.getLogger(CameraRetrieve.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-                if (camServ != null) {
-                    camServ.release();
-                }
+                if (camServ != null) camServ.release();
             }
 
             return null;
         }
 
-        protected void stop() {
+        private void stop() {
             bCapture = false;
         }
     }

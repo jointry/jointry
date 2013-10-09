@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jp.ac.aiit.jointry.services;
+package jp.ac.aiit.jointry.services.file;
 
 import java.io.File;
 import java.io.FileOutputStream;

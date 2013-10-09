@@ -18,9 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
-import jp.ac.aiit.jointry.statics.TestData;
+import jp.ac.aiit.jointry.util.StageUtil;
 
 public class FrontStageController implements Initializable {
 
@@ -48,32 +49,24 @@ public class FrontStageController implements Initializable {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        //Paintツール画面
-        Stage paintStage = new Stage(StageStyle.TRANSPARENT);
+        Window owner = stage.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Paint.fxml"); //表示するfxml
+        final StageUtil paintStage = new StageUtil(null, owner, fxml, null);
 
-        //オーナー設定
-        paintStage.initModality(Modality.APPLICATION_MODAL);
-        paintStage.initOwner((Stage) stage.getScene().getWindow());
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                .getResource("Paint.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-
-        //ペイント書き終えた
-        paintStage.setOnHidden(new EventHandler<WindowEvent>() {
+        //新規コスチューム追加
+        paintStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                TestData<Image> data = new TestData();
-                if (data.get("paintImage") != null) {
-                    Sprite sprite = new Sprite(data.get("paintImage"), mainController);
+                PaintController ctrl = (PaintController) paintStage.getController();
+
+                if (ctrl.getResult() != null) {
+                    Sprite sprite = new Sprite(ctrl.getResult(), mainController);
                     showSprite(sprite);
                 }
             }
         });
 
-        // 新しいウインドウを表示
-        paintStage.setScene(new Scene(root));
-        paintStage.show();
+        paintStage.getStage().show();
     }
 
     public void setMainController(MainController controller) {

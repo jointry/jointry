@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import jp.ac.aiit.jointry.models.Sprite;
-import jp.ac.aiit.jointry.services.FileManager;
+import jp.ac.aiit.jointry.services.file.FileManager;
 
 public class MainController implements Initializable {
 

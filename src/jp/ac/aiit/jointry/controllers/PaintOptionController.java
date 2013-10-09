@@ -13,9 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import jp.ac.aiit.jointry.paint.PaintTool;
-import jp.ac.aiit.jointry.paint.PtEraser;
-import jp.ac.aiit.jointry.paint.PtPencil;
+import jp.ac.aiit.jointry.services.paint.PaintTool;
+import jp.ac.aiit.jointry.services.paint.PtEraser;
+import jp.ac.aiit.jointry.services.paint.PtPencil;
 
 public class PaintOptionController implements Initializable {
 

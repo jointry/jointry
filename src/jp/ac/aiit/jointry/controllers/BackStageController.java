@@ -13,21 +13,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
 import jp.ac.aiit.jointry.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
-import jp.ac.aiit.jointry.statics.TestData;
+import jp.ac.aiit.jointry.util.StageUtil;
 
 public class BackStageController implements Initializable {
 
@@ -40,24 +36,25 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        Stage paintStage = createStage("Paint.fxml", null);
+        Window owner = costumeList.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Paint.fxml"); //表示するfxml
+        final StageUtil paintStage = new StageUtil(null, owner, fxml, null);
 
         //新規コスチューム追加
-        paintStage.setOnHidden(new EventHandler<WindowEvent>() {
+        paintStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                TestData<Image> data = new TestData();
-                Image image = data.get("paintImage");
-                if (image == null) {
-                    return;
+                PaintController ctrl = (PaintController) paintStage.getController();
+
+                if (ctrl.getResult() != null) {
+                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                    sprite.createCostume(ctrl.getResult());
+                    showCostumes(sprite);
                 }
-                Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                sprite.createCostume(image);
-                showCostumes(sprite);
             }
         });
 
-        paintStage.show();
+        paintStage.getStage().show();
     }
 
     public void showCostumes(Sprite sprite) {
@@ -81,25 +78,25 @@ public class BackStageController implements Initializable {
 
     @FXML
     protected void handleCamBtnAct(ActionEvent event) throws Exception {
-
-        Stage cameraStage = createStage("Camera.fxml", new Stage());
+        Window owner = costumeList.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Camera.fxml"); //表示するfxml
+        final StageUtil cameraStage = new StageUtil(null, owner, fxml, null);
 
         //新規コスチューム追加
-        cameraStage.setOnHidden(new EventHandler<WindowEvent>() {
+        cameraStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                TestData<Image> data = new TestData();
-                Image image = data.get("cameraImage");
-                if (image == null) {
-                    return;
+                CameraController ctrl = (CameraController) cameraStage.getController();
+
+                if (ctrl.getResult() != null) {
+                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                    sprite.createCostume(ctrl.getResult());
+                    showCostumes(sprite);
                 }
-                Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                sprite.createCostume(image);
-                showCostumes(sprite);
             }
         });
 
-        cameraStage.show();
+        cameraStage.getStage().show();
     }
 
     @FXML
@@ -133,22 +130,6 @@ public class BackStageController implements Initializable {
 
     public void setMainController(MainController controller) {
         this.mainController = controller;
-    }
-
-    private Stage createStage(String fxml, Stage stage) throws IOException {
-        if (stage == null) {
-            stage = new Stage(StageStyle.TRANSPARENT);
-        }
-
-        //オーナー設定
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) costumeList.getScene().getWindow());
-
-        //UI読み込み
-        Parent root = FXMLLoader.load(getClass().getResource(fxml));
-        stage.setScene(new Scene(root));
-
-        return stage;
     }
 
     private void showBlocks(Sprite sprite) {

@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.paint;
+package jp.ac.aiit.jointry.services.paint;
 
 import java.awt.Point;
 import javafx.scene.Node;
@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.paint.ListSelectOption.ToolOption;
+import jp.ac.aiit.jointry.services.paint.ListSelectOption.ToolOption;
 
 public class PtEraser extends PaintTool {
 
