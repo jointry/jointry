@@ -1,7 +1,6 @@
 package jp.ac.aiit.jointry.controllers;
 
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Costume;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Condition;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While;
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Rotate;
@@ -15,6 +14,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.models.blocks.*;
 import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Eq;
+import jp.ac.aiit.jointry.models.blocks.procedure.statement.Speech;
 
 public class BlocksController implements Initializable {
 
@@ -37,7 +37,9 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Rebound.class),
                 new Separator(),
-                new MenuItem(Eq.class));
+                new MenuItem(Eq.class),
+                new Separator(),
+                new MenuItem(Speech.class));
     }
 
     public void setMainController(MainController controller) {

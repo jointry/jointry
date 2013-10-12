@@ -1,3 +1,14 @@
 #blockMenu {
     -fx-background-color: aliceblue;
 }
+
+.speech-bubble {
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+    -fx-border-width: 2 2 2 0;
+    -fx-border-radius: 8;
+    -fx-padding: 3 20 3 0;
+    -fx-graphic: url("images/speech.png");
+    -fx-content-display: left;
+    -fx-graphic-text-gap: 20px;
+}
