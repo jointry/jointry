@@ -2,16 +2,19 @@ package jp.ac.aiit.jointry.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import jp.ac.aiit.jointry.controllers.MainController;
 
-public final class Sprite extends ImageView {
+public final class Sprite extends HBox {
 
     private List<Costume> costumes = new ArrayList<>();
     private AnchorPane scriptPane;
@@ -21,14 +24,16 @@ public final class Sprite extends ImageView {
     private MainController mainController;
     private int currentCostumeNumber;
     private Integer direction = 1;
+    private ImageView icon;
+    private Label saying;
 
     public Sprite(String url, MainController mainController) {
-        super(url);
+        icon = new ImageView(url);
         initialize(mainController);
     }
 
     public Sprite(Image image, MainController mainController) {
-        super(image);
+        icon = new ImageView(image);
         initialize(mainController);
     }
 
@@ -132,19 +137,20 @@ public final class Sprite extends ImageView {
     }
 
     private void initialize(MainController mainController) {
+        getChildren().add(this.icon);
         this.mainController = mainController;
         this.currentCostumeNumber = 1;
         this.scriptPane = new AnchorPane();
         scriptPane.setId("scriptPane");
-        createCostume(getImage());
+        createCostume(icon.getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
     }
 
     public int getCostumeNumber() {
         return currentCostumeNumber;
-   }
-    
+    }
+
     public Iterable<Costume> getCostumes() {
         return costumes;
     }
@@ -181,5 +187,36 @@ public final class Sprite extends ImageView {
 
     public void changeDirection() {
         this.direction *= -1;
+    }
+
+    public void setSpeechBubble(final String say) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                clearSpeechBubble();
+                saying = new Label(say);
+                saying.getStyleClass().add("speech-bubble");
+                getChildren().add(saying);
+            }
+        });
+    }
+
+    public void clearSpeechBubble() {
+        if (saying != null) {
+            saying.setVisible(false);
+            getChildren().removeAll(saying);
+        }
+    }
+
+    public void setImage(Image image) {
+        icon.setImage(image);
+    }
+
+    public double getX() {
+        return icon.getX();
+    }
+
+    public double getY() {
+        return icon.getY();
     }
 }
