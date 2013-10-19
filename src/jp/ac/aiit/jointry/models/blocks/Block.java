@@ -3,8 +3,12 @@ package jp.ac.aiit.jointry.models.blocks;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 public abstract class Block extends AnchorPane {
@@ -45,6 +49,24 @@ public abstract class Block extends AnchorPane {
             }
         });
 
+        setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent t) {
+                remove();
+            }
+        });
+    }
+
+    public void remove() {
+        BorderPane root = (BorderPane) getScene().getRoot();
+        TabPane centerPane = (TabPane) root.getCenter();
+        for (Tab t : centerPane.getTabs()) {
+            if ("scriptPane".equals(t.getContent().getId())) {
+                AnchorPane ap = (AnchorPane) t.getContent();
+                ap.getChildren().remove(this);
+            }
+        }
+        setVisible(false);
     }
 
     public void move(double dx, double dy) {
