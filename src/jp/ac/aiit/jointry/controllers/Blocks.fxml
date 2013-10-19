@@ -8,16 +8,20 @@
 <?import javafx.scene.shape.*?>
 
 <TabPane prefHeight="598.0" prefWidth="148.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.BlocksController">
-    <tabs>
-        <Tab text="きほん">
-            <content>
-                <VBox fx:id="blockMenu" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-            </content>
-        </Tab>
-        <Tab text="おうよう">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-        </Tab>
-    </tabs>
+  <tabs>
+    <Tab text="きほん">
+      <content>
+        <VBox fx:id="blockMenu" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+    <Tab text="おうよう">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <Button fx:id="createVariable" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#createVariable" text="へんすうをつくる" />
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
 </TabPane>

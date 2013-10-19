@@ -12,10 +12,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -23,6 +27,7 @@ import jp.ac.aiit.jointry.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class BackStageController implements Initializable {
@@ -135,5 +140,10 @@ public class BackStageController implements Initializable {
     private void showBlocks(Sprite sprite) {
         //組み立てたブロックを表示
         scriptTab.setContent(sprite.getScriptPane());
+    }
+
+    public void addBlock(Block block) {
+        AnchorPane ap = (AnchorPane) scriptTab.getContent();
+        ap.getChildren().add(block);
     }
 }
