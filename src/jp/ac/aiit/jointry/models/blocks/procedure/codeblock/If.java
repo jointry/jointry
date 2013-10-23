@@ -5,7 +5,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.blocks.Connector;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Condition;
+import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 import static jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While.getColor;
 

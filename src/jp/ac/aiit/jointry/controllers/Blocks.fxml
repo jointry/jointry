@@ -16,11 +16,11 @@
     </Tab>
     <Tab text="おうよう">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <VBox fx:id="blockMenuAdv" prefHeight="200.0" prefWidth="100.0">
           <children>
-            <Button fx:id="createVariable" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#createVariable" text="へんすうをつくる" />
+            <Button fx:id="createVariable" mnemonicParsing="false" onAction="#createVariable" text="へんすうをつくる" />
           </children>
-        </AnchorPane>
+        </VBox>
       </content>
     </Tab>
   </tabs>

@@ -201,6 +201,8 @@ public abstract class Procedure extends Block {
 
     /**
      * 縦方向の最上部にあるブロックを取得する.
+     *
+     * @return
      */
     public Procedure fetchPrevTopBlock() {
         if (prevBlock == null) {

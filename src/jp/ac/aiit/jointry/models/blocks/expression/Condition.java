@@ -1,7 +1,9 @@
-package jp.ac.aiit.jointry.models.blocks.arithmetic.condition;
+package jp.ac.aiit.jointry.models.blocks.expression;
 
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -14,10 +16,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.Value;
 import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
 
-public abstract class Condition extends Block {
+public class Condition extends Expression {
 
     protected final Rectangle rect;
     public If mother;
@@ -26,11 +27,11 @@ public abstract class Condition extends Block {
     public Connector bottomCon;
     public Connector leftCon;
     public Connector rightCon;
-    protected Value arg1;
-    protected Value arg2;
+    protected Variable arg1;
+    protected Variable arg2;
     protected TextField tf1;
     protected TextField tf2;
-    protected Label op;
+    protected ComboBox cb;
 
     public Condition() {
         super();
@@ -84,6 +85,15 @@ public abstract class Condition extends Block {
 
         getChildren().addAll(rect, lb, tf1, tf2);
 
+        cb = new ComboBox();
+        cb.setItems(FXCollections.observableArrayList(
+                "おなじ", "おおきい", "いじょう", "いか", "ちいさい"));
+
+        AnchorPane.setTopAnchor(cb, 22.0);
+        AnchorPane.setLeftAnchor(cb, 68.0);
+        cb.setPrefSize(60, 20);
+        getChildren().addAll(cb);
+
         // コネクタを全面に出すために
         rect.toBack();
     }
@@ -99,7 +109,7 @@ public abstract class Condition extends Block {
         return Color.LIGHTGREEN;
     }
 
-    public final Label getLabel() {
+    public Label getLabel() {
         return new Label("じょうけん");
     }
 
@@ -168,19 +178,48 @@ public abstract class Condition extends Block {
         if (arg1 != null) {
             sb.append(arg1);
         } else {
-            sb.append(tf1.getText());
+            try {
+                // As number
+                sb.append(Integer.parseInt(tf1.getText()));
+            } catch (NumberFormatException nfe) {
+                // As String
+                sb.append("\"");
+                sb.append(tf1.getText());
+                sb.append("\"");
+            }
         }
         sb.append(getOp());
         if (arg2 != null) {
             sb.append(arg2);
         } else {
-            sb.append(tf2.getText());
+            try {
+                // As number
+                sb.append(Integer.parseInt(tf2.getText()));
+            } catch (NumberFormatException nfe) {
+                // As String
+                sb.append("\"");
+                sb.append(tf2.getText());
+                sb.append("\"");
+            }
         }
         return sb.toString();
     }
 
     public String getOp() {
-        throw new UnsupportedOperationException("Not supported.");
+        String op = (String) cb.getValue();
+        if (op.equals("おなじ")) {
+            return " == ";
+        } else if (op.equals("おおきい")) {
+            return " > ";
+        } else if (op.equals("いじょう")) {
+            return " >= ";
+        } else if (op.equals("いか")) {
+            return " <= ";
+        } else if (op.equals("ちいさい")) {
+            return " < ";
+        } else {
+            return "";
+        }
     }
 
     public String blockIntern() {

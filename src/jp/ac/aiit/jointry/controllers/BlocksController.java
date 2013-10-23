@@ -8,6 +8,7 @@ import jp.ac.aiit.jointry.models.blocks.procedure.statement.Rebound;
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Move;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,16 +21,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.*;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.Variable;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.calculate.Calculate;
-import jp.ac.aiit.jointry.models.blocks.arithmetic.condition.Eq;
+import jp.ac.aiit.jointry.models.blocks.expression.Condition;
+import jp.ac.aiit.jointry.models.blocks.expression.Variable;
+import jp.ac.aiit.jointry.models.blocks.procedure.statement.Calculate;
 import jp.ac.aiit.jointry.models.blocks.procedure.statement.Speech;
 
 public class BlocksController implements Initializable {
 
     @FXML
     private VBox blockMenu;
+    @FXML
+    private VBox blockMenuAdv;
     @FXML
     private Button createVariable;
     private MainController mainController;
@@ -49,7 +53,7 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Rebound.class),
                 new Separator(),
-                new MenuItem(Eq.class),
+                new MenuItem(Condition.class),
                 new Separator(),
                 new MenuItem(Speech.class),
                 new Separator(),
@@ -77,8 +81,16 @@ public class BlocksController implements Initializable {
 
         switch (controller.getSelectedOption()) {
             case YES:
-                Variable v = new Variable(controller.getVariableName());
-                this.mainController.getBackStageController().addBlock(v);
+                String name = controller.getVariableName();
+
+                blockMenuAdv.getChildren().add(new Separator());
+                MenuItemAdv menu = new MenuItemAdv(name);
+                blockMenuAdv.getChildren().add(menu);
+
+                VariableLabel vl = new VariableLabel(name, null);
+                this.mainController.getFrontStageController().addVariable(vl);
+
+//                Bindings.bindBidirectional(v.getValueProperty(), vl.getValueProperty());
                 break;
         }
     }

@@ -20,6 +20,7 @@
         <AnchorPane fx:id="stage" layoutX="1.0" layoutY="2.0" prefHeight="350.0" prefWidth="450.0">
           <children>
             <ImageView fx:id="background" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="variables" layoutX="1.0" layoutY="1.0" prefHeight="200.0" prefWidth="100.0" />
           </children>
         </AnchorPane>
       </children>
