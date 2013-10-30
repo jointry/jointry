@@ -1,7 +1,6 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.io.File;
 import java.io.IOException;
-import ash.broker.util.Util;
 
 /**
  * テキストファイル、バイナリファイル、画像ファイルの転送と表示の処理を行う。

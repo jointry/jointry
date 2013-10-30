@@ -1,7 +1,6 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.ArrayList;
-import ash.broker.util.Util;
 
 /**
  * ServerProxyは、サーバ(サービスを提供するAgent)との間で

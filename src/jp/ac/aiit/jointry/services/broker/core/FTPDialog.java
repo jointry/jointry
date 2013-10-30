@@ -1,10 +1,8 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.BufferedReader;
-import ash.broker.core.DialogBase;
-import ash.broker.core.DInfo;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * FTPDialogはファイルの送受信を行うダイアログクラスである。

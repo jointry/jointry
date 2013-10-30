@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketException;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * Agentは、Broker側の対応するProxyとの間で双方向のSocket通信を行うために

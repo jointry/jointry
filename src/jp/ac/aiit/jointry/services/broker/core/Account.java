@@ -1,8 +1,8 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * ユーザアカウントの管理:<br>

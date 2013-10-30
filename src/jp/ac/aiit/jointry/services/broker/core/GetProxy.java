@@ -1,8 +1,8 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 class GetProxy extends Proxy {
 	public GetProxy(HttpInfo hinfo) { super(hinfo); }

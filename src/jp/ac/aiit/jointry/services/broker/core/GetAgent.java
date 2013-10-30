@@ -1,9 +1,9 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.io.IOException;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * GetAgent: HTTP GET メソッド処理の実装

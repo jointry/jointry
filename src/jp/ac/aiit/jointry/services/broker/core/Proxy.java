@@ -1,9 +1,8 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.List;
-import ash.broker.util.Util;
-import ash.broker.core.Property.Counter;
+import jp.ac.aiit.jointry.services.broker.core.Property.Counter;
 
 /**
  * Proxyは、Broker側で Agentとの双方向通信を処理する。

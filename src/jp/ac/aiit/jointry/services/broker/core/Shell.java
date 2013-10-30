@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 
 /**
  * Shellインタフェースでは、エージェントから送信されたコマンド文字列を

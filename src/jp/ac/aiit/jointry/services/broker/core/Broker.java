@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Constructor;
-import ash.broker.util.Util;
-import ash.broker.core.Property.Counter;
+import jp.ac.aiit.jointry.services.broker.core.Property.Counter;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * Brokerの双方向通信の概念モデルは、

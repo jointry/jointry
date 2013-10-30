@@ -1,4 +1,4 @@
-package ash.broker.util;
+package jp.ac.aiit.jointry.services.broker.util;
 import java.util.List;
 import java.util.Hashtable;
 import java.util.Iterator;

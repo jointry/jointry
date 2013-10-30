@@ -1,6 +1,5 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
-import ash.broker.util.Util;
 
 /**
  * ClientProxyは、クライアント(サービスを利用するAgent)との間で

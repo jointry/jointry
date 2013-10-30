@@ -1,9 +1,9 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
-import ash.broker.util.Util;
-import ash.broker.util.ImageUtil;
+import jp.ac.aiit.jointry.services.broker.util.ImageUtil;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * WorkerBaseは、NSBrokerを構成する主要なコンポーネントであるBroker、Proxy、

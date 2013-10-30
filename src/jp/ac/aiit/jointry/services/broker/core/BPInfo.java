@@ -1,8 +1,8 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.Set;
 import java.util.Map;
 import java.util.LinkedHashMap;
-import ash.broker.util.Util;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * BPInfoはHTTP通信プロトコルとNSBroker独自プロトコルのデータ構造を定義し、

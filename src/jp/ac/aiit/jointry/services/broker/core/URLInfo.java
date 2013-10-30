@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.Map;
 import java.util.HashMap;
 import java.net.URL;

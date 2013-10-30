@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,8 +9,8 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.awt.image.BufferedImage;
-import ash.broker.util.Util;
-import ash.broker.util.Base64;
+import jp.ac.aiit.jointry.services.broker.util.Base64;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * HttpBaseは HTTPポートを使ってSoketによる双方向通信を行うための機能を

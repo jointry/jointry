@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 

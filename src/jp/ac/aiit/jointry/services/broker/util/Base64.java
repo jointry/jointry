@@ -1,4 +1,4 @@
-package ash.broker.util;
+package jp.ac.aiit.jointry.services.broker.util;
 import java.util.List;
 import java.io.InputStream;
 import java.io.OutputStream;

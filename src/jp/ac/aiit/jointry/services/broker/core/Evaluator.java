@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 
 /**
  * Brokerスクリプトの評価実行に必要なメソッドを定義する。

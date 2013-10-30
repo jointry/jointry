@@ -1,8 +1,7 @@
-package ash.broker.core;
-import ash.broker.core.DialogBase;
-import ash.broker.core.DInfo;
-import ash.broker.util.Util;
-import ash.broker.core.Property.IntProperty;
+package jp.ac.aiit.jointry.services.broker.core;
+
+import jp.ac.aiit.jointry.services.broker.core.Property.IntProperty;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * 時刻を刻印したメッセージを交換するpingダイアログの実装クラス<br>

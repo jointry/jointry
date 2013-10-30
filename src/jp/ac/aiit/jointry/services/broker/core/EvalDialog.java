@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 
 /**
  * EvalDialogは、Scriptの実行とその実行結果の受信を扱うダイアログの

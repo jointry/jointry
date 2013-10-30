@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 
 /**
  * Dialogは、双方向対話型通信機能の仕様を示すインタフェースであり、

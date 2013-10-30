@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -13,9 +13,9 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import ash.broker.util.Util;
-import ash.broker.util.ImageUtil;
-import ash.broker.util.Base64;
+import jp.ac.aiit.jointry.services.broker.util.Base64;
+import jp.ac.aiit.jointry.services.broker.util.ImageUtil;
+import jp.ac.aiit.jointry.services.broker.util.Util;
 
 /**
  * DInfoは、AgentとProxyの間の双方向通信のプロトコル情報、および Proxy間での

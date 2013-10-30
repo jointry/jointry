@@ -1,4 +1,4 @@
-package ash.broker.core;
+package jp.ac.aiit.jointry.services.broker.core;
 
 /**
  * ShellDialogは、Shellコマンドの発行とその実行結果の受信を扱うダイアログの
