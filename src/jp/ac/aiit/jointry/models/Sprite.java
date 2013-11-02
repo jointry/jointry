@@ -7,14 +7,19 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
+import jp.ac.aiit.jointry.services.broker.app.IWorkerMonitor;
+import jp.ac.aiit.jointry.services.broker.app.JointryMonitor;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
 
-public final class Sprite extends HBox {
+public final class Sprite extends HBox implements IWorkerMonitor {
 
     private List<Costume> costumes = new ArrayList<>();
     private AnchorPane scriptPane;
@@ -94,10 +99,18 @@ public final class Sprite extends HBox {
                 pressY = event.getSceneY() - mouseY;
 
                 //ドラッグ中のエフェクト効果
-                InnerShadow is = new InnerShadow();
-                is.setOffsetX(4.0f);
-                is.setOffsetY(4.0f);
-                setEffect(is);
+                if (mainController.getAgent() != null) {
+                    DInfo dinfo = new DInfo(D_FRONT);
+                    dinfo.set(KC_METHOD, VM_SELECT_SPRITE);
+                    dinfo.set(KC_COLOR, Color.RED.toString());
+
+                    mainController.getAgent().sendNotify(dinfo);
+                } else {
+                    InnerShadow is = new InnerShadow();
+                    is.setOffsetX(4.0f);
+                    is.setOffsetY(4.0f);
+                    setEffect(is);
+                }
 
                 //イベントストップ
                 event.consume();
@@ -120,6 +133,16 @@ public final class Sprite extends HBox {
                 if (!isInsideDragRange(event.getSceneX(), event.getSceneY())) {
                     setTranslateX(pressX);
                     setTranslateY(pressY);
+                }
+
+                if (mainController.getAgent() != null) {
+                    DInfo dinfo = new DInfo(D_FRONT);
+                    dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
+                    dinfo.set(KC_X1, (int) (event.getSceneX() - mouseX));
+                    dinfo.set(KC_Y1, (int) (event.getSceneY() - mouseY));
+                    dinfo.set(KC_COLOR, Color.ALICEBLUE.toString());
+
+                    mainController.getAgent().sendNotify(dinfo);
                 }
 
                 setEffect(null);
@@ -145,6 +168,7 @@ public final class Sprite extends HBox {
         createCostume(icon.getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
+        JointryMonitor.putListener(this);
     }
 
     public int getCostumeNumber() {
@@ -218,5 +242,32 @@ public final class Sprite extends HBox {
 
     public double getY() {
         return icon.getY();
+    }
+
+    @Override
+    public void onNotify(int eventId, DInfo dinfo) {
+        switch (eventId) {
+            case VM_MOVE_SPRITE:
+                setTranslateX(dinfo.getInt(KC_X1));
+                setTranslateY(dinfo.getInt(KC_Y1));
+
+                setEffect(null);
+                break;
+
+            case VM_SELECT_SPRITE:
+                setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(KC_COLOR))));
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onAnswer(int eventId, DInfo dinfo) {
+    }
+
+    @Override
+    public void onQuery(int eventId, DInfo dinfo) {
     }
 }

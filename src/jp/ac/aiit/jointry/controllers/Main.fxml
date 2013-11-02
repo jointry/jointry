@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+<BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
     <Label fx:id="dummylabel"></Label>
     <bottom>
         <!--
@@ -37,6 +37,12 @@
                 <Menu mnemonicParsing="false" text="編集">
                     <items>
                         <MenuItem mnemonicParsing="false" text="削除" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="共同編集">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#startServer" text="サーバー開始" />
+                        <MenuItem mnemonicParsing="false" onAction="#startClient" text="チームへ参加" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="ヘルプ">

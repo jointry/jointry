@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="228.0" prefWidth="582.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.CooperationController">
+  <children>
+    <Label fx:id="kind" layoutX="14.0" layoutY="20.0" prefHeight="49.0" prefWidth="296.0" text="協同編集 client">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Label>
+    <Label layoutX="15.0" layoutY="75.0" prefHeight="30.0" prefWidth="50.0" text="ユーザ名" />
+    <TextField fx:id="name" layoutX="67.0" layoutY="75.0" prefHeight="30.0" prefWidth="236.0" text="Takashi" />
+    <Label layoutX="337.0" layoutY="75.0" prefHeight="30.0" prefWidth="50.0" text="パスワード" />
+    <PasswordField fx:id="password" layoutX="390.0" layoutY="75.0" prefHeight="30.0" prefWidth="180.0" text="yt" />
+    <Label layoutX="15.0" layoutY="129.0" prefHeight="30.0" prefWidth="40.0" text="URL" />
+    <TextField fx:id="url" layoutX="68.0" layoutY="129.0" prefHeight="30.0" prefWidth="503.0" text="http://localhost:8081/index.html" />
+    <Button layoutX="34.0" layoutY="186.0" onAction="#startCooperation" prefHeight="30.0" prefWidth="100.0" text="接続" />
+    <Button layoutX="162.0" layoutY="186.0" onAction="#windowClose" prefHeight="30.0" prefWidth="100.0" text="取消" />
+    <Button layoutX="468.0" layoutY="186.0" onAction="#startProxy" prefHeight="30.0" prefWidth="100.0" text="プロキシ" />
+  </children>
+</AnchorPane>

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,8 +17,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.broker.core.Agent;
+import jp.ac.aiit.jointry.services.broker.core.Broker;
+import jp.ac.aiit.jointry.services.broker.core.Common;
 import jp.ac.aiit.jointry.services.file.FileManager;
+import jp.ac.aiit.jointry.util.StageUtil;
 
 public class MainController implements Initializable {
 
@@ -30,6 +37,8 @@ public class MainController implements Initializable {
     private BlocksController blocksController;
     @FXML
     private Label dummylabel;
+    private Broker broker;
+    private Agent agent;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,6 +92,60 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    protected void windowClose(ActionEvent event) {
+        FileManager manager = new FileManager();
+        try {
+            manager.save(frontStageController.getSprites());
+        } catch (Exception ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    protected void startServer(ActionEvent event) {
+        //協同編集 サーバサイド
+        Window owner = rootPane.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Cooperation.fxml"); //表示するfxml
+        final StageUtil stage = new StageUtil(null, owner, fxml, null);
+
+        final CooperationController ctrl = (CooperationController) stage.getController();
+        ctrl.setRole(Common.SERVER);
+
+        stage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                if (broker == null) broker = ctrl.getBroker();
+                if (agent == null) agent = ctrl.getAgent();
+            }
+        });
+
+        stage.getStage().show();
+    }
+
+    @FXML
+    protected void startClient(ActionEvent event) {
+        //協同編集 クライアントサイド
+        Window owner = rootPane.getScene().getWindow(); //画面オーナー
+        URL fxml = getClass().getResource("Cooperation.fxml"); //表示するfxml
+        final StageUtil stage = new StageUtil(null, owner, fxml, null);
+
+        stage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                CooperationController ctrl = (CooperationController) stage.getController();
+                if (agent == null) agent = ctrl.getAgent();
+            }
+        });
+
+        stage.getStage().show();
+    }
+
+    public void windowClose() {
+        if (broker != null) broker.close();
+        if (agent != null) agent.close();
+    }
+
     public void setBackStageController(BackStageController controller) {
         this.backStageController = controller;
     }
@@ -105,6 +168,10 @@ public class MainController implements Initializable {
 
     public BlocksController getBlocksController() {
         return this.blocksController;
+    }
+    
+    public Agent getAgent() {
+        return this.agent;
     }
 
     @FXML
