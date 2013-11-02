@@ -55,13 +55,11 @@ public class FileManager {
         Element projectElm = document.createElement(PROJECT_TAG);
         document.appendChild(projectElm);
 
-        int number = 0; //スプライトを一意に区別するため
-
         for (Sprite sprite : sprites) {
             //save as sprite
             Element spriteElm = document.createElement(SPRITE_TAG);
 
-            spriteElm.setAttribute("title", "sprite" + number);
+            spriteElm.setAttribute("title", sprite.getName());
             spriteElm.setAttribute("layoutX", Double.toString(sprite.getTranslateX()));
             spriteElm.setAttribute("layoutY", Double.toString(sprite.getTranslateY()));
             spriteElm.setAttribute("costume", Integer.toString(sprite.getCostumeNumber()));
@@ -71,7 +69,7 @@ public class FileManager {
             for (Costume costume : sprite.getCostumes()) {
                 Element costumeElm = document.createElement(COSTUME_TAG);
                 costumeElm.setAttribute("title", costume.getTitle());
-                costumeElm.setAttribute("img", saveAsImage(file, number + "_costume" + costume.getNumber(), costume.getImage()));
+                costumeElm.setAttribute("img", saveAsImage(file, sprite.getName() + "_costume" + costume.getNumber(), costume.getImage()));
                 spriteElm.appendChild(costumeElm);
             }
 
@@ -100,8 +98,6 @@ public class FileManager {
             Element scriptElm = document.createElement(SCRIPT_TAG);
             scriptElm.setAttribute("script", SCRIPT_FILE);
             spriteElm.appendChild(scriptElm);
-
-            number++;
         }
 
         //javaで保存できる形式に変換

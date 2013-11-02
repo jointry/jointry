@@ -21,6 +21,7 @@ import jp.ac.aiit.jointry.services.broker.core.DInfo;
 
 public final class Sprite extends HBox implements IWorkerMonitor {
 
+    private String name;
     private List<Costume> costumes = new ArrayList<>();
     private AnchorPane scriptPane;
     private double mouseX, mouseY; //マウス位置 x, y
@@ -242,6 +243,14 @@ public final class Sprite extends HBox implements IWorkerMonitor {
 
     public double getY() {
         return icon.getY();
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     @Override

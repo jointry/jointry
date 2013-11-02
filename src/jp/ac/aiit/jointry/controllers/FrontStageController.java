@@ -89,6 +89,15 @@ public class FrontStageController implements Initializable {
 
     public void showSprite(Sprite sprite) {
         sprite.setDragRange(stage);
+
+        int number = 1;
+        for (Node i : stage.getChildren()) {
+            if (i instanceof Sprite) {
+                number++;
+            }
+        }
+        sprite.setName("sprite" + number);
+
         stage.getChildren().add(sprite);
 
         setCurrentSprite(sprite);
