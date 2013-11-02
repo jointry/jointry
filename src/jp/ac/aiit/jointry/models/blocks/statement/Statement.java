@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.models.blocks.procedure;
+package jp.ac.aiit.jointry.models.blocks.statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +13,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
-import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.CodeBlock;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 
-public abstract class Procedure extends Block {
+public abstract class Statement extends Block {
 
-    public Procedure myBlock;
-    public Procedure prevBlock;
-    public Procedure nextBlock;
+    public Statement myBlock;
+    public Statement prevBlock;
+    public Statement nextBlock;
     public CodeBlock parentBlock;
     public Connector topCon;
     public Connector bottomCon;
     public Connector leftCon;
     public Connector rightCon;
 
-    public Procedure() {
+    public Statement() {
         super();
         this.myBlock = this;
 
@@ -49,10 +49,10 @@ public abstract class Procedure extends Block {
 
                 // 上下の接続
                 if (con.getPosition() == Connector.Position.BOTTOM) {
-                    Procedure target = (Procedure) con.getHolder();
+                    Statement target = (Statement) con.getHolder();
                     if (target != nextBlock) {
                         con.setFill(Color.GOLD);
-                        target.addLink((Procedure) myBlock);
+                        target.addLink((Statement) myBlock);
                         move(target.getLayoutX(),
                                 target.getLayoutY() + target.getHeight());
                         con.setFill(Color.GOLD);
@@ -66,7 +66,7 @@ public abstract class Procedure extends Block {
                         target.addChild(myBlock);
 
                         // 子供要素
-                        Procedure next = myBlock.nextBlock;
+                        Statement next = myBlock.nextBlock;
                         while (next != null) {
                             target.addChild(next);
                             next = next.nextBlock;
@@ -95,7 +95,7 @@ public abstract class Procedure extends Block {
 
         // 親のブロックを外す
         if (parentBlock != null) {
-            List<Procedure> blocks = this.fetchAllNextBlocks();
+            List<Statement> blocks = this.fetchAllNextBlocks();
             blocks.add(this);
             parentBlock.childBlocks.removeAll(blocks);
             parentBlock.resize();
@@ -122,12 +122,12 @@ public abstract class Procedure extends Block {
                 if (node == myBlock) {
                     continue;
                 }
-                if (!(node instanceof Procedure)) {
+                if (!(node instanceof Statement)) {
                     continue;
                 }
 
                 // Inside Block
-                Procedure target = (Procedure) node;
+                Statement target = (Statement) node;
                 for (Node n : target.getChildren()) {
                     if (n instanceof Connector) {
                         Connector c = (Connector) n;
@@ -179,8 +179,8 @@ public abstract class Procedure extends Block {
      *
      * @param next 次のブロック
      */
-    public void addLink(Procedure next) {
-        Procedure tmp = this.nextBlock;
+    public void addLink(Statement next) {
+        Statement tmp = this.nextBlock;
         this.nextBlock = next;
         next.prevBlock = this;
         if (tmp != null) {
@@ -189,10 +189,10 @@ public abstract class Procedure extends Block {
         }
 
         // 包含関係も考慮する
-        Procedure prevTop = fetchPrevTopBlock();
+        Statement prevTop = fetchPrevTopBlock();
         if (prevTop.parentBlock != null) {
             prevTop.parentBlock.addChild(next);
-            for (Procedure p : next.fetchAllNextBlocks()) {
+            for (Statement p : next.fetchAllNextBlocks()) {
                 prevTop.parentBlock.addChild(p);
             }
             prevTop.parentBlock.resize();
@@ -204,7 +204,7 @@ public abstract class Procedure extends Block {
      *
      * @return
      */
-    public Procedure fetchPrevTopBlock() {
+    public Statement fetchPrevTopBlock() {
         if (prevBlock == null) {
             return this;
         } else {
@@ -212,9 +212,9 @@ public abstract class Procedure extends Block {
         }
     }
 
-    public List<Procedure> fetchAllNextBlocks() {
-        List<Procedure> list = new ArrayList<>();
-        Procedure nb = this.nextBlock;
+    public List<Statement> fetchAllNextBlocks() {
+        List<Statement> list = new ArrayList<>();
+        Statement nb = this.nextBlock;
         while (nb != null) {
             list.add(nb);
             nb = nb.nextBlock;

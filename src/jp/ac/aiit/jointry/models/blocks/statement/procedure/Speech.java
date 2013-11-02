@@ -1,17 +1,16 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.statement;
+package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class Speech extends Statement {
+public class Speech extends Procedure {
 
     private TextField tf;
 
     public Speech() {
         super();
         rect.setFill(getColor());
-        getChildren().remove(cb);
 
         this.tf = new TextField();
         getChildren().add(tf);

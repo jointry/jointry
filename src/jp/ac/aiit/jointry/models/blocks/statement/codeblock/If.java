@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
+package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
-import static jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While.getColor;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
+import static jp.ac.aiit.jointry.models.blocks.statement.codeblock.While.getColor;
 
 public class If extends CodeBlock {
 
@@ -65,12 +65,12 @@ public class If extends CodeBlock {
 
     public String intern() {
         StringBuilder sb = new StringBuilder();
-        sb.append("if");
+        sb.append("if ");
         if (this.embryo != null) {
             sb.append(this.embryo.intern());
         }
-        sb.append("{\n");
-        for (Procedure p : childBlocks) {
+        sb.append(" {\n");
+        for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
                 sb.append("\t");
                 sb.append(p.intern());
@@ -89,7 +89,7 @@ public class If extends CodeBlock {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName()).append(" index < 10\n");
 
-        for (Procedure p : childBlocks) {
+        for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
                 sb.append(p.blockIntern());
                 break;

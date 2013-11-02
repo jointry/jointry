@@ -1,15 +1,15 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
+package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.blocks.Block;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
-public abstract class CodeBlock extends Procedure {
+public abstract class CodeBlock extends Statement {
 
-    public Set<Procedure> childBlocks = new LinkedHashSet<>();
+    public Set<Statement> childBlocks = new LinkedHashSet<>();
     public double hUpper = 30.0;
     public double hConcave = 50.0;
     public double hLower = 30.0;
@@ -42,7 +42,7 @@ public abstract class CodeBlock extends Procedure {
         super.initializeLink();
         // 親のブロックを外す
         if (parentBlock != null) {
-            List<Procedure> blocks = this.fetchAllNextBlocks();
+            List<Statement> blocks = this.fetchAllNextBlocks();
             blocks.add(this);
             parentBlock.childBlocks.removeAll(blocks);
             parentBlock.resize();
@@ -50,7 +50,7 @@ public abstract class CodeBlock extends Procedure {
         parentBlock = null;
     }
 
-    public void addChild(Procedure child) {
+    public void addChild(Statement child) {
         childBlocks.add(child);
         child.parentBlock = this;
     }

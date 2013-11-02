@@ -28,7 +28,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -78,7 +78,7 @@ public class FileManager {
             final String lineSeparator = System.getProperty("line.separator");
 
             for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-                Procedure procedure = (Procedure) node;
+                Statement procedure = (Statement) node;
 
                 //ブロックとの紐付 ≠ コード
                 if (procedure.isTopLevelBlock()) {

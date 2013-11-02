@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -16,28 +18,33 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
-import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 
 public class Condition extends Expression {
 
     protected final Rectangle rect;
     public If mother;
-    public Condition myBlock;
+    public Condition me;
     public Connector topCon;
     public Connector bottomCon;
     public Connector leftCon;
     public Connector rightCon;
-    protected Variable arg1;
-    protected Variable arg2;
+    public Connector leftVariableCon;
+    public Connector rightVariableCon;
     protected TextField tf1;
     protected TextField tf2;
     protected ComboBox cb;
+    public Variable leftVariable;
+    public Variable rightVariable;
+    private Map<String, String> operation = new HashMap<>();
 
     public Condition() {
         super();
-        this.myBlock = this;
-
-        makeConnectors();
+        me = this;
+        operation.put("おなじ", " == ");
+        operation.put("いじょう", " >= ");
+        operation.put("いか", " <= ");
+        operation.put("ちいさい", " < ");
 
         // Use Filter (not Handler) to fire first.
         addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -56,7 +63,7 @@ public class Condition extends Expression {
 
                 // 内部の接続
                 If target = (If) con.getHolder();
-                target.addEmbryo(myBlock);
+                target.addEmbryo(me);
                 move(target.getLayoutX() + 50, target.getLayoutY() + 10); // TODO
             }
         });
@@ -70,7 +77,7 @@ public class Condition extends Expression {
         rect.setFill(getColor());
         AnchorPane.setTopAnchor(rect, 0.0);
 
-        Label lb = getLabel();
+        Label lb = this.getLabel();
         AnchorPane.setTopAnchor(lb, 5.0);
         AnchorPane.setLeftAnchor(lb, 10.0);
 
@@ -86,8 +93,7 @@ public class Condition extends Expression {
         getChildren().addAll(rect, lb, tf1, tf2);
 
         cb = new ComboBox();
-        cb.setItems(FXCollections.observableArrayList(
-                "おなじ", "おおきい", "いじょう", "いか", "ちいさい"));
+        cb.setItems(FXCollections.observableArrayList(operation.keySet()));
 
         AnchorPane.setTopAnchor(cb, 22.0);
         AnchorPane.setLeftAnchor(cb, 68.0);
@@ -96,6 +102,8 @@ public class Condition extends Expression {
 
         // コネクタを全面に出すために
         rect.toBack();
+
+        makeConnectors();
     }
 
     public void initializeLink() {
@@ -129,7 +137,7 @@ public class Condition extends Expression {
             // Inside scriptPane
             AnchorPane scriptPane = (AnchorPane) tab.getContent();
             for (Node node : scriptPane.getChildren()) {
-                if (node == myBlock) {
+                if (node == me) {
                     continue;
                 }
                 if (!(node instanceof If)) {
@@ -145,7 +153,7 @@ public class Condition extends Expression {
                         Shape intersect = null;
 
                         // 内部の接触
-                        intersect = Shape.intersect(c, myBlock.leftCon);
+                        intersect = Shape.intersect(c, me.leftCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             if (c.getPosition() == Connector.Position.CENTER) {
                                 connector = c;
@@ -166,17 +174,39 @@ public class Condition extends Expression {
         leftCon.setFill(Color.TRANSPARENT);
         leftCon.setWidth(10);
         leftCon.setHeight(50);
-        leftCon.setHolder(myBlock);
+        leftCon.setHolder(me);
         leftCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(leftCon, 0.0);
-        getChildren().addAll(leftCon);
+
+        // Variable
+        this.leftVariableCon = new Connector();
+        leftVariableCon.setFill(Color.RED);
+        leftVariableCon.setWidth(50);
+        leftVariableCon.setHeight(2);
+        leftVariableCon.setHolder(me);
+        leftVariableCon.setPosition(Connector.Position.INSIDE_LEFT);
+        AnchorPane.setTopAnchor(leftVariableCon, 22.0);
+        AnchorPane.setLeftAnchor(leftVariableCon, 10.0);
+
+        // Variable
+        this.rightVariableCon = new Connector();
+        rightVariableCon.setFill(Color.RED);
+        rightVariableCon.setWidth(50);
+        rightVariableCon.setHeight(2);
+        rightVariableCon.setHolder(me);
+        rightVariableCon.setPosition(Connector.Position.INSIDE_RIGHT);
+        AnchorPane.setTopAnchor(rightVariableCon, 22.0);
+        AnchorPane.setRightAnchor(rightVariableCon, 10.0);
+
+        getChildren().addAll(leftCon, leftVariableCon, rightVariableCon);
     }
 
     public String intern() {
         StringBuilder sb = new StringBuilder();
-        sb.append(" ");
-        if (arg1 != null) {
-            sb.append(arg1);
+
+        // left
+        if (leftVariable != null) {
+            sb.append(leftVariable.intern());
         } else {
             try {
                 // As number
@@ -188,9 +218,13 @@ public class Condition extends Expression {
                 sb.append("\"");
             }
         }
-        sb.append(getOp());
-        if (arg2 != null) {
-            sb.append(arg2);
+
+        // op
+        sb.append(getOperation());
+
+        // right
+        if (rightVariable != null) {
+            sb.append(rightVariable.intern());
         } else {
             try {
                 // As number
@@ -202,31 +236,48 @@ public class Condition extends Expression {
                 sb.append("\"");
             }
         }
+
+        System.out.println(sb.toString());
         return sb.toString();
     }
 
-    public String getOp() {
+    public String getOperation() {
         String op = (String) cb.getValue();
-        if (op.equals("おなじ")) {
-            return " == ";
-        } else if (op.equals("おおきい")) {
-            return " > ";
-        } else if (op.equals("いじょう")) {
-            return " >= ";
-        } else if (op.equals("いか")) {
-            return " <= ";
-        } else if (op.equals("ちいさい")) {
-            return " < ";
-        } else {
-            return "";
-        }
+        return operation.get(op);
     }
 
     public String blockIntern() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" ");
-        sb.append(arg1).append(",").append(arg2);
+        // TODO:
         return sb.toString();
     }
+
+    void setLeftVariable(Variable v) {
+        this.leftVariable = v;
+        if (v != null) {
+            v.mother = this;
+        }
+    }
+
+    void setRightVariable(Variable v) {
+        this.rightVariable = v;
+        if (v != null) {
+            v.mother = this;
+        }
+    }
+
+    public void move(double dx, double dy) {
+        super.move(dx, dy);
+        if (leftVariable != null) {
+            leftVariable.move(dx + 10, dy + 22);
+            leftVariable.toFront();
+        }
+        if (rightVariable != null) {
+            rightVariable.move(dx + 140, dy + 22);
+            rightVariable.toFront();
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.statement;
+package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -11,9 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 
-public class Calculate extends Statement {
+public class Calculate extends Procedure {
 
-    protected final Rectangle rect;
     protected Variable arg1;
     protected Variable arg2;
     protected TextField tf1;
@@ -50,8 +49,8 @@ public class Calculate extends Statement {
         rect.setHeight(50);
         rect.setArcWidth(10);
         rect.setArcHeight(10);
-        rect.setStroke(Color.GRAY);
         rect.setFill(getColor());
+        rect.setStroke(Color.GRAY);
         AnchorPane.setTopAnchor(rect, 0.0);
 
         AnchorPane.setTopAnchor(cb, 5.0);
@@ -73,7 +72,7 @@ public class Calculate extends Statement {
     }
 
     public static Color getColor() {
-        return Color.SLATEGREY;
+        return Color.SILVER;
     }
 
     public final Label getLabel() {

@@ -1,18 +1,16 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.statement;
+package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
 
-public abstract class Statement extends Procedure {
+public abstract class Procedure extends jp.ac.aiit.jointry.models.blocks.statement.Statement {
 
-    protected ComboBox cb;
-    protected final Rectangle rect;
+    protected Rectangle rect;
 
-    public Statement() {
+    public Procedure() {
         super();
 
         rect = new Rectangle();
@@ -21,19 +19,13 @@ public abstract class Statement extends Procedure {
         rect.setArcWidth(10);
         rect.setArcHeight(10);
         rect.setStroke(Color.GRAY);
-
-        cb = new ComboBox();
-        cb.setEditable(true);
-        cb.setMaxWidth(75.0);
-
         AnchorPane.setTopAnchor(rect, 0.0);
-        AnchorPane.setTopAnchor(cb, 10.0);
-        AnchorPane.setLeftAnchor(cb, 80.0);
+
         Label lb = getLabel();
         AnchorPane.setTopAnchor(lb, 10.0);
         AnchorPane.setLeftAnchor(lb, 150.0);
 
-        getChildren().addAll(rect, cb, lb);
+        getChildren().addAll(rect, lb);
 
         // コネクタを全面に出すために
         rect.toBack();

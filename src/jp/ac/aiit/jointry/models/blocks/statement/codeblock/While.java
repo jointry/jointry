@@ -1,9 +1,9 @@
-package jp.ac.aiit.jointry.models.blocks.procedure.codeblock;
+package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
 public class While extends CodeBlock {
 
@@ -29,7 +29,7 @@ public class While extends CodeBlock {
         StringBuilder sb = new StringBuilder();
         sb.append("index = 0\n");
         sb.append("while index < 10 {\n");
-        for (Procedure p : childBlocks) {
+        for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
                 sb.append(p.intern());
                 sb.append("\n");
@@ -49,7 +49,7 @@ public class While extends CodeBlock {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName()).append(" index < 10\n");
 
-        for (Procedure block : childBlocks) {
+        for (Statement block : childBlocks) {
             sb.append(block.blockIntern());
             break;
         }

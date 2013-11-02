@@ -14,7 +14,7 @@ import jp.ac.aiit.jointry.lang.parser.LangReader;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;
 import jp.ac.aiit.jointry.lang.parser.Token;
-import jp.ac.aiit.jointry.models.blocks.procedure.Procedure;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
 public class SpriteTask extends Task {
 
@@ -29,8 +29,8 @@ public class SpriteTask extends Task {
         StringBuilder code = new StringBuilder();
 
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-            if (node instanceof Procedure) {
-                Procedure block = (Procedure) node;
+            if (node instanceof Statement) {
+                Statement block = (Statement) node;
                 if (block.isTopLevelBlock()) {
                     code.append(block.intern());
                 }

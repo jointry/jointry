@@ -9,7 +9,8 @@ public class Connector extends Rectangle {
 
     public enum Position {
 
-        TOP, BOTTOM, LEFT, RIGHT, CENTER
+        TOP, BOTTOM, LEFT, RIGHT, CENTER,
+        INSIDE_LEFT, INSIDE_RIGHT
     };
 
     public Position getPosition() {

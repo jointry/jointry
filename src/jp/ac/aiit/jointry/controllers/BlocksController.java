@@ -1,14 +1,13 @@
 package jp.ac.aiit.jointry.controllers;
 
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Costume;
-import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.If;
-import jp.ac.aiit.jointry.models.blocks.procedure.codeblock.While;
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Rotate;
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Rebound;
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Move;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Costume;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.While;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rotate;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rebound;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Move;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +23,9 @@ import javafx.stage.StageStyle;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.*;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
-import jp.ac.aiit.jointry.models.blocks.expression.Variable;
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Calculate;
-import jp.ac.aiit.jointry.models.blocks.procedure.statement.Speech;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
 
 public class BlocksController implements Initializable {
 
@@ -57,7 +56,10 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Speech.class),
                 new Separator(),
-                new MenuItem(Calculate.class));
+                new MenuItem(Assign.class),
+                new Separator(),
+                new MenuItem(Calculate.class)
+        );
     }
 
     public void setMainController(MainController controller) {
