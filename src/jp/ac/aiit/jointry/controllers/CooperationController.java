@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -22,6 +23,8 @@ public class CooperationController {
     private PasswordField password;
     @FXML
     private TextField url;
+    @FXML
+    private Button proxy;
     private Broker broker;
     private Agent agent;
     private String role = Common.CLIENT;
@@ -62,10 +65,11 @@ public class CooperationController {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = role; //サーバーになる
         kind.setText("協同編集 " + role);
         name.setText("Matsuko");
         password.setText("ym");
+        proxy.setVisible(true);
     }
 
     public Broker getBroker() {
