@@ -28,9 +28,9 @@ public class JoinTryParser {
     Parser expr0 = rule();
     Parser primary = rule(PrimaryExpr.class)
             .or(rule().sep("(").ast(expr0).sep(")"),
-            rule().number(NumberLiteral.class),
-            rule().identifier(Name.class, reserved),
-            rule().string(StringLiteral.class));
+                    rule().number(NumberLiteral.class),
+                    rule().identifier(Name.class, reserved),
+                    rule().string(StringLiteral.class));
     Parser factor = rule().or(rule(NegativeExpr.class).sep("-").ast(primary),
             primary);
     Parser expr = expr0.expression(BinaryExpr.class, factor, operators);
@@ -40,18 +40,18 @@ public class JoinTryParser {
             .repeat(rule().sep(";", Token.EOL).option(statement0))
             .sep("}");
     Parser simple = rule(PrimaryExpr.class).ast(expr);
-    Parser statement =
-            statement0.or(rule(IfStmnt.class).sep("if").ast(expr).ast(block)
-            .option(rule().sep("else").ast(block)),
-            rule(WhileStmnt.class).sep("while").ast(expr).ast(block),
-            rule(RotateStmnt.class).sep("rotate").ast(expr),
-            rule(MoveStmnt.class).sep("move").ast(expr),
-            rule(CostumeStmnt.class).sep("costume").ast(expr),
-            rule(ReboundStmnt.class).sep("rebound").ast(expr),
-            rule(SpeechStmnt.class).sep("speech").ast(expr),
-            simple);
-    Parser program =
-            rule().or(statement, rule(NullStmnt.class)).sep(";", Token.EOL);
+    Parser statement
+            = statement0.or(rule(IfStmnt.class).sep("if").ast(expr).ast(block)
+                    .option(rule().sep("else").ast(block)),
+                    rule(WhileStmnt.class).sep("while").ast(expr).ast(block),
+                    rule(RotateStmnt.class).sep("rotate").ast(expr),
+                    rule(MoveStmnt.class).sep("move").ast(expr),
+                    rule(CostumeStmnt.class).sep("costume").ast(expr),
+                    rule(ReboundStmnt.class).sep("rebound").ast(expr),
+                    rule(SpeechStmnt.class).sep("speech").ast(expr),
+                    simple);
+    Parser program
+            = rule().or(statement, rule(NullStmnt.class)).sep(";", Token.EOL);
 
     /*
      * 関数に関係する文法規則
@@ -105,7 +105,9 @@ public class JoinTryParser {
         operators.add("=", 1, Operators.RIGHT);
         operators.add("==", 2, Operators.LEFT);
         operators.add(">", 2, Operators.LEFT);
+        operators.add(">=", 2, Operators.LEFT);
         operators.add("<", 2, Operators.LEFT);
+        operators.add("<=", 2, Operators.LEFT);
         operators.add("+", 3, Operators.LEFT);
         operators.add("-", 3, Operators.LEFT);
         operators.add("*", 4, Operators.LEFT);
@@ -114,10 +116,8 @@ public class JoinTryParser {
 
         //primary.insertChoice(rule(Fun.class)
         //		.sep("fun").ast(paramList).ast(block));
-
         //postfix.insertChoice(rule(Dot.class).sep(".").identifier(reserved));
         //program.insertChoice(defclass);
-
         //reserved.add("]");
         //primary.insertChoice(rule().sep("[").maybe(elements).sep("]"));
         //postfix.insertChoice(rule(ArrayRef.class).sep("[").ast(expr).sep("]"));
