@@ -8,6 +8,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rebound;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Move;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,14 +86,14 @@ public class BlocksController implements Initializable {
             case YES:
                 String name = controller.getVariableName();
 
-                blockMenuAdv.getChildren().add(new Separator());
-                MenuItemAdv menu = new MenuItemAdv(name);
-                blockMenuAdv.getChildren().add(menu);
-
                 VariableLabel vl = new VariableLabel(name, null);
                 this.mainController.getFrontStageController().addVariable(vl);
 
-//                Bindings.bindBidirectional(v.getValueProperty(), vl.getValueProperty());
+                blockMenuAdv.getChildren().add(new Separator());
+                MenuItemAdv menu = new MenuItemAdv(name);
+                menu.addVariableLabel(vl);
+                blockMenuAdv.getChildren().add(menu);
+
                 break;
         }
     }

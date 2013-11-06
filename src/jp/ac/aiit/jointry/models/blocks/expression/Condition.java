@@ -237,7 +237,6 @@ public class Condition extends Expression {
             }
         }
 
-        System.out.println(sb.toString());
         return sb.toString();
     }
 

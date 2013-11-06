@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -10,9 +11,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 
 public class MenuItemAdv extends AnchorPane {
+
+    private VariableLabel vl;
 
     public MenuItemAdv(final String variableName) {
         Rectangle rect = new Rectangle();
@@ -34,6 +38,10 @@ public class MenuItemAdv extends AnchorPane {
                 Variable v = new Variable();
                 v.setName(variableName);
                 addToScriptPane(v);
+
+                // TODO: バインディングする
+                //Bindings.bindBidirectional(v.getValueProperty(),
+                //        vl.getValueProperty());
                 setCursor(Cursor.MOVE);
             }
         });
@@ -69,5 +77,9 @@ public class MenuItemAdv extends AnchorPane {
                 ap.getChildren().add(v);
             }
         }
+    }
+
+    public void addVariableLabel(VariableLabel vl) {
+        this.vl = vl;
     }
 }

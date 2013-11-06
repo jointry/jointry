@@ -50,13 +50,24 @@ public class Variable extends Expression {
                 }
 
                 // 接続
-                Condition target = (Condition) con.getHolder();
-                if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
-                    target.setLeftVariable(me);
-                    move(target.getLayoutX() + 10, target.getLayoutY() + 22);
-                } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
-                    target.setRightVariable(me);
-                    move(target.getLayoutX() + 140, target.getLayoutY() + 22);
+                if (con.getHolder() instanceof Condition) {
+                    Condition target = (Condition) con.getHolder();
+                    if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
+                        target.setLeftVariable(me);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 22);
+                    } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
+                        target.setRightVariable(me);
+                        move(target.getLayoutX() + 140, target.getLayoutY() + 22);
+                    }
+                } else if (con.getHolder() instanceof Assign) {
+                    Assign target = (Assign) con.getHolder();
+                    if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
+                        target.setLeftVariable(me);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                    } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
+                        target.setRightVariable(me);
+                        move(target.getLayoutX() + 90, target.getLayoutY() + 15);
+                    }
                 }
             }
         });
@@ -94,8 +105,14 @@ public class Variable extends Expression {
                 c.setRightVariable(null);
             }
 
-        } // TODO:
-        else if (mother instanceof Assign) {
+        } else if (mother instanceof Assign) {
+            Assign m = (Assign) mother;
+            if (m.leftVariable == this) {
+                m.setLeftVariable(null);
+            }
+            if (m.rightVariable == this) {
+                m.setRightVariable(null);
+            }
         }
     }
 
@@ -144,29 +161,45 @@ public class Variable extends Expression {
                 if (node == this) {
                     continue;
                 }
-                if (!(node instanceof Condition)) {
-                    continue;
-                }
 
                 // Inside Block
-                Condition target = (Condition) node;
-                for (Node n : target.getChildren()) {
-                    if (n instanceof Connector) {
-                        Connector c = (Connector) n;
-                        c.setFill(Color.TRANSPARENT);
-                        Shape intersect = null;
+                if (node instanceof Condition) {
+                    Condition target = (Condition) node;
+                    for (Node n : target.getChildren()) {
+                        if (n instanceof Connector) {
+                            Connector c = (Connector) n;
+                            c.setFill(Color.TRANSPARENT);
+                            Shape intersect = null;
 
-                        // 包含の接触
-                        intersect = Shape.intersect(c, this.topCon);
-                        if (intersect.getBoundsInLocal().getWidth() != -1) {
-                            connector = c;
-                            break;
+                            // 包含の接触
+                            intersect = Shape.intersect(c, this.topCon);
+                            if (intersect.getBoundsInLocal().getWidth() != -1) {
+                                connector = c;
+                                break;
+                            }
+                        }
+                    }
+                } else if (node instanceof Assign) {
+                    Assign target = (Assign) node;
+                    for (Node n : target.getChildren()) {
+                        if (n instanceof Connector) {
+                            Connector c = (Connector) n;
+                            if (c.getPosition() == Connector.Position.INSIDE_LEFT
+                                    || c.getPosition() == Connector.Position.INSIDE_RIGHT) {
+                                c.setFill(Color.TRANSPARENT);
+                                Shape intersect = null;
+                                // 包含の接触
+                                intersect = Shape.intersect(c, this.topCon);
+                                if (intersect.getBoundsInLocal().getWidth() != -1) {
+                                    connector = c;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-
         if (connector != null) {
             setConnector(connector);
         }
@@ -174,6 +207,7 @@ public class Variable extends Expression {
     }
 
     public String intern() {
-        return value.getValue();
+        // TODO: this.value.setValue(null);
+        return name;
     }
 }

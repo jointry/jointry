@@ -1,12 +1,12 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
-public abstract class Procedure extends jp.ac.aiit.jointry.models.blocks.statement.Statement {
+public abstract class Procedure extends Statement {
 
     protected Rectangle rect;
 
@@ -22,8 +22,8 @@ public abstract class Procedure extends jp.ac.aiit.jointry.models.blocks.stateme
         AnchorPane.setTopAnchor(rect, 0.0);
 
         Label lb = getLabel();
-        AnchorPane.setTopAnchor(lb, 10.0);
-        AnchorPane.setLeftAnchor(lb, 150.0);
+        AnchorPane.setTopAnchor(lb, 15.0);
+        AnchorPane.setLeftAnchor(lb, 170.0);
 
         getChildren().addAll(rect, lb);
 

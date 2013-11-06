@@ -226,7 +226,7 @@ public abstract class Statement extends Block {
         return (prevBlock == null && parentBlock == null);
     }
 
-    private void makeConnectors() {
+    protected void makeConnectors() {
         this.topCon = new Connector();
         this.bottomCon = new Connector();
         this.leftCon = new Connector();
@@ -236,28 +236,28 @@ public abstract class Statement extends Block {
         topCon.setFill(Color.TRANSPARENT);
         topCon.setWidth(250);
         topCon.setHeight(10);
-        topCon.setHolder(myBlock);
+        topCon.setHolder(this);
         topCon.setPosition(Connector.Position.TOP);
         AnchorPane.setTopAnchor(topCon, 0.0);
 
         bottomCon.setFill(Color.TRANSPARENT);
         bottomCon.setWidth(250);
         bottomCon.setHeight(10);
-        bottomCon.setHolder(myBlock);
+        bottomCon.setHolder(this);
         bottomCon.setPosition(Connector.Position.BOTTOM);
         AnchorPane.setBottomAnchor(bottomCon, 0.0);
 
         leftCon.setFill(Color.TRANSPARENT);
         leftCon.setWidth(10);
         leftCon.setHeight(50);
-        leftCon.setHolder(myBlock);
+        leftCon.setHolder(this);
         leftCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(leftCon, 0.0);
 
         rightCon.setFill(Color.TRANSPARENT);
         rightCon.setWidth(10);
         rightCon.setHeight(50);
-        rightCon.setHolder(myBlock);
+        rightCon.setHolder(this);
         rightCon.setPosition(Connector.Position.RIGHT);
         AnchorPane.setRightAnchor(rightCon, 0.0);
 
