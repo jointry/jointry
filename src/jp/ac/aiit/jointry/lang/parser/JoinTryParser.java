@@ -44,6 +44,8 @@ public class JoinTryParser {
             = statement0.or(rule(IfStmnt.class).sep("if").ast(expr).ast(block)
                     .option(rule().sep("else").ast(block)),
                     rule(WhileStmnt.class).sep("while").ast(expr).ast(block),
+                    rule(BreakStmnt.class).sep("break"),
+                    rule(ContinueStmnt.class).sep("continue"),
                     rule(RotateStmnt.class).sep("rotate").ast(expr),
                     rule(MoveStmnt.class).sep("move").ast(expr),
                     rule(CostumeStmnt.class).sep("costume").ast(expr),

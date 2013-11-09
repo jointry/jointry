@@ -26,9 +26,11 @@ public class WhileStmnt extends ASTList {
         for (;;) {
             Object c = ((ASTree) condition()).eval(env);
             if (c instanceof Integer && ((Integer) c).intValue() == FALSE) {
-                return result;
+                return 0;
             }
             result = ((ASTree) body()).eval(env);
+
+            if (result instanceof BreakStmnt) return 0;
         }
     }
 }
