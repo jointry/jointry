@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.lang.JointryLangMainController">
+  <children>
+    <TextArea fx:id="ta" layoutX="14.0" layoutY="14.0" prefHeight="177.0" prefWidth="573.0" wrapText="true" />
+    <Button fx:id="btn" layoutX="277.0" layoutY="365.0" mnemonicParsing="false" onAction="#eval" text="Eval" />
+    <TextArea fx:id="result" layoutX="14.0" layoutY="200.0" prefHeight="151.0" prefWidth="573.0" wrapText="true" />
+  </children>
+</AnchorPane>
