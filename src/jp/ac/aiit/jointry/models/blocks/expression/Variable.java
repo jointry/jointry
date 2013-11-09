@@ -93,8 +93,6 @@ public class Variable extends Expression {
     }
 
     public void initializeLink() {
-        mother = null;
-
         // Condition:
         if (mother instanceof Condition) {
             Condition c = (Condition) mother;
@@ -114,6 +112,7 @@ public class Variable extends Expression {
                 m.setRightVariable(null);
             }
         }
+        mother = null;
     }
 
     public StringProperty getValueProperty() {
