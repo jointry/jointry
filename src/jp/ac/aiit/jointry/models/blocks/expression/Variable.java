@@ -1,5 +1,8 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
@@ -13,10 +16,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import static jp.ac.aiit.jointry.models.blocks.expression.Condition.getColor;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
 
 /**
  * 名前と値があればいい
@@ -68,6 +76,21 @@ public class Variable extends Expression {
                         target.setRightVariable(me);
                         move(target.getLayoutX() + 90, target.getLayoutY() + 15);
                     }
+                } else if (con.getHolder() instanceof Calculate) {
+                    Calculate target = (Calculate) con.getHolder();
+                    if (con.getPosition() == Connector.Position.LEFT) {
+                        target.setVariable(me);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                    } else if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
+                        target.setLeftVariable(me);
+                        move(target.getLayoutX() + 70, target.getLayoutY() + 15);
+                    }
+                } else if (con.getHolder() instanceof Speech) {
+                    Speech target = (Speech) con.getHolder();
+                    if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
+                        target.setVariable(me);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                    }
                 }
             }
         });
@@ -111,6 +134,19 @@ public class Variable extends Expression {
             if (m.rightVariable == this) {
                 m.setRightVariable(null);
             }
+        } else if (mother instanceof Calculate) {
+            Calculate m = (Calculate) mother;
+            if (m.variable == this) {
+                m.setVariable(null);
+            }
+            if (m.leftVariable == this) {
+                m.setLeftVariable(null);
+            }
+        } else if (mother instanceof Speech) {
+            Speech m = (Speech) mother;
+            if (m.variable == this) {
+                m.setVariable(null);
+            }
         }
         mother = null;
     }
@@ -137,8 +173,8 @@ public class Variable extends Expression {
         getChildren().add(lb);
     }
 
-    public void setValue(String value) {
-        this.value.setValue(value);
+    public void setValue(String v) {
+        this.value.setValue(v);
     }
 
     public Connector getCollision() {
@@ -196,6 +232,41 @@ public class Variable extends Expression {
                             }
                         }
                     }
+                } else if (node instanceof Calculate) {
+                    Calculate target = (Calculate) node;
+                    for (Node n : target.getChildren()) {
+                        if (n instanceof Connector) {
+                            Connector c = (Connector) n;
+                            if (c.getPosition() == Connector.Position.LEFT
+                                    || c.getPosition() == Connector.Position.INSIDE_LEFT) {
+                                c.setFill(Color.TRANSPARENT);
+                                Shape intersect = null;
+                                // 包含の接触
+                                intersect = Shape.intersect(c, this.topCon);
+                                if (intersect.getBoundsInLocal().getWidth() != -1) {
+                                    connector = c;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else if (node instanceof Speech) {
+                    Speech target = (Speech) node;
+                    for (Node n : target.getChildren()) {
+                        if (n instanceof Connector) {
+                            Connector c = (Connector) n;
+                            if (c.getPosition() == Connector.Position.INSIDE_LEFT) {
+                                c.setFill(Color.TRANSPARENT);
+                                Shape intersect = null;
+                                // 包含の接触
+                                intersect = Shape.intersect(c, this.topCon);
+                                if (intersect.getBoundsInLocal().getWidth() != -1) {
+                                    connector = c;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -206,7 +277,7 @@ public class Variable extends Expression {
     }
 
     public String intern() {
-        // TODO: this.value.setValue(null);
         return name;
     }
+
 }

@@ -116,33 +116,32 @@ public class Assign extends Procedure {
     }
 
     public String intern() {
-        StringBuilder sb = new StringBuilder();
-
-        // left
-        sb.append(leftVariable.intern());
-
-        // op
+        StringBuilder sb = new StringBuilder(leftVariable.intern());
         sb.append(" = ");
 
         // right
+        StringBuilder v = new StringBuilder();
         if (rightVariable != null) {
-            sb.append(rightVariable.intern());
+            v.append(rightVariable.intern());
         } else {
             try {
                 // As number
-                sb.append(Integer.parseInt(tf2.getText()));
+                v.append(Integer.parseInt(tf2.getText()));
             } catch (NumberFormatException nfe) {
                 // As String
-                sb.append("\"");
-                sb.append(tf2.getText());
-                sb.append("\"");
+                v.append("\"");
+                v.append(tf2.getText());
+                v.append("\"");
             }
         }
 
+        sb.append(v.toString());
         sb.append(";\n");
+
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }
+
         return sb.toString();
     }
 

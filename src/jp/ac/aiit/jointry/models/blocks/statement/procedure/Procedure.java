@@ -9,6 +9,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 public abstract class Procedure extends Statement {
 
     protected Rectangle rect;
+    protected Label lb;
 
     public Procedure() {
         super();
@@ -21,7 +22,7 @@ public abstract class Procedure extends Statement {
         rect.setStroke(Color.GRAY);
         AnchorPane.setTopAnchor(rect, 0.0);
 
-        Label lb = getLabel();
+        lb = getLabel();
         AnchorPane.setTopAnchor(lb, 15.0);
         AnchorPane.setLeftAnchor(lb, 170.0);
 

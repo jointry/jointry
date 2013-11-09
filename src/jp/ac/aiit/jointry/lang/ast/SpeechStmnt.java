@@ -27,12 +27,7 @@ public class SpeechStmnt extends ASTList {
     public Object eval(Environment env) {
         Sprite sprite = env.getSprite();
         Object c = ((ASTree) condition()).eval(env);
-        if (c instanceof String && !((String) c).equals("")) {
-            sprite.setSpeechBubble((String) c);
-        } else {
-            System.out.println("#####################");
-            sprite.clearSpeechBubble();
-        }
+        sprite.setSpeechBubble(c.toString());
         return c;
     }
 }
