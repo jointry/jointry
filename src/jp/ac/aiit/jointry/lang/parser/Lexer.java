@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 
 public class Lexer {
 
-    public final static String regexPat =
-            "\\s*((//.*)|([0-9]+)|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
-            + "|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct})?";
+    public final static String regexPat
+            = "\\s*((//.*)|([0-9]+)|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
+            + "|(\\p{InHiragana}|\\p{InKatakana}|\\p{InCJKUnifiedIdeographs}|[A-Z_a-z0-9])+"
+            + "|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct}"
+            + ")?";
     private Pattern pattern = Pattern.compile(regexPat);
     private ArrayList<Token> queue = new ArrayList<Token>();
     private boolean hasMore;
