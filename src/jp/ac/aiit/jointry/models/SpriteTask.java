@@ -6,14 +6,14 @@ import javafx.animation.SequentialTransition;
 import javafx.concurrent.Task;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.controllers.BackStageController;
-import jp.ac.aiit.jointry.lang.ast.ASTree;
-import jp.ac.aiit.jointry.lang.ast.NullStmnt;
-import jp.ac.aiit.jointry.lang.parser.Environment;
-import jp.ac.aiit.jointry.lang.parser.JointryParser;
-import jp.ac.aiit.jointry.lang.parser.LangReader;
-import jp.ac.aiit.jointry.lang.parser.Lexer;
-import jp.ac.aiit.jointry.lang.parser.ParseException;
-import jp.ac.aiit.jointry.lang.parser.Token;
+import jp.ac.aiit.jointry.services.lang.ast.ASTree;
+import jp.ac.aiit.jointry.services.lang.ast.NullStmnt;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.JointryParser;
+import jp.ac.aiit.jointry.services.lang.parser.LangReader;
+import jp.ac.aiit.jointry.services.lang.parser.Lexer;
+import jp.ac.aiit.jointry.services.lang.parser.ParseException;
+import jp.ac.aiit.jointry.services.lang.parser.Token;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
 public class SpriteTask extends Task {

@@ -1,6 +1,6 @@
 package jp.ac.aiit.jointry.util;
 
-import jp.ac.aiit.jointry.lang.ast.ASTree;
+import jp.ac.aiit.jointry.services.lang.ast.ASTree;
 
 public class JoinTryException extends RuntimeException {
 

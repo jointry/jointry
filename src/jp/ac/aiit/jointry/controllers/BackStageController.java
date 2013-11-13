@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import jp.ac.aiit.jointry.lang.parser.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
