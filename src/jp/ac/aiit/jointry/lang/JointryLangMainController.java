@@ -13,7 +13,7 @@ import javafx.scene.control.TextArea;
 import jp.ac.aiit.jointry.lang.ast.ASTree;
 import jp.ac.aiit.jointry.lang.ast.NullStmnt;
 import jp.ac.aiit.jointry.lang.parser.Environment;
-import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
+import jp.ac.aiit.jointry.lang.parser.JointryParser;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;
@@ -36,7 +36,7 @@ public class JointryLangMainController implements Initializable {
     @FXML
     private void eval(ActionEvent event) {
         Lexer lexer = new Lexer(new LangReader(ta.getText()));
-        JoinTryParser parser = new JoinTryParser();
+        JointryParser parser = new JointryParser();
         Environment env = new Environment();
         try {
             while (lexer.peek(0) != Token.EOF) {
@@ -49,9 +49,5 @@ public class JointryLangMainController implements Initializable {
         } catch (ParseException ex) {
             Logger.getLogger(JointryLangMainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

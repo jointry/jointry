@@ -4,7 +4,7 @@ import static jp.ac.aiit.jointry.lang.parser.Parser.*;
 import java.util.HashSet;
 import jp.ac.aiit.jointry.lang.ast.*;
 
-public class JoinTryParser {
+public class JointryParser {
 
     HashSet<String> reserved = new HashSet<String>();
     Operators operators = new Operators();
@@ -95,7 +95,7 @@ public class JoinTryParser {
     //Parser elements =
     //	rule(ArrayLiteral.class).ast(expr).repeat(rule().sep(",").ast(expr));
     /*======================================================================*/
-    public JoinTryParser() {
+    public JointryParser() {
         //primary.repeat(postfix);
         //simple.option(args);
         //program.insertChoice(def);

@@ -69,7 +69,7 @@ public class Calculate extends Procedure {
 
         // Variable
         variableCon = new Connector();
-        variableCon.setFill(Color.RED);
+        variableCon.setFill(Color.TRANSPARENT);
         variableCon.setWidth(50);
         variableCon.setHeight(2);
         variableCon.setHolder(this);
@@ -79,7 +79,7 @@ public class Calculate extends Procedure {
         variableCon.toFront();
 
         leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.RED);
+        leftVariableCon.setFill(Color.TRANSPARENT);
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(this);
@@ -102,7 +102,7 @@ public class Calculate extends Procedure {
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append(variable.intern());
-        sb.append(" = ");
+        sb.append(" = (");
 
         StringBuilder v = new StringBuilder();
         if (leftVariable != null) {
@@ -142,7 +142,7 @@ public class Calculate extends Procedure {
         }
 
         sb.append(v.toString());
-        sb.append(";\n");
+        sb.append(");\n");
 
         if (nextBlock != null) {
             sb.append(nextBlock.intern());

@@ -66,7 +66,7 @@ public class Assign extends Procedure {
 
         // Variable
         this.leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.RED);
+        leftVariableCon.setFill(Color.TRANSPARENT);
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(this);

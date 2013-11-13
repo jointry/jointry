@@ -64,7 +64,7 @@ public class Condition extends Expression {
                 // 内部の接続
                 If target = (If) con.getHolder();
                 target.addEmbryo(me);
-                move(target.getLayoutX() + 50, target.getLayoutY() + 10); // TODO
+                move(target.getLayoutX() + 50, target.getLayoutY() + 20);
             }
         });
 
@@ -180,7 +180,7 @@ public class Condition extends Expression {
 
         // Variable
         this.leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.RED);
+        leftVariableCon.setFill(Color.TRANSPARENT);
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(me);
@@ -190,7 +190,7 @@ public class Condition extends Expression {
 
         // Variable
         this.rightVariableCon = new Connector();
-        rightVariableCon.setFill(Color.RED);
+        rightVariableCon.setFill(Color.TRANSPARENT);
         rightVariableCon.setWidth(50);
         rightVariableCon.setHeight(2);
         rightVariableCon.setHolder(me);

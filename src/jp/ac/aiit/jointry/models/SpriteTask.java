@@ -9,7 +9,7 @@ import jp.ac.aiit.jointry.controllers.BackStageController;
 import jp.ac.aiit.jointry.lang.ast.ASTree;
 import jp.ac.aiit.jointry.lang.ast.NullStmnt;
 import jp.ac.aiit.jointry.lang.parser.Environment;
-import jp.ac.aiit.jointry.lang.parser.JoinTryParser;
+import jp.ac.aiit.jointry.lang.parser.JointryParser;
 import jp.ac.aiit.jointry.lang.parser.LangReader;
 import jp.ac.aiit.jointry.lang.parser.Lexer;
 import jp.ac.aiit.jointry.lang.parser.ParseException;
@@ -41,7 +41,7 @@ public class SpriteTask extends Task {
         System.out.println(code);
 
         Lexer lexer = new Lexer(new LangReader(code.toString()));
-        JoinTryParser parser = new JoinTryParser();
+        JointryParser parser = new JointryParser();
 
         Environment env = new Environment();
         env.setSprite(sprite);

@@ -36,7 +36,7 @@ public class Speech extends Procedure {
 
         // Variable
         variableCon = new Connector();
-        variableCon.setFill(Color.RED);
+        variableCon.setFill(Color.TRANSPARENT);
         variableCon.setWidth(50);
         variableCon.setHeight(2);
         variableCon.setHolder(this);

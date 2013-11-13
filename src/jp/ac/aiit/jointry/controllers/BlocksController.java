@@ -86,8 +86,9 @@ public class BlocksController implements Initializable {
             case YES:
                 String name = controller.getVariableName();
 
+                // TODO: あとで考える
                 VariableLabel vl = new VariableLabel(name, null);
-                this.mainController.getFrontStageController().addVariable(vl);
+                // this.mainController.getFrontStageController().addVariable(vl);
 
                 blockMenuAdv.getChildren().add(new Separator());
                 MenuItemAdv menu = new MenuItemAdv(name);

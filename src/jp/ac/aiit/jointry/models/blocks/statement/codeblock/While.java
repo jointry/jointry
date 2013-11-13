@@ -36,9 +36,9 @@ public class While extends CodeBlock {
                 break;
             }
         }
-        sb.append("index = index + 1\n");
+        sb.append("index = index + 1; \n");
         sb.append("}\n");
-        sb.append("index = 0\n");
+        sb.append("index = 0; \n");
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }
@@ -54,7 +54,9 @@ public class While extends CodeBlock {
             break;
         }
 
-        if (nextBlock != null) sb.append(nextBlock.blockIntern());
+        if (nextBlock != null) {
+            sb.append(nextBlock.blockIntern());
+        }
 
         return sb.toString();
     }

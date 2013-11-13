@@ -12,8 +12,8 @@ import static jp.ac.aiit.jointry.models.blocks.statement.codeblock.While.getColo
 public class If extends CodeBlock {
 
     public Condition embryo;
+    public Connector connector;
 
-    // TODO: dummy
     public If() {
         super();
         this.hUpper = 80.0;
@@ -23,13 +23,14 @@ public class If extends CodeBlock {
         p.setFill(getColor());
         p.setStroke(Color.GRAY);
 
-        Connector connector = new Connector();
-        connector.setFill(Color.RED);
+        connector = new Connector();
+        connector.setFill(Color.TRANSPARENT);
         connector.setWidth(50);
         connector.setHeight(10);
         connector.setHolder(myBlock);
         connector.setPosition(Connector.Position.CENTER);
         AnchorPane.setLeftAnchor(connector, 50.0);
+        AnchorPane.setTopAnchor(connector, 20.0);
 
         Label tl1 = new Label("もし");
         Label tl2 = new Label("ならば");
