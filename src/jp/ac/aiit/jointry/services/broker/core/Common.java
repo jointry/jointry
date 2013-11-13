@@ -54,6 +54,7 @@ public interface Common {
 	static final String PROXY_FQCN      = "proxy_fqcn";		// ProxyのFQCN
 	static final String USER_ID         = "user_id";		// ユーザID
 	static final String PASSWORD        = "password";		// パスワード
+        static final String PROXY_ID        = "proxy_id";		// サーバプロキシID
 
 	// メッセージの種別を示す先頭文字
 	static final char M_QUERY = '?';				// QUERY

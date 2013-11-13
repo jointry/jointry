@@ -16,12 +16,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.services.broker.app.IWorkerMonitor;
-import jp.ac.aiit.jointry.services.broker.app.JointryMonitor;
+import jp.ac.aiit.jointry.services.broker.app.JointryDialog;
 import jp.ac.aiit.jointry.services.broker.core.DInfo;
 
 public final class Sprite extends HBox implements IWorkerMonitor {
 
-    private String name;
+    private String name = "";
     private List<Costume> costumes = new ArrayList<>();
     private AnchorPane scriptPane;
     private double mouseX, mouseY; //マウス位置 x, y
@@ -102,6 +102,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
                 //ドラッグ中のエフェクト効果
                 if (mainController.getAgent() != null) {
                     DInfo dinfo = new DInfo(D_FRONT);
+                    dinfo.set(KC_SPRITE_NAME, name);
                     dinfo.set(KC_METHOD, VM_SELECT_SPRITE);
                     dinfo.set(KC_COLOR, Color.RED.toString());
 
@@ -139,6 +140,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
                 if (mainController.getAgent() != null) {
                     DInfo dinfo = new DInfo(D_FRONT);
                     dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
+                    dinfo.set(KC_SPRITE_NAME, name);
                     dinfo.set(KC_X1, (int) (event.getSceneX() - mouseX));
                     dinfo.set(KC_Y1, (int) (event.getSceneY() - mouseY));
                     dinfo.set(KC_COLOR, Color.ALICEBLUE.toString());
@@ -169,7 +171,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
         createCostume(icon.getImage());
         setMouseEvent();
         sendActiveSpriteEvent();
-        JointryMonitor.putListener(this);
+        JointryDialog.putListener(this);
     }
 
     public int getCostumeNumber() {
@@ -257,14 +259,17 @@ public final class Sprite extends HBox implements IWorkerMonitor {
     public void onNotify(int eventId, DInfo dinfo) {
         switch (eventId) {
             case VM_MOVE_SPRITE:
-                setTranslateX(dinfo.getInt(KC_X1));
-                setTranslateY(dinfo.getInt(KC_Y1));
+                if (name.equals(dinfo.get(KC_SPRITE_NAME))) {
+                    setTranslateX(dinfo.getInt(KC_X1));
+                    setTranslateY(dinfo.getInt(KC_Y1));
+                }
 
                 setEffect(null);
                 break;
 
             case VM_SELECT_SPRITE:
-                setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(KC_COLOR))));
+                if (name.equals(dinfo.get(KC_SPRITE_NAME)))
+                    setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(KC_COLOR))));
                 break;
 
             default:

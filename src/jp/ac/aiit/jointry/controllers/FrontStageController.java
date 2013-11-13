@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,9 +16,11 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
+import jp.ac.aiit.jointry.services.broker.app.IJointApp;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class FrontStageController implements Initializable {
+public class FrontStageController implements Initializable, IJointApp {
 
     @FXML
     private AnchorPane stage;
@@ -101,6 +104,20 @@ public class FrontStageController implements Initializable {
         stage.getChildren().add(sprite);
 
         setCurrentSprite(sprite);
+
+        if (mainController.getAgent() != null) {
+            DInfo dinfo = new DInfo(D_FRONT);
+            dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
+            dinfo.set(KC_SPRITE_NAME, sprite.getName());
+            dinfo.set(KC_X1, (int) sprite.getX());
+            dinfo.set(KC_Y1, (int) sprite.getY());
+
+            mainController.getAgent().sendNotify(dinfo);
+
+
+            mainController.getAgent().notifyViewImage(sprite.getName(),
+                    SwingFXUtils.fromFXImage(sprite.snapshot(null, null), null));
+        }
     }
 
     void addVariable(VariableLabel vl) {

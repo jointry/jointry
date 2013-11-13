@@ -8,16 +8,18 @@ import java.util.ArrayList;
 import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import jp.ac.aiit.jointry.services.broker.core.DialogBase;
 
-public class JointryMonitor extends DialogBase {
+public class JointryDialog extends DialogBase {
 
     private static ArrayList<IWorkerMonitor> listeners = new ArrayList();
     private static boolean installed = false;
 
     public static void putListener(IWorkerMonitor listener) {
         listeners.add(listener);
+    }
 
+    public static void Install() {
         if (!installed) {
-            DialogBase.addDialog(IJointApp.D_FRONT, JointryMonitor.class);
+            DialogBase.addDialog(IJointApp.D_FRONT, JointryDialog.class);
             installed = true;
         }
     }
@@ -45,8 +47,8 @@ public class JointryMonitor extends DialogBase {
 
     private int getEventId(DInfo dinfo) {
         int eventId = dinfo.getInt(IJointApp.KC_METHOD);
-        
-        if(eventId == 0) return IJointApp.VM_DUMMY;
+
+        if (eventId == 0) return IJointApp.VM_DUMMY;
         return eventId;
     }
 }

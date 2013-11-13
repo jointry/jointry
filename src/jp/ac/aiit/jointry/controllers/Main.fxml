@@ -41,8 +41,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="共同編集">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#startServer" text="サーバー開始" />
-                        <MenuItem mnemonicParsing="false" onAction="#startClient" text="チームへ参加" />
+            <MenuItem mnemonicParsing="false" onAction="#startCooperation" text="みんなと遊ぶ" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="ヘルプ">

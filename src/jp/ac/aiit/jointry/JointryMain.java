@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.controllers.MainController;
+import jp.ac.aiit.jointry.services.broker.app.JointryDialog;
 
 public class JointryMain extends Application {
 
@@ -30,6 +31,8 @@ public class JointryMain extends Application {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
+
+        JointryDialog.Install();
     }
 
     /**

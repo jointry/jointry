@@ -19,6 +19,7 @@ public class StageUtil<P> {
 
     private Object controller;
     private Stage stage;
+    private Parent root;
 
     public StageUtil(Stage stage, Window owner, URL fxml, final P resources) {
         if (stage == null) stage = new Stage();
@@ -32,7 +33,7 @@ public class StageUtil<P> {
             FXMLLoader loder = new FXMLLoader(fxml);
 
             try {
-                Parent root = (Parent) loder.load();
+                root = (Parent) loder.load();
                 stage.setScene(new Scene(root));
             } catch (IOException ex) {
                 Logger.getLogger(StageUtil.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,5 +55,9 @@ public class StageUtil<P> {
 
     public Object getController() {
         return controller;
+    }
+    
+    public Parent getParent() {
+        return root;
     }
 }
