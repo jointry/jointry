@@ -16,11 +16,11 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
-import jp.ac.aiit.jointry.services.broker.app.IJointApp;
-import jp.ac.aiit.jointry.services.broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
+import broker.core.DInfo;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class FrontStageController implements Initializable, IJointApp {
+public class FrontStageController implements Initializable, JointryCommon {
 
     @FXML
     private AnchorPane stage;

@@ -14,12 +14,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import jp.ac.aiit.jointry.models.Room;
-import jp.ac.aiit.jointry.services.broker.core.Agent;
-import jp.ac.aiit.jointry.services.broker.core.Common;
-import jp.ac.aiit.jointry.services.broker.core.DInfo;
+import broker.core.Agent;
+import broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class CooperationController implements Initializable, Common {
+public class CooperationController implements Initializable, JointryCommon {
 
     @FXML
     private TextField name;

@@ -1,7 +1,10 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 //協同編集アプリケーションインタフェース
-public interface IJointApp {
+
+import broker.core.Common;
+
+public interface JointryCommon extends Common{
 
     //どこのノードにいるかとかに使えそう
     static final String D_FRONT = "front";
@@ -19,4 +22,5 @@ public interface IJointApp {
     //名前
     static final String KC_USER_NAME = "user_name";
     static final String KC_SPRITE_NAME = "sprite_name";
+    static final String PROXY_ID = "proxy_id";		// サーバプロキシID
 }

@@ -4,9 +4,9 @@
  */
 package jp.ac.aiit.jointry.services.broker.app;
 
-import jp.ac.aiit.jointry.services.broker.core.DInfo;
+import broker.core.DInfo;
 
-public interface IWorkerMonitor extends IJointApp{
+public interface IWorkerMonitor extends JointryCommon{
 
     public void onAnswer(int eventId, DInfo dinfo);
 

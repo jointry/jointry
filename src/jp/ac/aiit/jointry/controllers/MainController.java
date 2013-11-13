@@ -20,7 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
-import jp.ac.aiit.jointry.services.broker.core.Agent;
+import broker.core.Agent;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
 

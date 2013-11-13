@@ -4,7 +4,7 @@
  */
 package jp.ac.aiit.jointry.services.broker.app;
 
-import jp.ac.aiit.jointry.services.broker.core.Account;
+import broker.core.Account;
 
 public class JointryAccount extends Account {
 

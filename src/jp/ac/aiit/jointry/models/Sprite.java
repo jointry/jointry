@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.services.broker.app.IWorkerMonitor;
 import jp.ac.aiit.jointry.services.broker.app.JointryDialog;
-import jp.ac.aiit.jointry.services.broker.core.DInfo;
+import broker.core.DInfo;
 
 public final class Sprite extends HBox implements IWorkerMonitor {
 

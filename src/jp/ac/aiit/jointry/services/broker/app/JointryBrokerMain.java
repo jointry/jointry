@@ -6,7 +6,7 @@ package jp.ac.aiit.jointry.services.broker.app;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.ac.aiit.jointry.services.broker.core.Broker;
+import broker.core.Broker;
 
 public class JointryBrokerMain {
 

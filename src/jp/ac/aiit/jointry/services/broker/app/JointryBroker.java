@@ -4,11 +4,11 @@
  */
 package jp.ac.aiit.jointry.services.broker.app;
 
-import jp.ac.aiit.jointry.services.broker.core.Broker;
-import jp.ac.aiit.jointry.services.broker.core.HttpInfo;
-import jp.ac.aiit.jointry.services.broker.core.ServerProxy;
+import broker.core.Broker;
+import broker.core.HttpInfo;
+import broker.core.ServerProxy;
 
-public class JointryBroker extends Broker {
+public class JointryBroker extends Broker implements JointryCommon {
 
     public JointryBroker(int port, String market) throws Exception {
         super(port, market);

@@ -5,8 +5,8 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import java.util.ArrayList;
-import jp.ac.aiit.jointry.services.broker.core.DInfo;
-import jp.ac.aiit.jointry.services.broker.core.DialogBase;
+import broker.core.DInfo;
+import broker.core.DialogBase;
 
 public class JointryDialog extends DialogBase {
 
@@ -19,7 +19,7 @@ public class JointryDialog extends DialogBase {
 
     public static void Install() {
         if (!installed) {
-            DialogBase.addDialog(IJointApp.D_FRONT, JointryDialog.class);
+            DialogBase.addDialog(JointryCommon.D_FRONT, JointryDialog.class);
             installed = true;
         }
     }
@@ -46,9 +46,9 @@ public class JointryDialog extends DialogBase {
     }
 
     private int getEventId(DInfo dinfo) {
-        int eventId = dinfo.getInt(IJointApp.KC_METHOD);
+        int eventId = dinfo.getInt(JointryCommon.KC_METHOD);
 
-        if (eventId == 0) return IJointApp.VM_DUMMY;
+        if (eventId == 0) return JointryCommon.VM_DUMMY;
         return eventId;
     }
 }
