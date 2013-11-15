@@ -78,12 +78,14 @@ public class FileManager {
             final String lineSeparator = System.getProperty("line.separator");
 
             for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
+                if (!(node instanceof Statement)) continue;
+
                 Statement procedure = (Statement) node;
 
                 //ブロックとの紐付 ≠ コード
                 if (procedure.isTopLevelBlock()) {
                     code.append("coordinate ");
-                    code.append(procedure.getTranslateX()).append(" ").append(procedure.getTranslateY());
+                    code.append(procedure.getLayoutX()).append(" ").append(procedure.getLayoutY());
                     code.append(lineSeparator);
                     code.append(procedure.blockIntern());
                 }
