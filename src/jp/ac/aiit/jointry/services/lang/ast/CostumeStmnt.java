@@ -1,6 +1,9 @@
 package jp.ac.aiit.jointry.services.lang.ast;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -30,8 +33,8 @@ public class CostumeStmnt extends ASTList {
         if (c instanceof Integer) {
             final Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
-            TranslateTransition tt =
-                    new TranslateTransition(Duration.millis(0), sprite);
+            TranslateTransition tt
+                    = new TranslateTransition(Duration.millis(10), sprite);
             tt.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {

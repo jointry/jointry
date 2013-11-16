@@ -40,7 +40,7 @@ public class Costume extends Procedure {
         if (arg == null) {
             arg = "0";
         }
-        sb.append(" " + arg + "\n");
+        sb.append(" " + arg + ";\n");
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }
