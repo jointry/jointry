@@ -59,6 +59,14 @@ public class BinaryExpr extends ASTList {
                 return left.equals(right) ? TRUE : FALSE;
             }
         }
+
+        if (op.equals("!=")) {
+            if (left == null) {
+                return right == null ? FALSE : TRUE;
+            } else {
+                return left.equals(right) ? FALSE : TRUE;
+            }
+        }
         throw new JoinTryException("bad type", this);
     }
 
@@ -88,6 +96,15 @@ public class BinaryExpr extends ASTList {
         }
         if (op.equals("<")) {
             return a < b ? TRUE : FALSE;
+        }
+        if (op.equals(">=")) {
+            return a >= b ? TRUE : FALSE;
+        }
+        if (op.equals("<=")) {
+            return a <= b ? TRUE : FALSE;
+        }
+        if (op.equals("!=")) {
+            return a != b ? TRUE : FALSE;
         }
 
         throw new JoinTryException("bad operator", this);

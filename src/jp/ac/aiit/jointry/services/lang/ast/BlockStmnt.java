@@ -14,9 +14,10 @@ public class BlockStmnt extends ASTList {
         for (ASTree t : this) {
             if (!(t instanceof NullStmnt)) {
                 result = ((ASTree) t).eval(env);
-                
-                if(result instanceof BreakStmnt || result instanceof ContinueStmnt)
+
+                if (result instanceof BreakStmnt || result instanceof ContinueStmnt) {
                     break;
+                }
             }
         }
         return result;
