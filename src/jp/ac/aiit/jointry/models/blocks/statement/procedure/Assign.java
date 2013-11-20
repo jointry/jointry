@@ -1,5 +1,8 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -145,4 +148,15 @@ public class Assign extends Procedure {
         return sb.toString();
     }
 
+    @Override
+    public Map blockIntern(Map blockMap) {
+        if (leftVariable != null)
+            blockMap.put("left", leftVariable.blockIntern());
+
+        if (rightVariable != null) {
+            blockMap.put("right", rightVariable.blockIntern());
+        }
+        
+        return blockMap;
+    }
 }

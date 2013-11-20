@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,19 +48,13 @@ public class Costume extends Procedure {
         return sb.toString();
     }
 
-    public String blockIntern() {
+    @Override
+    public Map blockIntern(Map blockMap) {
         String arg = (String) cb.getValue();
-        if (arg == null) {
-            arg = "0";
-        }
+        if (arg == null) arg = "0";
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName()).append(" ").append(arg).append("\n");
-
-        if (nextBlock != null) {
-            sb.append(nextBlock.blockIntern());
-        }
-
-        return sb.toString();
+        blockMap.put("costume", arg);
+        
+        return blockMap;
     }
 }

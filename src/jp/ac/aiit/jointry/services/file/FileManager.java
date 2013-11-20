@@ -4,11 +4,17 @@
  */
 package jp.ac.aiit.jointry.services.file;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -49,7 +55,7 @@ public class FileManager {
         if (!chooser.exists()) chooser.mkdir(); //create project folder
         File file = new File(chooser.getPath(), chooser.getName());
 
-        //DOM生成
+        //xml形式で各種情報の保存
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 
         Element projectElm = document.createElement(PROJECT_TAG);
@@ -74,8 +80,7 @@ public class FileManager {
             }
 
             //save as script
-            StringBuilder code = new StringBuilder();
-            final String lineSeparator = System.getProperty("line.separator");
+            ArrayList<Map> source = new ArrayList();
 
             for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
                 if (!(node instanceof Statement)) continue;
@@ -84,15 +89,20 @@ public class FileManager {
 
                 //ブロックとの紐付 ≠ コード
                 if (procedure.isTopLevelBlock()) {
-                    code.append("coordinate ");
-                    code.append(procedure.getLayoutX()).append(" ").append(procedure.getLayoutY());
-                    code.append(lineSeparator);
-                    code.append(procedure.blockIntern());
+                    Map<String, Object> codeMap = new HashMap();
+
+                    codeMap.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
+
+                    ArrayList<Map> blockList = new ArrayList();
+                    procedure.blockIntern(blockList);
+                    codeMap.put("block", blockList);
+
+                    source.add(codeMap);
                 }
             }
 
             try (PrintWriter script = new PrintWriter(new File(file.getParent(), SCRIPT_FILE))) {
-                script.print(code.toString());
+                script.print(makeJSONString(source));
                 script.flush();
             }
 
@@ -139,5 +149,21 @@ public class FileManager {
         }
 
         return name;
+    }
+
+    private String makeJSONString(ArrayList<Map> valueMap) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = null;
+
+        try {
+            jsonString = objectMapper.writeValueAsString(valueMap);
+        } catch (JsonGenerationException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JsonMappingException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return jsonString;
     }
 }

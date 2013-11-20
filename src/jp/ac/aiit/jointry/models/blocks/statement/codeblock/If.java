@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
+import java.util.ArrayList;
+import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -86,21 +88,20 @@ public class If extends CodeBlock {
         return sb.toString();
     }
 
-    public String blockIntern() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName()).append(" index < 10\n");
+    @Override
+    public Map blockIntern(Map blockMap) {
+        if (embryo != null)
+            blockMap.put("embryo", embryo.blockIntern());
 
+        ArrayList<Map> list = new ArrayList();
         for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
-                sb.append(p.blockIntern());
+                p.blockIntern(list);
                 break;
             }
         }
+        blockMap.put("childBlocks", list);
 
-        if (nextBlock != null) {
-            sb.append(nextBlock.blockIntern());
-        }
-
-        return sb.toString();
+        return blockMap;
     }
 }

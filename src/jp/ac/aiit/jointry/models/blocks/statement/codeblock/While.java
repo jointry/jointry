@@ -1,5 +1,8 @@
 package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -45,20 +48,20 @@ public class While extends CodeBlock {
         return sb.toString();
     }
 
-    public String blockIntern() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName()).append(" index < 10\n");
+    @Override
+    public Map blockIntern(Map blockMap) {
+        blockMap.put("embryo", "index < 10");
 
-        for (Statement block : childBlocks) {
-            sb.append(block.blockIntern());
-            break;
+        ArrayList<Map> list = new ArrayList();
+        for (Statement p : childBlocks) {
+            if (p.prevBlock == null) {
+                p.blockIntern(list);
+                break;
+            }
         }
+        blockMap.put("childBlocks", list);
 
-        if (nextBlock != null) {
-            sb.append(nextBlock.blockIntern());
-        }
-
-        return sb.toString();
+        return blockMap;
     }
 
     public Label getLabel() {

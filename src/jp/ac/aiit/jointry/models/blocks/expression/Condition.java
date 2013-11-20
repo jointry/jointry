@@ -1,6 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -245,12 +246,28 @@ public class Condition extends Expression {
         return operation.get(op);
     }
 
-    public String blockIntern() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" ");
-        // TODO:
-        return sb.toString();
+    @Override
+    public Map blockIntern() {
+        Map<String, Object> blockMap = new HashMap();
+
+        //left
+        if (leftVariable != null) {
+            blockMap.put("left", leftVariable.blockIntern());
+        } else {
+            blockMap.put("left", tf1.getText());
+        }
+
+        //op
+        blockMap.put("op", getOperation());
+
+        //right
+        if (rightVariable != null) {
+            blockMap.put("right", rightVariable.blockIntern());
+        } else {
+            blockMap.put("right", tf2.getText());
+        }
+
+        return blockMap;
     }
 
     void setLeftVariable(Variable v) {
@@ -278,5 +295,4 @@ public class Condition extends Expression {
             rightVariable.toFront();
         }
     }
-
 }

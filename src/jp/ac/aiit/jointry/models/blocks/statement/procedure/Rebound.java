@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
@@ -23,20 +24,10 @@ public class Rebound extends Procedure {
         return sb.toString();
     }
 
-    public String blockIntern() {
-        String arg = "";
-        if (arg == null) {
-            arg = "0";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName()).append(" ").append(arg).append("\n");
-
-        if (nextBlock != null) {
-            sb.append(nextBlock.blockIntern());
-        }
-
-        return sb.toString();
+    @Override
+    public Map blockIntern(Map blockMap) {
+        blockMap.put("rebound", "0");
+        return blockMap;
     }
 
     public Label getLabel() {

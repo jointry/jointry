@@ -1,6 +1,8 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -280,4 +282,11 @@ public class Variable extends Expression {
         return name;
     }
 
+    @Override
+    public Map blockIntern() {
+        Map<String, Object> blockMap = new HashMap();
+        blockMap.put(name, value.getValue());
+
+        return blockMap;
+    }
 }

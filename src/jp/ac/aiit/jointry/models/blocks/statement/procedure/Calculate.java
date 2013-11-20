@@ -1,5 +1,8 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
@@ -149,6 +152,28 @@ public class Calculate extends Procedure {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public Map blockIntern(Map blockMap) {
+        if (variable != null)
+            blockMap.put("variable", variable.blockIntern());
+
+        if (leftVariable != null) {
+            blockMap.put("left", leftVariable.blockIntern());
+        } else if (arg1 != null) {
+            blockMap.put("left", arg1.blockIntern());
+        } else {
+            blockMap.put("left", tf1.getText());
+        }
+
+        if (arg2 != null) {
+            blockMap.put("right", arg2.blockIntern());
+        } else {
+            blockMap.put("right", tf2.getText());
+        }
+
+        return blockMap;
     }
 
     public void setVariable(Variable v) {

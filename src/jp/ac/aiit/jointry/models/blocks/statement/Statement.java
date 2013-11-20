@@ -1,7 +1,9 @@
 package jp.ac.aiit.jointry.models.blocks.statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -263,4 +265,16 @@ public abstract class Statement extends Block {
 
         getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
     }
+
+    @Override
+    public void blockIntern(List codeList) {
+        Map<String, Object> blockMap = new HashMap();
+        blockMap.put(this.getClass().getSimpleName(), blockIntern(new HashMap()));
+        codeList.add(blockMap);
+
+        if (nextBlock != null)
+            nextBlock.blockIntern(codeList);
+    }
+
+    abstract protected Map blockIntern(Map blockMap);
 }

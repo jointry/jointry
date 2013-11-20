@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks;
 
+import java.util.List;
+import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -82,7 +84,7 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public String blockIntern() {
+    public void blockIntern(List codeList) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

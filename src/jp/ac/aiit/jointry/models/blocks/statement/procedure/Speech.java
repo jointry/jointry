@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -68,6 +70,17 @@ public class Speech extends Procedure {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
+    }
+
+    @Override
+    public Map blockIntern(Map blockMap) {
+        if (variable != null) {
+            blockMap.put("variable", variable.blockIntern());
+        } else {
+            blockMap.put("variable", tf.getText());
+        }
+
+        return blockMap;
     }
 
     public void setVariable(Variable v) {
