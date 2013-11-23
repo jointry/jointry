@@ -88,6 +88,7 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     public void setCurrentSprite(Sprite sprite) {
         currentSprite = sprite;
+        mainController.getBackStageController().setCurrentSprite(sprite);
     }
 
     public void showSprite(Sprite sprite) {
@@ -95,15 +96,12 @@ public class FrontStageController implements Initializable, JointryCommon {
 
         int number = 1;
         for (Node i : stage.getChildren()) {
-            if (i instanceof Sprite) {
-                number++;
-            }
+            if (i instanceof Sprite) number++;
         }
         sprite.setName("sprite" + number);
 
         stage.getChildren().add(sprite);
-
-        setCurrentSprite(sprite);
+        this.setCurrentSprite(sprite);
 
         if (mainController.getAgent() != null) {
             DInfo dinfo = new DInfo(D_FRONT);

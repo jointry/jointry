@@ -38,7 +38,7 @@ public class CostumeStmnt extends ASTList {
             tt.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    sprite.changeCostume((int) c);
+                    sprite.setSpriteCostume((int) c);
                 }
             });
             st.getChildren().add(tt);

@@ -29,13 +29,13 @@ public class CostumeCntroller implements Initializable {
     @FXML
     protected void handleImageSelected(MouseEvent event) {
         mainController.getFrontStageController()
-                .getCurrentSprite().setImage(image.getImage());
+                .getCurrentSprite().setSpriteCostume(Integer.valueOf(number.getText()));
     }
 
     @FXML
     protected void handleCopyButtonAction(ActionEvent event) {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        sprite.copyCostume(Integer.valueOf(number.getText()));
+        sprite.addCostume(title.getText() + "のコピー", image.getImage());
         mainController.getBackStageController().showCostumes(sprite);
     }
 

@@ -28,72 +28,132 @@ public final class Sprite extends HBox implements IWorkerMonitor {
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragRange; //ドラッグ範囲をノードで指定
     private MainController mainController;
-    private int currentCostumeNumber;
+    private int currentCostumeNumber = 1;
     private Integer direction = 1;
     private ImageView icon;
     private Label saying;
 
+    public Sprite(MainController mainController) {
+        //値初期化
+        this.mainController = mainController;
+        this.scriptPane = new AnchorPane();
+        scriptPane.setId("scriptPane");
+
+        icon = new ImageView();
+        getChildren().add(this.icon);
+
+        //リスナー設定
+        setMouseEvent();
+        JointryDialog.putListener(this);
+    }
+
     public Sprite(String url, MainController mainController) {
-        icon = new ImageView(url);
-        initialize(mainController);
+        this(new Image(url), mainController);
     }
 
     public Sprite(Image image, MainController mainController) {
+        this(mainController);
+
         icon = new ImageView(image);
-        initialize(mainController);
+        getChildren().add(this.icon);
+        addCostume("costume", icon.getImage());
     }
 
-    public void setDragRange(Node node) {
-        this.dragRange = node;
-    }
+    public Costume addCostume(String name, Image image) {
+        Costume costume = new Costume(getNewNumber(), name, image);
+        costumes.add(costume);
 
-    public void addCostume(Costume costume) {
-        if (costume != null) {
-            costumes.add(costume);
-        }
-    }
-
-    public void createCostume(Image image) {
-        Costume costume = new Costume(getNewNumber(), "costume", image);
-        addCostume(costume);
-    }
-
-    public void copyCostume(int number) {
-        for (Costume cos : costumes) {
-            if (cos.getNumber() == number) {
-                Costume costume = new Costume(getNewNumber(),
-                        cos.getTitle() + "のコピー",
-                        cos.getImage());
-                addCostume(costume);
-                break;
-            }
-        }
+        return costume;
     }
 
     public void updateCostume(int number, Image image) {
         for (Costume cos : costumes) {
             if (cos.getNumber() == number) {
                 cos.setImage(image);
-                setCostume(cos);
+                setSpriteCostume(cos);
                 break;
             }
         }
     }
 
-    public int getNewNumber() {
+    public void setSpriteCostume(int number) {
+        for (Costume cos : costumes) {
+            if (cos.getNumber() == number) {
+                setSpriteCostume(cos);
+                break;
+            }
+        }
+    }
+
+    public void setSpriteCostume(Costume costume) {
+        this.currentCostumeNumber = costume.getNumber();
+        icon.setImage(costume.getImage());
+    }
+
+    public int getCostumeNumber() {
+        return currentCostumeNumber;
+    }
+
+    public Iterable<Costume> getCostumes() {
+        return costumes;
+    }
+
+    private int getNewNumber() {
         return costumes.size() + 1;
     }
 
-    private void sendActiveSpriteEvent() {
-        mainController.getFrontStageController().setCurrentSprite(this);
-        mainController.getBackStageController().setCurrentSprite(this);
+    public AnchorPane getScriptPane() {
+        return scriptPane;
+    }
+
+    public double moveBy(double x) {
+        return x * this.direction;
+    }
+
+    public void setSpeechBubble(final String say) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                clearSpeechBubble();
+                saying = new Label(say);
+                saying.getStyleClass().add("speech-bubble");
+                getChildren().add(saying);
+            }
+        });
+    }
+
+    public void clearSpeechBubble() {
+        if (saying != null) {
+            saying.setVisible(false);
+            getChildren().removeAll(saying);
+        }
+    }
+
+    public double getX() {
+        return icon.getX();
+    }
+
+    public double getY() {
+        return icon.getY();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setDragRange(Node node) {
+        this.dragRange = node;
     }
 
     private void setMouseEvent() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                sendActiveSpriteEvent();
+                mainController.getFrontStageController().setCurrentSprite(Sprite.this);
                 mouseX = event.getSceneX() - getTranslateX();
                 mouseY = event.getSceneY() - getTranslateY();
                 pressX = event.getSceneX() - mouseX;
@@ -154,105 +214,12 @@ public final class Sprite extends HBox implements IWorkerMonitor {
         });
     }
 
-    public boolean isInsideDragRange(double sceneX, double sceneY) {
+    private boolean isInsideDragRange(double sceneX, double sceneY) {
         if (dragRange == null) {
             return true;
         }
         return dragRange.getLayoutBounds().contains(
                 dragRange.sceneToLocal(sceneX, sceneY));
-    }
-
-    private void initialize(MainController mainController) {
-        getChildren().add(this.icon);
-        this.mainController = mainController;
-        this.currentCostumeNumber = 1;
-        this.scriptPane = new AnchorPane();
-        scriptPane.setId("scriptPane");
-        createCostume(icon.getImage());
-        setMouseEvent();
-        sendActiveSpriteEvent();
-        JointryDialog.putListener(this);
-    }
-
-    public int getCostumeNumber() {
-        return currentCostumeNumber;
-    }
-
-    public Iterable<Costume> getCostumes() {
-        return costumes;
-    }
-
-    public void changeCostume(int number) {
-        for (Costume cos : costumes) {
-            if (cos.getNumber() == number) {
-                setCostume(cos);
-                break;
-            }
-        }
-    }
-
-    public void changeNextCostume() {
-        int nextNumber = this.currentCostumeNumber + 1;
-        if (nextNumber > costumes.size()) {
-            nextNumber = 1; // initialize
-        }
-        setCostume(costumes.get(nextNumber - 1));
-    }
-
-    public void setCostume(Costume costume) {
-        this.currentCostumeNumber = costume.getNumber();
-        this.setImage(costume.getImage());
-    }
-
-    public AnchorPane getScriptPane() {
-        return scriptPane;
-    }
-
-    public double moveBy(double x) {
-        return x * this.direction;
-    }
-
-    public void changeDirection() {
-        this.direction *= -1;
-    }
-
-    public void setSpeechBubble(final String say) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                clearSpeechBubble();
-                saying = new Label(say);
-                saying.getStyleClass().add("speech-bubble");
-                getChildren().add(saying);
-            }
-        });
-    }
-
-    public void clearSpeechBubble() {
-        if (saying != null) {
-            saying.setVisible(false);
-            getChildren().removeAll(saying);
-        }
-    }
-
-    public void setImage(Image image) {
-        icon.setImage(image);
-    }
-
-    public double getX() {
-        return icon.getX();
-    }
-
-    public double getY() {
-        return icon.getY();
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getName() {
-        return name;
     }
 
     @Override

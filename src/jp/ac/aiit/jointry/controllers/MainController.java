@@ -75,7 +75,7 @@ public class MainController implements Initializable {
         URL path = getClass().getResource("images/scratch_cat1.gif");
         Sprite sprite = new Sprite(path.toString(), this);
         URL costume_path = getClass().getResource("images/scratch_cat2.gif");
-        sprite.createCostume(new Image(costume_path.toString()));
+        sprite.addCostume("costume", new Image(costume_path.toString()));
         frontStageController.showSprite(sprite);
     }
 

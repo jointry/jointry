@@ -2,16 +2,13 @@ package jp.ac.aiit.jointry.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -26,7 +23,7 @@ import jp.ac.aiit.jointry.models.SpriteTask;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class BackStageController implements Initializable {
+public class BackStageController {
 
     @FXML
     private ScrollPane costumeList;
@@ -49,7 +46,7 @@ public class BackStageController implements Initializable {
 
                 if (ctrl.getResult() != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.createCostume(ctrl.getResult());
+                    sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
                     showCostumes(sprite);
                 }
             }
@@ -91,7 +88,7 @@ public class BackStageController implements Initializable {
 
                 if (ctrl.getResult() != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.createCostume(ctrl.getResult());
+                    sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
                     showCostumes(sprite);
                 }
             }
@@ -104,10 +101,6 @@ public class BackStageController implements Initializable {
     protected void handleCostumeSelected(Event event) {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         setCurrentSprite(sprite);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
     }
 
     public void setCurrentSprite(Sprite sprite) {
