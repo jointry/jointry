@@ -14,9 +14,10 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.util.ParameterAware;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class CostumeCntroller implements Initializable {
+public class CostumeCntroller implements Initializable, ParameterAware<Costume> {
 
     @FXML
     private ImageView image;
@@ -67,13 +68,14 @@ public class CostumeCntroller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void setInfo(Costume costume) {
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
+
+    @Override
+    public void setParameter(Costume costume) {
         this.title.setText(costume.getTitle());
         this.image.setImage(costume.getImage());
         this.number.setText(Integer.toString(costume.getNumber()));
-    }
-
-    public void setMainController(MainController controller) {
-        this.mainController = controller;
     }
 }

@@ -1,15 +1,10 @@
 package jp.ac.aiit.jointry.controllers;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
@@ -58,18 +53,12 @@ public class BackStageController {
     public void showCostumes(Sprite sprite) {
         VBox vbox = new VBox();
         for (Costume costume : sprite.getCostumes()) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Costume.fxml"));
-            Parent parent = null;
-            try {
-                parent = (Parent) fxmlLoader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(BackStageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            URL fxml = getClass().getResource("Costume.fxml"); //表示するfxml
+            StageUtil costumeStage = new StageUtil(null, null, fxml, costume);
 
-            CostumeCntroller controller = (CostumeCntroller) fxmlLoader.getController();
-            controller.setInfo(costume);
+            CostumeCntroller controller = (CostumeCntroller) costumeStage.getController();
             controller.setMainController(mainController);
-            vbox.getChildren().add(parent);
+            vbox.getChildren().add(costumeStage.getParent());
         }
         costumeList.setContent(vbox);
     }
