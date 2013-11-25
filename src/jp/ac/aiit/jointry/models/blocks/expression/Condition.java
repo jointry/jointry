@@ -258,7 +258,7 @@ public class Condition extends Expression {
         }
 
         //op
-        blockMap.put("op", getOperation());
+        blockMap.put("op", cb.getValue());
 
         //right
         if (rightVariable != null) {

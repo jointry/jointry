@@ -40,11 +40,11 @@ import org.w3c.dom.Element;
 
 public class FileManager {
 
+    private static final String JOINTRY_EXTENSION = ".jty";
     private static final String PROJECT_TAG = "PROJECT";
     private static final String SPRITE_TAG = "SPRITE";
     private static final String COSTUME_TAG = "COSTUME";
     private static final String SCRIPT_TAG = "SCRIPT";
-    private static final String SCRIPT_FILE = "script.jty";
 
     public void save(List<Sprite> sprites) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException {
         FileChooser fc = createFileChooser("save");
@@ -101,21 +101,22 @@ public class FileManager {
                 }
             }
 
-            try (PrintWriter script = new PrintWriter(new File(file.getParent(), SCRIPT_FILE))) {
+            String ScriptFileName = sprite.getName() + "_script";
+            try (PrintWriter script = new PrintWriter(new File(file.getParent(), ScriptFileName))) {
                 script.print(makeJSONString(source));
                 script.flush();
             }
 
             //スプライトとの関連付け
             Element scriptElm = document.createElement(SCRIPT_TAG);
-            scriptElm.setAttribute("script", SCRIPT_FILE);
+            scriptElm.setAttribute("script", ScriptFileName);
             spriteElm.appendChild(scriptElm);
         }
 
         //javaで保存できる形式に変換
         DOMSource source = new DOMSource(document);
 
-        File xmlFile = new File(file.getParent(), file.getName() + ".xml");
+        File xmlFile = new File(file.getParent(), file.getName() + JOINTRY_EXTENSION);
         try (FileOutputStream fo = new FileOutputStream(xmlFile)) {
             StreamResult result = new StreamResult(fo);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -130,7 +131,7 @@ public class FileManager {
 
         fc.setTitle(title); //title
         fc.setInitialDirectory(new File(System.getProperty("user.home"))); //home
-        fc.getExtensionFilters().add(new ExtensionFilter("jointry設定ファイル", "*.jty"));
+        fc.getExtensionFilters().add(new ExtensionFilter("jointry設定ファイル", "*" + JOINTRY_EXTENSION));
 
         return fc;
     }
