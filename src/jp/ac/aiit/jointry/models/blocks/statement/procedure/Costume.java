@@ -50,7 +50,7 @@ public class Costume extends Procedure {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         String arg = (String) cb.getValue();
         if (arg == null) arg = "0";
 
@@ -60,7 +60,7 @@ public class Costume extends Procedure {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
         cb.setValue(paramMap.get("costume"));
     }

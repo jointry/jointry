@@ -248,12 +248,12 @@ public class Condition extends Expression {
     }
 
     @Override
-    public Map blockIntern() {
+    public Map getStatus() {
         Map<String, Object> blockMap = new HashMap();
 
         //left
         if (leftVariable != null) {
-            blockMap.put("left", leftVariable.blockIntern());
+            blockMap.put("left", leftVariable.getStatus());
         } else {
             blockMap.put("left", tf1.getText());
         }
@@ -263,7 +263,7 @@ public class Condition extends Expression {
 
         //right
         if (rightVariable != null) {
-            blockMap.put("right", rightVariable.blockIntern());
+            blockMap.put("right", rightVariable.getStatus());
         } else {
             blockMap.put("right", tf2.getText());
         }
@@ -272,7 +272,7 @@ public class Condition extends Expression {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         for (Object key : paramMap.keySet()) {
@@ -286,7 +286,7 @@ public class Condition extends Expression {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
                     env.setValues((HashMap) paramMap.get(key));
-                    variable.setParams(env);
+                    variable.setStatus(env);
 
                     setLeftVariable(variable);
                 }
@@ -302,7 +302,7 @@ public class Condition extends Expression {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
                     env.setValues((HashMap) paramMap.get(key));
-                    variable.setParams(env);
+                    variable.setStatus(env);
 
                     setRightVariable(variable);
                 }

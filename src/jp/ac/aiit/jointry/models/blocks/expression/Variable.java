@@ -279,7 +279,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Map blockIntern() {
+    public Map getStatus() {
         Map<String, Object> blockMap = new HashMap();
         blockMap.put(name, value.getValue());
 
@@ -287,7 +287,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         //key = 変数名

@@ -105,7 +105,7 @@ public class FileManager {
                     codeMap.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
 
                     ArrayList<Map> blockList = new ArrayList();
-                    procedure.blockIntern(blockList);
+                    procedure.getStatus(blockList);
                     codeMap.put("block", blockList);
 
                     source.add(codeMap);
@@ -219,7 +219,7 @@ public class FileManager {
                 env.setValues((HashMap) map.get(cname));
 
                 //生成したブロックへパラメータを設定
-                myBlock.setParams(env);
+                myBlock.setStatus(env);
                 env.getSprite().getScriptPane().getChildren().add(myBlock); //ブロックの表示
 
                 if (topBlock == null) {

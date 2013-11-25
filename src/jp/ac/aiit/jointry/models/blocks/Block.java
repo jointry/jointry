@@ -86,11 +86,11 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void blockIntern(List codeList) {
+    public List getStatus(List codeList) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

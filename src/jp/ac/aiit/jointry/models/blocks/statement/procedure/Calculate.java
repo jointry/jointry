@@ -157,20 +157,20 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         if (variable != null)
-            blockMap.put("variable", variable.blockIntern());
+            blockMap.put("variable", variable.getStatus());
 
         if (leftVariable != null) {
-            blockMap.put("left", leftVariable.blockIntern());
+            blockMap.put("left", leftVariable.getStatus());
         } else if (arg1 != null) {
-            blockMap.put("left", arg1.blockIntern());
+            blockMap.put("left", arg1.getStatus());
         } else {
             blockMap.put("left", tf1.getText());
         }
 
         if (arg2 != null) {
-            blockMap.put("right", arg2.blockIntern());
+            blockMap.put("right", arg2.getStatus());
         } else {
             blockMap.put("right", tf2.getText());
         }
@@ -179,7 +179,7 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         for (Object key : paramMap.keySet()) {
@@ -187,7 +187,7 @@ public class Calculate extends Procedure {
                 //変数ブロック
                 Variable val = (Variable) BlockUtil.createBlock("Variable");
                 env.setValues((HashMap) paramMap.get(key));
-                val.setParams(env);
+                val.setStatus(env);
 
                 setVariable(val);
             } else if (key.equals("left")) {
@@ -200,7 +200,7 @@ public class Calculate extends Procedure {
                     //変数ブロック
                     Variable val = (Variable) BlockUtil.createBlock("Variable");
                     env.setValues((HashMap) paramMap.get(key));
-                    val.setParams(env);
+                    val.setStatus(env);
 
                     setLeftVariable(variable);
                 }

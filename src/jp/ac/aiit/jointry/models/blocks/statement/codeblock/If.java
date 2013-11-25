@@ -94,14 +94,14 @@ public class If extends CodeBlock {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         if (embryo != null)
-            blockMap.put("embryo", embryo.blockIntern());
+            blockMap.put("embryo", embryo.getStatus());
 
         ArrayList<Map> list = new ArrayList();
         for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
-                p.blockIntern(list);
+                p.getStatus(list);
                 break;
             }
         }
@@ -111,7 +111,7 @@ public class If extends CodeBlock {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         for (Object key : paramMap.keySet()) {
@@ -119,7 +119,7 @@ public class If extends CodeBlock {
                 //変数ブロック
                 Condition emb = new Condition();
                 env.setValues((HashMap) paramMap.get(key));
-                emb.setParams(env);
+                emb.setStatus(env);
 
                 addEmbryo(emb);
             } else if (key.equals("childBlocks")) {
@@ -128,7 +128,7 @@ public class If extends CodeBlock {
                 for (Map map : list) {
                     Block block = BlockUtil.createBlock(map);
                     env.setValues((HashMap) map.get(block.getClass().getSimpleName()));
-                    block.setParams(env);
+                    block.setStatus(env);
 
                     env.getSprite().getScriptPane().getChildren().add(block); //ブロックの表示
 

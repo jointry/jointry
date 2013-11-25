@@ -267,14 +267,16 @@ public abstract class Statement extends Block {
     }
 
     @Override
-    public void blockIntern(List codeList) {
+    public List getStatus(List codeList) {
         Map<String, Object> blockMap = new HashMap();
-        blockMap.put(this.getClass().getSimpleName(), blockIntern(new HashMap()));
+        blockMap.put(this.getClass().getSimpleName(), getStatus(new HashMap()));
         codeList.add(blockMap);
 
         if (nextBlock != null)
-            nextBlock.blockIntern(codeList);
+            nextBlock.getStatus(codeList);
+        
+        return codeList;
     }
 
-    abstract protected Map blockIntern(Map blockMap);
+    abstract protected Map getStatus(Map blockMap);
 }

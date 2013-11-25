@@ -76,9 +76,9 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         if (variable != null) {
-            blockMap.put("variable", variable.blockIntern());
+            blockMap.put("variable", variable.getStatus());
         } else {
             blockMap.put("variable", tf.getText());
         }
@@ -87,7 +87,7 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         Object value = paramMap.get("variable");
@@ -97,7 +97,7 @@ public class Speech extends Procedure {
             //変数ブロック
             Variable val = (Variable) BlockUtil.createBlock("Variable");
             env.setValues((HashMap) value);
-            val.setParams(env);
+            val.setStatus(env);
 
             setVariable(variable);
         }

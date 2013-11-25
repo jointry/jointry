@@ -26,13 +26,13 @@ public class Rebound extends Procedure {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         blockMap.put("rebound", "0");
         return blockMap;
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         //ブロック未実装
     }
 

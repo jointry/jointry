@@ -149,19 +149,19 @@ public class Assign extends Procedure {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         if (leftVariable != null)
-            blockMap.put("left", leftVariable.blockIntern());
+            blockMap.put("left", leftVariable.getStatus());
 
         if (rightVariable != null) {
-            blockMap.put("right", rightVariable.blockIntern());
+            blockMap.put("right", rightVariable.getStatus());
         }
 
         return blockMap;
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         for (Object key : paramMap.keySet()) {
@@ -172,7 +172,7 @@ public class Assign extends Procedure {
                 //変数ブロック
                 Variable variable = (Variable) BlockUtil.createBlock("Variable");
                 env.setValues((HashMap) paramMap.get(key));
-                variable.setParams(env);
+                variable.setStatus(env);
 
                 setLeftVariable(variable);
             } else if (key.equals("right")) {
@@ -185,7 +185,7 @@ public class Assign extends Procedure {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
                     env.setValues((HashMap) paramMap.get(key));
-                    variable.setParams(env);
+                    variable.setStatus(env);
 
                     setRightVariable(variable);
                 }

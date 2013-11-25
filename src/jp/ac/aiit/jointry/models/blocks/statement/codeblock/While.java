@@ -52,13 +52,13 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public Map blockIntern(Map blockMap) {
+    public Map getStatus(Map blockMap) {
         blockMap.put("embryo", "index < 10");
 
         ArrayList<Map> list = new ArrayList();
         for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
-                p.blockIntern(list);
+                p.getStatus(list);
                 break;
             }
         }
@@ -68,7 +68,7 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public void setParams(Environment env) {
+    public void setStatus(Environment env) {
         Map paramMap = env.getValues();
 
         ArrayList<Map> list = (ArrayList<Map>) paramMap.get("childBlocks");
@@ -76,7 +76,7 @@ public class While extends CodeBlock {
         for (Map map : list) {
             Block block = BlockUtil.createBlock(map);
             env.setValues((HashMap) map.get(block.getClass().getSimpleName()));
-            block.setParams(env);
+            block.setStatus(env);
 
             env.getSprite().getScriptPane().getChildren().add(block); //ブロックの表示
 
