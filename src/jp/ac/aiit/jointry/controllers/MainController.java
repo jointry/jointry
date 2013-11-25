@@ -19,6 +19,8 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
+import java.io.File;
+import javafx.stage.FileChooser;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
 
@@ -82,11 +84,16 @@ public class MainController implements Initializable {
 
     @FXML
     protected void fopen(ActionEvent event) {
-        initWindow("load");
-
         FileManager manager = new FileManager();
+        FileChooser fc = manager.createFileChooser("open");
+        File chooser = fc.showOpenDialog(null);
+
+        if (chooser == null) return; //読込先が指定されなかった
+
+        initWindow("load"); //読み込む前に画面を一旦クリア
+
         try {
-            manager.open(this);
+            manager.open(chooser, this);
         } catch (Exception ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }

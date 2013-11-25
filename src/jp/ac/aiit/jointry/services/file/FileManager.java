@@ -137,14 +137,10 @@ public class FileManager {
         }
     }
 
-    public void open(MainController mainController) throws ParserConfigurationException, SAXException, IOException {
-        FileChooser fc = createFileChooser("open");
-        File chooser = fc.showOpenDialog(null);
+    public void open(File file, MainController mainController) throws ParserConfigurationException, SAXException, IOException {
+        String parentPath = file.getParent(); //ファイル参照するためのファイルパス
 
-        if (chooser == null) return; //読込先が指定されなかった
-        String parentPath = chooser.getParent(); //ファイル参照するためのファイルパス
-
-        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(chooser);
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 
         //spriteタグのみなめる
         NodeList sprites = document.getFirstChild().getChildNodes();
@@ -245,7 +241,7 @@ public class FileManager {
         }
     }
 
-    private FileChooser createFileChooser(String title) {
+    public FileChooser createFileChooser(String title) {
         FileChooser fc = new FileChooser();
 
         fc.setTitle(title); //title
