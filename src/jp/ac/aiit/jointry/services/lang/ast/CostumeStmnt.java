@@ -9,7 +9,7 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
-import jp.ac.aiit.jointry.services.lang.parser.Environment;
+import jp.ac.aiit.jointry.util.Environment;
 import jp.ac.aiit.jointry.models.Sprite;
 
 public class CostumeStmnt extends ASTList {

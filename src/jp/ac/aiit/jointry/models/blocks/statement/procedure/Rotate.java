@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Rotate extends Procedure {
 
@@ -48,8 +49,14 @@ public class Rotate extends Procedure {
         if (arg == null) arg = "0";
 
         blockMap.put("rotate", arg);
-        
+
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+        cb.setValue(paramMap.get("rotate"));
     }
 
     public Label getLabel() {

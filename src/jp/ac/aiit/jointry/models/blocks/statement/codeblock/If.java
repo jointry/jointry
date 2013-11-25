@@ -1,15 +1,20 @@
 package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
+import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import static jp.ac.aiit.jointry.models.blocks.statement.codeblock.While.getColor;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class If extends CodeBlock {
 
@@ -103,5 +108,35 @@ public class If extends CodeBlock {
         blockMap.put("childBlocks", list);
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        for (Object key : paramMap.keySet()) {
+            if (key.equals("embryo")) {
+                //変数ブロック
+                Condition emb = new Condition();
+                env.setValues((HashMap) paramMap.get(key));
+                emb.setParams(env);
+
+                addEmbryo(emb);
+            } else if (key.equals("childBlocks")) {
+                ArrayList<Map> list = (ArrayList<Map>) paramMap.get(key);
+
+                for (Map map : list) {
+                    Block block = BlockUtil.createBlock(map);
+                    env.setValues((HashMap) map.get(block.getClass().getSimpleName()));
+                    block.setParams(env);
+
+                    env.getSprite().getScriptPane().getChildren().add(block); //ブロックの表示
+
+                    //ブロックの包含接続
+                    addChild((Statement) block);
+                    resize();
+                }
+            }
+        }
     }
 }

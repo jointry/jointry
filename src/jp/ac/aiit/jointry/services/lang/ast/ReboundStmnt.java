@@ -10,7 +10,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.util.Duration;
 import static jp.ac.aiit.jointry.services.lang.ast.ASTree.TRUE;
-import jp.ac.aiit.jointry.services.lang.parser.Environment;
+import jp.ac.aiit.jointry.util.Environment;
 import jp.ac.aiit.jointry.models.Sprite;
 
 public class ReboundStmnt extends ASTList {

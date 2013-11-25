@@ -1,17 +1,17 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import static jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate.getColor;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 /**
  * 左：変数（Variable）<br />
@@ -156,7 +156,40 @@ public class Assign extends Procedure {
         if (rightVariable != null) {
             blockMap.put("right", rightVariable.blockIntern());
         }
-        
+
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        for (Object key : paramMap.keySet()) {
+            System.out.println("key : " + key);
+            System.out.println("val : " + paramMap.get(key));
+
+            if (key.equals("left")) {
+                //変数ブロック
+                Variable variable = (Variable) BlockUtil.createBlock("Variable");
+                env.setValues((HashMap) paramMap.get(key));
+                variable.setParams(env);
+
+                setLeftVariable(variable);
+            } else if (key.equals("right")) {
+                Object value = paramMap.get(key);
+
+                if (value instanceof String) {
+                    //テキスト
+                    tf2.setText((String) value);
+                } else {
+                    //変数ブロック
+                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
+                    env.setValues((HashMap) paramMap.get(key));
+                    variable.setParams(env);
+
+                    setRightVariable(variable);
+                }
+            }
+        }
     }
 }

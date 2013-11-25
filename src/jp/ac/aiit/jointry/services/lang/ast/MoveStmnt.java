@@ -4,7 +4,7 @@ import java.util.List;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-import jp.ac.aiit.jointry.services.lang.parser.Environment;
+import jp.ac.aiit.jointry.util.Environment;
 import jp.ac.aiit.jointry.models.Sprite;
 
 public class MoveStmnt extends ASTList {

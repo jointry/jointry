@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Move extends Procedure {
 
@@ -49,8 +50,14 @@ public class Move extends Procedure {
         if (arg == null) arg = "0";
 
         blockMap.put("move", arg);
-        
+
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+        cb.setValue(paramMap.get("move"));
     }
 
     public Label getLabel() {

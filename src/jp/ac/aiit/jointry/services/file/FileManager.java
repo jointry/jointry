@@ -7,14 +7,18 @@ package jp.ac.aiit.jointry.services.file;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -32,11 +36,18 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class FileManager {
 
@@ -123,6 +134,114 @@ public class FileManager {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //エレメントごとの改行
 
             transformer.transform(source, result); //変換して保存
+        }
+    }
+
+    public void open(MainController mainController) throws ParserConfigurationException, SAXException, IOException {
+        FileChooser fc = createFileChooser("open");
+        File chooser = fc.showOpenDialog(null);
+
+        if (chooser == null) return; //読込先が指定されなかった
+        String parentPath = chooser.getParent(); //ファイル参照するためのファイルパス
+
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(chooser);
+
+        //spriteタグのみなめる
+        NodeList sprites = document.getFirstChild().getChildNodes();
+        for (int i = 0; i < sprites.getLength(); i++) {
+            if (!sprites.item(i).getNodeName().equals(SPRITE_TAG)) continue;
+
+            //環境設定
+            Environment env = new Environment();
+            env.setMainController(mainController);
+            env.setSprite(new Sprite(mainController));
+
+            //spriteのレイアウト
+            NamedNodeMap spriteMap = sprites.item(i).getAttributes();
+            String layoutX = spriteMap.getNamedItem("layoutX").getNodeValue();
+            String layoutY = spriteMap.getNamedItem("layoutY").getNodeValue();
+            env.getSprite().setLayoutX(Double.valueOf(layoutX));
+            env.getSprite().setLayoutX(Double.valueOf(layoutY));
+
+            //内部解析
+            NodeList childs = sprites.item(i).getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                org.w3c.dom.Node node = childs.item(j);
+
+                //コスチューム
+                if (node.getNodeName().equals(COSTUME_TAG)) {
+                    NamedNodeMap itemMap = node.getAttributes(); //マッピング読み込み
+
+                    //各アイテム
+                    String title = itemMap.getNamedItem("title").getNodeValue();
+                    String img = itemMap.getNamedItem("img").getNodeValue();
+
+                    //イメージファイルを読み込むためのパス
+                    File imgFile = new File(parentPath + "/img", img);
+                    env.getSprite().addCostume(title, new Image(imgFile.toURI().toURL().toString()));
+                }
+
+                //ブロック
+                if (node.getNodeName().equals(SCRIPT_TAG)) {
+                    NamedNodeMap itemMap = node.getAttributes(); //マッピング読み込み
+
+                    //スクリプトファイル読み込み
+                    String script = itemMap.getNamedItem("script").getNodeValue();
+                    File scriptFile = new File(parentPath, script);
+
+                    BufferedReader br = new BufferedReader(new FileReader(scriptFile));
+
+                    String jsonBlocks = br.readLine();
+                    parseJsonBlocks(jsonBlocks, env);
+                }
+            }
+
+            //spriteのコスチューム設定
+            int number = Integer.parseInt(spriteMap.getNamedItem("costume").getNodeValue());
+            env.getSprite().setSpriteCostume(number);
+
+            mainController.getFrontStageController().addSprite(env.getSprite());
+        }
+    }
+
+    private void parseJsonBlocks(String jsonString, Environment env) throws IOException {
+        //jackson使ってparse
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayList<Map> blockList = objectMapper.readValue(jsonString, ArrayList.class);
+
+        //ブロックの座標と内容のマッピング
+        for (Map blockInfo : blockList) {
+            Block topBlock = null;
+
+            for (Map map : (ArrayList<Map>) blockInfo.get("block")) {
+                //ブロックのクラス名抽出
+                Set<String> set = new HashSet(map.keySet());
+                String cname = set.toString().substring(1, set.toString().length() - 1);
+
+                Block myBlock = BlockUtil.createBlock(cname); //ブロック生成
+
+                env.setValues((HashMap) map.get(cname));
+
+                //生成したブロックへパラメータを設定
+                myBlock.setParams(env);
+                env.getSprite().getScriptPane().getChildren().add(myBlock); //ブロックの表示
+
+                if (topBlock == null) {
+                    topBlock = myBlock;
+                } else {
+                    ((Statement) topBlock).addLink((Statement) myBlock);
+                }
+            }
+
+            //topblockの座標
+            String cordinate = (String) blockInfo.get("coordinate");
+            String[] pos = cordinate.split(" ");
+
+            double x = Double.valueOf(pos[0]);
+            double y = Double.valueOf(pos[1]);
+
+            //生成時に実際のmoveは行っていない
+            if (topBlock != null) topBlock.move(x, y);
         }
     }
 

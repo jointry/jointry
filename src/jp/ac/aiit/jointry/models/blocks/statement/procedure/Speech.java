@@ -5,9 +5,12 @@ import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Speech extends Procedure {
 
@@ -81,6 +84,23 @@ public class Speech extends Procedure {
         }
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        Object value = paramMap.get("variable");
+        if (value instanceof String) {
+            tf.setText((String) value);
+        } else {
+            //変数ブロック
+            Variable val = (Variable) BlockUtil.createBlock("Variable");
+            env.setValues((HashMap) value);
+            val.setParams(env);
+
+            setVariable(variable);
+        }
     }
 
     public void setVariable(Variable v) {

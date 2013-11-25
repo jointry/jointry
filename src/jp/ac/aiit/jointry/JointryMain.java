@@ -19,10 +19,12 @@ public class JointryMain extends Application {
         loader = new FXMLLoader(getClass().getResource("controllers/Main.fxml"));
         Parent parent = (Parent) loader.load();
 
+        final MainController controller = loader.getController();
+        controller.initWindow("new");
+
         stage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                MainController controller = loader.getController();
                 controller.windowClose();
                 Platform.exit();
             }

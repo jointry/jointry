@@ -1,7 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -10,9 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Calculate extends Procedure {
 
@@ -174,6 +176,43 @@ public class Calculate extends Procedure {
         }
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        for (Object key : paramMap.keySet()) {
+            if (key.equals("variable")) {
+                //変数ブロック
+                Variable val = (Variable) BlockUtil.createBlock("Variable");
+                env.setValues((HashMap) paramMap.get(key));
+                val.setParams(env);
+
+                setVariable(val);
+            } else if (key.equals("left")) {
+                Object value = paramMap.get(key);
+
+                if (value instanceof String) {
+                    //テキスト
+                    tf1.setText((String) value);
+                } else {
+                    //変数ブロック
+                    Variable val = (Variable) BlockUtil.createBlock("Variable");
+                    env.setValues((HashMap) paramMap.get(key));
+                    val.setParams(env);
+
+                    setLeftVariable(variable);
+                }
+            } else if (key.equals("right")) {
+                Object value = paramMap.get(key);
+
+                if (value instanceof String) {
+                    //テキスト
+                    tf2.setText((String) value);
+                }
+            }
+        }
     }
 
     public void setVariable(Variable v) {

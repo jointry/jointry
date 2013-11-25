@@ -18,6 +18,12 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import broker.core.DInfo;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_FRONT;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_METHOD;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_X1;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_Y1;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_MOVE_SPRITE;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class FrontStageController implements Initializable, JointryCommon {
@@ -92,6 +98,11 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     public void showSprite(Sprite sprite) {
+        addSprite(sprite);
+        this.setCurrentSprite(sprite);
+    }
+
+    public void addSprite(Sprite sprite) {
         sprite.setDragRange(stage);
 
         int number = 1;
@@ -99,9 +110,7 @@ public class FrontStageController implements Initializable, JointryCommon {
             if (i instanceof Sprite) number++;
         }
         sprite.setName("sprite" + number);
-
         stage.getChildren().add(sprite);
-        this.setCurrentSprite(sprite);
 
         if (mainController.getAgent() != null) {
             DInfo dinfo = new DInfo(D_FRONT);

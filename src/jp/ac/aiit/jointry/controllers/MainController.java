@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
@@ -70,13 +68,6 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        //初期スプライト
-        URL path = getClass().getResource("images/scratch_cat1.gif");
-        Sprite sprite = new Sprite(path.toString(), this);
-        URL costume_path = getClass().getResource("images/scratch_cat2.gif");
-        sprite.addCostume("costume", new Image(costume_path.toString()));
-        frontStageController.showSprite(sprite);
     }
 
     @FXML
@@ -84,6 +75,18 @@ public class MainController implements Initializable {
         FileManager manager = new FileManager();
         try {
             manager.save(frontStageController.getSprites());
+        } catch (Exception ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    protected void fopen(ActionEvent event) {
+        initWindow("load");
+
+        FileManager manager = new FileManager();
+        try {
+            manager.open(this);
         } catch (Exception ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,6 +121,27 @@ public class MainController implements Initializable {
         stage.getStage().show();
     }
 
+    public void initWindow(String mode) {
+        switch (mode) {
+            case "new":
+                //初期スプライト
+                URL path = getClass().getResource("images/scratch_cat1.gif");
+                Sprite sprite = new Sprite(path.toString(), this);
+                URL costume_path = getClass().getResource("images/scratch_cat2.gif");
+                sprite.addCostume("costume", new Image(costume_path.toString()));
+                frontStageController.showSprite(sprite);
+                break;
+
+            case "load":
+                this.initialize(null, null);
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public void windowClose() {
         if (agent != null) agent.close();
     }
@@ -148,15 +172,5 @@ public class MainController implements Initializable {
 
     public Agent getAgent() {
         return this.agent;
-    }
-
-    @FXML
-    public void fopen(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Pick a Sound File");
-        File f = fc.showOpenDialog(dummylabel.getScene().getWindow());
-        if (f != null) {
-            // do something
-        }
     }
 }

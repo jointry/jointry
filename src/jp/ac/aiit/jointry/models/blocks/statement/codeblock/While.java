@@ -6,7 +6,10 @@ import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class While extends CodeBlock {
 
@@ -62,6 +65,25 @@ public class While extends CodeBlock {
         blockMap.put("childBlocks", list);
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        ArrayList<Map> list = (ArrayList<Map>) paramMap.get("childBlocks");
+
+        for (Map map : list) {
+            Block block = BlockUtil.createBlock(map);
+            env.setValues((HashMap) map.get(block.getClass().getSimpleName()));
+            block.setParams(env);
+
+            env.getSprite().getScriptPane().getChildren().add(block); //ブロックの表示
+
+            //ブロックの包含接続
+            addChild((Statement) block);
+            resize();
+        }
     }
 
     public Label getLabel() {

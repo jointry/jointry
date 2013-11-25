@@ -17,6 +17,7 @@ public abstract class Procedure extends Statement {
         rect = new Rectangle();
         rect.setWidth(250);
         rect.setHeight(50);
+        setHeight(50); //きちんと画面生成されてないうちからgetHeight()call時対策
         rect.setArcWidth(10);
         rect.setArcHeight(10);
         rect.setStroke(Color.GRAY);

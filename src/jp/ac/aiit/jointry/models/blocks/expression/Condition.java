@@ -1,7 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -20,6 +19,8 @@ import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
+import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Condition extends Expression {
 
@@ -268,6 +269,47 @@ public class Condition extends Expression {
         }
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        for (Object key : paramMap.keySet()) {
+            if (key.equals("left")) {
+                Object value = paramMap.get(key);
+
+                if (value instanceof String) {
+                    //テキスト
+                    tf2.setText((String) value);
+                } else {
+                    //変数ブロック
+                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
+                    env.setValues((HashMap) paramMap.get(key));
+                    variable.setParams(env);
+
+                    setLeftVariable(variable);
+                }
+            } else if (key.equals("op")) {
+                cb.setValue(paramMap.get(key));
+            } else if (key.equals("right")) {
+                Object value = paramMap.get(key);
+
+                if (value instanceof String) {
+                    //テキスト
+                    tf2.setText((String) value);
+                } else {
+                    //変数ブロック
+                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
+                    env.setValues((HashMap) paramMap.get(key));
+                    variable.setParams(env);
+
+                    setRightVariable(variable);
+                }
+            }
+        }
+
+        env.getSprite().getScriptPane().getChildren().add(this);
     }
 
     void setLeftVariable(Variable v) {

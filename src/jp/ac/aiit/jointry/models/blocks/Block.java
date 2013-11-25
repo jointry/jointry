@@ -11,7 +11,9 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.util.Environment;
 
 public abstract class Block extends AnchorPane {
 
@@ -85,6 +87,10 @@ public abstract class Block extends AnchorPane {
     }
 
     public void blockIntern(List codeList) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setParams(Environment env) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

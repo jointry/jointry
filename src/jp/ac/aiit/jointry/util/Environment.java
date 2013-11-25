@@ -1,13 +1,15 @@
-package jp.ac.aiit.jointry.services.lang.parser;
+package jp.ac.aiit.jointry.util;
 
 import java.util.HashMap;
 import javafx.animation.SequentialTransition;
+import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.models.Sprite;
 
 public class Environment {
 
     protected HashMap<String, Object> values;
     private Sprite sprite;
+    private MainController mainController;
     private SequentialTransition sequentialTransition;
     private double x = 0.0;
     private double y = 0.0;
@@ -30,6 +32,22 @@ public class Environment {
 
     public Object get(String name) {
         return values.get(name);
+    }
+
+    public void setValues(HashMap values) {
+        this.values = values;
+    }
+
+    public HashMap getValues() {
+        return values;
+    }
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
+    }
+
+    public MainController getMainController() {
+        return mainController;
     }
 
     public SequentialTransition getSequentialTransition() {

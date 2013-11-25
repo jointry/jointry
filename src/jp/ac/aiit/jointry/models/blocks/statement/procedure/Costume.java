@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import static jp.ac.aiit.jointry.models.blocks.statement.procedure.Move.getColor;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Costume extends Procedure {
 
@@ -54,7 +55,13 @@ public class Costume extends Procedure {
         if (arg == null) arg = "0";
 
         blockMap.put("costume", arg);
-        
+
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+        cb.setValue(paramMap.get("costume"));
     }
 }

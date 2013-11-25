@@ -59,8 +59,7 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Assign.class),
                 new Separator(),
-                new MenuItem(Calculate.class)
-        );
+                new MenuItem(Calculate.class));
     }
 
     public void setMainController(MainController controller) {
@@ -85,17 +84,20 @@ public class BlocksController implements Initializable {
         switch (controller.getSelectedOption()) {
             case YES:
                 String name = controller.getVariableName();
-
-                // TODO: あとで考える
-                VariableLabel vl = new VariableLabel(name, null);
-                // this.mainController.getFrontStageController().addVariable(vl);
-
-                blockMenuAdv.getChildren().add(new Separator());
-                MenuItemAdv menu = new MenuItemAdv(name);
-                menu.addVariableLabel(vl);
-                blockMenuAdv.getChildren().add(menu);
+                addVariable(name);
 
                 break;
         }
+    }
+
+    public void addVariable(String name) {
+        // TODO: あとで考える
+        VariableLabel vl = new VariableLabel(name, null);
+        // this.mainController.getFrontStageController().addVariable(vl);
+
+        blockMenuAdv.getChildren().add(new Separator());
+        MenuItemAdv menu = new MenuItemAdv(name);
+        menu.addVariableLabel(vl);
+        blockMenuAdv.getChildren().add(menu);
     }
 }

@@ -1,10 +1,9 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
@@ -18,15 +17,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
-import static jp.ac.aiit.jointry.models.blocks.expression.Condition.getColor;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
+import jp.ac.aiit.jointry.util.Environment;
 
 /**
  * 名前と値があればいい
@@ -288,5 +284,19 @@ public class Variable extends Expression {
         blockMap.put(name, value.getValue());
 
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        Map paramMap = env.getValues();
+
+        //key = 変数名
+        Set<String> set = new HashSet(paramMap.keySet());
+        setName(set.toString().substring(1, set.toString().length() - 1));
+        setValue((String) paramMap.get(name));
+
+        //変数ブロックを追加
+        env.getMainController().getBlocksController().addVariable(name);
+        env.getSprite().getScriptPane().getChildren().add(this);
     }
 }

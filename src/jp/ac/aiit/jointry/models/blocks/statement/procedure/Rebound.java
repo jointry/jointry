@@ -3,6 +3,7 @@ package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.util.Environment;
 
 public class Rebound extends Procedure {
 
@@ -28,6 +29,11 @@ public class Rebound extends Procedure {
     public Map blockIntern(Map blockMap) {
         blockMap.put("rebound", "0");
         return blockMap;
+    }
+
+    @Override
+    public void setParams(Environment env) {
+        //ブロック未実装
     }
 
     public Label getLabel() {
