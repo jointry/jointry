@@ -1,9 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.statement;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -13,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
@@ -267,16 +266,10 @@ public abstract class Statement extends Block {
     }
 
     @Override
-    public List getStatus(List codeList) {
-        Map<String, Object> blockMap = new HashMap();
-        blockMap.put(this.getClass().getSimpleName(), getStatus(new HashMap()));
-        codeList.add(blockMap);
+    public void outputBlock(Sprite sprite) {
+        sprite.getScriptPane().getChildren().add(this);
 
         if (nextBlock != null)
-            nextBlock.getStatus(codeList);
-        
-        return codeList;
+            nextBlock.outputBlock(sprite);
     }
-
-    abstract protected Map getStatus(Map blockMap);
 }

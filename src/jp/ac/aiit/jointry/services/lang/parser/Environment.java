@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.util;
+package jp.ac.aiit.jointry.services.lang.parser;
 
 import java.util.HashMap;
 import javafx.animation.SequentialTransition;

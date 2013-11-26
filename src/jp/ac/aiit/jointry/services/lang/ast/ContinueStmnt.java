@@ -5,7 +5,7 @@
 package jp.ac.aiit.jointry.services.lang.ast;
 
 import java.util.List;
-import jp.ac.aiit.jointry.util.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
 
 public class ContinueStmnt extends ASTList {
     public ContinueStmnt(List<ASTree> c) {

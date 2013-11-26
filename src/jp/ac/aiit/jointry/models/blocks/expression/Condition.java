@@ -16,11 +16,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.util.BlockUtil;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class Condition extends Expression {
 
@@ -249,51 +249,47 @@ public class Condition extends Expression {
 
     @Override
     public Map getStatus() {
-        Map<String, Object> blockMap = new HashMap();
+        Map<String, Object> status = new HashMap();
 
         //left
         if (leftVariable != null) {
-            blockMap.put("left", leftVariable.getStatus());
+            status.put("left", leftVariable.getStatus());
         } else {
-            blockMap.put("left", tf1.getText());
+            status.put("left", tf1.getText());
         }
 
         //op
-        blockMap.put("op", cb.getValue());
+        status.put("op", cb.getValue());
 
         //right
         if (rightVariable != null) {
-            blockMap.put("right", rightVariable.getStatus());
+            status.put("right", rightVariable.getStatus());
         } else {
-            blockMap.put("right", tf2.getText());
+            status.put("right", tf2.getText());
         }
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
-
-        for (Object key : paramMap.keySet()) {
+    public void setStatus(Map status) {
+        for (Object key : status.keySet()) {
             if (key.equals("left")) {
-                Object value = paramMap.get(key);
+                Object value = status.get(key);
 
                 if (value instanceof String) {
-                    //テキスト
-                    tf2.setText((String) value);
+                    tf2.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    env.setValues((HashMap) paramMap.get(key));
-                    variable.setStatus(env);
+                    variable.setStatus((HashMap) value);
 
                     setLeftVariable(variable);
                 }
             } else if (key.equals("op")) {
-                cb.setValue(paramMap.get(key));
+                cb.setValue(status.get(key));
             } else if (key.equals("right")) {
-                Object value = paramMap.get(key);
+                Object value = status.get(key);
 
                 if (value instanceof String) {
                     //テキスト
@@ -301,15 +297,23 @@ public class Condition extends Expression {
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    env.setValues((HashMap) paramMap.get(key));
-                    variable.setStatus(env);
+                    variable.setStatus((HashMap) value);
 
                     setRightVariable(variable);
                 }
             }
         }
+    }
 
-        env.getSprite().getScriptPane().getChildren().add(this);
+    @Override
+    public void outputBlock(Sprite sprite) {
+        sprite.getScriptPane().getChildren().add(this);
+
+        if (leftVariable != null)
+            leftVariable.outputBlock(sprite);
+
+        if (rightVariable != null)
+            rightVariable.outputBlock(sprite);
     }
 
     void setLeftVariable(Variable v) {

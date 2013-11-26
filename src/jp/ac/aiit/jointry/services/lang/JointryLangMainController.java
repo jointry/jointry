@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import jp.ac.aiit.jointry.services.lang.ast.ASTree;
 import jp.ac.aiit.jointry.services.lang.ast.NullStmnt;
-import jp.ac.aiit.jointry.util.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
 import jp.ac.aiit.jointry.services.lang.parser.JointryParser;
 import jp.ac.aiit.jointry.services.lang.parser.LangReader;
 import jp.ac.aiit.jointry.services.lang.parser.Lexer;

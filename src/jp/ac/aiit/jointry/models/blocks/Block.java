@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks;
 
-import java.util.List;
 import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -11,9 +10,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.util.Environment;
+import jp.ac.aiit.jointry.models.Sprite;
 
 public abstract class Block extends AnchorPane {
 
@@ -86,11 +84,15 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public List getStatus(List codeList) {
+    public Map getStatus() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setStatus(Environment env) {
+    public void setStatus(Map status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void outputBlock(Sprite sprite) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

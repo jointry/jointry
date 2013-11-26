@@ -2,7 +2,7 @@ package jp.ac.aiit.jointry.services.lang.ast;
 
 import java.util.List;
 import java.util.Iterator;
-import jp.ac.aiit.jointry.util.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
 import jp.ac.aiit.jointry.util.JoinTryException;
 
 public class ASTList extends ASTree {

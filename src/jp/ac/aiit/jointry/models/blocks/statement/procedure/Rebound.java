@@ -1,9 +1,9 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class Rebound extends Procedure {
 
@@ -26,13 +26,15 @@ public class Rebound extends Procedure {
     }
 
     @Override
-    public Map getStatus(Map blockMap) {
-        blockMap.put("rebound", "0");
-        return blockMap;
+    public Map getStatus() {
+        Map<String, Object> status = new HashMap();
+        status.put("rebound", "0");
+
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
+    public void setStatus(Map status) {
         //ブロック未実装
     }
 

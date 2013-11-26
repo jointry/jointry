@@ -14,15 +14,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
-import jp.ac.aiit.jointry.util.Environment;
+import jp.ac.aiit.jointry.services.lang.parser.Environment;
 
 /**
  * 名前と値があればいい
@@ -280,23 +282,27 @@ public class Variable extends Expression {
 
     @Override
     public Map getStatus() {
-        Map<String, Object> blockMap = new HashMap();
-        blockMap.put(name, value.getValue());
+        Map<String, Object> status = new HashMap();
+        status.put(name, value.getValue());
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
-
+    public void setStatus(Map status) {
         //key = 変数名
-        Set<String> set = new HashSet(paramMap.keySet());
+        Set<String> set = new HashSet(status.keySet());
         setName(set.toString().substring(1, set.toString().length() - 1));
-        setValue((String) paramMap.get(name));
+        setValue((String) status.get(name));
 
-        //変数ブロックを追加
-        env.getMainController().getBlocksController().addVariable(name);
-        env.getSprite().getScriptPane().getChildren().add(this);
+        //変数ブロックを追加しなきゃね
+        //env.getMainController().getBlocksController().addVariable(name);
+        //env.getSprite().getScriptPane().getChildren().add(this);
+    }
+
+    @Override
+    public void outputBlock(Sprite sprite) {
+        sprite.getScriptPane().getChildren().add(this);
+        sprite.getMainController().getBlocksController().addVariable(name);
     }
 }

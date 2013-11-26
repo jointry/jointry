@@ -5,12 +5,11 @@ import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.util.BlockUtil;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class Speech extends Procedure {
 
@@ -76,31 +75,39 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public Map getStatus(Map blockMap) {
+    public Map getStatus() {
+        Map<String, Object> status = new HashMap();
+
         if (variable != null) {
-            blockMap.put("variable", variable.getStatus());
+            status.put("variable", variable.getStatus());
         } else {
-            blockMap.put("variable", tf.getText());
+            status.put("variable", tf.getText());
         }
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
+    public void setStatus(Map status) {
+        Object value = status.get("variable");
 
-        Object value = paramMap.get("variable");
         if (value instanceof String) {
             tf.setText((String) value);
         } else {
             //変数ブロック
             Variable val = (Variable) BlockUtil.createBlock("Variable");
-            env.setValues((HashMap) value);
-            val.setStatus(env);
+            val.setStatus((HashMap) value);
 
             setVariable(variable);
         }
+    }
+
+    @Override
+    public void outputBlock(Sprite sprite) {
+        super.outputBlock(sprite);
+
+        if (variable != null)
+            variable.outputBlock(sprite);
     }
 
     public void setVariable(Variable v) {

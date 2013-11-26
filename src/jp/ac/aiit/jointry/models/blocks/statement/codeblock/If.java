@@ -2,19 +2,18 @@ package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
-import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
-import static jp.ac.aiit.jointry.models.blocks.statement.codeblock.While.getColor;
 import jp.ac.aiit.jointry.util.BlockUtil;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class If extends CodeBlock {
 
@@ -94,49 +93,66 @@ public class If extends CodeBlock {
     }
 
     @Override
-    public Map getStatus(Map blockMap) {
-        if (embryo != null)
-            blockMap.put("embryo", embryo.getStatus());
+    public Map getStatus() {
+        Map<String, Object> status = new HashMap();
 
-        ArrayList<Map> list = new ArrayList();
-        for (Statement p : childBlocks) {
-            if (p.prevBlock == null) {
-                p.getStatus(list);
+        if (embryo != null)
+            status.put("embryo", embryo.getStatus());
+
+        for (Statement state : childBlocks) {
+            if (state.prevBlock == null) {
+                List<Map> list = BlockUtil.getAllStatus(state);
+                status.put("childBlocks", list);
                 break;
             }
         }
-        blockMap.put("childBlocks", list);
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
-
-        for (Object key : paramMap.keySet()) {
+    public void setStatus(Map status) {
+        for (Object key : status.keySet()) {
             if (key.equals("embryo")) {
                 //変数ブロック
                 Condition emb = new Condition();
-                env.setValues((HashMap) paramMap.get(key));
-                emb.setStatus(env);
+                emb.setStatus((HashMap) status.get(key));
 
                 addEmbryo(emb);
             } else if (key.equals("childBlocks")) {
-                ArrayList<Map> list = (ArrayList<Map>) paramMap.get(key);
+                //包含するブロック
+                ArrayList<Map> list = (ArrayList<Map>) status.get(key);
+                
+                Block preBlock = null;
 
                 for (Map map : list) {
                     Block block = BlockUtil.createBlock(map);
-                    env.setValues((HashMap) map.get(block.getClass().getSimpleName()));
-                    block.setStatus(env);
+                    block.setStatus((HashMap) map.get(block.getClass().getSimpleName()));
 
-                    env.getSprite().getScriptPane().getChildren().add(block); //ブロックの表示
+                    if(preBlock == null) {
+                        preBlock = block;
+                    } else {
+                        ((Statement) preBlock).addLink((Statement) block);
+                    }
 
                     //ブロックの包含接続
                     addChild((Statement) block);
                     resize();
                 }
             }
+        }
+    }
+
+    @Override
+    public void outputBlock(Sprite sprite) {
+        super.outputBlock(sprite);
+
+        if (embryo != null)
+            embryo.outputBlock(sprite);
+
+        for (Statement state : childBlocks) {
+            state.outputBlock(sprite);
+            break;
         }
     }
 }

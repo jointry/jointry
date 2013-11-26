@@ -221,6 +221,10 @@ public final class Sprite extends HBox implements IWorkerMonitor {
         return dragRange.getLayoutBounds().contains(
                 dragRange.sceneToLocal(sceneX, sceneY));
     }
+    
+    public MainController getMainController() {
+        return mainController;
+    }
 
     @Override
     public void onNotify(int eventId, DInfo dinfo) {

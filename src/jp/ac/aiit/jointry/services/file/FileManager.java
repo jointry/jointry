@@ -42,7 +42,6 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.util.BlockUtil;
-import jp.ac.aiit.jointry.util.Environment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -56,6 +55,7 @@ public class FileManager {
     private static final String SPRITE_TAG = "SPRITE";
     private static final String COSTUME_TAG = "COSTUME";
     private static final String SCRIPT_TAG = "SCRIPT";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public void save(List<Sprite> sprites) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException {
         FileChooser fc = createFileChooser("save");
@@ -103,10 +103,7 @@ public class FileManager {
                     Map<String, Object> codeMap = new HashMap();
 
                     codeMap.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
-
-                    ArrayList<Map> blockList = new ArrayList();
-                    procedure.getStatus(blockList);
-                    codeMap.put("block", blockList);
+                    codeMap.put("block", BlockUtil.getAllStatus(procedure));
 
                     source.add(codeMap);
                 }
@@ -147,17 +144,14 @@ public class FileManager {
         for (int i = 0; i < sprites.getLength(); i++) {
             if (!sprites.item(i).getNodeName().equals(SPRITE_TAG)) continue;
 
-            //環境設定
-            Environment env = new Environment();
-            env.setMainController(mainController);
-            env.setSprite(new Sprite(mainController));
+            Sprite sprite = new Sprite(mainController); //create sprite
 
             //spriteのレイアウト
             NamedNodeMap spriteMap = sprites.item(i).getAttributes();
             String layoutX = spriteMap.getNamedItem("layoutX").getNodeValue();
             String layoutY = spriteMap.getNamedItem("layoutY").getNodeValue();
-            env.getSprite().setLayoutX(Double.valueOf(layoutX));
-            env.getSprite().setLayoutX(Double.valueOf(layoutY));
+            sprite.setLayoutX(Double.valueOf(layoutX));
+            sprite.setLayoutX(Double.valueOf(layoutY));
 
             //内部解析
             NodeList childs = sprites.item(i).getChildNodes();
@@ -174,7 +168,7 @@ public class FileManager {
 
                     //イメージファイルを読み込むためのパス
                     File imgFile = new File(parentPath + "/img", img);
-                    env.getSprite().addCostume(title, new Image(imgFile.toURI().toURL().toString()));
+                    sprite.addCostume(title, new Image(imgFile.toURI().toURL().toString()));
                 }
 
                 //ブロック
@@ -185,59 +179,57 @@ public class FileManager {
                     String script = itemMap.getNamedItem("script").getNodeValue();
                     File scriptFile = new File(parentPath, script);
 
-                    BufferedReader br = new BufferedReader(new FileReader(scriptFile));
-
-                    String jsonBlocks = br.readLine();
-                    parseJsonBlocks(jsonBlocks, env);
+                    try (BufferedReader br = new BufferedReader(new FileReader(scriptFile))) {
+                        parseJsonBlocks(br.readLine(), sprite); //scriptは1行のみ
+                    }
                 }
             }
 
             //spriteのコスチューム設定
             int number = Integer.parseInt(spriteMap.getNamedItem("costume").getNodeValue());
-            env.getSprite().setSpriteCostume(number);
+            sprite.setSpriteCostume(number);
 
-            mainController.getFrontStageController().addSprite(env.getSprite());
+            mainController.getFrontStageController().addSprite(sprite);
         }
     }
 
-    private void parseJsonBlocks(String jsonString, Environment env) throws IOException {
+    private void parseJsonBlocks(String jsonString, Sprite sprite) throws IOException {
         //jackson使ってparse
-        ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<Map> blockList = objectMapper.readValue(jsonString, ArrayList.class);
 
         //ブロックの座標と内容のマッピング
         for (Map blockInfo : blockList) {
             Block topBlock = null;
+            Block preBlock = null;
 
+            //top blockごとにマッピングされている
             for (Map map : (ArrayList<Map>) blockInfo.get("block")) {
-                //ブロックのクラス名抽出
-                Set<String> set = new HashSet(map.keySet());
-                String cname = set.toString().substring(1, set.toString().length() - 1);
-
-                Block myBlock = BlockUtil.createBlock(cname); //ブロック生成
-
-                env.setValues((HashMap) map.get(cname));
+                Block block = BlockUtil.createBlock(map); //ブロック生成
 
                 //生成したブロックへパラメータを設定
-                myBlock.setStatus(env);
-                env.getSprite().getScriptPane().getChildren().add(myBlock); //ブロックの表示
+                block.setStatus((HashMap) map.get(block.getClass().getSimpleName()));
 
                 if (topBlock == null) {
-                    topBlock = myBlock;
+                    topBlock = block;
+                    preBlock = topBlock;
                 } else {
-                    ((Statement) topBlock).addLink((Statement) myBlock);
+                    ((Statement) preBlock).addLink((Statement) block);
+                    preBlock = block;
                 }
             }
 
-            //topblockの座標
-            String cordinate = (String) blockInfo.get("coordinate");
-            String[] pos = cordinate.split(" ");
+            if (topBlock != null) {
+                //topblockの座標
+                String cordinate = (String) blockInfo.get("coordinate");
+                String[] pos = cordinate.split(" ");
 
-            double x = Double.valueOf(pos[0]);
-            double y = Double.valueOf(pos[1]);
+                double x = Double.valueOf(pos[0]);
+                double y = Double.valueOf(pos[1]);
 
-            //生成時に実際のmoveは行っていない
-            if (topBlock != null) topBlock.move(x, y);
+                //子要素含めて全ての座標を設定して表示
+                topBlock.move(x, y);
+                topBlock.outputBlock(sprite);
+            }
         }
     }
 
@@ -268,7 +260,6 @@ public class FileManager {
     }
 
     private String makeJSONString(ArrayList<Map> valueMap) {
-        ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = null;
 
         try {

@@ -1,12 +1,12 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
+import java.util.HashMap;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class Move extends Procedure {
 
@@ -45,19 +45,20 @@ public class Move extends Procedure {
     }
 
     @Override
-    public Map getStatus(Map blockMap) {
+    public Map getStatus() {
+        Map<String, Object> status = new HashMap();
+
         String arg = (String) cb.getValue();
         if (arg == null) arg = "0";
 
-        blockMap.put("move", arg);
+        status.put("move", arg);
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
-        cb.setValue(paramMap.get("move"));
+    public void setStatus(Map status) {
+        cb.setValue(status.get("move"));
     }
 
     public Label getLabel() {

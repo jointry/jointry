@@ -9,12 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.util.BlockUtil;
-import jp.ac.aiit.jointry.util.Environment;
 
 public class Calculate extends Procedure {
 
@@ -157,62 +156,73 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public Map getStatus(Map blockMap) {
+    public Map getStatus() {
+        Map<String, Object> status = new HashMap();
+
         if (variable != null)
-            blockMap.put("variable", variable.getStatus());
+            status.put("variable", variable.getStatus());
 
         if (leftVariable != null) {
-            blockMap.put("left", leftVariable.getStatus());
+            status.put("left", leftVariable.getStatus());
         } else if (arg1 != null) {
-            blockMap.put("left", arg1.getStatus());
+            status.put("left", arg1.getStatus());
         } else {
-            blockMap.put("left", tf1.getText());
+            status.put("left", tf1.getText());
         }
 
         if (arg2 != null) {
-            blockMap.put("right", arg2.getStatus());
+            status.put("right", arg2.getStatus());
         } else {
-            blockMap.put("right", tf2.getText());
+            status.put("right", tf2.getText());
         }
 
-        return blockMap;
+        return status;
     }
 
     @Override
-    public void setStatus(Environment env) {
-        Map paramMap = env.getValues();
-
-        for (Object key : paramMap.keySet()) {
+    public void setStatus(Map status) {
+        for (Object key : status.keySet()) {
             if (key.equals("variable")) {
                 //変数ブロック
                 Variable val = (Variable) BlockUtil.createBlock("Variable");
-                env.setValues((HashMap) paramMap.get(key));
-                val.setStatus(env);
+                val.setStatus((Map) status.get(key));
 
                 setVariable(val);
             } else if (key.equals("left")) {
-                Object value = paramMap.get(key);
+                Object value = status.get(key);
 
                 if (value instanceof String) {
-                    //テキスト
-                    tf1.setText((String) value);
+                    tf1.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
                     Variable val = (Variable) BlockUtil.createBlock("Variable");
-                    env.setValues((HashMap) paramMap.get(key));
-                    val.setStatus(env);
+                    val.setStatus((Map) status.get(key));
 
                     setLeftVariable(variable);
                 }
             } else if (key.equals("right")) {
-                Object value = paramMap.get(key);
+                Object value = status.get(key);
 
                 if (value instanceof String) {
-                    //テキスト
-                    tf2.setText((String) value);
+                    tf2.setText((String) status.get(key)); //テキスト
+                } else {
+                    //変数ブロック
+                    arg2 = (Variable) BlockUtil.createBlock("Variable");
+                    arg2.setStatus((Map) status.get(key));
                 }
             }
         }
+    }
+
+    @Override
+    public void outputBlock(Sprite sprite) {
+        super.outputBlock(sprite);
+
+        if (variable != null)
+            variable.outputBlock(sprite);
+
+        if (leftVariable != null)
+            leftVariable.outputBlock(sprite);
     }
 
     public void setVariable(Variable v) {
