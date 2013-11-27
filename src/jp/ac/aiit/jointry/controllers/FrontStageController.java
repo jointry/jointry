@@ -19,6 +19,7 @@ import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import broker.core.DInfo;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_FRONT;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_SPRITE;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_METHOD;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_X1;
@@ -113,7 +114,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         stage.getChildren().add(sprite);
 
         if (mainController.getAgent() != null) {
-            DInfo dinfo = new DInfo(D_FRONT);
+            DInfo dinfo = new DInfo(D_SPRITE);
             dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
             dinfo.set(KC_SPRITE_NAME, sprite.getName());
             dinfo.set(KC_X1, (int) sprite.getX());

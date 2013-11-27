@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.controllers.MainController;
-import jp.ac.aiit.jointry.services.broker.app.JointryDialog;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 
 public class JointryMain extends Application {
 
@@ -34,7 +34,7 @@ public class JointryMain extends Application {
         stage.setScene(scene);
         stage.show();
 
-        JointryDialog.Install();
+        SpriteDialog.Install();
     }
 
     /**

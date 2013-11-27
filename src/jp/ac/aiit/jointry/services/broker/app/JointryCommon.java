@@ -1,13 +1,13 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 //協同編集アプリケーションインタフェース
-
 import broker.core.Common;
 
-public interface JointryCommon extends Common{
+public interface JointryCommon extends Common {
 
     //どこのノードにいるかとかに使えそう
     static final String D_FRONT = "front";
+    static final String D_SPRITE = "sprite";
     //役割とか動きとか イベント
     static final String KC_METHOD = "method";
     static final int VM_DUMMY = 0x000000;

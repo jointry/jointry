@@ -294,10 +294,6 @@ public class Variable extends Expression {
         Set<String> set = new HashSet(status.keySet());
         setName(set.toString().substring(1, set.toString().length() - 1));
         setValue((String) status.get(name));
-
-        //変数ブロックを追加しなきゃね
-        //env.getMainController().getBlocksController().addVariable(name);
-        //env.getSprite().getScriptPane().getChildren().add(this);
     }
 
     @Override

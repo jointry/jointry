@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,11 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
-import jp.ac.aiit.jointry.services.broker.app.IWorkerMonitor;
-import jp.ac.aiit.jointry.services.broker.app.JointryDialog;
 import broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 
-public final class Sprite extends HBox implements IWorkerMonitor {
+public final class Sprite extends HBox implements JointryCommon {
 
     private String name = "";
     private List<Costume> costumes = new ArrayList<>();
@@ -44,7 +43,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
 
         //リスナー設定
         setMouseEvent();
-        JointryDialog.putListener(this);
+        SpriteDialog.putSprite(this);
     }
 
     public Sprite(String url, MainController mainController) {
@@ -161,7 +160,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
 
                 //ドラッグ中のエフェクト効果
                 if (mainController.getAgent() != null) {
-                    DInfo dinfo = new DInfo(D_FRONT);
+                    DInfo dinfo = new DInfo(D_SPRITE);
                     dinfo.set(KC_SPRITE_NAME, name);
                     dinfo.set(KC_METHOD, VM_SELECT_SPRITE);
                     dinfo.set(KC_COLOR, Color.RED.toString());
@@ -174,8 +173,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
                     setEffect(is);
                 }
 
-                //イベントストップ
-                event.consume();
+                event.consume(); //イベントストップ
             }
         });
 
@@ -198,7 +196,7 @@ public final class Sprite extends HBox implements IWorkerMonitor {
                 }
 
                 if (mainController.getAgent() != null) {
-                    DInfo dinfo = new DInfo(D_FRONT);
+                    DInfo dinfo = new DInfo(D_SPRITE);
                     dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
                     dinfo.set(KC_SPRITE_NAME, name);
                     dinfo.set(KC_X1, (int) (event.getSceneX() - mouseX));
@@ -221,38 +219,8 @@ public final class Sprite extends HBox implements IWorkerMonitor {
         return dragRange.getLayoutBounds().contains(
                 dragRange.sceneToLocal(sceneX, sceneY));
     }
-    
+
     public MainController getMainController() {
         return mainController;
-    }
-
-    @Override
-    public void onNotify(int eventId, DInfo dinfo) {
-        switch (eventId) {
-            case VM_MOVE_SPRITE:
-                if (name.equals(dinfo.get(KC_SPRITE_NAME))) {
-                    setTranslateX(dinfo.getInt(KC_X1));
-                    setTranslateY(dinfo.getInt(KC_Y1));
-                }
-
-                setEffect(null);
-                break;
-
-            case VM_SELECT_SPRITE:
-                if (name.equals(dinfo.get(KC_SPRITE_NAME)))
-                    setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(KC_COLOR))));
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onAnswer(int eventId, DInfo dinfo) {
-    }
-
-    @Override
-    public void onQuery(int eventId, DInfo dinfo) {
     }
 }
