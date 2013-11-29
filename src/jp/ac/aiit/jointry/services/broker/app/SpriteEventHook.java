@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.models.Sprite;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_X1;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_Y1;
 
 public class SpriteEventHook extends EventHook {
 
@@ -52,14 +54,17 @@ public class SpriteEventHook extends EventHook {
         });
     }
 
-    private void sendMessage(int event) {
+    @Override
+    public void sendMessage(int event) {
         if (mainController.getAgent() != null) {
             DInfo dinfo = new DInfo(D_SPRITE);
 
             dinfo.set(KC_METHOD, event);
             dinfo.set(KC_SPRITE_NAME, sprite.getName());
-            dinfo.set(KC_X1, (int) sprite.getTranslateX());
-            dinfo.set(KC_Y1, (int) sprite.getTranslateY());
+            dinfo.set(KC_X1, (int) sprite.getX());
+            dinfo.set(KC_Y1, (int) sprite.getY());
+            dinfo.set(KC_X2, (int) sprite.getTranslateX());
+            dinfo.set(KC_Y2, (int) sprite.getTranslateY());
             dinfo.set(KC_COLOR, Color.RED.toString());
 
             mainController.getAgent().sendNotify(dinfo);

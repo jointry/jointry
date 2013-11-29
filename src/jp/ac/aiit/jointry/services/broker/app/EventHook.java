@@ -27,4 +27,5 @@ public abstract class EventHook implements JointryCommon {
     }
 
     public abstract void enableHook();
+    public abstract void sendMessage(int event);
 }
