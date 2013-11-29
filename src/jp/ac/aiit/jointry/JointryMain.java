@@ -34,7 +34,7 @@ public class JointryMain extends Application {
         stage.setScene(scene);
         stage.show();
 
-        SpriteDialog.Install();
+        SpriteDialog.install(controller);
     }
 
     /**

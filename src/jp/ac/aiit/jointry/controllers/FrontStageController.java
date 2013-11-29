@@ -18,13 +18,7 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import broker.core.DInfo;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_FRONT;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_SPRITE;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_METHOD;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_X1;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_Y1;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_MOVE_SPRITE;
+import jp.ac.aiit.jointry.services.broker.app.SpriteEventHook;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class FrontStageController implements Initializable, JointryCommon {
@@ -99,7 +93,7 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     public void showSprite(Sprite sprite) {
-        addSprite(sprite);
+        this.addSprite(sprite);
         this.setCurrentSprite(sprite);
     }
 
@@ -112,10 +106,11 @@ public class FrontStageController implements Initializable, JointryCommon {
         }
         sprite.setName("sprite" + number);
         stage.getChildren().add(sprite);
+        new SpriteEventHook(sprite).enableHook();
 
         if (mainController.getAgent() != null) {
             DInfo dinfo = new DInfo(D_SPRITE);
-            dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
+            dinfo.set(KC_METHOD, VM_SPRITE_MOVE);
             dinfo.set(KC_SPRITE_NAME, sprite.getName());
             dinfo.set(KC_X1, (int) sprite.getX());
             dinfo.set(KC_Y1, (int) sprite.getY());

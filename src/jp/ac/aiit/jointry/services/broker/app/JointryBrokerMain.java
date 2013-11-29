@@ -19,7 +19,7 @@ public class JointryBrokerMain {
         try {
             broker = new JointryBroker(PORT, "jointry");
             broker.multiServer(true);
-            SpriteDialog.Install();
+            JointryDialogBase.install(null);
         } catch (Exception ex) {
             System.out.println("既に起動している可能性があります。");
             System.out.println("止めるときはプロセス殺してください。");

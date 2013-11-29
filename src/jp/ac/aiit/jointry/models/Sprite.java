@@ -12,13 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.controllers.MainController;
-import broker.core.DInfo;
-import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
-import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 
-public final class Sprite extends HBox implements JointryCommon {
+public final class Sprite extends HBox {
 
     private String name = "";
     private List<Costume> costumes = new ArrayList<>();
@@ -41,9 +37,7 @@ public final class Sprite extends HBox implements JointryCommon {
         icon = new ImageView();
         getChildren().add(this.icon);
 
-        //リスナー設定
         setMouseEvent();
-        SpriteDialog.putSprite(this);
     }
 
     public Sprite(String url, MainController mainController) {
@@ -159,19 +153,10 @@ public final class Sprite extends HBox implements JointryCommon {
                 pressY = event.getSceneY() - mouseY;
 
                 //ドラッグ中のエフェクト効果
-                if (mainController.getAgent() != null) {
-                    DInfo dinfo = new DInfo(D_SPRITE);
-                    dinfo.set(KC_SPRITE_NAME, name);
-                    dinfo.set(KC_METHOD, VM_SELECT_SPRITE);
-                    dinfo.set(KC_COLOR, Color.RED.toString());
-
-                    mainController.getAgent().sendNotify(dinfo);
-                } else {
-                    InnerShadow is = new InnerShadow();
-                    is.setOffsetX(4.0f);
-                    is.setOffsetY(4.0f);
-                    setEffect(is);
-                }
+                InnerShadow is = new InnerShadow();
+                is.setOffsetX(4.0f);
+                is.setOffsetY(4.0f);
+                setEffect(is);
 
                 event.consume(); //イベントストップ
             }
@@ -193,17 +178,6 @@ public final class Sprite extends HBox implements JointryCommon {
                 if (!isInsideDragRange(event.getSceneX(), event.getSceneY())) {
                     setTranslateX(pressX);
                     setTranslateY(pressY);
-                }
-
-                if (mainController.getAgent() != null) {
-                    DInfo dinfo = new DInfo(D_SPRITE);
-                    dinfo.set(KC_METHOD, VM_MOVE_SPRITE);
-                    dinfo.set(KC_SPRITE_NAME, name);
-                    dinfo.set(KC_X1, (int) (event.getSceneX() - mouseX));
-                    dinfo.set(KC_Y1, (int) (event.getSceneY() - mouseY));
-                    dinfo.set(KC_COLOR, Color.ALICEBLUE.toString());
-
-                    mainController.getAgent().sendNotify(dinfo);
                 }
 
                 setEffect(null);
