@@ -1,6 +1,6 @@
 /*
  * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * and load the template in the editor.
  */
 package jp.ac.aiit.jointry.services.file;
 
@@ -61,9 +61,12 @@ public class FileManager {
         FileChooser fc = createFileChooser("save");
         File chooser = fc.showSaveDialog(null);
 
-        if (chooser == null) return; //保存先が指定されなかった
-
-        if (!chooser.exists()) chooser.mkdir(); //create project folder
+        if (chooser == null) {
+            return; //保存先が指定されなかった
+        }
+        if (!chooser.exists()) {
+            chooser.mkdir(); //create project folder
+        }
         File file = new File(chooser.getPath(), chooser.getName());
 
         //xml形式で各種情報の保存
@@ -94,7 +97,9 @@ public class FileManager {
             ArrayList<Map> source = new ArrayList();
 
             for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-                if (!(node instanceof Statement)) continue;
+                if (!(node instanceof Statement)) {
+                    continue;
+                }
 
                 Statement procedure = (Statement) node;
 
@@ -124,7 +129,8 @@ public class FileManager {
         //javaで保存できる形式に変換
         DOMSource source = new DOMSource(document);
 
-        File xmlFile = new File(file.getParent(), file.getName() + JOINTRY_EXTENSION);
+        File xmlFile = new File(file.getParent(), file.getName());
+
         try (FileOutputStream fo = new FileOutputStream(xmlFile)) {
             StreamResult result = new StreamResult(fo);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -134,15 +140,19 @@ public class FileManager {
         }
     }
 
-    public void open(File file, MainController mainController) throws ParserConfigurationException, SAXException, IOException {
-        String parentPath = file.getParent(); //ファイル参照するためのファイルパス
+    public void load(File dir, MainController mainController) throws ParserConfigurationException, SAXException, IOException {
+        String parentPath = dir.getAbsolutePath();
+        // ファイル名はディレクトリ名と同じ
+        File xml = new File(parentPath, dir.getName());
 
-        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml);
 
         //spriteタグのみなめる
         NodeList sprites = document.getFirstChild().getChildNodes();
         for (int i = 0; i < sprites.getLength(); i++) {
-            if (!sprites.item(i).getNodeName().equals(SPRITE_TAG)) continue;
+            if (!sprites.item(i).getNodeName().equals(SPRITE_TAG)) {
+                continue;
+            }
 
             Sprite sprite = new Sprite(mainController); //create sprite
 
@@ -245,8 +255,9 @@ public class FileManager {
 
     private String saveAsImage(File file, String name, Image image) {
         File folder = new File(file.getParent(), "img");
-        if (!folder.exists()) folder.mkdir(); //create img folder
-
+        if (!folder.exists()) {
+            folder.mkdir(); //create img folder
+        }
         name = name + ".png";
         File fileName = new File(folder.getPath(), name);
 

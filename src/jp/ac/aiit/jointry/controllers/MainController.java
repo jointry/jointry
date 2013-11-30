@@ -86,14 +86,15 @@ public class MainController implements Initializable {
     protected void fopen(ActionEvent event) {
         FileManager manager = new FileManager();
         FileChooser fc = manager.createFileChooser("open");
-        File chooser = fc.showOpenDialog(null);
+        File dir = fc.showOpenDialog(null);
 
-        if (chooser == null) return; //読込先が指定されなかった
-
+        if (dir == null) {
+            return; //読込先が指定されなかった
+        }
         initWindow("load"); //読み込む前に画面を一旦クリア
 
         try {
-            manager.open(chooser, this);
+            manager.load(dir, this);
         } catch (Exception ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,7 +121,9 @@ public class MainController implements Initializable {
             @Override
             public void handle(WindowEvent t) {
                 CooperationController ctrl = (CooperationController) stage.getController();
-                if (agent == null) agent = ctrl.getAgent();
+                if (agent == null) {
+                    agent = ctrl.getAgent();
+                }
                 ctrl.windowClose();
             }
         });
@@ -150,7 +153,9 @@ public class MainController implements Initializable {
     }
 
     public void windowClose() {
-        if (agent != null) agent.close();
+        if (agent != null) {
+            agent.close();
+        }
     }
 
     public void setBackStageController(BackStageController controller) {
