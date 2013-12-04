@@ -1,23 +1,32 @@
 package jp.ac.aiit.jointry.models.blocks;
 
 import java.util.Map;
+import java.util.UUID;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_CHANGE_STATE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_REMOVE;
 
 public abstract class Block extends AnchorPane {
 
     protected double anchorX;
     protected double anchorY;
     public Connector con;
+    private String uuid = UUID.randomUUID().toString();
 
     public Block() {
         setLayoutX(0);
@@ -55,6 +64,7 @@ public abstract class Block extends AnchorPane {
             @Override
             public void handle(ContextMenuEvent t) {
                 remove();
+                BlockDialog.sendMessage(VM_BLOCK_REMOVE, Block.this);
             }
         });
     }
@@ -80,6 +90,18 @@ public abstract class Block extends AnchorPane {
         return getHeight();
     }
 
+    public String getUUID() {
+        return uuid;
+    }
+
+    public String setUUID(String uuid) {
+        return this.uuid = uuid;
+    }
+
+    public void initializeLink() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public String intern() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -102,5 +124,30 @@ public abstract class Block extends AnchorPane {
 
     public void setConnector(Connector con) {
         this.con = con;
+    }
+
+    protected void setChangeListener(final TextField field) {
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                if (!t1.equals(t)) {
+                    System.out.println("start");
+                    System.out.println(t);
+                    System.out.println(t1);
+                    BlockDialog.sendMessage(VM_BLOCK_CHANGE_STATE, Block.this);
+                }
+            }
+        });
+    }
+
+    protected void setChangeListener(final ComboBox cb) {
+        cb.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                if (!t1.equals(t)) {
+                    BlockDialog.sendMessage(VM_BLOCK_CHANGE_STATE, Block.this);
+                }
+            }
+        });
     }
 }

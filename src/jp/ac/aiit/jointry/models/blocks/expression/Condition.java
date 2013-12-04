@@ -20,6 +20,9 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_ADDEMBRYO;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_MOVE;
 import jp.ac.aiit.jointry.util.BlockUtil;
 
 public class Condition extends Expression {
@@ -59,6 +62,8 @@ public class Condition extends Expression {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
+                BlockDialog.sendMessage(VM_BLOCK_MOVE, me);
+
                 if (getCollision() == null) {
                     return;
                 }
@@ -67,6 +72,8 @@ public class Condition extends Expression {
                 If target = (If) con.getHolder();
                 target.addEmbryo(me);
                 move(target.getLayoutX() + 50, target.getLayoutY() + 20);
+
+                BlockDialog.sendMessage(VM_BLOCK_ADDEMBRYO, me);
             }
         });
 
@@ -93,6 +100,8 @@ public class Condition extends Expression {
         AnchorPane.setRightAnchor(tf2, 10.0);
 
         getChildren().addAll(rect, lb, tf1, tf2);
+        setChangeListener(tf1);
+        setChangeListener(tf2);
 
         cb = new ComboBox();
         cb.setItems(FXCollections.observableArrayList(operation.keySet()));
@@ -101,6 +110,7 @@ public class Condition extends Expression {
         AnchorPane.setLeftAnchor(cb, 68.0);
         cb.setPrefSize(60, 20);
         getChildren().addAll(cb);
+        setChangeListener(cb);
 
         // コネクタを全面に出すために
         rect.toBack();
@@ -108,6 +118,7 @@ public class Condition extends Expression {
         makeConnectors();
     }
 
+    @Override
     public void initializeLink() {
         if (mother != null) {
             mother.embryo = null;
@@ -278,7 +289,7 @@ public class Condition extends Expression {
                 Object value = status.get(key);
 
                 if (value instanceof String) {
-                    tf2.setText((String) value); //テキスト
+                    tf1.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
@@ -316,14 +327,14 @@ public class Condition extends Expression {
             rightVariable.outputBlock(sprite);
     }
 
-    void setLeftVariable(Variable v) {
+    public void setLeftVariable(Variable v) {
         this.leftVariable = v;
         if (v != null) {
             v.mother = this;
         }
     }
 
-    void setRightVariable(Variable v) {
+    public void setRightVariable(Variable v) {
         this.rightVariable = v;
         if (v != null) {
             v.mother = this;

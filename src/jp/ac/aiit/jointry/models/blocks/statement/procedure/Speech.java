@@ -25,6 +25,7 @@ public class Speech extends Procedure {
         tf.setPrefWidth(50.0);
         AnchorPane.setTopAnchor(tf, 15.0);
         AnchorPane.setLeftAnchor(tf, 10.0);
+        setChangeListener(tf);
 
         getChildren().add(tf);
         makeConnectors();

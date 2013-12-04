@@ -47,6 +47,7 @@ public class Calculate extends Procedure {
         tf1.setPrefWidth(50.0);
         AnchorPane.setTopAnchor(tf1, 15.0);
         AnchorPane.setLeftAnchor(tf1, 70.0);
+        setChangeListener(tf1);
 
         cb = new ChoiceBox(FXCollections.observableArrayList(
                 "+", "-", "×", "÷", "%"));
@@ -57,6 +58,7 @@ public class Calculate extends Procedure {
         tf2.setPrefWidth(50.0);
         AnchorPane.setTopAnchor(tf2, 15.0);
         AnchorPane.setLeftAnchor(tf2, 190.0);
+        setChangeListener(tf2);
 
         getChildren().addAll(cb, tf1, tf2);
         getChildren().remove(lb);

@@ -23,6 +23,7 @@ public class Rotate extends Procedure {
         cb.setItems(FXCollections.observableArrayList(
                 "0", "30", "60", "90", "120", "150", "180"));
         getChildren().add(cb);
+        setChangeListener(cb);
     }
 
     public static Color getColor() {

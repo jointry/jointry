@@ -38,6 +38,7 @@ public abstract class CodeBlock extends Statement {
     /**
      * ドラッグするブロックを先頭にする.
      */
+    @Override
     public void initializeLink() {
         super.initializeLink();
         // 親のブロックを外す

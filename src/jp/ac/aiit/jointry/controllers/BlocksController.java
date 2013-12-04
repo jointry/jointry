@@ -8,11 +8,11 @@ import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rebound;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Move;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +27,8 @@ import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_VARIABLE_CREATE;
 
 public class BlocksController implements Initializable {
 
@@ -91,6 +93,13 @@ public class BlocksController implements Initializable {
     }
 
     public void addVariable(String name) {
+        for (Node node : blockMenuAdv.getChildrenUnmodifiable()) {
+            if (node instanceof MenuItemAdv) {
+                VariableLabel variable = ((MenuItemAdv) node).getVariableLabel();
+                if (variable.getName().equals(name)) return; //既にある変数名
+            }
+        }
+
         // TODO: あとで考える
         VariableLabel vl = new VariableLabel(name, null);
         // this.mainController.getFrontStageController().addVariable(vl);
@@ -99,5 +108,6 @@ public class BlocksController implements Initializable {
         MenuItemAdv menu = new MenuItemAdv(name);
         menu.addVariableLabel(vl);
         blockMenuAdv.getChildren().add(menu);
+        BlockDialog.sendMessage(VM_BLOCK_VARIABLE_CREATE, name);
     }
 }

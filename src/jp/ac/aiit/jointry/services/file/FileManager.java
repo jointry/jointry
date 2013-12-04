@@ -4,9 +4,6 @@
  */
 package jp.ac.aiit.jointry.services.file;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,10 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -42,6 +37,7 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.util.BlockUtil;
+import jp.ac.aiit.jointry.util.JsonUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -55,7 +51,6 @@ public class FileManager {
     private static final String SPRITE_TAG = "SPRITE";
     private static final String COSTUME_TAG = "COSTUME";
     private static final String SCRIPT_TAG = "SCRIPT";
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public void save(List<Sprite> sprites) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException {
         FileChooser fc = createFileChooser("save");
@@ -116,7 +111,7 @@ public class FileManager {
 
             String ScriptFileName = sprite.getName() + "_script";
             try (PrintWriter script = new PrintWriter(new File(file.getParent(), ScriptFileName))) {
-                script.print(makeJSONString(source));
+                script.print(JsonUtil.makeJSONString(source));
                 script.flush();
             }
 
@@ -205,7 +200,7 @@ public class FileManager {
 
     private void parseJsonBlocks(String jsonString, Sprite sprite) throws IOException {
         //jackson使ってparse
-        ArrayList<Map> blockList = objectMapper.readValue(jsonString, ArrayList.class);
+        ArrayList<Map> blockList = JsonUtil.parceListJSONString(jsonString);
 
         //ブロックの座標と内容のマッピング
         for (Map blockInfo : blockList) {
@@ -268,20 +263,5 @@ public class FileManager {
         }
 
         return name;
-    }
-
-    private String makeJSONString(ArrayList<Map> valueMap) {
-        String jsonString = null;
-
-        try {
-            jsonString = objectMapper.writeValueAsString(valueMap);
-        } catch (JsonGenerationException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return jsonString;
     }
 }

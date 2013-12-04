@@ -24,6 +24,7 @@ public class Costume extends Procedure {
         cb.setItems(FXCollections.observableArrayList(
                 "1", "2", "3")); // TODO
         getChildren().add(cb);
+        setChangeListener(cb);
     }
 
     public static Color getColor() {

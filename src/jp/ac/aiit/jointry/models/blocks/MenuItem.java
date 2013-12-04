@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_CREATE;
 
 public class MenuItem extends AnchorPane {
 
@@ -56,6 +58,7 @@ public class MenuItem extends AnchorPane {
                 try {
                     final Block block = (Block) blockClass.newInstance();
                     addToScriptPane(block);
+                    BlockDialog.sendMessage(VM_BLOCK_CREATE, block);
                     setCursor(Cursor.MOVE);
                 } catch (InstantiationException ex) {
                     Logger.getLogger(MenuItem.class.getName()).log(Level.SEVERE, null, ex);

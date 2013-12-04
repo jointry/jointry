@@ -23,6 +23,7 @@ public class Move extends Procedure {
         cb.setItems(FXCollections.observableArrayList(
                 "0", "10", "20", "30", "40", "50", "60"));
         getChildren().add(cb);
+        setChangeListener(cb);
     }
 
     public static Color getColor() {

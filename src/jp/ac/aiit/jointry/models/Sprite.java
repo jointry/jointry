@@ -13,6 +13,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import jp.ac.aiit.jointry.controllers.MainController;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_SPRITE_SELECT;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_SPRITE_DRAGGED;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_SPRITE_RELEASD;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 
 public final class Sprite extends HBox {
 
@@ -159,6 +163,8 @@ public final class Sprite extends HBox {
                 setEffect(is);
 
                 event.consume(); //イベントストップ
+
+                SpriteDialog.sendMessage(VM_SPRITE_SELECT, Sprite.this);
             }
         });
 
@@ -169,6 +175,8 @@ public final class Sprite extends HBox {
                 setTranslateY(event.getSceneY() - mouseY);
 
                 event.consume();
+
+                SpriteDialog.sendMessage(VM_SPRITE_DRAGGED, Sprite.this);
             }
         });
 
@@ -182,6 +190,8 @@ public final class Sprite extends HBox {
 
                 setEffect(null);
                 event.consume();
+
+                SpriteDialog.sendMessage(VM_SPRITE_RELEASD, Sprite.this);
             }
         });
     }

@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -13,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_CREATE;
 
 public class MenuItemAdv extends AnchorPane {
 
@@ -38,6 +39,7 @@ public class MenuItemAdv extends AnchorPane {
                 Variable v = new Variable();
                 v.setName(variableName);
                 addToScriptPane(v);
+                BlockDialog.sendMessage(VM_BLOCK_CREATE, v);
 
                 // TODO: バインディングする
                 //Bindings.bindBidirectional(v.getValueProperty(),
@@ -81,5 +83,9 @@ public class MenuItemAdv extends AnchorPane {
 
     public void addVariableLabel(VariableLabel vl) {
         this.vl = vl;
+    }
+
+    public VariableLabel getVariableLabel() {
+        return vl;
     }
 }

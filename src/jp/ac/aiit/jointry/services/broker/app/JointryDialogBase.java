@@ -17,6 +17,7 @@ public abstract class JointryDialogBase extends DialogBase implements JointryCom
     public static void install(MainController mainController) {
         if (!installed) {
             DialogBase.addDialog(JointryCommon.D_SPRITE, SpriteDialog.class);
+            DialogBase.addDialog(JointryCommon.D_BLOCK, BlockDialog.class);
 
             if (mainController != null) JointryDialogBase.mainController = mainController;
             installed = true;

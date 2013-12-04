@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.controllers.MainController;
-import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
+import jp.ac.aiit.jointry.services.broker.app.JointryDialogBase;
 
 public class JointryMain extends Application {
 
@@ -20,6 +20,8 @@ public class JointryMain extends Application {
         Parent parent = (Parent) loader.load();
 
         final MainController controller = loader.getController();
+        JointryDialogBase.install(controller);
+
         controller.initWindow("new");
 
         stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -33,8 +35,6 @@ public class JointryMain extends Application {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
-
-        SpriteDialog.install(controller);
     }
 
     /**

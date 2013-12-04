@@ -16,8 +16,7 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
-import jp.ac.aiit.jointry.services.broker.app.EventHook;
-import jp.ac.aiit.jointry.services.broker.app.SpriteEventHook;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class FrontStageController implements Initializable, JointryCommon {
@@ -106,9 +105,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         sprite.setName("sprite" + number);
         stage.getChildren().add(sprite);
 
-        EventHook hook = new SpriteEventHook(sprite);
-        hook.enableHook();
-        hook.sendMessage(VM_SPRITE_MOVE);
+        SpriteDialog.sendMessage(VM_SPRITE_CREATE, sprite);
     }
 
     void addVariable(VariableLabel vl) {

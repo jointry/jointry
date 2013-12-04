@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
+import broker.core.DInfo;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,7 +15,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -24,7 +24,14 @@ import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
-import jp.ac.aiit.jointry.services.lang.parser.Environment;
+import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_VALUE_POS;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_LEFT_VALUE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_RIGHT_VALUE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_VALUE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_ADDVARIABLE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_MOVE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_BLOCK;
 
 /**
  * 名前と値があればいい
@@ -53,9 +60,13 @@ public class Variable extends Expression {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
+                BlockDialog.sendMessage(VM_BLOCK_MOVE, me);
+
                 if (getCollision() == null) {
                     return;
                 }
+
+                DInfo dinfo = new DInfo(D_BLOCK);
 
                 // 接続
                 if (con.getHolder() instanceof Condition) {
@@ -63,35 +74,44 @@ public class Variable extends Expression {
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setLeftVariable(me);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 22);
+                        dinfo.set(KC_VALUE_POS, KC_LEFT_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
                         target.setRightVariable(me);
                         move(target.getLayoutX() + 140, target.getLayoutY() + 22);
+                        dinfo.set(KC_VALUE_POS, KC_RIGHT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Assign) {
                     Assign target = (Assign) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setLeftVariable(me);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        dinfo.set(KC_VALUE_POS, KC_LEFT_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
                         target.setRightVariable(me);
                         move(target.getLayoutX() + 90, target.getLayoutY() + 15);
+                        dinfo.set(KC_VALUE_POS, KC_RIGHT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Calculate) {
                     Calculate target = (Calculate) con.getHolder();
                     if (con.getPosition() == Connector.Position.LEFT) {
                         target.setVariable(me);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        dinfo.set(KC_VALUE_POS, KC_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setLeftVariable(me);
                         move(target.getLayoutX() + 70, target.getLayoutY() + 15);
+                        dinfo.set(KC_VALUE_POS, KC_LEFT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Speech) {
                     Speech target = (Speech) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setVariable(me);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        dinfo.set(KC_VALUE_POS, KC_LEFT_VALUE);
                     }
                 }
+
+                BlockDialog.sendMessage(VM_BLOCK_ADDVARIABLE, me, dinfo);
             }
         });
 
@@ -115,6 +135,7 @@ public class Variable extends Expression {
         getChildren().addAll(rect, topCon);
     }
 
+    @Override
     public void initializeLink() {
         // Condition:
         if (mother instanceof Condition) {
@@ -277,6 +298,10 @@ public class Variable extends Expression {
     }
 
     public String intern() {
+        return name;
+    }
+
+    public String getName() {
         return name;
     }
 
