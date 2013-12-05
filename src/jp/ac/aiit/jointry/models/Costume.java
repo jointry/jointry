@@ -1,6 +1,7 @@
 package jp.ac.aiit.jointry.models;
 
 import javafx.scene.image.Image;
+import jp.ac.aiit.jointry.controllers.CostumeCntroller;
 
 public class Costume {
 

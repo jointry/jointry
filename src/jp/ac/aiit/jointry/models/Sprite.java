@@ -134,6 +134,15 @@ public final class Sprite extends HBox {
         return icon.getY();
     }
 
+    public Image getIcon() {
+        return icon.getImage();
+    }
+
+    public void setIcon(Image image) {
+        this.icon.setImage(image);
+        addCostume("costume", icon.getImage());
+    }
+
     public void setName(String name) {
         this.name = name;
     }

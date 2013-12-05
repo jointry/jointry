@@ -20,9 +20,17 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.FileChooser;
+import jp.ac.aiit.jointry.models.Costume;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_BLOCK_STATUS;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
 import jp.ac.aiit.jointry.services.file.FileManager;
+import jp.ac.aiit.jointry.util.JsonUtil;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class MainController extends DefaultMonitor implements Initializable {
@@ -128,7 +136,7 @@ public class MainController extends DefaultMonitor implements Initializable {
                 CooperationController ctrl = (CooperationController) stage.getController();
                 if (agent == null) {
                     agent = ctrl.getAgent();
-                    agent.setMonitor(MainController.this);
+                    if (agent != null) agent.setMonitor(MainController.this);
                 }
                 ctrl.windowClose();
             }
@@ -211,5 +219,46 @@ public class MainController extends DefaultMonitor implements Initializable {
 
         roomEnter.setVisible(true);
         roomExit.setVisible(false);
+    }
+
+    @Override
+    public void viewImage(String title, final BufferedImage bimage) {
+        title = title.substring(0, title.lastIndexOf("."));
+
+        final String[] names = title.split("_");
+
+        for (final Sprite sprite : this.getFrontStageController().getSprites()) {
+            if (sprite.getName().equals(names[0])) {
+                if (names.length <= 1) {
+                    sprite.setIcon(SwingFXUtils.toFXImage(bimage, null));
+                } else {
+                    final int number = Integer.parseInt(names[2]);
+
+                    for (Costume costume : sprite.getCostumes()) {
+                        if (costume.getNumber() == number) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    sprite.updateCostume(number, SwingFXUtils.toFXImage(bimage, null));
+                                    MainController.this.getBackStageController().showCostumes(sprite);
+                                }
+                            });
+
+                            return;
+                        }
+                    }
+                }
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        sprite.addCostume(names[1], SwingFXUtils.toFXImage(bimage, null));
+                        MainController.this.getBackStageController().showCostumes(sprite);
+                    }
+                });
+
+                break;
+            }
+        }
     }
 }

@@ -156,7 +156,7 @@ public class FileManager {
             String layoutX = spriteMap.getNamedItem("layoutX").getNodeValue();
             String layoutY = spriteMap.getNamedItem("layoutY").getNodeValue();
             sprite.setLayoutX(Double.valueOf(layoutX));
-            sprite.setLayoutX(Double.valueOf(layoutY));
+            sprite.setLayoutY(Double.valueOf(layoutY));
 
             //内部解析
             NodeList childs = sprites.item(i).getChildNodes();

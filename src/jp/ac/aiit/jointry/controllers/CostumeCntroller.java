@@ -8,12 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.util.ParameterAware;
 import jp.ac.aiit.jointry.util.StageUtil;
 
@@ -36,8 +38,9 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
     @FXML
     protected void handleCopyButtonAction(ActionEvent event) {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        sprite.addCostume(title.getText() + "のコピー", image.getImage());
+        Costume costume = sprite.addCostume(title.getText() + "のコピー", image.getImage());
         mainController.getBackStageController().showCostumes(sprite);
+        sendMessage(title.getText() + "のコピー", costume.getNumber(), image.getImage());
     }
 
     @FXML
@@ -46,7 +49,6 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
         URL fxml = getClass().getResource("Paint.fxml"); //表示するfxml
         final StageUtil paintStage = new StageUtil(null, owner, fxml, image.getImage());
 
-        //新規コスチューム追加
         paintStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
@@ -56,7 +58,9 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
                     sprite.updateCostume(Integer.valueOf(number.getText()), ctrl.getResult());
 
-                    image.setImage(ctrl.getResult());
+                    mainController.getBackStageController().showCostumes(sprite);
+                    sendMessage("costume", Integer.parseInt(number.getText()), ctrl.getResult());
+
                 }
             }
         });
@@ -77,5 +81,10 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
         this.title.setText(costume.getTitle());
         this.image.setImage(costume.getImage());
         this.number.setText(Integer.toString(costume.getNumber()));
+    }
+
+    private void sendMessage(String name, int num, Image image) {
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        SpriteDialog.sendImage(sprite.getName(), num, name, image);
     }
 }

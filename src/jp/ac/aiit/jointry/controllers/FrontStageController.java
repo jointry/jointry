@@ -96,16 +96,19 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     public void addSprite(Sprite sprite) {
-        sprite.setDragRange(stage);
-
         int number = 1;
         for (Node i : stage.getChildren()) {
-            if (i instanceof Sprite) number++;
+            if (i instanceof Sprite) {
+                if (((Sprite) i).getName().equals(sprite.getName())) return;
+                number++;
+            }
         }
         sprite.setName("sprite" + number);
+        sprite.setDragRange(stage);
         stage.getChildren().add(sprite);
 
         SpriteDialog.sendMessage(VM_SPRITE_CREATE, sprite);
+        SpriteDialog.sendImage(sprite.getName(), 0, null, sprite.getIcon());
     }
 
     void addVariable(VariableLabel vl) {
