@@ -19,12 +19,13 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
+import broker.core.DefaultMonitor;
 import java.io.File;
 import javafx.stage.FileChooser;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
 
-public class MainController implements Initializable {
+public class MainController extends DefaultMonitor implements Initializable {
 
     @FXML
     private BorderPane rootPane;
@@ -35,6 +36,10 @@ public class MainController implements Initializable {
     private BlocksController blocksController;
     @FXML
     private Label dummylabel;
+    @FXML
+    private MenuItem roomEnter;
+    @FXML
+    private MenuItem roomExit;
     private Agent agent;
 
     @Override
@@ -123,12 +128,26 @@ public class MainController implements Initializable {
                 CooperationController ctrl = (CooperationController) stage.getController();
                 if (agent == null) {
                     agent = ctrl.getAgent();
+                    agent.setMonitor(MainController.this);
                 }
                 ctrl.windowClose();
             }
         });
 
         stage.getStage().show();
+        roomEnter.setVisible(false);
+        roomExit.setVisible(true);
+    }
+
+    @FXML
+    protected void endCooperation(ActionEvent event) {
+        if (agent != null) {
+            agent.close();
+            agent = null;
+        }
+
+        roomEnter.setVisible(true);
+        roomExit.setVisible(false);
     }
 
     public void initWindow(String mode) {
@@ -184,5 +203,13 @@ public class MainController implements Initializable {
 
     public Agent getAgent() {
         return this.agent;
+    }
+
+    @Override
+    public void onClose() {
+        agent = null; //agentのclose
+
+        roomEnter.setVisible(true);
+        roomExit.setVisible(false);
     }
 }

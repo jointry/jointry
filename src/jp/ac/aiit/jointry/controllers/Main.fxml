@@ -41,7 +41,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="共同編集">
                     <items>
-            <MenuItem mnemonicParsing="false" onAction="#startCooperation" text="みんなと遊ぶ" />
+                        <MenuItem fx:id="roomEnter" mnemonicParsing="false" onAction="#startCooperation" text="みんなと遊ぶ" visible="true" />
+                        <MenuItem fx:id="roomExit" mnemonicParsing="false" onAction="#endCooperation" text="部屋を退出" visible="false" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="ヘルプ">
