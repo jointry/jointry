@@ -26,12 +26,15 @@ import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.FileChooser;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import jp.ac.aiit.jointry.models.Costume;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_BLOCK_STATUS;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.JsonUtil;
 import jp.ac.aiit.jointry.util.StageUtil;
+import org.xml.sax.SAXException;
 
 public class MainController extends DefaultMonitor implements Initializable {
 
@@ -86,39 +89,21 @@ public class MainController extends DefaultMonitor implements Initializable {
     }
 
     @FXML
-    protected void handleSaveBtnAct(ActionEvent event) {
-        FileManager manager = new FileManager();
+    protected void fsave(ActionEvent event) {
         try {
-            manager.save(frontStageController.getSprites());
-        } catch (Exception ex) {
+            new FileManager().save(frontStageController.getSprites());
+        } catch (IOException | ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
     protected void fopen(ActionEvent event) {
-        FileManager manager = new FileManager();
-        FileChooser fc = manager.createFileChooser("open");
-        File dir = fc.showOpenDialog(null);
-
-        if (dir == null) {
-            return; //読込先が指定されなかった
-        }
         initWindow("load"); //読み込む前に画面を一旦クリア
 
         try {
-            manager.load(dir, this);
-        } catch (Exception ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @FXML
-    protected void windowClose(ActionEvent event) {
-        FileManager manager = new FileManager();
-        try {
-            manager.save(frontStageController.getSprites());
-        } catch (Exception ex) {
+            new FileManager().load(this);
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
