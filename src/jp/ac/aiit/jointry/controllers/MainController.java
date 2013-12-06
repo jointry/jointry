@@ -21,18 +21,12 @@ import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.stage.FileChooser;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import jp.ac.aiit.jointry.models.Costume;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_BLOCK_STATUS;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.KC_SPRITE_NAME;
 import jp.ac.aiit.jointry.services.file.FileManager;
-import jp.ac.aiit.jointry.util.JsonUtil;
 import jp.ac.aiit.jointry.util.StageUtil;
 import org.xml.sax.SAXException;
 
