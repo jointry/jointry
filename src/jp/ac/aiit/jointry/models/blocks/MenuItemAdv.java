@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_CREATE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_CREATE;
 
 public class MenuItemAdv extends AnchorPane {
 
@@ -39,7 +39,7 @@ public class MenuItemAdv extends AnchorPane {
                 Variable v = new Variable();
                 v.setName(variableName);
                 addToScriptPane(v);
-                BlockDialog.sendMessage(VM_BLOCK_CREATE, v);
+                BlockDialog.sendMessage(M_BLOCK_CREATE, v);
 
                 // TODO: バインディングする
                 //Bindings.bindBidirectional(v.getValueProperty(),

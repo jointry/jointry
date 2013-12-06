@@ -16,9 +16,9 @@ import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_MOVE;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_ADDLINK;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_ADDCHILD;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_MOVE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_ADDLINK;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_ADDCHILD;
 
 public abstract class Statement extends Block {
 
@@ -48,7 +48,7 @@ public abstract class Statement extends Block {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
-                BlockDialog.sendMessage(VM_BLOCK_MOVE, myBlock);
+                BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
 
                 if (getCollision() == null) return;
 
@@ -62,7 +62,7 @@ public abstract class Statement extends Block {
                                 target.getLayoutY() + target.getHeight());
                         con.setFill(Color.GOLD);
 
-                        BlockDialog.sendMessage(VM_BLOCK_ADDLINK, myBlock);
+                        BlockDialog.sendMessage(M_BLOCK_ADDLINK, myBlock);
                     }
                 }
 
@@ -84,7 +84,7 @@ public abstract class Statement extends Block {
                         con.setFill(Color.GOLD);
                         target.resize();
 
-                        BlockDialog.sendMessage(VM_BLOCK_ADDCHILD, myBlock);
+                        BlockDialog.sendMessage(M_BLOCK_ADDCHILD, myBlock);
                     }
                     return;
                 }

@@ -25,9 +25,9 @@ public abstract class JointryDialogBase extends DialogBase implements JointryCom
     }
 
     protected int getEvent(DInfo dinfo) {
-        int event = dinfo.getInt(JointryCommon.KC_METHOD);
+        int event = dinfo.getInt(JointryCommon.K_METHOD);
 
-        if (event == 0) return JointryCommon.VM_DUMMY;
+        if (event == 0) return JointryCommon.M_DUMMY;
         return event;
     }
 
@@ -35,7 +35,7 @@ public abstract class JointryDialogBase extends DialogBase implements JointryCom
         if (mainController == null) return null;
 
         for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
-            if (sprite.getName().equals(dinfo.get(KC_SPRITE_NAME))) {
+            if (sprite.getName().equals(dinfo.get(K_SPRITE_NAME))) {
                 return sprite;
             }
         }

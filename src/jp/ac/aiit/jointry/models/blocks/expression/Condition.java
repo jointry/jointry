@@ -21,8 +21,8 @@ import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_ADDEMBRYO;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_MOVE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_ADDEMBRYO;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_MOVE;
 import jp.ac.aiit.jointry.util.BlockUtil;
 
 public class Condition extends Expression {
@@ -62,7 +62,7 @@ public class Condition extends Expression {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
-                BlockDialog.sendMessage(VM_BLOCK_MOVE, me);
+                BlockDialog.sendMessage(M_BLOCK_MOVE, me);
 
                 if (getCollision() == null) {
                     return;
@@ -73,7 +73,7 @@ public class Condition extends Expression {
                 target.addEmbryo(me);
                 move(target.getLayoutX() + 50, target.getLayoutY() + 20);
 
-                BlockDialog.sendMessage(VM_BLOCK_ADDEMBRYO, me);
+                BlockDialog.sendMessage(M_BLOCK_ADDEMBRYO, me);
             }
         });
 

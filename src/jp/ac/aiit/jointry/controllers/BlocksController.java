@@ -28,7 +28,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_VARIABLE_CREATE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_VARIABLE_CREATE;
 
 public class BlocksController implements Initializable {
 
@@ -108,6 +108,6 @@ public class BlocksController implements Initializable {
         MenuItemAdv menu = new MenuItemAdv(name);
         menu.addVariableLabel(vl);
         blockMenuAdv.getChildren().add(menu);
-        BlockDialog.sendMessage(VM_BLOCK_VARIABLE_CREATE, name);
+        BlockDialog.sendMessage(M_BLOCK_VARIABLE_CREATE, name);
     }
 }

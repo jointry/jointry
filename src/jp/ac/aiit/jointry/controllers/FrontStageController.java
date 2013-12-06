@@ -107,7 +107,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         sprite.setDragRange(stage);
         stage.getChildren().add(sprite);
 
-        SpriteDialog.sendMessage(VM_SPRITE_CREATE, sprite);
+        SpriteDialog.sendMessage(M_SPRITE_CREATE, sprite);
         SpriteDialog.sendImage(sprite.getName(), 0, null, sprite.getIcon());
     }
 

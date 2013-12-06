@@ -18,8 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_CHANGE_STATE;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.VM_BLOCK_REMOVE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_CHANGE_STATE;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_REMOVE;
 
 public abstract class Block extends AnchorPane {
 
@@ -64,7 +64,7 @@ public abstract class Block extends AnchorPane {
             @Override
             public void handle(ContextMenuEvent t) {
                 remove();
-                BlockDialog.sendMessage(VM_BLOCK_REMOVE, Block.this);
+                BlockDialog.sendMessage(M_BLOCK_REMOVE, Block.this);
             }
         });
     }
@@ -134,7 +134,7 @@ public abstract class Block extends AnchorPane {
                     System.out.println("start");
                     System.out.println(t);
                     System.out.println(t1);
-                    BlockDialog.sendMessage(VM_BLOCK_CHANGE_STATE, Block.this);
+                    BlockDialog.sendMessage(M_BLOCK_CHANGE_STATE, Block.this);
                 }
             }
         });
@@ -145,7 +145,7 @@ public abstract class Block extends AnchorPane {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
                 if (!t1.equals(t)) {
-                    BlockDialog.sendMessage(VM_BLOCK_CHANGE_STATE, Block.this);
+                    BlockDialog.sendMessage(M_BLOCK_CHANGE_STATE, Block.this);
                 }
             }
         });
