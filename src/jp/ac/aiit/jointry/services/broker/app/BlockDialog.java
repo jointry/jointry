@@ -213,7 +213,7 @@ public class BlockDialog extends JointryDialogBase {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myBlock.setStatus(JsonUtil.parceMapJSONString(dinfo.get(K_BLOCK_STATUS)));
+                myBlock.setStatus(JsonUtil.parseMapJSONString(dinfo.get(K_BLOCK_STATUS)));
             }
         });
     }

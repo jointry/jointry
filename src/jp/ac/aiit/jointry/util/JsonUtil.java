@@ -145,7 +145,7 @@ public class JsonUtil {
         return jsonString;
     }
 
-    public static Map parceMapJSONString(String jsonString) {
+    public static Map parseMapJSONString(String jsonString) {
         Map jsonMap = null;
 
         try {
@@ -176,7 +176,7 @@ public class JsonUtil {
     }
 
     public static Sprite parceSpriteJSONString(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
-        Map<String, Object> projectMap = parceMapJSONString(jsonString);
+        Map<String, Object> projectMap = parseMapJSONString(jsonString);
 
         //load as sprite
         Map<String, String> spriteMap = (Map) projectMap.get(SPRITE_TAG);
