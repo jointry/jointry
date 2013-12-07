@@ -1,6 +1,7 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
+import java.util.ArrayList;
 import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_BLOCK_STATUS;
 import jp.ac.aiit.jointry.util.BlockUtil;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
@@ -226,7 +228,8 @@ public class BlockDialog extends JointryDialogBase {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myBlock.setStatus(JsonUtil.parseJSONStringToList(dinfo.get(K_BLOCK_STATUS)).get(0));
+                ArrayList<Map> list = JsonUtil.parseJSONStringToList(dinfo.get(K_BLOCK_STATUS));
+                myBlock.setStatus(list.get(0));
             }
         });
     }
@@ -268,7 +271,9 @@ public class BlockDialog extends JointryDialogBase {
                 setVariableBlock(dinfo, (Variable) block);
             }
 
-            dinfo.set(K_BLOCK_STATUS, JsonUtil.makeJSONString(block.getStatus()));
+            ArrayList<Map> list = new ArrayList();
+            list.add(block.getStatus());
+            dinfo.set(K_BLOCK_STATUS, JsonUtil.makeJSONString(list));
 
             mainController.getAgent().sendNotify(dinfo);
         }
