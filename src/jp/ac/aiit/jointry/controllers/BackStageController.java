@@ -97,10 +97,11 @@ public class BackStageController {
         showBlocks(sprite);
     }
 
-    public void start() {
+    public void start(double speed) {
         for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
             SpriteTask task = new SpriteTask();
             task.setSprite(sprite);
+            task.setSpeed(speed);
             Thread th = new Thread(task);
             th.setDaemon(true);
             th.start();

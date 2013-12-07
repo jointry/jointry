@@ -28,7 +28,7 @@ public class RotateStmnt extends ASTList {
         if (c instanceof Integer) {
             Sprite sprite = env.getSprite();
             SequentialTransition st = env.getSequentialTransition();
-            RotateTransition rt = new RotateTransition(Duration.millis(1000), sprite);
+            RotateTransition rt = new RotateTransition(Duration.millis(env.getSpeed()), sprite);
             rt.setByAngle((Integer) c);
             rt.setAutoReverse(true);
             st.getChildren().add(rt);

@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
@@ -25,6 +26,8 @@ public class FrontStageController implements Initializable, JointryCommon {
     private AnchorPane stage;
     @FXML
     private VBox variables;
+    @FXML
+    private Slider speed_slider;
     private Sprite currentSprite;
     private MainController mainController;
 
@@ -37,7 +40,7 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     @FXML
     protected void start(ActionEvent event) {
-        this.mainController.getBackStageController().start();
+        this.mainController.getBackStageController().start(speed_slider.getValue());
     }
 
     @FXML
@@ -99,7 +102,9 @@ public class FrontStageController implements Initializable, JointryCommon {
         int number = 1;
         for (Node i : stage.getChildren()) {
             if (i instanceof Sprite) {
-                if (((Sprite) i).getName().equals(sprite.getName())) return;
+                if (((Sprite) i).getName().equals(sprite.getName())) {
+                    return;
+                }
                 number++;
             }
         }

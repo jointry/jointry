@@ -26,5 +26,6 @@
       </children>
     </AnchorPane>
     <Button layoutX="14.0" layoutY="402.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
+    <Slider fx:id="speed_slider" layoutX="170.0" layoutY="12.0" max="2000.0" min="10.0" prefWidth="275.0" value="1000.0" />
   </children>
 </AnchorPane>

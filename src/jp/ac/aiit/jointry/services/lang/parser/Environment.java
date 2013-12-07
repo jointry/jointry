@@ -13,6 +13,7 @@ public class Environment {
     private SequentialTransition sequentialTransition;
     private double x = 0.0;
     private double y = 0.0;
+    private double speed;
 
     public Environment() {
         values = new HashMap<>();
@@ -72,5 +73,13 @@ public class Environment {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getSpeed() {
+        return this.speed;
     }
 }

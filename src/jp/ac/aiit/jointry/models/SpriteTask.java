@@ -19,6 +19,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 public class SpriteTask extends Task {
 
     private Sprite sprite;
+    private double speed;
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
@@ -45,6 +46,7 @@ public class SpriteTask extends Task {
 
         Environment env = new Environment();
         env.setSprite(sprite);
+        env.setSpeed(speed);
         SequentialTransition st = new SequentialTransition();
         env.setSequentialTransition(st);
         Object retval = null;
@@ -62,5 +64,9 @@ public class SpriteTask extends Task {
         st.play();
 
         return retval;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 }
