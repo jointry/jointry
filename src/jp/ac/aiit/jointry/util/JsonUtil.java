@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -234,22 +235,19 @@ public class JsonUtil {
         for (Map blocks_info : source) {
             Block topBlock = null;
             Block prevBlock = null;
+            ArrayList<Map> blocks = (ArrayList<Map>) blocks_info.get("block");
+            for (Map status_info : blocks) {
+                Block block = BlockUtil.createBlock(status_info);
+                String json = makeJSONString((Map) status_info.get(block.getClass().getSimpleName()));
+                ArrayList<Status> params = parseJSONString("[" + json + "]");
+                block.setStatus(params.get(0));
 
-            for (Map blocks : (ArrayList<Map>) blocks_info.get("block")) {
-                ArrayList<Status> list = parseJSONString("[" + makeJSONString(blocks) + "]");
-
-                for (Status status : list) {
-                    Block block = BlockUtil.createBlock(status); //ブロック生成
-                    block.setStatus(status); //パラメータ設定         
-                    //block.setStatus((Status) list.get(block.getClass().getSimpleName())); //パラメータ設定 
-
-                    if (topBlock == null) {
-                        topBlock = block;
-                        prevBlock = topBlock;
-                    } else if (prevBlock != null) {
-                        ((Statement) prevBlock).addLink((Statement) block);
-                        prevBlock = block;
-                    }
+                if (topBlock == null) {
+                    topBlock = block;
+                    prevBlock = topBlock;
+                } else if (prevBlock != null) {
+                    ((Statement) prevBlock).addLink((Statement) block);
+                    prevBlock = block;
                 }
             }
 
