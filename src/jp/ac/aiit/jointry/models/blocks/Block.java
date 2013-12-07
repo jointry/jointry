@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_CHANGE_STATE;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_REMOVE;
@@ -110,7 +111,7 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

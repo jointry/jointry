@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.util.BlockUtil;
@@ -70,13 +71,13 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         ArrayList<Map> list = (ArrayList<Map>) status.get("childBlocks");
 
         Block preBlock = null;
         for (Map map : list) {
             Block block = BlockUtil.createBlock(map);
-            block.setStatus((HashMap) map.get(block.getClass().getSimpleName()));
+            block.setStatus((Status) map.get(block.getClass().getSimpleName()));
 
             if (preBlock == null) {
                 preBlock = block;

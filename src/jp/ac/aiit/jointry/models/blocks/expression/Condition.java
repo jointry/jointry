@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
@@ -283,7 +284,7 @@ public class Condition extends Expression {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
                 Object value = status.get(key);
@@ -293,7 +294,7 @@ public class Condition extends Expression {
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((HashMap) value);
+                    variable.setStatus((Status) value);
 
                     setLeftVariable(variable);
                 }
@@ -308,7 +309,7 @@ public class Condition extends Expression {
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((HashMap) value);
+                    variable.setStatus((Status) value);
 
                     setRightVariable(variable);
                 }
@@ -320,11 +321,13 @@ public class Condition extends Expression {
     public void outputBlock(Sprite sprite) {
         sprite.getScriptPane().getChildren().add(this);
 
-        if (leftVariable != null)
+        if (leftVariable != null) {
             leftVariable.outputBlock(sprite);
+        }
 
-        if (rightVariable != null)
+        if (rightVariable != null) {
             rightVariable.outputBlock(sprite);
+        }
     }
 
     public void setLeftVariable(Variable v) {

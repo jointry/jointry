@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.util.BlockUtil;
@@ -161,8 +162,9 @@ public class Calculate extends Procedure {
     public Map getStatus() {
         Map<String, Object> status = new HashMap();
 
-        if (variable != null)
+        if (variable != null) {
             status.put("variable", variable.getStatus());
+        }
 
         if (leftVariable != null) {
             status.put("left", leftVariable.getStatus());
@@ -182,12 +184,12 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         for (Object key : status.keySet()) {
             if (key.equals("variable")) {
                 //変数ブロック
                 Variable val = (Variable) BlockUtil.createBlock("Variable");
-                val.setStatus((Map) status.get(key));
+                val.setStatus((Status) status.get(key));
 
                 setVariable(val);
             } else if (key.equals("left")) {
@@ -198,7 +200,7 @@ public class Calculate extends Procedure {
                 } else {
                     //変数ブロック
                     Variable val = (Variable) BlockUtil.createBlock("Variable");
-                    val.setStatus((Map) status.get(key));
+                    val.setStatus((Status) status.get(key));
 
                     setLeftVariable(variable);
                 }
@@ -210,7 +212,7 @@ public class Calculate extends Procedure {
                 } else {
                     //変数ブロック
                     arg2 = (Variable) BlockUtil.createBlock("Variable");
-                    arg2.setStatus((Map) status.get(key));
+                    arg2.setStatus((Status) status.get(key));
                 }
             }
         }
@@ -220,11 +222,13 @@ public class Calculate extends Procedure {
     public void outputBlock(Sprite sprite) {
         super.outputBlock(sprite);
 
-        if (variable != null)
+        if (variable != null) {
             variable.outputBlock(sprite);
+        }
 
-        if (leftVariable != null)
+        if (leftVariable != null) {
             leftVariable.outputBlock(sprite);
+        }
     }
 
     public void setVariable(Variable v) {

@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
@@ -314,7 +315,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         //key = 変数名
         Set<String> set = new HashSet(status.keySet());
         setName(set.toString().substring(1, set.toString().length() - 1));

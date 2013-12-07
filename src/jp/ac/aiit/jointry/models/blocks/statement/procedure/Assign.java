@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import static jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate.getColor;
@@ -152,8 +153,9 @@ public class Assign extends Procedure {
     public Map getStatus() {
         Map<String, Object> status = new HashMap();
 
-        if (leftVariable != null)
+        if (leftVariable != null) {
             status.put("left", leftVariable.getStatus());
+        }
 
         if (rightVariable != null) {
             status.put("right", rightVariable.getStatus());
@@ -165,11 +167,11 @@ public class Assign extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
                 Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                variable.setStatus((Map) status.get(key));
+                variable.setStatus((Status) status.get(key));
 
                 setLeftVariable(variable);
             } else if (key.equals("right")) {
@@ -180,7 +182,7 @@ public class Assign extends Procedure {
                 } else {
                     //変数ブロック
                     Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((Map) value);
+                    variable.setStatus((Status) value);
 
                     setRightVariable(variable);
                 }
@@ -192,10 +194,12 @@ public class Assign extends Procedure {
     public void outputBlock(Sprite sprite) {
         super.outputBlock(sprite);
 
-        if (leftVariable != null)
+        if (leftVariable != null) {
             leftVariable.outputBlock(sprite);
+        }
 
-        if (rightVariable != null)
+        if (rightVariable != null) {
             rightVariable.outputBlock(sprite);
+        }
     }
 }

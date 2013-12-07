@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.services.file.FileManager;
@@ -144,8 +145,8 @@ public class JsonUtil {
         return jsonString;
     }
 
-    public static ArrayList<Map> parseJSONStringToList(String jsonString) {
-        ArrayList<Map> jsonList = null;
+    public static ArrayList<Status> parseJSONString(String jsonString) {
+        ArrayList<Status> jsonList = null;
 
         try {
             jsonList = objectMapper.readValue(jsonString, ArrayList.class);
@@ -217,7 +218,7 @@ public class JsonUtil {
     }
 
     private static void parseBlocks(String jsonString, Sprite sprite) {
-        ArrayList<Map> source = JsonUtil.parseJSONStringToList(jsonString);
+        ArrayList<Status> source = JsonUtil.parseJSONString(jsonString);
 
         for (Map blockInfo : source) {
             Block topBlock = null;
@@ -225,7 +226,7 @@ public class JsonUtil {
 
             for (Map script : (ArrayList<Map>) blockInfo.get("block")) {
                 Block block = BlockUtil.createBlock(script); //ブロック生成
-                block.setStatus((HashMap) script.get(block.getClass().getSimpleName())); //パラメータ設定
+                block.setStatus((Status) script.get(block.getClass().getSimpleName())); //パラメータ設定
 
                 if (topBlock == null) {
                     topBlock = block;

@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Status;
 
 public class Move extends Procedure {
 
@@ -50,7 +51,9 @@ public class Move extends Procedure {
         Map<String, Object> status = new HashMap();
 
         String arg = (String) cb.getValue();
-        if (arg == null) arg = "0";
+        if (arg == null) {
+            arg = "0";
+        }
 
         status.put("move", arg);
 
@@ -58,7 +61,7 @@ public class Move extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         cb.setValue(status.get("move"));
     }
 

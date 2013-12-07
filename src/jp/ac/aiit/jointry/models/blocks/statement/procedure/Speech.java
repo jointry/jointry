@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.util.BlockUtil;
@@ -89,7 +90,7 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         Object value = status.get("variable");
 
         if (value instanceof String) {
@@ -97,7 +98,7 @@ public class Speech extends Procedure {
         } else {
             //変数ブロック
             Variable val = (Variable) BlockUtil.createBlock("Variable");
-            val.setStatus((HashMap) value);
+            val.setStatus((Status) value);
 
             setVariable(variable);
         }
@@ -107,8 +108,9 @@ public class Speech extends Procedure {
     public void outputBlock(Sprite sprite) {
         super.outputBlock(sprite);
 
-        if (variable != null)
+        if (variable != null) {
             variable.outputBlock(sprite);
+        }
     }
 
     public void setVariable(Variable v) {

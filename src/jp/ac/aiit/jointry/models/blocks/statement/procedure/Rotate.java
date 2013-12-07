@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Status;
 
 public class Rotate extends Procedure {
 
@@ -49,7 +50,9 @@ public class Rotate extends Procedure {
         Map<String, Object> status = new HashMap();
 
         String arg = (String) cb.getValue();
-        if (arg == null) arg = "0";
+        if (arg == null) {
+            arg = "0";
+        }
 
         status.put("rotate", arg);
 
@@ -57,7 +60,7 @@ public class Rotate extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         cb.setValue(status.get("rotate"));
     }
 

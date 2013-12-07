@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Status;
 
 public class Rebound extends Procedure {
 
@@ -34,7 +35,7 @@ public class Rebound extends Procedure {
     }
 
     @Override
-    public void setStatus(Map status) {
+    public void setStatus(Status status) {
         //ブロック未実装
     }
 
