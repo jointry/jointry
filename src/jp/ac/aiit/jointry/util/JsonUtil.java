@@ -28,7 +28,6 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.services.file.FileManager;
-import org.w3c.dom.NamedNodeMap;
 
 public class JsonUtil {
 
