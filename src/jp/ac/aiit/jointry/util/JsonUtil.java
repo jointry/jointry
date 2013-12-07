@@ -5,6 +5,8 @@
 package jp.ac.aiit.jointry.util;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
@@ -148,8 +150,11 @@ public class JsonUtil {
     public static ArrayList<Status> parseJSONString(String jsonString) {
         ArrayList<Status> jsonList = null;
 
+        TypeReference type = new TypeReference<ArrayList<Status>>() {
+        };
+
         try {
-            jsonList = objectMapper.readValue(jsonString, ArrayList.class);
+            jsonList = objectMapper.readValue(jsonString, type);
         } catch (JsonGenerationException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JsonMappingException ex) {
@@ -157,6 +162,7 @@ public class JsonUtil {
         } catch (IOException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return jsonList;
     }
 
@@ -218,22 +224,32 @@ public class JsonUtil {
     }
 
     private static void parseJSONStringToBlocks(String jsonString, Sprite sprite) {
-        ArrayList<Status> source = JsonUtil.parseJSONString(jsonString);
+        ArrayList<Map> source = null;
+        try {
+            source = objectMapper.readValue(jsonString, ArrayList.class);
+        } catch (IOException ex) {
+            Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        for (Status blocks : source) {
+        for (Map blocks_info : source) {
             Block topBlock = null;
             Block prevBlock = null;
 
-            for (Status s : (ArrayList<Status>) blocks.get("block")) {
-                Block block = BlockUtil.createBlock(s); //ブロック生成
-                block.setStatus((Status) s.get(block.getClass().getSimpleName())); //パラメータ設定
+            for (Map blocks : (ArrayList<Map>) blocks_info.get("block")) {
+                ArrayList<Status> list = parseJSONString("[" + makeJSONString(blocks) + "]");
 
-                if (topBlock == null) {
-                    topBlock = block;
-                    prevBlock = topBlock;
-                } else if (prevBlock != null) {
-                    ((Statement) prevBlock).addLink((Statement) block);
-                    prevBlock = block;
+                for (Status status : list) {
+                    Block block = BlockUtil.createBlock(status); //ブロック生成
+                    block.setStatus(status); //パラメータ設定         
+                    //block.setStatus((Status) list.get(block.getClass().getSimpleName())); //パラメータ設定 
+
+                    if (topBlock == null) {
+                        topBlock = block;
+                        prevBlock = topBlock;
+                    } else if (prevBlock != null) {
+                        ((Statement) prevBlock).addLink((Statement) block);
+                        prevBlock = block;
+                    }
                 }
             }
 
@@ -241,7 +257,7 @@ public class JsonUtil {
                 ((Statement) topBlock).fetchPrevTopBlock();
 
                 //topblockの座標
-                String cordinate = (String) blocks.get("coordinate");
+                String cordinate = (String) blocks_info.get("coordinate");
                 String[] pos = cordinate.split(" ");
 
                 double x = Double.valueOf(pos[0]);
