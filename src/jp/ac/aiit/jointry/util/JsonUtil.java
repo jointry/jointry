@@ -203,30 +203,30 @@ public class JsonUtil {
                     try (BufferedReader br = new BufferedReader(new FileReader(scriptFile))) {
                         String line;
                         while ((line = br.readLine()) != null) {
-                            parseBlocks(line, sprite);
+                            parseJSONStringToBlocks(line, sprite);
                         }
                     }
                 }
                 break;
 
             default:
-                parseBlocks((String) projectMap.get(SCRIPT_TAG), sprite);
+                parseJSONStringToBlocks((String) projectMap.get(SCRIPT_TAG), sprite);
                 break;
         }
 
         return sprite;
     }
 
-    private static void parseBlocks(String jsonString, Sprite sprite) {
+    private static void parseJSONStringToBlocks(String jsonString, Sprite sprite) {
         ArrayList<Status> source = JsonUtil.parseJSONString(jsonString);
 
-        for (Map blockInfo : source) {
+        for (Status blocks : source) {
             Block topBlock = null;
             Block prevBlock = null;
 
-            for (Map script : (ArrayList<Map>) blockInfo.get("block")) {
-                Block block = BlockUtil.createBlock(script); //ブロック生成
-                block.setStatus((Status) script.get(block.getClass().getSimpleName())); //パラメータ設定
+            for (Status s : (ArrayList<Status>) blocks.get("block")) {
+                Block block = BlockUtil.createBlock(s); //ブロック生成
+                block.setStatus((Status) s.get(block.getClass().getSimpleName())); //パラメータ設定
 
                 if (topBlock == null) {
                     topBlock = block;
@@ -241,7 +241,7 @@ public class JsonUtil {
                 ((Statement) topBlock).fetchPrevTopBlock();
 
                 //topblockの座標
-                String cordinate = (String) blockInfo.get("coordinate");
+                String cordinate = (String) blocks.get("coordinate");
                 String[] pos = cordinate.split(" ");
 
                 double x = Double.valueOf(pos[0]);
