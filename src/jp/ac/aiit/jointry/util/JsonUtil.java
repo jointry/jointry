@@ -145,7 +145,7 @@ public class JsonUtil {
         return jsonString;
     }
 
-    public static ArrayList<Map> parseJSONString(String jsonString) {
+    public static ArrayList<Map> parseJSONStringToList(String jsonString) {
         ArrayList<Map> jsonList = null;
 
         try {
@@ -218,7 +218,7 @@ public class JsonUtil {
     }
 
     private static void parseBlocks(String jsonString, Sprite sprite) {
-        ArrayList<Map> source = JsonUtil.parseJSONString(jsonString);
+        ArrayList<Map> source = JsonUtil.parseJSONStringToList(jsonString);
 
         for (Map blockInfo : source) {
             Block topBlock = null;
