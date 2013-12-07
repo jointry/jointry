@@ -58,7 +58,7 @@ public class JsonUtil {
             costumeMap.put("title", costume.getTitle());
             switch (fileType) {
                 case TYPE_BASE64:
-                    costumeMap.put("img", "base64"); // base64で画像をエンコードして文字列を保存したい   
+                    costumeMap.put("img", "base64"); // base64で画像をエンコードして文字列を保存したい
                     break;
 
                 case TYPE_FILE:
@@ -160,7 +160,7 @@ public class JsonUtil {
         return jsonMap;
     }
 
-    public static ArrayList parceListJSONString(String jsonString) {
+    public static ArrayList parseListJSONString(String jsonString) {
         ArrayList<Map> jsonList = null;
 
         try {
@@ -175,7 +175,7 @@ public class JsonUtil {
         return jsonList;
     }
 
-    public static Sprite parceSpriteJSONString(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
+    public static Sprite parseSpriteJSONString(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
         Map<String, Object> projectMap = parseMapJSONString(jsonString);
 
         //load as sprite
@@ -191,7 +191,7 @@ public class JsonUtil {
             String title = costumeMap.get("title");
             switch (fileType) {
                 case TYPE_BASE64:
-                    costumeMap.get("img"); // base64で画像をデコードしたい   
+                    costumeMap.get("img"); // base64で画像をデコードしたい
                     break;
 
                 case TYPE_FILE:
@@ -233,7 +233,7 @@ public class JsonUtil {
     }
 
     private static void parseBlocks(String jsonString, Sprite sprite) {
-        ArrayList<Map> source = JsonUtil.parceListJSONString(jsonString);
+        ArrayList<Map> source = JsonUtil.parseListJSONString(jsonString);
 
         for (Map blockInfo : source) {
             Block topBlock = null;
