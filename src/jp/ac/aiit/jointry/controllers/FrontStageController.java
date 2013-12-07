@@ -61,7 +61,8 @@ public class FrontStageController implements Initializable, JointryCommon {
                 PaintController ctrl = (PaintController) paintStage.getController();
 
                 if (ctrl.getResult() != null) {
-                    Sprite sprite = new Sprite(ctrl.getResult(), mainController);
+                    Sprite sprite = new Sprite(ctrl.getResult());
+                    sprite.setMainController(mainController);
                     showSprite(sprite);
                 }
             }

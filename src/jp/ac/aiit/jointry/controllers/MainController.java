@@ -115,7 +115,9 @@ public class MainController extends DefaultMonitor implements Initializable {
                 CooperationController ctrl = (CooperationController) stage.getController();
                 if (agent == null) {
                     agent = ctrl.getAgent();
-                    if (agent != null) agent.setMonitor(MainController.this);
+                    if (agent != null) {
+                        agent.setMonitor(MainController.this);
+                    }
                 }
                 ctrl.windowClose();
             }
@@ -142,7 +144,8 @@ public class MainController extends DefaultMonitor implements Initializable {
             case "new":
                 //初期スプライト
                 URL path = getClass().getResource("images/scratch_cat1.gif");
-                Sprite sprite = new Sprite(path.toString(), this);
+                Sprite sprite = new Sprite(path.toString());
+                sprite.setMainController(this);
                 URL costume_path = getClass().getResource("images/scratch_cat2.gif");
                 sprite.addCostume("costume", new Image(costume_path.toString()));
                 frontStageController.showSprite(sprite);

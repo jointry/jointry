@@ -33,8 +33,8 @@ public class SpriteDialog extends JointryDialogBase {
         int event = getEvent(dinfo);
 
         if (event == M_SPRITE_CREATE && mainController != null) {
-            final Sprite sprite = new Sprite(mainController);
-
+            final Sprite sprite = new Sprite();
+            sprite.setMainController(mainController);
             sprite.setName(dinfo.get(K_SPRITE_NAME));
             sprite.setLayoutX(dinfo.getInt(K_X1));
             sprite.setLayoutY(dinfo.getInt(K_Y1));
@@ -47,10 +47,10 @@ public class SpriteDialog extends JointryDialogBase {
             });
         }
 
-
         Sprite sprite = getTargetSprite(dinfo);
-        if (sprite == null) return; //該当なし
-
+        if (sprite == null) {
+            return; //該当なし
+        }
         switch (event) {
             case M_SPRITE_SELECT:
                 sprite.setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(K_COLOR))));
@@ -91,7 +91,9 @@ public class SpriteDialog extends JointryDialogBase {
 
     public static void sendImage(String spriteName, int num, String costumeName, Image image) {
         if (mainController.getAgent() != null && image != null) {
-            if (costumeName != null) spriteName = spriteName + "_" + costumeName+ "_" + num;
+            if (costumeName != null) {
+                spriteName = spriteName + "_" + costumeName + "_" + num;
+            }
 
             BufferedImage buf = SwingFXUtils.fromFXImage(image, null);
             mainController.getAgent().notifyViewImage(spriteName, buf);

@@ -167,11 +167,12 @@ public class JsonUtil {
         return jsonList;
     }
 
-    public static Sprite parseJSONStringToSprite(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
+    public static Sprite parseJSONStringToSprite(String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
         Map<String, Object> projectMap = objectMapper.readValue(jsonString, Map.class);
 
         //load as sprite
         Map<String, String> spriteMap = (Map) projectMap.get(SPRITE_TAG);
+        Sprite sprite = new Sprite();
         sprite.setName(spriteMap.get("title"));
         sprite.setTranslateX(Double.valueOf(spriteMap.get("layoutX")));
         sprite.setTranslateY(Double.valueOf(spriteMap.get("layoutY")));

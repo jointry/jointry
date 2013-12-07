@@ -32,9 +32,8 @@ public final class Sprite extends HBox {
     private ImageView icon;
     private Label saying;
 
-    public Sprite(MainController mainController) {
+    public Sprite() {
         //値初期化
-        this.mainController = mainController;
         this.scriptPane = new AnchorPane();
         scriptPane.setId("scriptPane");
 
@@ -44,13 +43,12 @@ public final class Sprite extends HBox {
         setMouseEvent();
     }
 
-    public Sprite(String url, MainController mainController) {
-        this(new Image(url), mainController);
+    public Sprite(String url) {
+        this(new Image(url));
     }
 
-    public Sprite(Image image, MainController mainController) {
-        this(mainController);
-
+    public Sprite(Image image) {
+        this();
         icon = new ImageView(image);
         getChildren().add(this.icon);
         addCostume("costume", icon.getImage());
@@ -159,7 +157,7 @@ public final class Sprite extends HBox {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mainController.getFrontStageController().setCurrentSprite(Sprite.this);
+                getMainController().getFrontStageController().setCurrentSprite(Sprite.this);
                 mouseX = event.getSceneX() - getTranslateX();
                 mouseY = event.getSceneY() - getTranslateY();
                 pressX = event.getSceneX() - mouseX;
@@ -215,5 +213,9 @@ public final class Sprite extends HBox {
 
     public MainController getMainController() {
         return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

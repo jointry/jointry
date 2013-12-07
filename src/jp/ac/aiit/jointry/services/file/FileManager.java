@@ -68,7 +68,9 @@ public class FileManager {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Sprite sprite = JsonUtil.parseJSONStringToSprite(new Sprite(mainController), line, JsonUtil.TYPE_FILE, file);
+                Sprite sprite = JsonUtil.parseJSONStringToSprite(line, JsonUtil.TYPE_FILE, file);
+                sprite.setMainController(mainController);
+
                 mainController.getFrontStageController().addSprite(sprite);
 
                 if (mainController.getFrontStageController().getCurrentSprite() == null) {
@@ -97,9 +99,6 @@ public class FileManager {
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileName);
-
-
-
 
         } catch (IOException ex) {
             Logger.getLogger(FileManager.class
