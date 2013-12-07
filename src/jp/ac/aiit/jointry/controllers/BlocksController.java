@@ -22,7 +22,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import jp.ac.aiit.jointry.models.VariableLabel;
-import jp.ac.aiit.jointry.models.blocks.*;
+import jp.ac.aiit.jointry.models.blocks.MenuItem;
+import jp.ac.aiit.jointry.models.blocks.MenuItemAdv;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
@@ -96,7 +97,9 @@ public class BlocksController implements Initializable {
         for (Node node : blockMenuAdv.getChildrenUnmodifiable()) {
             if (node instanceof MenuItemAdv) {
                 VariableLabel variable = ((MenuItemAdv) node).getVariableLabel();
-                if (variable.getName().equals(name)) return; //既にある変数名
+                if (variable.getName().equals(name)) {
+                    return; //既にある変数名
+                }
             }
         }
 
