@@ -1,6 +1,7 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
+import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.models.Sprite;
@@ -21,8 +22,9 @@ public class BlockDialog extends JointryDialogBase {
     @Override
     public void onNotify(final DInfo dinfo) {
         final Sprite sprite = getTargetSprite(dinfo);
-        if (sprite == null) return; //該当なし
-
+        if (sprite == null) {
+            return; //該当なし
+        }
         int event = getEvent(dinfo); //対象イベント取得
 
         //新規block作成
@@ -39,8 +41,9 @@ public class BlockDialog extends JointryDialogBase {
 
         //既存blockの操作
         final Block myBlock = getTargetBlock(sprite, dinfo.get(K_BLOCK_ID));
-        if (myBlock == null) return; //該当なし
-
+        if (myBlock == null) {
+            return; //該当なし
+        }
         switch (event) {
             case M_BLOCK_REMOVE:
                 vmBlockRemove(myBlock, dinfo);
@@ -70,7 +73,9 @@ public class BlockDialog extends JointryDialogBase {
 
     private void vmBlockCreate(final Sprite sprite, final DInfo dinfo) {
         final Block newBlock = BlockUtil.createBlock(dinfo.get(K_BLOCK_CLASS_NAME));
-        if (newBlock == null) return;
+        if (newBlock == null) {
+            return;
+        }
 
         newBlock.setUUID(dinfo.get(K_BLOCK_ID));
 
@@ -115,7 +120,9 @@ public class BlockDialog extends JointryDialogBase {
 
     private void vmBlockAddLink(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
         final Statement prevBlock = (Statement) getTargetBlock(sprite, dinfo.get(K_PREV_BLOCK_ID));
-        if (prevBlock == null) return;
+        if (prevBlock == null) {
+            return;
+        }
 
         if (!myBlock.getUUID().equals(prevBlock.getUUID())) {
             Platform.runLater(new Runnable() {
@@ -130,7 +137,9 @@ public class BlockDialog extends JointryDialogBase {
 
     private void vmBlockAddChild(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
         final CodeBlock parentBlock = (CodeBlock) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (parentBlock == null) return;
+        if (parentBlock == null) {
+            return;
+        }
 
         Platform.runLater(new Runnable() {
             @Override
@@ -151,7 +160,9 @@ public class BlockDialog extends JointryDialogBase {
 
     private void vmBlockAddEmbryo(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
         final If mothorBlock = (If) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (mothorBlock == null) return;
+        if (mothorBlock == null) {
+            return;
+        }
 
         Platform.runLater(new Runnable() {
             @Override
@@ -164,7 +175,9 @@ public class BlockDialog extends JointryDialogBase {
 
     private void vmBlockAddVariable(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
         final Block mothorBlocks = getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (mothorBlocks == null) return;
+        if (mothorBlocks == null) {
+            return;
+        }
 
         if (mothorBlocks instanceof Condition) {
             switch (dinfo.get(K_VALUE_POS)) {
@@ -213,7 +226,7 @@ public class BlockDialog extends JointryDialogBase {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myBlock.setStatus(JsonUtil.parseMapJSONString(dinfo.get(K_BLOCK_STATUS)));
+                myBlock.setStatus(JsonUtil.parseJSONString(dinfo.get(K_BLOCK_STATUS)).get(0));
             }
         });
     }
@@ -236,7 +249,9 @@ public class BlockDialog extends JointryDialogBase {
 
     public static void sendMessage(int event, Block block, DInfo dinfo) {
         if (mainController.getAgent() != null) {
-            if (dinfo == null) dinfo = new DInfo(D_BLOCK);
+            if (dinfo == null) {
+                dinfo = new DInfo(D_BLOCK);
+            }
 
             dinfo.set(K_METHOD, event);
             dinfo.set(K_SPRITE_NAME, mainController.getFrontStageController().getCurrentSprite().getName());
@@ -260,32 +275,40 @@ public class BlockDialog extends JointryDialogBase {
     }
 
     private static void setStatementBlock(DInfo dinfo, Statement statement) {
-        if (statement.parentBlock != null)
+        if (statement.parentBlock != null) {
             dinfo.set(K_PARENT_BLOCK_ID, statement.parentBlock.getUUID());
+        }
 
-        if (statement.prevBlock != null)
+        if (statement.prevBlock != null) {
             dinfo.set(K_PREV_BLOCK_ID, statement.prevBlock.getUUID());
+        }
     }
 
     private static void setConditionBlock(DInfo dinfo, Condition condition) {
-        if (condition.mother != null)
+        if (condition.mother != null) {
             dinfo.set(K_PARENT_BLOCK_ID, condition.mother.getUUID());
+        }
     }
 
     private static void setVariableBlock(DInfo dinfo, Variable variable) {
-        if (variable.mother != null)
+        if (variable.mother != null) {
             dinfo.set(K_PARENT_BLOCK_ID, variable.mother.getUUID());
+        }
 
         dinfo.set(K_BLOCK_LABEL_NAME, variable.getName());
     }
 
     private Block getTargetBlock(Sprite sprite, String id) {
-        if (mainController == null) return null;
+        if (mainController == null) {
+            return null;
+        }
 
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             Block block = (Block) node;
 
-            if (block.getUUID().equals(id)) return block;
+            if (block.getUUID().equals(id)) {
+                return block;
+            }
         }
         return null;
     }

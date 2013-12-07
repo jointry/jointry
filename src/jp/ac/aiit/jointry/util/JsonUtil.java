@@ -145,22 +145,7 @@ public class JsonUtil {
         return jsonString;
     }
 
-    public static Map parseMapJSONString(String jsonString) {
-        Map jsonMap = null;
-
-        try {
-            jsonMap = objectMapper.readValue(jsonString, Map.class);
-        } catch (JsonGenerationException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return jsonMap;
-    }
-
-    public static ArrayList parseListJSONString(String jsonString) {
+    public static ArrayList<Map> parseJSONString(String jsonString) {
         ArrayList<Map> jsonList = null;
 
         try {
@@ -175,8 +160,8 @@ public class JsonUtil {
         return jsonList;
     }
 
-    public static Sprite parseSpriteJSONString(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
-        Map<String, Object> projectMap = parseMapJSONString(jsonString);
+    public static Sprite parseJSONStringToSprite(Sprite sprite, String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
+        Map<String, Object> projectMap = objectMapper.readValue(jsonString, Map.class);
 
         //load as sprite
         Map<String, String> spriteMap = (Map) projectMap.get(SPRITE_TAG);
@@ -233,7 +218,7 @@ public class JsonUtil {
     }
 
     private static void parseBlocks(String jsonString, Sprite sprite) {
-        ArrayList<Map> source = JsonUtil.parseListJSONString(jsonString);
+        ArrayList<Map> source = JsonUtil.parseJSONString(jsonString);
 
         for (Map blockInfo : source) {
             Block topBlock = null;
