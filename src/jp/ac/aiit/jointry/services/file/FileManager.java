@@ -21,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import jp.ac.aiit.jointry.controllers.MainController;
+import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.util.JsonUtil;
 import org.xml.sax.SAXException;
@@ -28,10 +29,6 @@ import org.xml.sax.SAXException;
 public class FileManager {
 
     private static final String JOINTRY_EXTENSION = ".jty";
-    private static final String PROJECT_TAG = "PROJECT";
-    private static final String SPRITE_TAG = "SPRITE";
-    private static final String COSTUME_TAG = "COSTUME";
-    private static final String SCRIPT_TAG = "SCRIPT";
 
     public void save(List<Sprite> sprites) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException {
         FileChooser fc = createFileChooser("save");
@@ -48,10 +45,13 @@ public class FileManager {
 
         try (PrintWriter script = new PrintWriter(file)) {
             for (Sprite sprite : sprites) {
-                script.print(JsonUtil.makeJSONString(sprite, JsonUtil.TYPE_FILE, file));
+                Jty wrap = new Jty();
+                wrap.setSprite(JsonUtil.processSprite(sprite));
+                wrap.setCostume(JsonUtil.processCostumes(sprite, file.getParent()));
+                wrap.setScript(JsonUtil.processScript(sprite, file.getParent()));
+                script.print(JsonUtil.convertObjectToJsonString(wrap));
                 script.print("\n");
             }
-
             script.flush();
         }
     }

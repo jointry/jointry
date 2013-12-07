@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.util;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +14,6 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,117 +30,60 @@ import jp.ac.aiit.jointry.services.file.FileManager;
 
 public class JsonUtil {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String SPRITE_TAG = "SPRITE";
-    private static final String COSTUME_TAG = "COSTUME";
-    private static final String SCRIPT_TAG = "SCRIPT";
+    public static final ObjectMapper objectMapper = new ObjectMapper();
+    public static final String SPRITE_TAG = "sprite";
+    public static final String COSTUME_TAG = "costume";
+    public static final String SCRIPT_TAG = "script";
     public static final String TYPE_BASE64 = "base64";
     public static final String TYPE_FILE = "file";
 
-    public static String makeJSONString(Sprite sprite, String fileType, File file) throws FileNotFoundException {
-        Map<String, Object> projectMap = new HashMap();
+    public static String convertObjectToJsonString(Object obj) {
+        try {
+            return objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException ex) {
+            return "";
+        }
+    }
 
+    public static Map<String, String> processSprite(Sprite sprite) {
         Map<String, String> spriteMap = new HashMap();
         spriteMap.put("title", sprite.getName());
         spriteMap.put("layoutX", Double.toString(sprite.getTranslateX()));
         spriteMap.put("layoutY", Double.toString(sprite.getTranslateY()));
         spriteMap.put("costume", Integer.toString(sprite.getCostumeNumber()));
+        return spriteMap;
+    }
 
-        projectMap.put(SPRITE_TAG, spriteMap);
-
-        //save as costume
+    public static ArrayList<Map> processCostumes(Sprite sprite, String dir) {
         ArrayList<Map> costumes = new ArrayList();
         for (Costume costume : sprite.getCostumes()) {
             Map<String, String> costumeMap = new HashMap();
-
             costumeMap.put("title", costume.getTitle());
-            switch (fileType) {
-                case TYPE_BASE64:
-                    costumeMap.put("img", "base64"); // base64で画像をエンコードして文字列を保存したい
-                    break;
-
-                case TYPE_FILE:
-                    if (file != null) {
-                        String fileName = sprite.getName() + "_costume" + costume.getNumber();
-                        costumeMap.put("img", saveAsImage(file, fileName, costume.getImage()));
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+            String fileName = sprite.getName() + "_costume" + costume.getNumber();
+            saveImage(dir, fileName, costume.getImage());
+            costumeMap.put("img", fileName);
             costumes.add(costumeMap);
         }
+        return costumes;
+    }
 
-        projectMap.put(COSTUME_TAG, costumes);
-
-        //save as script
+    public static String processScript(Sprite sprite, String dir) {
         ArrayList<Map> source = new ArrayList();
-
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (!(node instanceof Statement)) {
                 continue;
             }
-
             Statement procedure = (Statement) node;
             if (procedure.isTopLevelBlock()) {
                 Map<String, Object> blockInfo = new HashMap();
-
                 blockInfo.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
                 blockInfo.put("block", BlockUtil.getAllStatus(procedure));
-
                 source.add(blockInfo);
             }
         }
-
-        switch (fileType) {
-            case TYPE_FILE:
-                if (file != null) {
-                    String ScriptFileName = sprite.getName() + "_script";
-                    try (PrintWriter script = new PrintWriter(new File(file.getParent(), ScriptFileName))) {
-                        script.print(JsonUtil.makeJSONString(source));
-                        script.flush();
-                    }
-                    projectMap.put(SCRIPT_TAG, ScriptFileName);
-                }
-                break;
-
-            default:
-                projectMap.put(SCRIPT_TAG, JsonUtil.makeJSONString(source));
-                break;
-        }
-
-        return makeJSONString(projectMap);
-    }
-
-    public static String makeJSONString(ArrayList<Map> valueMap) {
-        String jsonString = null;
-
-        try {
-            jsonString = objectMapper.writeValueAsString(valueMap);
-        } catch (JsonGenerationException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return jsonString;
-    }
-
-    public static String makeJSONString(Map valueMap) {
-        String jsonString = null;
-
-        try {
-            jsonString = objectMapper.writeValueAsString(valueMap);
-        } catch (JsonGenerationException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return jsonString;
+        String name = sprite.getName() + "_script";
+        saveScriptFile(dir, name, convertObjectToJsonString(source));
+        return name;
     }
 
     public static ArrayList<Status> parseJSONString(String jsonString) {
@@ -239,7 +177,12 @@ public class JsonUtil {
             ArrayList<Map> blocks = (ArrayList<Map>) blocks_info.get("block");
             for (Map status_info : blocks) {
                 Block block = BlockUtil.createBlock(status_info);
-                String json = makeJSONString((Map) status_info.get(block.getClass().getSimpleName()));
+                String json = "";
+                try {
+                    json = objectMapper.writeValueAsString((Map) status_info.get(block.getClass().getSimpleName()));
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ArrayList<Status> params = parseJSONString("[" + json + "]");
                 block.setStatus(params.get(0));
 
@@ -268,14 +211,12 @@ public class JsonUtil {
         }
     }
 
-    private static String saveAsImage(File file, String name, Image image) {
-        File folder = new File(file.getParent(), "img");
-        if (!folder.exists()) {
-            folder.mkdir(); //create img folder
+    private static String saveImage(String dir, String name, Image image) {
+        File path = new File(dir, "img");
+        if (!path.exists()) {
+            path.mkdir(); //create img folder
         }
-        name = name + ".png";
-        File fileName = new File(folder.getPath(), name);
-
+        File fileName = new File(path.getPath(), name += ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileName);
         } catch (IOException ex) {
@@ -283,5 +224,18 @@ public class JsonUtil {
         }
 
         return name;
+    }
+
+    private static void saveScriptFile(String dir, String name, String content) {
+        PrintWriter script = null;
+        try {
+            script = new PrintWriter(new File(dir, name));
+            script.print(content);
+            script.flush();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            script.close();
+        }
     }
 }

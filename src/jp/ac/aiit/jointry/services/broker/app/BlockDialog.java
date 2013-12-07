@@ -1,8 +1,11 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.models.Sprite;
@@ -272,7 +275,7 @@ public class BlockDialog extends JointryDialogBase {
 
             ArrayList<Map> list = new ArrayList();
             list.add(block.getStatus());
-            dinfo.set(K_BLOCK_STATUS, JsonUtil.makeJSONString(list));
+            dinfo.set(K_BLOCK_STATUS, JsonUtil.convertObjectToJsonString(list));
 
             mainController.getAgent().sendNotify(dinfo);
         }
