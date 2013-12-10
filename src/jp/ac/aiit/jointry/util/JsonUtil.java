@@ -85,14 +85,14 @@ public class JsonUtil {
         return name;
     }
 
-    public static ArrayList<Status> parseJSONString(String jsonString) {
-        ArrayList<Status> jsonList = null;
+    public static Status parseJSONString(String jsonString) {
+        Status status = null;
 
-        TypeReference type = new TypeReference<ArrayList<Status>>() {
+        TypeReference type = new TypeReference<Status>() {
         };
 
         try {
-            jsonList = objectMapper.readValue(jsonString, type);
+            status = objectMapper.readValue(jsonString, type);
         } catch (JsonGenerationException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JsonMappingException ex) {
@@ -101,7 +101,7 @@ public class JsonUtil {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return jsonList;
+        return status;
     }
 
     public static Sprite parseJSONStringToSprite(String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
@@ -146,8 +146,8 @@ public class JsonUtil {
                     File scriptFile = new File(parentPath, (String) projectMap.get(SCRIPT_TAG));
 
                     try (BufferedReader br = new BufferedReader(new FileReader(scriptFile))) {
-                        String line;
-                        while ((line = br.readLine()) != null) {
+                        String line = br.readLine();
+                        if (line != null) {
                             parseJSONStringToBlocks(line, sprite);
                         }
                     }
@@ -175,16 +175,11 @@ public class JsonUtil {
             Block prevBlock = null;
             ArrayList<Map> blocks = (ArrayList<Map>) blocks_info.get("block");
             for (Map status_info : blocks) {
-                Block block = BlockUtil.createBlock(status_info);
+                Block block = BlockUtil.create(status_info);
                 block.setSprite(sprite);
-                String json = "";
-                try {
-                    json = objectMapper.writeValueAsString((Map) status_info.get(block.getClass().getSimpleName()));
-                } catch (JsonProcessingException ex) {
-                    Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                ArrayList<Status> params = parseJSONString("[" + json + "]");
-                block.setStatus(params.get(0));
+
+                Status status = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
+                block.setStatus(status);
 
                 if (topBlock == null) {
                     topBlock = block;

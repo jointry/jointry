@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
@@ -97,8 +96,8 @@ public class Speech extends Procedure {
             tf.setText((String) value);
         } else {
             //変数ブロック
-            Variable val = (Variable) BlockUtil.createBlock("Variable");
-            val.setStatus((Status) value);
+            Variable val = (Variable) BlockUtil.create("Variable");
+            val.setStatus(BlockUtil.convertMapToStatus(value));
 
             setVariable(variable);
         }

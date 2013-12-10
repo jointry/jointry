@@ -77,7 +77,7 @@ public class BlockDialog extends JointryDialogBase {
     }
 
     private void vmBlockCreate(final Sprite sprite, final DInfo dinfo) {
-        final Block newBlock = BlockUtil.createBlock(dinfo.get(K_BLOCK_CLASS_NAME));
+        final Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
         if (newBlock == null) {
             return;
         }
@@ -231,7 +231,7 @@ public class BlockDialog extends JointryDialogBase {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myBlock.setStatus(JsonUtil.parseJSONString(dinfo.get(K_BLOCK_STATUS)).get(0));
+                myBlock.setStatus(JsonUtil.parseJSONString(dinfo.get(K_BLOCK_STATUS)));
             }
         });
     }

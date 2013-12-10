@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
@@ -325,6 +324,5 @@ public class Variable extends Expression {
     @Override
     public void show() {
         getSprite().getScriptPane().getChildren().add(this);
-        getSprite().getMainController().getBlocksController().addVariable(name);
     }
 }

@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
@@ -103,7 +102,7 @@ public class If extends CodeBlock {
 
         for (Statement state : childBlocks) {
             if (state.prevBlock == null) {
-                List<Map> list = BlockUtil.getAllStatus(state);
+                List<Status> list = BlockUtil.getAllStatus(state);
                 status.put("childBlocks", list);
                 break;
             }
@@ -118,7 +117,8 @@ public class If extends CodeBlock {
             if (key.equals("embryo")) {
                 //変数ブロック
                 Condition emb = new Condition();
-                emb.setStatus((Status) status.get(key));
+                emb.setSprite(getSprite());
+                emb.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
 
                 addEmbryo(emb);
             } else if (key.equals("childBlocks")) {
@@ -127,9 +127,12 @@ public class If extends CodeBlock {
 
                 Block preBlock = null;
 
-                for (Map map : list) {
-                    Block block = BlockUtil.createBlock(map);
-                    block.setStatus((Status) map.get(block.getClass().getSimpleName()));
+                for (Map status_info : list) {
+                    Block block = BlockUtil.create(status_info);
+                    block.setSprite(getSprite());
+                    Status childStatus = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
+                    block.setStatus(childStatus);
+
 
                     if (preBlock == null) {
                         preBlock = block;

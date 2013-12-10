@@ -62,12 +62,6 @@ public class Move extends Procedure {
 
     @Override
     public void setStatus(Status status) {
-
-        System.out.println("move1 : " + status.get(this.getClass().getSimpleName()));
-        System.out.println("move2 : " + status);
-        System.out.println("move3 : " + status.get("move"));
-
-
         cb.setValue(status.get("move"));
     }
 

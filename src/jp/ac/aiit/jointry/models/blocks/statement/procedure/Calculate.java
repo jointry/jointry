@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
@@ -188,8 +187,9 @@ public class Calculate extends Procedure {
         for (Object key : status.keySet()) {
             if (key.equals("variable")) {
                 //変数ブロック
-                Variable val = (Variable) BlockUtil.createBlock("Variable");
-                val.setStatus((Status) status.get(key));
+                Variable val = (Variable) BlockUtil.create("Variable");
+                val.setSprite(getSprite());
+                val.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
 
                 setVariable(val);
             } else if (key.equals("left")) {
@@ -199,10 +199,11 @@ public class Calculate extends Procedure {
                     tf1.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
-                    Variable val = (Variable) BlockUtil.createBlock("Variable");
-                    val.setStatus((Status) status.get(key));
+                    Variable val = (Variable) BlockUtil.create("Variable");
+                    val.setSprite(getSprite());
+                    val.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
 
-                    setLeftVariable(variable);
+                    setLeftVariable(val);
                 }
             } else if (key.equals("right")) {
                 Object value = status.get(key);
@@ -211,8 +212,9 @@ public class Calculate extends Procedure {
                     tf2.setText((String) status.get(key)); //テキスト
                 } else {
                     //変数ブロック
-                    arg2 = (Variable) BlockUtil.createBlock("Variable");
-                    arg2.setStatus((Status) status.get(key));
+                    arg2 = (Variable) BlockUtil.create("Variable");
+                    arg2.setSprite(getSprite());
+                    arg2.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
                 }
             }
         }

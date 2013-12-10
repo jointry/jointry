@@ -16,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
@@ -293,8 +292,9 @@ public class Condition extends Expression {
                     tf1.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
-                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((Status) value);
+                    Variable variable = (Variable) BlockUtil.create("Variable");
+                    variable.setSprite(getSprite());
+                    variable.setStatus(BlockUtil.convertMapToStatus(value));
 
                     setLeftVariable(variable);
                 }
@@ -308,8 +308,9 @@ public class Condition extends Expression {
                     tf2.setText((String) value);
                 } else {
                     //変数ブロック
-                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((Status) value);
+                    Variable variable = (Variable) BlockUtil.create("Variable");
+                    variable.setSprite(getSprite());
+                    variable.setStatus(BlockUtil.convertMapToStatus(value));
 
                     setRightVariable(variable);
                 }

@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
@@ -170,8 +169,9 @@ public class Assign extends Procedure {
     public void setStatus(Status status) {
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
-                Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                variable.setStatus((Status) status.get(key));
+                Variable variable = (Variable) BlockUtil.create("Variable");
+                variable.setSprite(getSprite());
+                variable.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
 
                 setLeftVariable(variable);
             } else if (key.equals("right")) {
@@ -181,8 +181,9 @@ public class Assign extends Procedure {
                     tf2.setText((String) value); //テキスト
                 } else {
                     //変数ブロック
-                    Variable variable = (Variable) BlockUtil.createBlock("Variable");
-                    variable.setStatus((Status) value);
+                    Variable variable = (Variable) BlockUtil.create("Variable");
+                    variable.setSprite(getSprite());
+                    variable.setStatus(BlockUtil.convertMapToStatus(value));
 
                     setRightVariable(variable);
                 }
