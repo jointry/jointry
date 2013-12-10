@@ -92,12 +92,14 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        super.outputBlock(sprite);
+    public void show() {
+        super.show();
 
         for (Statement state : childBlocks) {
-            state.outputBlock(sprite);
-            break;
+            if (state.prevBlock == null) {
+                state.show();
+                break;
+            }
         }
     }
 

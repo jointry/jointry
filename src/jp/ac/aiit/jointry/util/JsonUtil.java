@@ -177,6 +177,7 @@ public class JsonUtil {
             ArrayList<Map> blocks = (ArrayList<Map>) blocks_info.get("block");
             for (Map status_info : blocks) {
                 Block block = BlockUtil.createBlock(status_info);
+                block.setSprite(sprite);
                 String json = "";
                 try {
                     json = objectMapper.writeValueAsString((Map) status_info.get(block.getClass().getSimpleName()));
@@ -206,7 +207,7 @@ public class JsonUtil {
                 double y = Double.valueOf(pos[1]);
                 topBlock.move(x, y); //子要素含めて全ての座標を設定
 
-                topBlock.outputBlock(sprite); //scriptPaneへBlockを登録
+                topBlock.show();
             }
         }
     }

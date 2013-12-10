@@ -105,11 +105,11 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        super.outputBlock(sprite);
+    public void show() {
+        super.show();
 
         if (variable != null) {
-            variable.outputBlock(sprite);
+            variable.show();
         }
     }
 

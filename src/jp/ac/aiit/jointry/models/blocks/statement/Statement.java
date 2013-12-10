@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
@@ -275,10 +274,11 @@ public abstract class Statement extends Block {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        sprite.getScriptPane().getChildren().add(this);
+    public void show() {
+        getSprite().getScriptPane().getChildren().add(this);
 
-        if (nextBlock != null)
-            nextBlock.outputBlock(sprite);
+        if (nextBlock != null) {
+            nextBlock.show();
+        }
     }
 }

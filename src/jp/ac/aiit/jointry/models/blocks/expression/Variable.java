@@ -323,8 +323,8 @@ public class Variable extends Expression {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        sprite.getScriptPane().getChildren().add(this);
-        sprite.getMainController().getBlocksController().addVariable(name);
+    public void show() {
+        getSprite().getScriptPane().getChildren().add(this);
+        getSprite().getMainController().getBlocksController().addVariable(name);
     }
 }

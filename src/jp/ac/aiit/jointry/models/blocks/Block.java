@@ -28,6 +28,7 @@ public abstract class Block extends AnchorPane {
     protected double anchorY;
     public Connector con;
     private String uuid = UUID.randomUUID().toString();
+    private Sprite sprite;
 
     public Block() {
         setLayoutX(0);
@@ -95,8 +96,16 @@ public abstract class Block extends AnchorPane {
         return uuid;
     }
 
-    public String setUUID(String uuid) {
-        return this.uuid = uuid;
+    public void setUUID(String uuid) {
+        this.uuid = uuid;
+    }
+    
+    public Sprite getSprite() {
+        return sprite;
+    }
+    
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     public void initializeLink() {
@@ -115,7 +124,7 @@ public abstract class Block extends AnchorPane {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void outputBlock(Sprite sprite) {
+    public void show(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -132,9 +141,6 @@ public abstract class Block extends AnchorPane {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
                 if (!t1.equals(t)) {
-                    System.out.println("start");
-                    System.out.println(t);
-                    System.out.println(t1);
                     BlockDialog.sendMessage(M_BLOCK_CHANGE_STATE, Block.this);
                 }
             }

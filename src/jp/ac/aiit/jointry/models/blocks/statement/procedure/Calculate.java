@@ -219,15 +219,15 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        super.outputBlock(sprite);
+    public void show() {
+        super.show();
 
         if (variable != null) {
-            variable.outputBlock(sprite);
+            variable.show();
         }
 
         if (leftVariable != null) {
-            leftVariable.outputBlock(sprite);
+            leftVariable.show();
         }
     }
 

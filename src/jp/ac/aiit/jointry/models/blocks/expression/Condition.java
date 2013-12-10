@@ -318,15 +318,15 @@ public class Condition extends Expression {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        sprite.getScriptPane().getChildren().add(this);
+    public void show() {
+        getSprite().getScriptPane().getChildren().add(this);
 
         if (leftVariable != null) {
-            leftVariable.outputBlock(sprite);
+            leftVariable.show();
         }
 
         if (rightVariable != null) {
-            rightVariable.outputBlock(sprite);
+            rightVariable.show();
         }
     }
 

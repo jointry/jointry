@@ -146,16 +146,18 @@ public class If extends CodeBlock {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        super.outputBlock(sprite);
+    public void show() {
+        super.show();
 
         if (embryo != null) {
-            embryo.outputBlock(sprite);
+            embryo.show();
         }
 
         for (Statement state : childBlocks) {
-            state.outputBlock(sprite);
-            break;
+            if (state.prevBlock == null) {
+                state.show();
+                break;
+            }
         }
     }
 }

@@ -191,15 +191,15 @@ public class Assign extends Procedure {
     }
 
     @Override
-    public void outputBlock(Sprite sprite) {
-        super.outputBlock(sprite);
+    public void show() {
+        super.show();
 
         if (leftVariable != null) {
-            leftVariable.outputBlock(sprite);
+            leftVariable.show();
         }
 
         if (rightVariable != null) {
-            rightVariable.outputBlock(sprite);
+            rightVariable.show();
         }
     }
 }
