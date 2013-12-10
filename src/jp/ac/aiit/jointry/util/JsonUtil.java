@@ -60,8 +60,7 @@ public class JsonUtil {
             Map<String, String> costumeMap = new HashMap();
             costumeMap.put("title", costume.getTitle());
             String fileName = sprite.getName() + "_costume" + costume.getNumber();
-            saveImage(dir, fileName, costume.getImage());
-            costumeMap.put("img", fileName);
+            costumeMap.put("img", saveImage(dir, fileName, costume.getImage()));
             costumes.add(costumeMap);
         }
         return costumes;
@@ -228,15 +227,11 @@ public class JsonUtil {
     }
 
     private static void saveScriptFile(String dir, String name, String content) {
-        PrintWriter script = null;
-        try {
-            script = new PrintWriter(new File(dir, name));
+        try (PrintWriter script = new PrintWriter(new File(dir, name))) {
             script.print(content);
             script.flush();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            script.close();
         }
     }
 }
