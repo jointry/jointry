@@ -6,25 +6,12 @@ package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.D_SPRITE;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_COLOR;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_METHOD;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_SPRITE_NAME;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_X1;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_X2;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_Y1;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_Y2;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_SPRITE_CREATE;
-import static jp.ac.aiit.jointry.services.broker.app.JointryDialogBase.mainController;
 
 public class SpriteDialog extends JointryDialogBase {
 
@@ -42,7 +29,7 @@ public class SpriteDialog extends JointryDialogBase {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    mainController.getFrontStageController().addSprite(sprite);
+                    mainController.getFrontStageController().addSprite(sprite, false);
                 }
             });
         }

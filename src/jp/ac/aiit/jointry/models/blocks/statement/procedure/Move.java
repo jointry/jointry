@@ -62,7 +62,11 @@ public class Move extends Procedure {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         cb.setValue(status.get("move"));
+
+        bChangeEnable = true;
     }
 
     public Label getLabel() {

@@ -90,6 +90,8 @@ public class Speech extends Procedure {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         Object value = status.get("variable");
 
         if (value instanceof String) {
@@ -101,6 +103,8 @@ public class Speech extends Procedure {
 
             setVariable(variable);
         }
+
+        bChangeEnable = true;
     }
 
     @Override

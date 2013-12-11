@@ -284,6 +284,8 @@ public class Condition extends Expression {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
                 Object value = status.get(key);
@@ -316,6 +318,8 @@ public class Condition extends Expression {
                 }
             }
         }
+
+        bChangeEnable = true;
     }
 
     @Override

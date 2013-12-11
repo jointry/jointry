@@ -66,6 +66,10 @@ public class Costume extends Procedure {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         cb.setValue(status.get("costume"));
+
+        bChangeEnable = true;
     }
 }

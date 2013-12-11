@@ -17,6 +17,7 @@ import jp.ac.aiit.jointry.models.Room;
 import broker.core.Agent;
 import broker.core.DInfo;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
+import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class CooperationController implements Initializable, JointryCommon {
@@ -54,6 +55,7 @@ public class CooperationController implements Initializable, JointryCommon {
 
         if (agent.open(url.getText(), accessMapping(CHAT_SERVICE, CLIENT, name.getText(), "", null, selectRoom.getRoom().getProxyId()))) {
             agent.startListening(CHAT_TIMEOUT);
+            MainDialog.sendMessage(M_MAIN_SYNC, agent);
 
             windowClose();
         }

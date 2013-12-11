@@ -26,6 +26,7 @@ public abstract class Block extends AnchorPane {
 
     protected double anchorX;
     protected double anchorY;
+    protected boolean bChangeEnable = true;
     public Connector con;
     private String uuid = UUID.randomUUID().toString();
     private Sprite sprite;
@@ -140,7 +141,7 @@ public abstract class Block extends AnchorPane {
         field.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
-                if (!t1.equals(t)) {
+                if (bChangeEnable && !t1.equals(t)) {
                     BlockDialog.sendMessage(M_BLOCK_CHANGE_STATE, Block.this);
                 }
             }
@@ -151,7 +152,7 @@ public abstract class Block extends AnchorPane {
         cb.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
-                if (!t1.equals(t)) {
+                if (bChangeEnable && !t1.equals(t)) {
                     BlockDialog.sendMessage(M_BLOCK_CHANGE_STATE, Block.this);
                 }
             }

@@ -97,11 +97,11 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     public void showSprite(Sprite sprite) {
-        this.addSprite(sprite);
+        this.addSprite(sprite, true);
         this.setCurrentSprite(sprite);
     }
 
-    public void addSprite(Sprite sprite) {
+    public void addSprite(Sprite sprite, boolean sendMessage) {
         int number = 1;
         for (Node i : stage.getChildren()) {
             if (i instanceof Sprite) {
@@ -115,8 +115,10 @@ public class FrontStageController implements Initializable, JointryCommon {
         sprite.setDragRange(stage);
         stage.getChildren().add(sprite);
 
-        SpriteDialog.sendMessage(M_SPRITE_CREATE, sprite);
-        SpriteDialog.sendImage(sprite.getName(), 0, null, sprite.getIcon());
+        if (sendMessage) {
+            SpriteDialog.sendMessage(M_SPRITE_CREATE, sprite);
+            SpriteDialog.sendImage(sprite.getName(), 0, null, sprite.getIcon());
+        }
 
         //Spriteが持っている変数を登録
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {

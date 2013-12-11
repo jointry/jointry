@@ -42,8 +42,8 @@ public class FileManager {
             for (Sprite sprite : sprites) {
                 Jty wrap = new Jty();
                 wrap.setSprite(JsonUtil.processSprite(sprite));
-                wrap.setCostume(JsonUtil.processCostumes(sprite, file.getParent()));
-                wrap.setScript(JsonUtil.processScript(sprite, file.getParent()));
+                wrap.setCostume(JsonUtil.processCostumes(sprite, JsonUtil.TYPE_FILE, file.getParent()));
+                wrap.setScript(JsonUtil.processScript(sprite, JsonUtil.TYPE_FILE, file.getParent()));
                 script.print(JsonUtil.convertObjectToJsonString(wrap));
                 script.print("\n");
             }
@@ -66,7 +66,7 @@ public class FileManager {
                 Sprite sprite = JsonUtil.parseJSONStringToSprite(line, JsonUtil.TYPE_FILE, file);
                 sprite.setMainController(mainController);
 
-                mainController.getFrontStageController().addSprite(sprite);
+                mainController.getFrontStageController().addSprite(sprite, true);
 
                 if (mainController.getFrontStageController().getCurrentSprite() == null) {
                     mainController.getFrontStageController().setCurrentSprite(sprite);

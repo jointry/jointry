@@ -1,6 +1,9 @@
 package jp.ac.aiit.jointry.util;
 
+import broker.util.Base64;
+import broker.util.ImageUtil;
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -14,12 +17,14 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
@@ -45,6 +50,17 @@ public class JsonUtil {
         }
     }
 
+    public static List<String> convertJsonStringToList(String jsonString) {
+        List<String> list = new ArrayList();
+        try {
+            list = objectMapper.readValue(jsonString, ArrayList.class);
+        } catch (IOException ex) {
+            Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
     public static Map<String, String> processSprite(Sprite sprite) {
         Map<String, String> spriteMap = new HashMap();
         spriteMap.put("title", sprite.getName());
@@ -54,19 +70,35 @@ public class JsonUtil {
         return spriteMap;
     }
 
-    public static ArrayList<Map> processCostumes(Sprite sprite, String dir) {
+    public static ArrayList<Map> processCostumes(Sprite sprite, String fileType, String dir) {
         ArrayList<Map> costumes = new ArrayList();
         for (Costume costume : sprite.getCostumes()) {
             Map<String, String> costumeMap = new HashMap();
             costumeMap.put("title", costume.getTitle());
             String fileName = sprite.getName() + "_costume" + costume.getNumber();
-            costumeMap.put("img", saveImage(dir, fileName, costume.getImage()));
+
+            switch (fileType) {
+                case TYPE_BASE64:
+                    //ファイルへ一旦落としてからbase64に変換
+                    File infile = saveImage(new File(dir), fileName, costume.getImage());
+                    costumeMap.put("img", Base64.encode(infile.getPath()));
+                    break;
+
+                case TYPE_FILE:
+                    saveImage(new File(dir, "img"), fileName, costume.getImage());
+                    costumeMap.put("img", fileName);
+                    break;
+
+                default:
+                    break;
+            }
+
             costumes.add(costumeMap);
         }
         return costumes;
     }
 
-    public static String processScript(Sprite sprite, String dir) {
+    public static String processScript(Sprite sprite, String fileType, String dir) {
         ArrayList<Map> source = new ArrayList();
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (!(node instanceof Statement)) {
@@ -80,9 +112,20 @@ public class JsonUtil {
                 source.add(blockInfo);
             }
         }
-        String name = sprite.getName() + "_script";
-        saveScriptFile(dir, name, convertObjectToJsonString(source));
-        return name;
+
+        String result; //script or filePath
+        switch (fileType) {
+            case TYPE_FILE:
+                result = sprite.getName() + "_script";
+                saveScriptFile(dir, result, convertObjectToJsonString(source));
+                break;
+
+            default:
+                result = convertObjectToJsonString(source);
+                break;
+        }
+
+        return result;
     }
 
     public static Status parseJSONString(String jsonString) {
@@ -121,7 +164,15 @@ public class JsonUtil {
             String title = costumeMap.get("title");
             switch (fileType) {
                 case TYPE_BASE64:
-                    costumeMap.get("img"); // base64で画像をデコードしたい
+                    String value = costumeMap.get("img");
+                    List<String> list = new ArrayList();
+                    for (String s : value.split("\n")) {
+                        list.add(s);
+                    }
+
+                    WritableImage img = SwingFXUtils.toFXImage(ImageUtil.createImage(list), null);
+                    sprite.addCostume(title, img);
+                    //costumeMap.get("img"); // base64で画像をデコードしたい
                     break;
 
                 case TYPE_FILE:
@@ -206,19 +257,18 @@ public class JsonUtil {
         }
     }
 
-    private static String saveImage(String dir, String name, Image image) {
-        File path = new File(dir, "img");
-        if (!path.exists()) {
-            path.mkdir(); //create img folder
+    private static File saveImage(File dir, String name, Image image) {
+        if (!dir.exists()) {
+            dir.mkdir(); //create img folder
         }
-        File fileName = new File(path.getPath(), name += ".png");
+        File fileName = new File(dir.getPath(), name += ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileName);
         } catch (IOException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return name;
+        return fileName;
     }
 
     private static void saveScriptFile(String dir, String name, String content) {

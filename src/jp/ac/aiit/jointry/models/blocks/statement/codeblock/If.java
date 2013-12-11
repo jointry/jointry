@@ -113,6 +113,8 @@ public class If extends CodeBlock {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         for (Object key : status.keySet()) {
             if (key.equals("embryo")) {
                 //変数ブロック
@@ -146,6 +148,8 @@ public class If extends CodeBlock {
                 }
             }
         }
+
+        bChangeEnable = true;
     }
 
     @Override

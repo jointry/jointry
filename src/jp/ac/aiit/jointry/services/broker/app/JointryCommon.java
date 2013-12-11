@@ -6,6 +6,7 @@ import broker.core.Common;
 public interface JointryCommon extends Common {
 
     //どこのノードにいるかとかに使えそう
+    public static final String D_MAIN = "main";
     public static final String D_SPRITE = "sprite";
     public static final String D_BLOCK = "block";
     //役割とか動きとか イベント
@@ -24,6 +25,8 @@ public interface JointryCommon extends Common {
     public static final int M_BLOCK_ADDVARIABLE = 0x000107;
     public static final int M_BLOCK_ADDEMBRYO = 0x000108;
     public static final int M_BLOCK_CHANGE_STATE = 0x000109;
+    public static final int M_MAIN_SYNC = 0x001001;
+    public static final int M_MAIN_RESPONSE = 0x001002;
     //位置情報
     public static final String K_X1 = "x1";
     public static final String K_Y1 = "y1";
@@ -45,5 +48,6 @@ public interface JointryCommon extends Common {
     public static final String K_PARENT_BLOCK_ID = "parent_block_id";
     public static final String K_BLOCK_STATUS = "block_status";
     //その他
+    public static final String K_MAIN_INFO = "main_info";
     public static final String PROXY_ID = "proxy_id"; // サーバプロキシID
 }

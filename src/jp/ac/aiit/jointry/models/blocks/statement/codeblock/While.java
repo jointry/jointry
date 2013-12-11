@@ -71,6 +71,8 @@ public class While extends CodeBlock {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         ArrayList<Map> list = (ArrayList<Map>) status.get("childBlocks");
 
         Block preBlock = null;
@@ -90,6 +92,8 @@ public class While extends CodeBlock {
             addChild((Statement) block);
             resize();
         }
+
+        bChangeEnable = true;
     }
 
     @Override

@@ -315,10 +315,14 @@ public class Variable extends Expression {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         //key = 変数名
         Set<String> set = new HashSet(status.keySet());
         setName(set.toString().substring(1, set.toString().length() - 1));
         setValue((String) status.get(name));
+
+        bChangeEnable = true;
     }
 
     @Override

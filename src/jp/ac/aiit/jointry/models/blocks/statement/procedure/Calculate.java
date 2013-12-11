@@ -184,6 +184,8 @@ public class Calculate extends Procedure {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         for (Object key : status.keySet()) {
             if (key.equals("variable")) {
                 //変数ブロック
@@ -218,6 +220,8 @@ public class Calculate extends Procedure {
                 }
             }
         }
+
+        bChangeEnable = true;
     }
 
     @Override

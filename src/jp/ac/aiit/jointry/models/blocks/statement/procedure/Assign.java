@@ -167,6 +167,8 @@ public class Assign extends Procedure {
 
     @Override
     public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
                 Variable variable = (Variable) BlockUtil.create("Variable");
@@ -189,6 +191,8 @@ public class Assign extends Procedure {
                 }
             }
         }
+
+        bChangeEnable = true;
     }
 
     @Override
