@@ -36,15 +36,19 @@ public class FileManager {
 
         try (PrintWriter script = new PrintWriter(file)) {
             for (Sprite sprite : sprites) {
-                Jty wrap = new Jty();
-                wrap.setSprite(JsonUtil.processSprite(sprite));
-                wrap.setCostume(JsonUtil.processCostumes(sprite, JsonUtil.TYPE_FILE, file.getParent()));
-                wrap.setScript(JsonUtil.processScript(sprite, JsonUtil.TYPE_FILE, file.getParent()));
-                script.print(JsonUtil.convertObjectToJsonString(wrap));
+                script.print(convertSpriteToJson(sprite, file.getParent()));
                 script.print("\n");
             }
             script.flush();
         }
+    }
+
+    public static String convertSpriteToJson(Sprite sprite, String save_dir) {
+        Jty wrap = new Jty();
+        wrap.setSprite(JsonUtil.processSprite(sprite));
+        wrap.setCostume(JsonUtil.processCostumes(sprite, save_dir));
+        wrap.setScript(JsonUtil.processScript(sprite, save_dir));
+        return JsonUtil.convertObjectToJsonString(wrap);
     }
 
     public void load(MainController mainController) throws ParserConfigurationException, SAXException, IOException {

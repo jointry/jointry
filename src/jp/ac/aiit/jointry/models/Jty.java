@@ -6,7 +6,7 @@ import java.util.Map;
 public class Jty {
 
     private Map<String, String> sprite;
-    private String script;
+    private Map<String, String> script;
     private ArrayList<Map> costume;
 
     /**
@@ -26,14 +26,14 @@ public class Jty {
     /**
      * @return the script
      */
-    public String getScript() {
+    public Map getScript() {
         return script;
     }
 
     /**
      * @param script the script to set
      */
-    public void setScript(String script) {
+    public void setScript(Map script) {
         this.script = script;
     }
 

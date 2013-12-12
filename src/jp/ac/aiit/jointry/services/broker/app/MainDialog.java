@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
 public class MainDialog extends JointryDialogBase {
@@ -30,19 +31,13 @@ public class MainDialog extends JointryDialogBase {
             case M_MAIN_REQUEST:
                 List<String> spriteList = new ArrayList();
                 for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
-                    Jty wrap = new Jty();
-                    wrap.setSprite(JsonUtil.processSprite(sprite));
-
+                    String json = null;
                     try {
-                        String filePath = makeFilePath("img"); //workroot直下へ作成
-                        wrap.setCostume(JsonUtil.processCostumes(sprite, JsonUtil.TYPE_BASE64, filePath));
+                        json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
                     } catch (IOException ex) {
                         Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                    wrap.setScript(JsonUtil.processScript(sprite, JsonUtil.TYPE_BASE64, null));
-
-                    spriteList.add(JsonUtil.convertObjectToJsonString(wrap));
+                    spriteList.add(json);
                 }
 
                 String response = JsonUtil.convertObjectToJsonString(spriteList);

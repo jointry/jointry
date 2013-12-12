@@ -70,35 +70,21 @@ public class JsonUtil {
         return spriteMap;
     }
 
-    public static ArrayList<Map> processCostumes(Sprite sprite, String fileType, String dir) {
+    public static ArrayList<Map> processCostumes(Sprite sprite, String dir) {
         ArrayList<Map> costumes = new ArrayList();
         for (Costume costume : sprite.getCostumes()) {
             Map<String, String> costumeMap = new HashMap();
             costumeMap.put("title", costume.getTitle());
             String fileName = sprite.getName() + "_costume" + costume.getNumber();
-
-            switch (fileType) {
-                case TYPE_BASE64:
-                    //ファイルへ一旦落としてからbase64に変換
-                    File infile = saveImage(new File(dir), fileName, costume.getImage());
-                    costumeMap.put("img", Base64.encode(infile.getPath()));
-                    break;
-
-                case TYPE_FILE:
-                    saveImage(new File(dir, "img"), fileName, costume.getImage());
-                    costumeMap.put("img", fileName);
-                    break;
-
-                default:
-                    break;
-            }
-
+            costumeMap.put("imgsrc", fileName);
+            File file = saveImage(new File(dir, "img"), fileName, costume.getImage());
+            costumeMap.put("img", Base64.encode(file.getPath()));
             costumes.add(costumeMap);
         }
         return costumes;
     }
 
-    public static String processScript(Sprite sprite, String fileType, String dir) {
+    public static Map<String, String> processScript(Sprite sprite, String dir) {
         ArrayList<Map> source = new ArrayList();
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (!(node instanceof Statement)) {
@@ -113,19 +99,14 @@ public class JsonUtil {
             }
         }
 
-        String result; //script or filePath
-        switch (fileType) {
-            case TYPE_FILE:
-                result = sprite.getName() + "_script";
-                saveScriptFile(dir, result, convertObjectToJsonString(source));
-                break;
+        Map<String, String> map = new HashMap<>();
+        String name = sprite.getName() + "_script";
+        String contents = convertObjectToJsonString(source);
+        saveScriptFile(dir, name, contents);
+        map.put("script_src", name);
+        map.put("script", contents);
 
-            default:
-                result = convertObjectToJsonString(source);
-                break;
-        }
-
-        return result;
+        return map;
     }
 
     public static Status parseJSONString(String jsonString) {
