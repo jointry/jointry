@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.Agent;
@@ -12,7 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.JsonUtil;
@@ -55,7 +50,7 @@ public class MainDialog extends JointryDialogBase {
 
                         for (String jsonString : list) {
                             try {
-                                Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, JsonUtil.TYPE_BASE64, null);
+                                Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, null);
                                 if (sprite != null) {
                                     sprite.setMainController(mainController);
                                     mainController.getFrontStageController().addSprite(sprite, false);

@@ -3,7 +3,6 @@ package jp.ac.aiit.jointry.util;
 import broker.util.Base64;
 import broker.util.ImageUtil;
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import jp.ac.aiit.jointry.models.Costume;
+import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
@@ -76,7 +77,7 @@ public class JsonUtil {
             Map<String, String> costumeMap = new HashMap();
             costumeMap.put("title", costume.getTitle());
             String fileName = sprite.getName() + "_costume" + costume.getNumber();
-            costumeMap.put("imgsrc", fileName);
+            costumeMap.put("img_src", fileName);
             File file = saveImage(new File(dir, "img"), fileName, costume.getImage());
             costumeMap.put("img", Base64.encode(file.getPath()));
             costumes.add(costumeMap);
@@ -128,67 +129,51 @@ public class JsonUtil {
         return status;
     }
 
-    public static Sprite parseJSONStringToSprite(String jsonString, String fileType, File file) throws MalformedURLException, FileNotFoundException, IOException {
-        Map<String, Object> projectMap = objectMapper.readValue(jsonString, Map.class);
+    public static Sprite parseJSONStringToSprite(String jsonString, File file) throws MalformedURLException, FileNotFoundException, IOException {
+        Jty jty = objectMapper.readValue(jsonString, Jty.class);
 
-        //load as sprite
-        Map<String, String> spriteMap = (Map) projectMap.get(SPRITE_TAG);
+        // load sprite
+        Map<String, String> spriteMap = jty.getSprite();
         Sprite sprite = new Sprite();
         sprite.setName(spriteMap.get("title"));
         sprite.setTranslateX(Double.valueOf(spriteMap.get("layoutX")));
         sprite.setTranslateY(Double.valueOf(spriteMap.get("layoutY")));
 
-        //load as costume
-        ArrayList<Map> costumes = (ArrayList) projectMap.get(COSTUME_TAG);
-
+        // load costume
+        ArrayList<Map> costumes = jty.getCostume();
         for (Map<String, String> costumeMap : costumes) {
             String title = costumeMap.get("title");
-            switch (fileType) {
-                case TYPE_BASE64:
-                    String value = costumeMap.get("img");
-                    List<String> list = new ArrayList();
-                    for (String s : value.split("\n")) {
-                        list.add(s);
-                    }
+            String parentPath = file.getParent();
+            File imgFile = new File(parentPath + "/img", costumeMap.get("img_src"));
 
-                    WritableImage img = SwingFXUtils.toFXImage(ImageUtil.createImage(list), null);
-                    sprite.addCostume(title, img);
-                    //costumeMap.get("img"); // base64で画像をデコードしたい
-                    break;
-
-                case TYPE_FILE:
-                    String parentPath = file.getParent();
-                    File imgFile = new File(parentPath + "/img", costumeMap.get("img"));
-                    sprite.addCostume(title, new Image(imgFile.toURI().toURL().toString()));
-                    break;
-
-                default:
-                    break;
+            if (imgFile.exists()) {
+                sprite.addCostume(title, new Image(imgFile.toURI().toURL().toString()));
+            } else {
+                // decode Base64
+                String value = costumeMap.get("img");
+                List<String> list = new ArrayList();
+                list.addAll(Arrays.asList(value.split("\n")));
+                WritableImage img = SwingFXUtils.toFXImage(ImageUtil.createImage(list), null);
+                sprite.addCostume(title, img);
             }
         }
-
         sprite.setSpriteCostume(Integer.parseInt(spriteMap.get("costume")));
 
-        //load as script
-        switch (fileType) {
-            case TYPE_FILE:
-                if (file != null) {
-                    //スクリプトファイル読み込み
-                    String parentPath = file.getParent();
-                    File scriptFile = new File(parentPath, (String) projectMap.get(SCRIPT_TAG));
+        // load script
+        Map<String, String> scriptMap = jty.getScript();
 
-                    try (BufferedReader br = new BufferedReader(new FileReader(scriptFile))) {
-                        String line = br.readLine();
-                        if (line != null) {
-                            parseJSONStringToBlocks(line, sprite);
-                        }
-                    }
+        String parentPath = file.getParent();
+        File scriptFile = new File(parentPath, scriptMap.get("script_src"));
+
+        if (scriptFile.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(scriptFile))) {
+                String line = br.readLine();
+                if (line != null) {
+                    parseJSONStringToBlocks(line, sprite);
                 }
-                break;
-
-            default:
-                parseJSONStringToBlocks((String) projectMap.get(SCRIPT_TAG), sprite);
-                break;
+            }
+        } else {
+            parseJSONStringToBlocks(scriptMap.get("script"), sprite);
         }
 
         return sprite;
@@ -196,10 +181,13 @@ public class JsonUtil {
 
     private static void parseJSONStringToBlocks(String jsonString, Sprite sprite) {
         ArrayList<Map> source = null;
+
         try {
-            source = objectMapper.readValue(jsonString, ArrayList.class);
+            source = objectMapper.readValue(jsonString, ArrayList.class
+            );
         } catch (IOException ex) {
-            Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JsonUtil.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         for (Map blocks_info : source) {
@@ -245,8 +233,10 @@ public class JsonUtil {
         File fileName = new File(dir.getPath(), name += ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileName);
+
         } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileManager.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         return fileName;
@@ -256,8 +246,10 @@ public class JsonUtil {
         try (PrintWriter script = new PrintWriter(new File(dir, name))) {
             script.print(content);
             script.flush();
+
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(JsonUtil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JsonUtil.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

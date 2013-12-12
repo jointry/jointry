@@ -63,7 +63,7 @@ public class FileManager {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Sprite sprite = JsonUtil.parseJSONStringToSprite(line, JsonUtil.TYPE_FILE, file);
+                Sprite sprite = JsonUtil.parseJSONStringToSprite(line, file);
                 sprite.setMainController(mainController);
 
                 mainController.getFrontStageController().addSprite(sprite, true);
