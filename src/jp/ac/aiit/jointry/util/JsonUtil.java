@@ -76,10 +76,10 @@ public class JsonUtil {
         for (Costume costume : sprite.getCostumes()) {
             Map<String, String> costumeMap = new HashMap();
             costumeMap.put("title", costume.getTitle());
-            String fileName = sprite.getName() + "_costume" + costume.getNumber();
+            String fileName = sprite.getName() + "_costume" + costume.getNumber() + ".png";
             costumeMap.put("img_src", fileName);
-            File file = saveImage(new File(dir, "img"), fileName, costume.getImage());
-            costumeMap.put("img", Base64.encode(file.getPath()));
+            saveImage(new File(dir, "img"), fileName, costume.getImage());
+            costumeMap.put("img", Base64.encode(dir + "/img/" + fileName));
             costumes.add(costumeMap);
         }
         return costumes;
@@ -183,8 +183,7 @@ public class JsonUtil {
         ArrayList<Map> source = null;
 
         try {
-            source = objectMapper.readValue(jsonString, ArrayList.class
-            );
+            source = objectMapper.readValue(jsonString, ArrayList.class);
         } catch (IOException ex) {
             Logger.getLogger(JsonUtil.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -226,11 +225,11 @@ public class JsonUtil {
         }
     }
 
-    private static File saveImage(File dir, String name, Image image) {
+    private static void saveImage(File dir, String name, Image image) {
         if (!dir.exists()) {
             dir.mkdir(); //create img folder
         }
-        File fileName = new File(dir.getPath(), name += ".png");
+        File fileName = new File(dir.getPath(), name);
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileName);
 
@@ -238,8 +237,6 @@ public class JsonUtil {
             Logger.getLogger(FileManager.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
-        return fileName;
     }
 
     private static void saveScriptFile(String dir, String name, String content) {
