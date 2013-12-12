@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and load the template in the editor.
- */
 package jp.ac.aiit.jointry.services.file;
 
 import java.io.BufferedReader;
