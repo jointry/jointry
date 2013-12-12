@@ -27,7 +27,7 @@ public class MainDialog extends JointryDialogBase {
         int event = getEvent(dinfo);
 
         switch (event) {
-            case M_MAIN_SYNC:
+            case M_MAIN_REQUEST:
                 List<String> spriteList = new ArrayList();
                 for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
                     Jty wrap = new Jty();

@@ -55,7 +55,7 @@ public class CooperationController implements Initializable, JointryCommon {
 
         if (agent.open(url.getText(), accessMapping(CHAT_SERVICE, CLIENT, name.getText(), "", null, selectRoom.getRoom().getProxyId()))) {
             agent.startListening(CHAT_TIMEOUT);
-            MainDialog.sendMessage(M_MAIN_SYNC, agent);
+            MainDialog.sendMessage(M_MAIN_REQUEST, agent);
 
             windowClose();
         }

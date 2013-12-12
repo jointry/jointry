@@ -25,7 +25,7 @@ public interface JointryCommon extends Common {
     public static final int M_BLOCK_ADDVARIABLE = 0x000107;
     public static final int M_BLOCK_ADDEMBRYO = 0x000108;
     public static final int M_BLOCK_CHANGE_STATE = 0x000109;
-    public static final int M_MAIN_SYNC = 0x001001;
+    public static final int M_MAIN_REQUEST = 0x001001;
     public static final int M_MAIN_RESPONSE = 0x001002;
     //位置情報
     public static final String K_X1 = "x1";
