@@ -17,7 +17,6 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
-import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
@@ -42,7 +41,8 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     @FXML
     protected void start(ActionEvent event) {
-        this.mainController.getBackStageController().start(speed_slider.getValue());
+        double speed = (speed_slider.getMax() + 10) - speed_slider.getValue();
+        this.mainController.getBackStageController().start(speed);
     }
 
     @FXML
