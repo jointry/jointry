@@ -70,6 +70,7 @@ public class CooperationController implements Initializable, JointryCommon {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        connect(DEFAULT_SERVER);
     }
 
     @FXML
