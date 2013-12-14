@@ -27,6 +27,8 @@ import jp.ac.aiit.jointry.models.blocks.MenuItemAdv;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Continue;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Sleep;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_VARIABLE_CREATE;
@@ -62,7 +64,11 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Assign.class),
                 new Separator(),
-                new MenuItem(Calculate.class));
+                new MenuItem(Calculate.class),
+                new Separator(),
+                new MenuItem(Continue.class),
+                new Separator(),
+                new MenuItem(Sleep.class));
     }
 
     public void setMainController(MainController controller) {
