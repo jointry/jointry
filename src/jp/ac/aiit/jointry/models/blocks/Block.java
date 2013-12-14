@@ -100,37 +100,13 @@ public abstract class Block extends AnchorPane {
     public void setUUID(String uuid) {
         this.uuid = uuid;
     }
-    
+
     public Sprite getSprite() {
         return sprite;
     }
-    
+
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-    }
-
-    public void initializeLink() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String intern() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Map getStatus() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void setStatus(Status status) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void show(){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Label getLabel() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void setConnector(Connector con) {
@@ -157,5 +133,35 @@ public abstract class Block extends AnchorPane {
                 }
             }
         });
+    }
+
+
+    /*
+     * *************************************************************************
+     * TO BE INHERITED
+     * *************************************************************************
+     */
+    public void initializeLink() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String intern() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Status getStatus() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setStatus(Status status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void show() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Label getLabel() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

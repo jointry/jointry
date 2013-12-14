@@ -70,6 +70,7 @@ public class If extends CodeBlock {
         }
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("if ");
@@ -93,8 +94,8 @@ public class If extends CodeBlock {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         if (embryo != null) {
             status.put("embryo", embryo.getStatus());
@@ -134,7 +135,6 @@ public class If extends CodeBlock {
                     block.setSprite(getSprite());
                     Status childStatus = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
                     block.setStatus(childStatus);
-
 
                     if (preBlock == null) {
                         preBlock = block;

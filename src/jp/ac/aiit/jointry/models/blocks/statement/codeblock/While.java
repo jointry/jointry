@@ -32,6 +32,7 @@ public class While extends CodeBlock {
         return Color.LIGHTGREEN;
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("index = 0\n");
@@ -53,8 +54,8 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         status.put("embryo", "index < 10");
 
@@ -108,6 +109,7 @@ public class While extends CodeBlock {
         }
     }
 
+    @Override
     public Label getLabel() {
         return new Label("くりかえす");
     }

@@ -27,10 +27,9 @@ public class Rebound extends Procedure {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
         status.put("rebound", "0");
-
         return status;
     }
 

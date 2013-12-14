@@ -101,10 +101,12 @@ public class Calculate extends Procedure {
         return Color.LIGHTSALMON;
     }
 
+    @Override
     public final Label getLabel() {
         return new Label("けいさん");
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append(variable.intern());
@@ -158,8 +160,8 @@ public class Calculate extends Procedure {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         if (variable != null) {
             status.put("variable", variable.getStatus());
@@ -244,6 +246,7 @@ public class Calculate extends Procedure {
         }
     }
 
+    @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
         if (variable != null) {

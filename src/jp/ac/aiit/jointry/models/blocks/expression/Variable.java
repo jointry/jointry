@@ -1,9 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import broker.core.DInfo;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -42,7 +40,7 @@ public class Variable extends Expression {
     private final Rectangle rect;
     private String name;
     private StringProperty value = new SimpleStringProperty("");
-    private Connector topCon;
+    private final Connector topCon;
     private Variable me;
 
     public Variable() {
@@ -180,6 +178,7 @@ public class Variable extends Expression {
         return Color.TOMATO;
     }
 
+    @Override
     public Label getLabel() {
         return new Label("へんすう");
     }
@@ -297,6 +296,7 @@ public class Variable extends Expression {
         return connector;
     }
 
+    @Override
     public String intern() {
         return name;
     }
@@ -306,8 +306,8 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
         status.put(name, value.getValue());
 
         return status;

@@ -130,6 +130,7 @@ public class Condition extends Expression {
         return Color.LIGHTGREEN;
     }
 
+    @Override
     public Label getLabel() {
         return new Label("じょうけん");
     }
@@ -214,6 +215,7 @@ public class Condition extends Expression {
         getChildren().addAll(leftCon, leftVariableCon, rightVariableCon);
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
 
@@ -259,8 +261,8 @@ public class Condition extends Expression {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         //left
         if (leftVariable != null) {
@@ -349,6 +351,7 @@ public class Condition extends Expression {
         }
     }
 
+    @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
         if (leftVariable != null) {

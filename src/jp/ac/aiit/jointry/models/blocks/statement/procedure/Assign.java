@@ -106,6 +106,7 @@ public class Assign extends Procedure {
         }
     }
 
+    @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
         if (leftVariable != null) {
@@ -118,6 +119,7 @@ public class Assign extends Procedure {
         }
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder(leftVariable.intern());
         sb.append(" = ");
@@ -149,8 +151,8 @@ public class Assign extends Procedure {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         if (leftVariable != null) {
             status.put("left", leftVariable.getStatus());

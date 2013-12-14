@@ -53,10 +53,12 @@ public class Speech extends Procedure {
         getChildren().addAll(variableCon);
     }
 
+    @Override
     public Label getLabel() {
         return new Label("はなす");
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
 
@@ -76,8 +78,8 @@ public class Speech extends Procedure {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         if (variable != null) {
             status.put("variable", variable.getStatus());
@@ -123,6 +125,7 @@ public class Speech extends Procedure {
         }
     }
 
+    @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
         if (variable != null) {

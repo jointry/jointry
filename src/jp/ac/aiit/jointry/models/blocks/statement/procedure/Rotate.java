@@ -31,6 +31,7 @@ public class Rotate extends Procedure {
         return Color.ORANGERED;
     }
 
+    @Override
     public String intern() {
         StringBuilder sb = new StringBuilder();
         sb.append("rotate");
@@ -46,8 +47,8 @@ public class Rotate extends Procedure {
     }
 
     @Override
-    public Map getStatus() {
-        Map<String, Object> status = new HashMap();
+    public Status getStatus() {
+        Status status = new Status();
 
         String arg = (String) cb.getValue();
         if (arg == null) {
@@ -68,6 +69,7 @@ public class Rotate extends Procedure {
         bChangeEnable = true;
     }
 
+    @Override
     public Label getLabel() {
         return new Label("かいてんする");
     }
