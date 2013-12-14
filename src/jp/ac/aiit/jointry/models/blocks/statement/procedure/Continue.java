@@ -2,6 +2,7 @@ package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Status;
 import static jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate.getColor;
 
 public class Continue extends Procedure {
@@ -26,5 +27,18 @@ public class Continue extends Procedure {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
+    }
+
+    @Override
+    public Status getStatus() {
+        Status status = new Status();
+        status.put("continue", "");
+        return status;
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+        bChangeEnable = true;
     }
 }

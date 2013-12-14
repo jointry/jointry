@@ -5,6 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import jp.ac.aiit.jointry.models.Status;
 import static jp.ac.aiit.jointry.models.blocks.statement.procedure.Continue.getColor;
 
 public class Sleep extends Procedure {
@@ -48,6 +49,29 @@ public class Sleep extends Procedure {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
+    }
+
+    @Override
+    public Status getStatus() {
+        Status status = new Status();
+
+        String arg = (String) cb.getValue();
+        if (arg == null) {
+            arg = "1";
+        }
+
+        status.put("sleep", arg);
+
+        return status;
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        bChangeEnable = false; //一時的にリスナーを無効化
+
+        cb.setValue(status.get("sleep"));
+
+        bChangeEnable = true;
     }
 
 }
