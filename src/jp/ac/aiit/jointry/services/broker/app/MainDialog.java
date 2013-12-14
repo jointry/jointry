@@ -2,6 +2,7 @@ package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.Agent;
 import broker.core.DInfo;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class MainDialog extends JointryDialogBase {
 
                         for (String jsonString : list) {
                             try {
-                                Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, null);
+                                Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, new File(""));
                                 if (sprite != null) {
                                     sprite.setMainController(mainController);
                                     mainController.getFrontStageController().addSprite(sprite, false);
