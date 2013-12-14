@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import jp.ac.aiit.jointry.models.Room;
 import broker.core.Agent;
 import broker.core.DInfo;
+import javafx.scene.control.RadioButton;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
@@ -30,9 +31,15 @@ public class CooperationController implements Initializable, JointryCommon {
     private FlowPane roomList;
     @FXML
     private Label messages;
+    @FXML
+    private RadioButton default_server;
+    @FXML
+    private RadioButton custom_server;
     private Agent agent;
     private Agent dummyAgent;
     private RoomController selectRoom;
+    private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
+
     /**
      * ルーム状況を取得するためのダミーネーム
      */
@@ -63,19 +70,33 @@ public class CooperationController implements Initializable, JointryCommon {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    }
+
+    @FXML
+    protected void connect(ActionEvent event) {
+        if (custom_server.isSelected()) {
+            connect(this.url.getText());
+        } else {
+            connect(DEFAULT_SERVER);
+        }
+    }
+
+    private void connect(String server) {
         dummyAgent = new Agent();
 
         //立ち上がっているサーバー一覧を取得する
-        if (dummyAgent.open(this.url.getText(), CHAT_SERVICE, SERVER, DUMMY_AGENT_NAME, "", null)) {
+        if (dummyAgent.open(server, CHAT_SERVICE, SERVER, DUMMY_AGENT_NAME, "", null)) {
             dummyAgent.startListening(CHAT_TIMEOUT);
 
             DInfo info = dummyAgent.query(K_SERVER_INFO);
             String[] serverList = info.get(K_SERVER_INFO).split(":");
 
             int roomId = 1; //部屋番号
-            for (String server : serverList) {
-                Room room = new Room(server);
-                if (room.getName().equals(DUMMY_AGENT_NAME)) continue;
+            for (String s : serverList) {
+                Room room = new Room(s);
+                if (room.getName().equals(DUMMY_AGENT_NAME)) {
+                    continue;
+                }
 
                 addRoom(roomId++, room);//部屋登録
             }
@@ -91,12 +112,14 @@ public class CooperationController implements Initializable, JointryCommon {
         final RoomController ctrl = (RoomController) roomStage.getController();
         ctrl.setRoom(roomId, room);
 
-        ctrl.getBG().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        ctrl.getBackground().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
-                if(selectRoom != null) selectRoom.getBG().setStyle("-fx-border-color: white;");
+                if (selectRoom != null) {
+                    selectRoom.getBackground().setStyle("-fx-border-color: white;");
+                }
 
-                ctrl.getBG().setStyle("-fx-border-color: red;");
+                ctrl.getBackground().setStyle("-fx-border-color: red;");
                 selectRoom = ctrl;
             }
         });
@@ -105,20 +128,24 @@ public class CooperationController implements Initializable, JointryCommon {
     }
 
     private Map<String, String> accessMapping(String serviceId, String role,
-            String userId, String password, String proxyFQCN, String proxyId) {
+                                              String userId, String password, String proxyFQCN, String proxyId) {
         Map<String, String> paramMap = new HashMap();
         paramMap.put(USER_ROLE, role);
         paramMap.put(SERVICE_ID, serviceId);
         paramMap.put(USER_ID, userId);
         paramMap.put(PASSWORD, password);
         paramMap.put(PROXY_ID, proxyId);
-        if (proxyFQCN != null) paramMap.put(PROXY_FQCN, proxyFQCN);
+        if (proxyFQCN != null) {
+            paramMap.put(PROXY_FQCN, proxyFQCN);
+        }
 
         return paramMap;
     }
 
     public void windowClose() {
-        if (dummyAgent != null) dummyAgent.close();
+        if (dummyAgent != null) {
+            dummyAgent.close();
+        }
         Stage stage = (Stage) roomList.getScene().getWindow();
         stage.close();
     }

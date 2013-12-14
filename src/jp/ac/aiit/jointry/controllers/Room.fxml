@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="bg" id="AnchorPane" minWidth="190.0" prefHeight="40.0" prefWidth="260.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.RoomController">
+<AnchorPane fx:id="background" id="AnchorPane" minWidth="190.0" prefHeight="40.0" prefWidth="260.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.RoomController">
     <children>
         <ImageView fitHeight="38.0" fitWidth="257.0" layoutX="1.0" layoutY="1.0" mouseTransparent="true">
             <image>

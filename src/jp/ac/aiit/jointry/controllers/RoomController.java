@@ -15,7 +15,7 @@ public class RoomController {
     @FXML
     private Label id;
     @FXML
-    private AnchorPane bg;
+    private AnchorPane background;
     private Room room;
 
     public void setRoom(int roomId, Room room) {
@@ -27,8 +27,8 @@ public class RoomController {
     public Room getRoom() {
         return room;
     }
-    
-    public AnchorPane getBG() {
-        return bg;
+
+    public AnchorPane getBackground() {
+        return background;
     }
 }
