@@ -55,6 +55,11 @@ public class SpriteDialog extends JointryDialogBase {
                 sprite.setEffect(null);
                 break;
 
+            case M_SPRITE_CHANGED:
+                sprite.setTranslateX(dinfo.getInt(K_X2));
+                sprite.setTranslateY(dinfo.getInt(K_Y2));
+                break;
+
             default:
                 break;
         }

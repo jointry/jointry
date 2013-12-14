@@ -1,6 +1,8 @@
 package jp.ac.aiit.jointry.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import jp.ac.aiit.jointry.services.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
@@ -25,7 +26,7 @@ public class BackStageController {
     @FXML
     private Tab scriptTab;
     private MainController mainController;
-    private Environment env;
+    private final List<SpriteTask> spriteTasks = new ArrayList(); //停止用
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
@@ -102,6 +103,7 @@ public class BackStageController {
             SpriteTask task = new SpriteTask();
             task.setSprite(sprite);
             task.setSpeed(speed);
+            spriteTasks.add(task);
             Thread th = new Thread(task);
             th.setDaemon(true);
             th.start();
@@ -109,7 +111,11 @@ public class BackStageController {
     }
 
     public void stop() {
-        env.getSequentialTransition().stop();
+        for (SpriteTask task : spriteTasks) {
+            task.stop();
+        }
+
+        spriteTasks.clear();
     }
 
     public void setMainController(MainController controller) {
