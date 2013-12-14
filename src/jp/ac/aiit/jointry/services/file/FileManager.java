@@ -60,6 +60,8 @@ public class FileManager {
             return; //読込先が指定されなかった
         }
 
+        mainController.initWindow("load"); //読み込む前に画面を一旦クリア
+
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {

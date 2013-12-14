@@ -93,8 +93,6 @@ public class MainController extends DefaultMonitor implements Initializable {
 
     @FXML
     protected void fopen(ActionEvent event) {
-        initWindow("load"); //読み込む前に画面を一旦クリア
-
         try {
             new FileManager().load(this);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
