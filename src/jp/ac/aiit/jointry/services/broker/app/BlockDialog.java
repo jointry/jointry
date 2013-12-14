@@ -270,9 +270,7 @@ public class BlockDialog extends JointryDialogBase {
                 setVariableBlock(dinfo, (Variable) block);
             }
 
-            ArrayList<Map> list = new ArrayList();
-            list.add(block.getStatus());
-            dinfo.set(K_BLOCK_STATUS, JsonUtil.convertObjectToJsonString(list));
+            dinfo.set(K_BLOCK_STATUS, JsonUtil.convertObjectToJsonString(block.getStatus()));
 
             mainController.getAgent().sendNotify(dinfo);
         }
