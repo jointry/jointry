@@ -80,7 +80,6 @@ public class If extends CodeBlock {
         sb.append(" {\n");
         for (Statement p : childBlocks) {
             if (p.prevBlock == null) {
-                sb.append("\t");
                 sb.append(p.intern());
                 sb.append("\n");
                 break;
