@@ -227,7 +227,7 @@ public class JsonUtil {
 
     private static void saveImage(File dir, String name, Image image) {
         if (!dir.exists()) {
-            dir.mkdir(); //create img folder
+            dir.mkdirs(); //create img folder
         }
         File fileName = new File(dir.getPath(), name);
         try {
