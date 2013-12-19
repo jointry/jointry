@@ -29,13 +29,15 @@ public class Rebound extends Procedure {
     @Override
     public Status getStatus() {
         Status status = new Status();
+        status.put("id", this.getUUID());
         status.put("rebound", "0");
         return status;
     }
 
     @Override
     public void setStatus(Status status) {
-        //ブロック未実装
+        //idだけ
+        this.setUUID((String) status.get("id"));
     }
 
     public Label getLabel() {

@@ -240,7 +240,7 @@ public class Variable extends Expression {
                         if (n instanceof Connector) {
                             Connector c = (Connector) n;
                             if (c.getPosition() == Connector.Position.INSIDE_LEFT
-                                    || c.getPosition() == Connector.Position.INSIDE_RIGHT) {
+                                || c.getPosition() == Connector.Position.INSIDE_RIGHT) {
                                 c.setFill(Color.TRANSPARENT);
                                 Shape intersect = null;
                                 // 包含の接触
@@ -258,7 +258,7 @@ public class Variable extends Expression {
                         if (n instanceof Connector) {
                             Connector c = (Connector) n;
                             if (c.getPosition() == Connector.Position.LEFT
-                                    || c.getPosition() == Connector.Position.INSIDE_LEFT) {
+                                || c.getPosition() == Connector.Position.INSIDE_LEFT) {
                                 c.setFill(Color.TRANSPARENT);
                                 Shape intersect = null;
                                 // 包含の接触
@@ -308,6 +308,7 @@ public class Variable extends Expression {
     @Override
     public Status getStatus() {
         Status status = new Status();
+        status.put("id", this.getUUID());
         status.put(name, value.getValue());
 
         return status;
@@ -317,6 +318,7 @@ public class Variable extends Expression {
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
 
+        this.setUUID((String) status.get("id"));
         //key = 変数名
         Set<String> set = new HashSet(status.keySet());
         setName(set.toString().substring(1, set.toString().length() - 1));

@@ -1,7 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
@@ -163,6 +161,7 @@ public class Calculate extends Procedure {
     public Status getStatus() {
         Status status = new Status();
 
+        status.put("id", this.getUUID());
         if (variable != null) {
             status.put("variable", variable.getStatus());
         }
@@ -187,6 +186,8 @@ public class Calculate extends Procedure {
     @Override
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
+
+        this.setUUID((String) status.get("id"));
 
         for (Object key : status.keySet()) {
             if (key.equals("variable")) {

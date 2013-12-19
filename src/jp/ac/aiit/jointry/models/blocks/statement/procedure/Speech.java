@@ -1,7 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -81,6 +79,8 @@ public class Speech extends Procedure {
     public Status getStatus() {
         Status status = new Status();
 
+        status.put("id", this.getUUID());
+
         if (variable != null) {
             status.put("variable", variable.getStatus());
         } else {
@@ -94,6 +94,7 @@ public class Speech extends Procedure {
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
 
+        this.setUUID((String) status.get("id"));
         Object value = status.get("variable");
 
         if (value instanceof String) {

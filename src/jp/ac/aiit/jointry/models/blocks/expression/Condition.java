@@ -264,6 +264,8 @@ public class Condition extends Expression {
     public Status getStatus() {
         Status status = new Status();
 
+        status.put("id", this.getUUID());
+
         //left
         if (leftVariable != null) {
             status.put("left", leftVariable.getStatus());
@@ -288,6 +290,7 @@ public class Condition extends Expression {
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
 
+        this.setUUID((String) status.get("id"));
         for (Object key : status.keySet()) {
             if (key.equals("left")) {
                 Object value = status.get(key);

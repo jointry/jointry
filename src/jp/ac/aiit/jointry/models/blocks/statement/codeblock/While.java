@@ -1,7 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.control.Label;
@@ -57,6 +56,7 @@ public class While extends CodeBlock {
     public Status getStatus() {
         Status status = new Status();
 
+        status.put("id", this.getUUID());
         status.put("embryo", "index < 10");
 
         for (Statement p : childBlocks) {
@@ -74,6 +74,7 @@ public class While extends CodeBlock {
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
 
+        this.setUUID((String) status.get("id"));
         ArrayList<Map> list = (ArrayList<Map>) status.get("childBlocks");
 
         Block preBlock = null;

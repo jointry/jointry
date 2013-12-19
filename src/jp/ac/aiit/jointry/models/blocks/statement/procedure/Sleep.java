@@ -55,6 +55,7 @@ public class Sleep extends Procedure {
     public Status getStatus() {
         Status status = new Status();
 
+        status.put("id", this.getUUID());
         String arg = (String) cb.getValue();
         if (arg == null) {
             arg = "1";
@@ -69,9 +70,9 @@ public class Sleep extends Procedure {
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
 
+        this.setUUID((String) status.get("id"));
         cb.setValue(status.get("sleep"));
 
         bChangeEnable = true;
     }
-
 }

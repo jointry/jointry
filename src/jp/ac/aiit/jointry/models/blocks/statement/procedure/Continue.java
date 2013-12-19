@@ -32,6 +32,7 @@ public class Continue extends Procedure {
     @Override
     public Status getStatus() {
         Status status = new Status();
+        status.put("id", this.getUUID());
         status.put("continue", "");
         return status;
     }
@@ -39,6 +40,7 @@ public class Continue extends Procedure {
     @Override
     public void setStatus(Status status) {
         bChangeEnable = false; //一時的にリスナーを無効化
+        this.setUUID((String) status.get("id"));
         bChangeEnable = true;
     }
 }
