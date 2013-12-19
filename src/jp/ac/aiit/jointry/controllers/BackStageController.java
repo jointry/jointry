@@ -21,6 +21,7 @@ import jp.ac.aiit.jointry.models.SpriteTask;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.util.StageUtil;
+import jp.ac.aiit.jointry.util.StringUtil;
 
 public class BackStageController {
 
@@ -106,7 +107,7 @@ public class BackStageController {
         String tabs = "";
         for (String line : code.split("\n")) {
             if (line.endsWith("}")) {
-                tabs = stringMultiply("\t", --tabCount);
+                tabs = StringUtil.multply("\t", --tabCount);
             }
 
             result.append(tabs);
@@ -114,19 +115,11 @@ public class BackStageController {
             result.append("\n");
 
             if (line.endsWith("{")) {
-                tabs = stringMultiply("\t", ++tabCount);
+                tabs = StringUtil.multply("\t", ++tabCount);
             }
         }
 
         return result.toString();
-    }
-
-    private String stringMultiply(String str, int num) {
-        StringBuilder buf = new StringBuilder();
-        for (int multi = 0; multi < num; multi++) {
-            buf.append(str);
-        }
-        return buf.toString();
     }
 
     public void setCurrentSprite(Sprite sprite) {
