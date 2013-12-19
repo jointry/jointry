@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
@@ -24,7 +23,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class BackStageController {
-    
+
     @FXML
     private ScrollPane costumeList;
     @FXML
@@ -45,7 +44,7 @@ public class BackStageController {
             @Override
             public void handle(WindowEvent t) {
                 PaintController ctrl = (PaintController) paintStage.getController();
-                
+
                 if (ctrl.getResult() != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
                     sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
@@ -53,23 +52,23 @@ public class BackStageController {
                 }
             }
         });
-        
+
         paintStage.getStage().show();
     }
-    
+
     public void showCostumes(Sprite sprite) {
         VBox vbox = new VBox();
         for (Costume costume : sprite.getCostumes()) {
             URL fxml = getClass().getResource("Costume.fxml"); //表示するfxml
             StageUtil costumeStage = new StageUtil(null, null, fxml, costume);
-            
+
             CostumeCntroller controller = (CostumeCntroller) costumeStage.getController();
             controller.setMainController(mainController);
             vbox.getChildren().add(costumeStage.getParent());
         }
         costumeList.setContent(vbox);
     }
-    
+
     @FXML
     protected void handleCamBtnAct(ActionEvent event) throws Exception {
         Window owner = costumeList.getScene().getWindow(); //画面オーナー
@@ -81,7 +80,7 @@ public class BackStageController {
             @Override
             public void handle(WindowEvent t) {
                 CameraController ctrl = (CameraController) cameraStage.getController();
-                
+
                 if (ctrl.getResult() != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
                     sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
@@ -89,34 +88,16 @@ public class BackStageController {
                 }
             }
         });
-        
+
         cameraStage.getStage().show();
     }
-    
+
     @FXML
     protected void handleCostumeSelected(Event event) {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
         setCurrentSprite(sprite);
     }
-    
-    @FXML
-    protected void handleCodeSelected(Event event) {
-        codeArea.setText(null);
-        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        
-        StringBuilder code = new StringBuilder();
-        for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-            if (node instanceof Statement) {
-                Statement block = (Statement) node;
-                if (block.isTopLevelBlock()) {
-                    code.append(block.intern());
-                }
-            }
-        }
-        
-        codeArea.setText(codeFormat(code.toString()));
-    }
-    
+
     private String codeFormat(String code) {
         StringBuilder result = new StringBuilder();
 
@@ -131,12 +112,12 @@ public class BackStageController {
             result.append(tabs);
             result.append(line);
             result.append("\n");
-            
+
             if (line.endsWith("{")) {
                 tabs = stringMultiply("\t", ++tabCount);
             }
         }
-        
+
         return result.toString();
     }
 
@@ -152,8 +133,22 @@ public class BackStageController {
         showCostumes(sprite);
         showBlocks(sprite);
     }
-    
-    public void start(double speed) {
+
+    @FXML
+    protected void handleCodeSelected(Event event) {
+        codeArea.setText(null);
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        double speed = mainController.getFrontStageController().getSpeed();
+
+        SpriteTask task = new SpriteTask();
+        task.setSprite(sprite);
+        task.setSpeed(speed);
+
+        codeArea.setText(codeFormat(task.getCode()));
+    }
+
+    public void start() {
+        double speed = mainController.getFrontStageController().getSpeed();
         for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
             SpriteTask task = new SpriteTask();
             task.setSprite(sprite);
@@ -164,24 +159,24 @@ public class BackStageController {
             th.start();
         }
     }
-    
+
     public void stop() {
         for (SpriteTask task : spriteTasks) {
             task.stop();
         }
-        
+
         spriteTasks.clear();
     }
-    
+
     public void setMainController(MainController controller) {
         this.mainController = controller;
     }
-    
+
     private void showBlocks(Sprite sprite) {
         //組み立てたブロックを表示
         scriptTab.setContent(sprite.getScriptPane());
     }
-    
+
     public void addBlock(Block block) {
         AnchorPane ap = (AnchorPane) scriptTab.getContent();
         ap.getChildren().add(block);

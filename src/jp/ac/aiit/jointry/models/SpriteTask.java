@@ -30,8 +30,7 @@ public class SpriteTask extends Task {
         this.sprite = sprite;
     }
 
-    @Override
-    protected Object call() throws Exception {
+    public String getCode() {
         StringBuilder code = new StringBuilder();
 
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
@@ -42,11 +41,16 @@ public class SpriteTask extends Task {
                 }
             }
         }
-
         // Debug
         System.out.println(code);
 
-        Lexer lexer = new Lexer(new LangReader(code.toString()));
+        return code.toString();
+    }
+
+    @Override
+    protected Object call() throws Exception {
+        String code = getCode();
+        Lexer lexer = new Lexer(new LangReader(code));
         JointryParser parser = new JointryParser();
 
         Environment env = new Environment();

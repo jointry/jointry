@@ -41,8 +41,11 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     @FXML
     protected void start(ActionEvent event) {
-        double speed = (speed_slider.getMax() + 10) - speed_slider.getValue();
-        this.mainController.getBackStageController().start(speed);
+        this.mainController.getBackStageController().start();
+    }
+
+    public double getSpeed() {
+        return (speed_slider.getMax() + 10) - speed_slider.getValue();
     }
 
     @FXML
