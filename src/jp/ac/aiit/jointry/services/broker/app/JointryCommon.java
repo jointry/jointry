@@ -36,6 +36,8 @@ public interface JointryCommon extends Common {
     public static final String K_Y1 = "y1";
     public static final String K_X2 = "x2";
     public static final String K_Y2 = "y2";
+    public static final String K_ROTATE = "rotate";
+    public static final String K_SPEECH = "speech";
     public static final String K_VALUE_POS = "value_pos";
     public static final String K_VALUE = "value";
     public static final String K_LEFT_VALUE = "left_value";

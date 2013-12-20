@@ -124,6 +124,14 @@ public final class Sprite extends HBox {
         }
     }
 
+    public String getSpeech() {
+        if (saying != null) {
+            return saying.getText();
+        }
+
+        return null;
+    }
+
     public double getX() {
         return icon.getX();
     }

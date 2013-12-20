@@ -68,6 +68,13 @@ public class JsonUtil {
         spriteMap.put("layoutX", Double.toString(sprite.getTranslateX()));
         spriteMap.put("layoutY", Double.toString(sprite.getTranslateY()));
         spriteMap.put("costume", Integer.toString(sprite.getCostumeNumber()));
+        spriteMap.put("rotate", Double.toString(sprite.getRotate()));
+
+        String speech = sprite.getSpeech();
+        if (speech != null) {
+            spriteMap.put("speech", speech);
+        }
+
         return spriteMap;
     }
 
@@ -138,6 +145,12 @@ public class JsonUtil {
         sprite.setName(spriteMap.get("title"));
         sprite.setTranslateX(Double.valueOf(spriteMap.get("layoutX")));
         sprite.setTranslateY(Double.valueOf(spriteMap.get("layoutY")));
+        sprite.setRotate(Double.valueOf(spriteMap.get("rotate")));
+
+        String speech = spriteMap.get("speech");
+        if (speech != null) {
+            sprite.setSpeechBubble(speech);
+        }
 
         // load costume
         ArrayList<Map> costumes = jty.getCostume();
