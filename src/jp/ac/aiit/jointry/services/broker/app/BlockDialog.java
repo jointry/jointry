@@ -1,9 +1,6 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
-import java.util.ArrayList;
-import java.util.Map;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
@@ -15,27 +12,35 @@ import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
-import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.K_BLOCK_STATUS;
 import jp.ac.aiit.jointry.util.BlockUtil;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
 public class BlockDialog extends JointryDialogBase {
 
     @Override
-    public void onNotify(final DInfo dinfo) {
+    public void onAnswer(int event, DInfo dinfo) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void onQuery(int event, DInfo dinfo) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void onNotify(int event, DInfo dinfo) {
         final Sprite sprite = getTargetSprite(dinfo);
         if (sprite == null) {
             return; //該当なし
         }
-        int event = getEvent(dinfo); //対象イベント取得
 
         //新規block作成
         switch (event) {
             case M_BLOCK_CREATE:
-                vmBlockCreate(sprite, dinfo);
+                mBlockCreate(sprite, dinfo);
                 break;
             case M_BLOCK_VARIABLE_CREATE:
-                vmBlockVariableCreate(dinfo);
+                mBlockVariableCreate(dinfo);
                 break;
             default:
                 break;
@@ -48,138 +53,85 @@ public class BlockDialog extends JointryDialogBase {
         }
         switch (event) {
             case M_BLOCK_REMOVE:
-                vmBlockRemove(myBlock, dinfo);
+                mBlockRemove(myBlock, dinfo);
                 break;
             case M_BLOCK_MOVE:
-                vmBlockMove(myBlock, dinfo);
+                mBlockMove(myBlock, dinfo);
                 break;
             case M_BLOCK_ADDLINK:
-                vmBlockAddLink(sprite, myBlock, dinfo);
+                mBlockAddLink(sprite, myBlock, dinfo);
                 break;
             case M_BLOCK_ADDCHILD:
-                vmBlockAddChild(sprite, myBlock, dinfo);
+                mBlockAddChild(sprite, myBlock, dinfo);
                 break;
             case M_BLOCK_ADDEMBRYO:
-                vmBlockAddEmbryo(sprite, myBlock, dinfo);
+                mBlockAddEmbryo(sprite, myBlock, dinfo);
                 break;
             case M_BLOCK_ADDVARIABLE:
-                vmBlockAddVariable(sprite, myBlock, dinfo);
+                mBlockAddVariable(sprite, myBlock, dinfo);
                 break;
             case M_BLOCK_CHANGE_STATE:
-                vmBlockChangeState(myBlock, dinfo);
+                mBlockChangeState(myBlock, dinfo);
                 break;
             default:
                 break;
         }
     }
 
-    private void vmBlockCreate(final Sprite sprite, final DInfo dinfo) {
-        final Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
-        if (newBlock == null) {
-            return;
-        }
+    private void mBlockCreate(Sprite sprite, DInfo dinfo) {
+        Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
 
         newBlock.setUUID(dinfo.get(K_BLOCK_ID));
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                //JavaFXのthreadでしかやれない
-                sprite.getScriptPane().getChildren().add(newBlock);
-            }
-        });
+        sprite.getScriptPane().getChildren().add(newBlock);
     }
 
-    private void vmBlockVariableCreate(final DInfo dinfo) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                mainController.getBlocksController().addVariable(dinfo.get(K_BLOCK_LABEL_NAME));
-            }
-        });
+    private void mBlockVariableCreate(final DInfo dinfo) {
+        mainController.getBlocksController().addVariable(dinfo.get(K_BLOCK_LABEL_NAME));
     }
 
-    private void vmBlockRemove(final Block myBlock, final DInfo dinfo) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myBlock.remove();
-            }
-        });
+    private void mBlockRemove(Block myBlock, DInfo dinfo) {
+        myBlock.remove();
     }
 
-    private void vmBlockMove(final Block myBlock, final DInfo dinfo) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                //JavaFXのthreadでしかやれない
-                myBlock.toFront(); //クライアント状態に関わらず前面に
-                myBlock.initializeLink();
-                myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
-            }
-        });
+    private void mBlockMove(Block myBlock, DInfo dinfo) {
+        myBlock.toFront(); //クライアント状態に関わらず前面に
+        myBlock.initializeLink();
+        myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
     }
 
-    private void vmBlockAddLink(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
-        final Statement prevBlock = (Statement) getTargetBlock(sprite, dinfo.get(K_PREV_BLOCK_ID));
-        if (prevBlock == null) {
-            return;
-        }
+    private void mBlockAddLink(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
+        Statement prevBlock = (Statement) getTargetBlock(sprite, dinfo.get(K_PREV_BLOCK_ID));
 
         if (!myBlock.getUUID().equals(prevBlock.getUUID())) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    prevBlock.addLink((Statement) myBlock);
-                    myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
-                }
-            });
+            prevBlock.addLink((Statement) myBlock);
+            myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
         }
     }
 
-    private void vmBlockAddChild(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
-        final CodeBlock parentBlock = (CodeBlock) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (parentBlock == null) {
-            return;
+    private void mBlockAddChild(Sprite sprite, Block myBlock, DInfo dinfo) {
+        CodeBlock parentBlock = (CodeBlock) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
+
+        parentBlock.addChild((Statement) myBlock);
+
+        Statement next = ((Statement) myBlock).nextBlock;
+        while (next != null) {
+            parentBlock.addChild(next);
+            next = next.nextBlock;
         }
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                parentBlock.addChild((Statement) myBlock);
-
-                Statement next = ((Statement) myBlock).nextBlock;
-                while (next != null) {
-                    parentBlock.addChild(next);
-                    next = next.nextBlock;
-                }
-
-                parentBlock.move(parentBlock.getLayoutX(), parentBlock.getLayoutY());
-                parentBlock.resize();
-            }
-        });
+        parentBlock.move(parentBlock.getLayoutX(), parentBlock.getLayoutY());
+        parentBlock.resize();
     }
 
-    private void vmBlockAddEmbryo(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
-        final If mothorBlock = (If) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (mothorBlock == null) {
-            return;
-        }
+    private void mBlockAddEmbryo(Sprite sprite, Block myBlock, DInfo dinfo) {
+        If mothorBlock = (If) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                mothorBlock.addEmbryo((Condition) myBlock);
-                myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
-            }
-        });
+        mothorBlock.addEmbryo((Condition) myBlock);
+        myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
     }
 
-    private void vmBlockAddVariable(final Sprite sprite, final Block myBlock, final DInfo dinfo) {
-        final Block mothorBlocks = getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
-        if (mothorBlocks == null) {
-            return;
-        }
+    private void mBlockAddVariable(Sprite sprite, Block myBlock, DInfo dinfo) {
+        Block mothorBlocks = getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
 
         if (mothorBlocks instanceof Condition) {
             switch (dinfo.get(K_VALUE_POS)) {
@@ -224,13 +176,8 @@ public class BlockDialog extends JointryDialogBase {
         }
     }
 
-    private void vmBlockChangeState(final Block myBlock, final DInfo dinfo) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myBlock.setStatus(JsonUtil.parseJSONString(dinfo.get(K_BLOCK_STATUS)));
-            }
-        });
+    private void mBlockChangeState(Block myBlock, DInfo dinfo) {
+        myBlock.setStatus(JsonUtil.parseJSONString(dinfo.get(K_BLOCK_STATUS)));
     }
 
     public static void sendMessage(int event, String value) {

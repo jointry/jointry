@@ -6,7 +6,6 @@ package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
 import java.awt.image.BufferedImage;
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
@@ -16,22 +15,19 @@ import jp.ac.aiit.jointry.models.Sprite;
 public class SpriteDialog extends JointryDialogBase {
 
     @Override
-    public void onNotify(DInfo dinfo) {
-        int event = getEvent(dinfo);
+    public void onAnswer(int event, DInfo dinfo) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
+    @Override
+    public void onQuery(int event, DInfo dinfo) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void onNotify(int event, DInfo dinfo) {
         if (event == M_SPRITE_CREATE && mainController != null) {
-            final Sprite sprite = new Sprite();
-            sprite.setMainController(mainController);
-            sprite.setName(dinfo.get(K_SPRITE_NAME));
-            sprite.setLayoutX(dinfo.getInt(K_X1));
-            sprite.setLayoutY(dinfo.getInt(K_Y1));
-
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    mainController.getFrontStageController().addSprite(sprite, false);
-                }
-            });
+            mSpriteCreate(dinfo);
         }
 
         Sprite sprite = getTargetSprite(dinfo);
@@ -40,29 +36,55 @@ public class SpriteDialog extends JointryDialogBase {
         }
         switch (event) {
             case M_SPRITE_SELECT:
-                sprite.setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(K_COLOR))));
+                mSpriteSelect(sprite, dinfo);
                 break;
 
             case M_SPRITE_DRAGGED:
-                sprite.setTranslateX(dinfo.getInt(K_X2));
-                sprite.setTranslateY(dinfo.getInt(K_Y2));
+                mSpriteDragged(sprite, dinfo);
                 break;
 
             case M_SPRITE_RELEASD:
-                sprite.setTranslateX(dinfo.getInt(K_X2));
-                sprite.setTranslateY(dinfo.getInt(K_Y2));
-
-                sprite.setEffect(null);
+                mSpriteReleasd(sprite, dinfo);
                 break;
 
             case M_SPRITE_CHANGED:
-                sprite.setTranslateX(dinfo.getInt(K_X2));
-                sprite.setTranslateY(dinfo.getInt(K_Y2));
+                mSpriteChanged(sprite, dinfo);
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void mSpriteCreate(DInfo dinfo) {
+        Sprite sprite = new Sprite();
+        sprite.setMainController(mainController);
+        sprite.setName(dinfo.get(K_SPRITE_NAME));
+        sprite.setLayoutX(dinfo.getInt(K_X1));
+        sprite.setLayoutY(dinfo.getInt(K_Y1));
+
+        mainController.getFrontStageController().addSprite(sprite, false);
+    }
+
+    private void mSpriteSelect(Sprite sprite, DInfo dinfo) {
+        sprite.setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(K_COLOR))));
+    }
+
+    private void mSpriteDragged(Sprite sprite, DInfo dinfo) {
+        sprite.setTranslateX(dinfo.getInt(K_X2));
+        sprite.setTranslateY(dinfo.getInt(K_Y2));
+    }
+
+    private void mSpriteReleasd(Sprite sprite, DInfo dinfo) {
+        sprite.setTranslateX(dinfo.getInt(K_X2));
+        sprite.setTranslateY(dinfo.getInt(K_Y2));
+
+        sprite.setEffect(null);
+    }
+
+    private void mSpriteChanged(Sprite sprite, DInfo dinfo) {
+        sprite.setTranslateX(dinfo.getInt(K_X2));
+        sprite.setTranslateY(dinfo.getInt(K_Y2));
     }
 
     public static void sendMessage(int event, Sprite sprite) {

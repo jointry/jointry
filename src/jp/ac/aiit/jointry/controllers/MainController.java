@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +22,7 @@ import broker.core.DefaultMonitor;
 import java.awt.image.BufferedImage;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,16 +38,12 @@ public class MainController extends DefaultMonitor implements Initializable {
     @FXML
     private BorderPane rootPane;
     @FXML
-    private MenuItem fopen;
-    private BackStageController backStageController;
-    private FrontStageController frontStageController;
-    private BlocksController blocksController;
-    @FXML
-    private Label dummylabel;
-    @FXML
     private MenuItem roomEnter;
     @FXML
     private MenuItem roomExit;
+    private BackStageController backStageController;
+    private FrontStageController frontStageController;
+    private BlocksController blocksController;
     private Agent agent;
     private ListView members = new ListView();
 
@@ -139,6 +135,7 @@ public class MainController extends DefaultMonitor implements Initializable {
             agent = null;
         }
 
+        initWindow("disconnect");
         roomEnter.setVisible(true);
         roomExit.setVisible(false);
     }
@@ -169,8 +166,12 @@ public class MainController extends DefaultMonitor implements Initializable {
 
             case "disconnect":
                 //参加しているメンバー領域の非表示
-                VBox disconnectFront = (VBox) rootPane.getRight();
-                rootPane.setRight(disconnectFront.getChildren().get(0));
+                Node disconnectFront = rootPane.getRight();
+
+                if (disconnectFront instanceof VBox) {
+                    rootPane.setRight(((VBox) disconnectFront).getChildren().get(0));
+                }
+
                 break;
 
             default:

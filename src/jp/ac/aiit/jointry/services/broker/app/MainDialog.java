@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.JsonUtil;
@@ -16,109 +15,105 @@ import jp.ac.aiit.jointry.util.JsonUtil;
 public class MainDialog extends JointryDialogBase {
 
     @Override
-    public void onAnswer(DInfo dinfo) {
+    public void onAnswer(int event, DInfo dinfo) {
     }
 
     @Override
-    public void onQuery(final DInfo dinfo) {
-        int event = getEvent(dinfo);
-
+    public void onQuery(int event, DInfo dinfo) {
         switch (event) {
             case M_MAIN_CONNECT:
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JointryAccount.addUser(dinfo.get(K_USER_NAME));
-                        mainController.refreshMembers();
-                        sendMembers();
-                        sendAnswer(dinfo, V_OK);
-                    }
-                });
+                mMainConnect(dinfo);
                 break;
 
             case M_MAIN_DISCONNECT:
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JointryAccount.removeUser(dinfo.get(K_USER_NAME));
-                        mainController.refreshMembers();
-                        sendMembers();
-                        sendAnswer(dinfo, V_OK);
-                    }
-                });
+                mMainDisconnect(dinfo);
                 break;
 
             case M_MAIN_REQUEST:
-                List<String> spriteList = new ArrayList();
-                for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
-                    String json = null;
-                    try {
-                        json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    spriteList.add(json);
-                }
-
-                String response = JsonUtil.convertObjectToJsonString(spriteList);
-                sendMessage(M_MAIN_RESPONSE, response);
-                sendAnswer(dinfo, V_OK);
+                mMainRequest();
                 break;
         }
     }
 
     @Override
-    public void onNotify(final DInfo dinfo) {
+    public void onNotify(int event, DInfo dinfo) {
         if (mainController == null) {
             return;
         }
 
-        int event = getEvent(dinfo);
-
         switch (event) {
             case M_MAIN_MEMBERS:
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JointryAccount.clearUser();
-                        String members = dinfo.get(K_USER_NAME_LIST);
-                        JointryAccount.addAllUser(members.substring(1, members.length() - 1).split(","));
-                        mainController.refreshMembers();
-                    }
-                });
+                mMainMembers(dinfo);
                 break;
 
             case M_MAIN_RESPONSE:
-                String main_info = dinfo.get(K_MAIN_INFO);
-                final List<String> list = JsonUtil.convertJsonStringToList(main_info);
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (String jsonString : list) {
-                            try {
-                                Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, new File(""));
-                                if (sprite != null) {
-                                    sprite.setMainController(mainController);
-                                    mainController.getFrontStageController().addSprite(sprite, false);
-                                    if (mainController.getFrontStageController().getCurrentSprite() == null) {
-                                        mainController.getFrontStageController().setCurrentSprite(sprite);
-                                    }
-
-                                }
-                            } catch (Exception ex) {
-                                Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
-                });
-
+                mMainResponse(dinfo);
                 break;
 
             default:
-                System.out.println("unknown event : " + event);
                 break;
         }
+    }
+
+    private void mMainConnect(DInfo dinfo) {
+        JointryAccount.addUser(dinfo.get(K_USER_NAME));
+        mainController.refreshMembers();
+        sendMembers();
+    }
+
+    private void mMainDisconnect(DInfo dinfo) {
+        JointryAccount.removeUser(dinfo.get(K_USER_NAME));
+        mainController.refreshMembers();
+        sendMembers();
+    }
+
+    private void mMainRequest() {
+        List<String> spriteList = new ArrayList();
+        for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
+            String json = null;
+            try {
+                json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
+            } catch (IOException ex) {
+                Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            spriteList.add(json);
+        }
+
+        String response = JsonUtil.convertObjectToJsonString(spriteList);
+        sendMessage(M_MAIN_RESPONSE, response);
+    }
+
+    private void mMainResponse(DInfo dinfo) {
+        //一旦画面をクリアしてから同期させる
+        mainController.initWindow("load");
+        mainController.initWindow("connect");
+
+        String main_info = dinfo.get(K_MAIN_INFO);
+        final List<String> list = JsonUtil.convertJsonStringToList(main_info);
+
+        for (String jsonString : list) {
+            Sprite sprite = null;
+            try {
+                sprite = JsonUtil.parseJSONStringToSprite(jsonString, new File(""));
+            } catch (Exception ex) {
+                Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (sprite != null) {
+                sprite.setMainController(mainController);
+                mainController.getFrontStageController().addSprite(sprite, false);
+                if (mainController.getFrontStageController().getCurrentSprite() == null) {
+                    mainController.getFrontStageController().setCurrentSprite(sprite);
+                }
+            }
+        }
+    }
+
+    private void mMainMembers(DInfo dinfo) {
+        JointryAccount.getUsers().clear();
+        String members = dinfo.get(K_USER_NAME_LIST);
+        JointryAccount.addAllUser(members.substring(1, members.length() - 1).split(","));
+        mainController.refreshMembers();
     }
 
     private void sendMessage(int event, String main_info) {
