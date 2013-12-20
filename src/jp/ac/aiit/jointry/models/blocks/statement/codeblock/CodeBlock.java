@@ -42,8 +42,8 @@ public abstract class CodeBlock extends Statement {
 
         connector = new Connector();
         connector.detouch();
-        connector.setWidth(50);
-        connector.setHeight(10);
+        connector.setWidth(200);
+        connector.setHeight(50);
         connector.setHolder(myBlock);
         connector.setPosition(Connector.Position.CENTER);
         AnchorPane.setLeftAnchor(connector, 50.0);
