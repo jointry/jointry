@@ -97,12 +97,13 @@ public class MainDialog extends JointryDialogBase {
         mainController.refreshMembers();
     }
 
-    private void sendSynchronize() {
+    public static void sendSynchronize() {
         List<String> spriteList = new ArrayList();
         for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
             String json = null;
             try {
-                json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
+                String tempFile = new MainDialog().makeFilePath("");
+                json = FileManager.convertSpriteToJson(sprite, tempFile);
             } catch (IOException ex) {
                 Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -115,7 +116,7 @@ public class MainDialog extends JointryDialogBase {
         dinfo.set(K_METHOD, M_MAIN_SYNCHRONIZE);
         dinfo.set(K_MAIN_INFO, main_info);
 
-        sendNotify(dinfo);
+        mainController.getAgent().sendNotify(dinfo);
     }
 
     public static void sendConnection(int event, Agent agent, String name) {

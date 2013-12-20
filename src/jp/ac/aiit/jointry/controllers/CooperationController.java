@@ -54,7 +54,6 @@ public class CooperationController implements Initializable, JointryCommon {
             agent.startListening(CHAT_TIMEOUT);
             JointryAccount.addUser(name.getText());
             mainController.initWindow("connect");
-            mainController.refreshMembers();
 
             windowClose();
         }
