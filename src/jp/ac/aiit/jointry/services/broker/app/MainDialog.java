@@ -16,14 +16,38 @@ import jp.ac.aiit.jointry.util.JsonUtil;
 public class MainDialog extends JointryDialogBase {
 
     @Override
-    public void onNotify(DInfo dinfo) {
-        if (mainController == null) {
-            return;
-        }
+    public void onAnswer(DInfo dinfo) {
+    }
 
+    @Override
+    public void onQuery(final DInfo dinfo) {
         int event = getEvent(dinfo);
 
         switch (event) {
+            case M_MAIN_CONNECT:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JointryAccount.addUser(dinfo.get(K_USER_NAME));
+                        mainController.refreshMembers();
+                        sendMembers();
+                        sendAnswer(dinfo, V_OK);
+                    }
+                });
+                break;
+
+            case M_MAIN_DISCONNECT:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JointryAccount.removeUser(dinfo.get(K_USER_NAME));
+                        mainController.refreshMembers();
+                        sendMembers();
+                        sendAnswer(dinfo, V_OK);
+                    }
+                });
+                break;
+
             case M_MAIN_REQUEST:
                 List<String> spriteList = new ArrayList();
                 for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
@@ -38,6 +62,30 @@ public class MainDialog extends JointryDialogBase {
 
                 String response = JsonUtil.convertObjectToJsonString(spriteList);
                 sendMessage(M_MAIN_RESPONSE, response);
+                sendAnswer(dinfo, V_OK);
+                break;
+        }
+    }
+
+    @Override
+    public void onNotify(final DInfo dinfo) {
+        if (mainController == null) {
+            return;
+        }
+
+        int event = getEvent(dinfo);
+
+        switch (event) {
+            case M_MAIN_MEMBERS:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JointryAccount.clearUser();
+                        String members = dinfo.get(K_USER_NAME_LIST);
+                        JointryAccount.addAllUser(members.substring(1, members.length() - 1).split(","));
+                        mainController.refreshMembers();
+                    }
+                });
                 break;
 
             case M_MAIN_RESPONSE:
@@ -47,8 +95,6 @@ public class MainDialog extends JointryDialogBase {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        mainController.initWindow("load");
-
                         for (String jsonString : list) {
                             try {
                                 Sprite sprite = JsonUtil.parseJSONStringToSprite(jsonString, new File(""));
@@ -81,7 +127,6 @@ public class MainDialog extends JointryDialogBase {
         dinfo.set(K_MAIN_INFO, main_info);
 
         sendNotify(dinfo);
-
     }
 
     public static void sendMessage(int event, Agent agent) {
@@ -89,7 +134,25 @@ public class MainDialog extends JointryDialogBase {
             DInfo dinfo = new DInfo(D_MAIN);
             dinfo.set(K_METHOD, event);
 
-            agent.sendNotify(dinfo);
+            agent.sendQuery(dinfo);
         }
+    }
+
+    public static void sendConnection(int event, Agent agent, String name) {
+        if (agent != null) {
+            DInfo dinfo = new DInfo(D_MAIN);
+            dinfo.set(K_METHOD, event);
+            dinfo.set(K_USER_NAME, name);
+
+            agent.sendQuery(dinfo);
+        }
+    }
+
+    public void sendMembers() {
+        DInfo dinfo = new DInfo(D_MAIN);
+        dinfo.set(K_METHOD, M_MAIN_MEMBERS);
+        dinfo.set(K_USER_NAME_LIST, JointryAccount.getUsers().toString());
+
+        sendNotify(dinfo);
     }
 }

@@ -23,9 +23,12 @@ import broker.core.DefaultMonitor;
 import java.awt.image.BufferedImage;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import jp.ac.aiit.jointry.models.Costume;
+import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
 import org.xml.sax.SAXException;
@@ -46,6 +49,7 @@ public class MainController extends DefaultMonitor implements Initializable {
     @FXML
     private MenuItem roomExit;
     private Agent agent;
+    private ListView members = new ListView();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -107,14 +111,18 @@ public class MainController extends DefaultMonitor implements Initializable {
         URL fxml = getClass().getResource("Cooperation.fxml"); //表示するfxml
         final StageUtil stage = new StageUtil(null, owner, fxml, null);
 
+        final CooperationController ctrl = (CooperationController) stage.getController();
+        ctrl.setMainController(MainController.this);
+
         stage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                CooperationController ctrl = (CooperationController) stage.getController();
                 if (agent == null) {
                     agent = ctrl.getAgent();
                     if (agent != null) {
                         agent.setMonitor(MainController.this);
+                        roomEnter.setVisible(false);
+                        roomExit.setVisible(true);
                     }
                 }
                 ctrl.windowClose();
@@ -122,8 +130,6 @@ public class MainController extends DefaultMonitor implements Initializable {
         });
 
         stage.getStage().show();
-        roomEnter.setVisible(false);
-        roomExit.setVisible(true);
     }
 
     @FXML
@@ -151,12 +157,29 @@ public class MainController extends DefaultMonitor implements Initializable {
 
             case "load":
                 this.initialize(null, null);
+                break;
 
+            case "connect":
+                //参加しているメンバー領域の表示
+                VBox connectFront = new VBox();
+                connectFront.getChildren().addAll(rootPane.getRight(), members);
+                rootPane.setRight(connectFront);
+                members.setStyle("-fx-border-color: rgb(49, 89, 23)");
+                break;
+
+            case "disconnect":
+                //参加しているメンバー領域の非表示
+                VBox disconnectFront = (VBox) rootPane.getRight();
+                rootPane.setRight(disconnectFront.getChildren().get(0));
                 break;
 
             default:
                 break;
         }
+    }
+
+    public void refreshMembers() {
+        members.setItems(JointryAccount.getUsers());
     }
 
     public void windowClose() {
@@ -197,8 +220,14 @@ public class MainController extends DefaultMonitor implements Initializable {
     public void onClose() {
         agent = null; //agentのclose
 
-        roomEnter.setVisible(true);
-        roomExit.setVisible(false);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initWindow("disconnect");
+                roomEnter.setVisible(true);
+                roomExit.setVisible(false);
+            }
+        });
     }
 
     @Override

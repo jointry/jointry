@@ -17,6 +17,7 @@ import jp.ac.aiit.jointry.models.Room;
 import broker.core.Agent;
 import broker.core.DInfo;
 import javafx.scene.control.RadioButton;
+import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
@@ -39,7 +40,7 @@ public class CooperationController implements Initializable, JointryCommon {
     private Agent dummyAgent;
     private RoomController selectRoom;
     private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
-
+    private MainController mainController;
     /**
      * ルーム状況を取得するためのダミーネーム
      */
@@ -51,6 +52,9 @@ public class CooperationController implements Initializable, JointryCommon {
 
         if (agent.open(url.getText(), CHAT_SERVICE, SERVER, name.getText(), "", null)) {
             agent.startListening(CHAT_TIMEOUT);
+            JointryAccount.addUser(name.getText());
+            mainController.initWindow("connect");
+            mainController.refreshMembers();
 
             windowClose();
         }
@@ -62,6 +66,10 @@ public class CooperationController implements Initializable, JointryCommon {
 
         if (agent.open(url.getText(), accessMapping(CHAT_SERVICE, CLIENT, name.getText(), "", null, selectRoom.getRoom().getProxyId()))) {
             agent.startListening(CHAT_TIMEOUT);
+            MainDialog.sendConnection(M_MAIN_CONNECT, agent, name.getText());
+            JointryAccount.addUser(name.getText());
+            mainController.initWindow("connect");
+            mainController.refreshMembers();
             MainDialog.sendMessage(M_MAIN_REQUEST, agent);
 
             windowClose();
@@ -129,7 +137,7 @@ public class CooperationController implements Initializable, JointryCommon {
     }
 
     private Map<String, String> accessMapping(String serviceId, String role,
-                                              String userId, String password, String proxyFQCN, String proxyId) {
+            String userId, String password, String proxyFQCN, String proxyId) {
         Map<String, String> paramMap = new HashMap();
         paramMap.put(USER_ROLE, role);
         paramMap.put(SERVICE_ID, serviceId);
@@ -153,5 +161,9 @@ public class CooperationController implements Initializable, JointryCommon {
 
     public Agent getAgent() {
         return agent;
+    }
+
+    public void setMainController(MainController controller) {
+        this.mainController = controller;
     }
 }

@@ -28,6 +28,9 @@ public interface JointryCommon extends Common {
     public static final int M_BLOCK_CHANGE_STATE = 0x000109;
     public static final int M_MAIN_REQUEST = 0x001001;
     public static final int M_MAIN_RESPONSE = 0x001002;
+    public static final int M_MAIN_CONNECT = 0x001003;
+    public static final int M_MAIN_DISCONNECT = 0x001004;
+    public static final int M_MAIN_MEMBERS = 0x001005;
     //位置情報
     public static final String K_X1 = "x1";
     public static final String K_Y1 = "y1";
@@ -41,14 +44,15 @@ public interface JointryCommon extends Common {
     public static final String K_COLOR = "color";
     //名前
     public static final String K_USER_NAME = "user_name";
+    public static final String K_USER_NAME_LIST = "user_name_list";
     public static final String K_SPRITE_NAME = "sprite_name";
     public static final String K_BLOCK_CLASS_NAME = "block_class";
     public static final String K_BLOCK_LABEL_NAME = "block_label";
     public static final String K_BLOCK_ID = "block_id";
     public static final String K_PREV_BLOCK_ID = "prev_block_id";
     public static final String K_PARENT_BLOCK_ID = "parent_block_id";
-    public static final String K_BLOCK_STATUS = "block_status";
     //その他
     public static final String K_MAIN_INFO = "main_info";
+    public static final String K_BLOCK_STATUS = "block_status";
     public static final String PROXY_ID = "proxy_id"; // サーバプロキシID
 }
