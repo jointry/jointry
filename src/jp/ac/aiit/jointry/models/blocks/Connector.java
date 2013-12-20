@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Connector extends Rectangle {
@@ -10,7 +11,7 @@ public class Connector extends Rectangle {
     public enum Position {
 
         TOP, BOTTOM, LEFT, RIGHT, CENTER,
-        INSIDE_LEFT, INSIDE_RIGHT
+        INSIDE_LEFT, INSIDE_RIGHT, INSIDE
     };
 
     public Position getPosition() {
@@ -27,5 +28,13 @@ public class Connector extends Rectangle {
 
     public void setHolder(Block holder) {
         this.holder = holder;
+    }
+
+    public void touch() {
+        this.setFill(Color.GOLD);
+    }
+
+    public void detouch() {
+        this.setFill(Color.TRANSPARENT);
     }
 }

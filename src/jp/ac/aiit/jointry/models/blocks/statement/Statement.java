@@ -49,17 +49,18 @@ public abstract class Statement extends Block {
 
                 BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
 
-                if (getCollision() == null) return;
+                if (getCollision() == null) {
+                    return;
+                }
 
                 // 上下の接続
                 if (con.getPosition() == Connector.Position.BOTTOM) {
                     Statement target = (Statement) con.getHolder();
                     if (target != nextBlock) {
-                        con.setFill(Color.GOLD);
                         target.addLink((Statement) myBlock);
                         move(target.getLayoutX(),
-                                target.getLayoutY() + target.getHeight());
-                        con.setFill(Color.GOLD);
+                             target.getLayoutY() + target.getHeight());
+                        con.touch();
 
                         BlockDialog.sendMessage(M_BLOCK_ADDLINK, myBlock);
                     }
@@ -79,8 +80,8 @@ public abstract class Statement extends Block {
                         }
 
                         move(target.getLayoutX() + target.wLeft,
-                                target.getLayoutY() + target.hUpper);
-                        con.setFill(Color.GOLD);
+                             target.getLayoutY() + target.hUpper);
+                        con.touch();
                         target.resize();
 
                         BlockDialog.sendMessage(M_BLOCK_ADDCHILD, myBlock);
@@ -140,7 +141,7 @@ public abstract class Statement extends Block {
                 for (Node n : target.getChildren()) {
                     if (n instanceof Connector) {
                         Connector c = (Connector) n;
-                        c.setFill(Color.TRANSPARENT);
+                        c.detouch();
                         Shape intersect = null;
 
                         // 上下の接触
@@ -235,44 +236,6 @@ public abstract class Statement extends Block {
         return (prevBlock == null && parentBlock == null);
     }
 
-    protected void makeConnectors() {
-        this.topCon = new Connector();
-        this.bottomCon = new Connector();
-        this.leftCon = new Connector();
-        this.rightCon = new Connector();
-
-        // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
-        topCon.setFill(Color.TRANSPARENT);
-        topCon.setWidth(250);
-        topCon.setHeight(10);
-        topCon.setHolder(this);
-        topCon.setPosition(Connector.Position.TOP);
-        AnchorPane.setTopAnchor(topCon, 0.0);
-
-        bottomCon.setFill(Color.TRANSPARENT);
-        bottomCon.setWidth(250);
-        bottomCon.setHeight(10);
-        bottomCon.setHolder(this);
-        bottomCon.setPosition(Connector.Position.BOTTOM);
-        AnchorPane.setBottomAnchor(bottomCon, 0.0);
-
-        leftCon.setFill(Color.TRANSPARENT);
-        leftCon.setWidth(10);
-        leftCon.setHeight(50);
-        leftCon.setHolder(this);
-        leftCon.setPosition(Connector.Position.LEFT);
-        AnchorPane.setLeftAnchor(leftCon, 0.0);
-
-        rightCon.setFill(Color.TRANSPARENT);
-        rightCon.setWidth(10);
-        rightCon.setHeight(50);
-        rightCon.setHolder(this);
-        rightCon.setPosition(Connector.Position.RIGHT);
-        AnchorPane.setRightAnchor(rightCon, 0.0);
-
-        getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
-    }
-
     @Override
     public void show() {
         getSprite().getScriptPane().getChildren().add(this);
@@ -280,5 +243,48 @@ public abstract class Statement extends Block {
         if (nextBlock != null) {
             nextBlock.show();
         }
+    }
+
+    protected void makeConnectors() {
+        this.topCon = new Connector();
+        this.bottomCon = new Connector();
+        this.leftCon = new Connector();
+        this.rightCon = new Connector();
+
+        double connector_width = BASIC_WIDTH - 125;
+        double connector_margin = (BASIC_WIDTH - connector_width) / 2.0;
+
+        // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
+        topCon.setFill(Color.TRANSPARENT);
+        topCon.setWidth(connector_width);
+        topCon.setHeight(10);
+        topCon.setHolder(this);
+        topCon.setPosition(Connector.Position.TOP);
+        AnchorPane.setTopAnchor(topCon, 0.0);
+        AnchorPane.setLeftAnchor(topCon, connector_margin);
+
+        bottomCon.setFill(Color.TRANSPARENT);
+        bottomCon.setWidth(connector_width);
+        bottomCon.setHeight(10);
+        bottomCon.setHolder(this);
+        bottomCon.setPosition(Connector.Position.BOTTOM);
+        AnchorPane.setBottomAnchor(bottomCon, 0.0);
+        AnchorPane.setLeftAnchor(bottomCon, connector_margin);
+
+        leftCon.setFill(Color.TRANSPARENT);
+        leftCon.setWidth(10);
+        leftCon.setHeight(BASIC_HEIGHT);
+        leftCon.setHolder(this);
+        leftCon.setPosition(Connector.Position.LEFT);
+        AnchorPane.setLeftAnchor(leftCon, 0.0);
+
+        rightCon.setFill(Color.TRANSPARENT);
+        rightCon.setWidth(10);
+        rightCon.setHeight(BASIC_HEIGHT);
+        rightCon.setHolder(this);
+        rightCon.setPosition(Connector.Position.RIGHT);
+        AnchorPane.setRightAnchor(rightCon, 0.0);
+
+        getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
     }
 }

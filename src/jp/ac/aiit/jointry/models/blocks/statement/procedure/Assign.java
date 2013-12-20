@@ -37,7 +37,7 @@ public class Assign extends Procedure {
 
         tf2 = new TextField();
         tf2.setPrefWidth(50.0);
-        AnchorPane.setTopAnchor(tf2, 15.0);
+        AnchorPane.setTopAnchor(tf2, 10.0);
         AnchorPane.setLeftAnchor(tf2, 90.0);
         setChangeListener(tf2);
 
@@ -54,7 +54,7 @@ public class Assign extends Procedure {
     }
 
     public static Color getColor() {
-        return Color.YELLOW;
+        return Color.web("F8BB3D");
     }
 
     public final Label getLabel() {
@@ -67,23 +67,23 @@ public class Assign extends Procedure {
 
         // Variable
         this.leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.TRANSPARENT);
+        leftVariableCon.detouch();
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(this);
         leftVariableCon.setPosition(Connector.Position.INSIDE_LEFT);
-        AnchorPane.setTopAnchor(leftVariableCon, 15.0);
+        AnchorPane.setTopAnchor(leftVariableCon, 10.0);
         AnchorPane.setLeftAnchor(leftVariableCon, 10.0);
         leftVariableCon.toFront();
 
         // Variable
         this.rightVariableCon = new Connector();
-        rightVariableCon.setFill(Color.YELLOW);
+        rightVariableCon.detouch();
         rightVariableCon.setWidth(50);
         rightVariableCon.setHeight(2);
         rightVariableCon.setHolder(this);
         rightVariableCon.setPosition(Connector.Position.INSIDE_RIGHT);
-        AnchorPane.setTopAnchor(rightVariableCon, 15.0);
+        AnchorPane.setTopAnchor(rightVariableCon, 10.0);
         AnchorPane.setLeftAnchor(rightVariableCon, 90.0);
         rightVariableCon.toFront();
 
@@ -106,15 +106,15 @@ public class Assign extends Procedure {
 
     @Override
     public void move(double dx, double dy) {
-        super.move(dx, dy);
         if (leftVariable != null) {
-            leftVariable.move(dx + 10, dy + 15);
+            leftVariable.move(dx + 10, dy + 10);
             leftVariable.toFront();
         }
         if (rightVariable != null) {
-            rightVariable.move(dx + 90, dy + 15);
+            rightVariable.move(dx + 90, dy + 10);
             rightVariable.toFront();
         }
+        super.move(dx, dy);
     }
 
     @Override

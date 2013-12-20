@@ -43,18 +43,18 @@ public class Calculate extends Procedure {
 
         tf1 = new TextField();
         tf1.setPrefWidth(50.0);
-        AnchorPane.setTopAnchor(tf1, 15.0);
+        AnchorPane.setTopAnchor(tf1, 10.0);
         AnchorPane.setLeftAnchor(tf1, 70.0);
         setChangeListener(tf1);
 
         cb = new ChoiceBox(FXCollections.observableArrayList(
                 "+", "-", "×", "÷", "%"));
-        AnchorPane.setTopAnchor(cb, 15.0);
+        AnchorPane.setTopAnchor(cb, 10.0);
         AnchorPane.setLeftAnchor(cb, 125.0);
 
         tf2 = new TextField();
         tf2.setPrefWidth(50.0);
-        AnchorPane.setTopAnchor(tf2, 15.0);
+        AnchorPane.setTopAnchor(tf2, 10.0);
         AnchorPane.setLeftAnchor(tf2, 190.0);
         setChangeListener(tf2);
 
@@ -73,22 +73,22 @@ public class Calculate extends Procedure {
 
         // Variable
         variableCon = new Connector();
-        variableCon.setFill(Color.TRANSPARENT);
+        variableCon.detouch();
         variableCon.setWidth(50);
         variableCon.setHeight(2);
         variableCon.setHolder(this);
         variableCon.setPosition(Connector.Position.LEFT);
-        AnchorPane.setTopAnchor(variableCon, 15.0);
+        AnchorPane.setTopAnchor(variableCon, 10.0);
         AnchorPane.setLeftAnchor(variableCon, 10.0);
         variableCon.toFront();
 
         leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.TRANSPARENT);
+        leftVariableCon.detouch();
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(this);
         leftVariableCon.setPosition(Connector.Position.INSIDE_LEFT);
-        AnchorPane.setTopAnchor(leftVariableCon, 15.0);
+        AnchorPane.setTopAnchor(leftVariableCon, 10.0);
         AnchorPane.setLeftAnchor(leftVariableCon, 70.0);
         leftVariableCon.toFront();
 
@@ -96,7 +96,7 @@ public class Calculate extends Procedure {
     }
 
     public static Color getColor() {
-        return Color.LIGHTSALMON;
+        return Color.web("F6D7B3");
     }
 
     @Override
@@ -250,13 +250,14 @@ public class Calculate extends Procedure {
     @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
+
         if (variable != null) {
-            variable.move(dx + 10, dy + 15);
             variable.toFront();
+            variable.move(dx + 10, dy + 10);
         }
         if (leftVariable != null) {
-            leftVariable.move(dx + 70, dy + 15);
             leftVariable.toFront();
+            leftVariable.move(dx + 70, dy + 10);
         }
     }
 

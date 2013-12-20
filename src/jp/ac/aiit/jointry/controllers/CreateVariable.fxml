@@ -14,7 +14,7 @@
     <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <children>
         <Label text="へんすうをつくる" />
-        <TextField fx:id="variableName" prefWidth="200.0" />
+        <TextField fx:id="variableName" onKeyTyped="#handleEnterKey" prefWidth="200.0" />
       </children>
     </VBox>
     <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">

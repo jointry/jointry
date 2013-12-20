@@ -82,29 +82,29 @@ public class Variable extends Expression {
                     Assign target = (Assign) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setLeftVariable(me);
-                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
                         target.setRightVariable(me);
-                        move(target.getLayoutX() + 90, target.getLayoutY() + 15);
+                        move(target.getLayoutX() + 90, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_RIGHT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Calculate) {
                     Calculate target = (Calculate) con.getHolder();
                     if (con.getPosition() == Connector.Position.LEFT) {
                         target.setVariable(me);
-                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setLeftVariable(me);
-                        move(target.getLayoutX() + 70, target.getLayoutY() + 15);
+                        move(target.getLayoutX() + 70, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Speech) {
                     Speech target = (Speech) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
                         target.setVariable(me);
-                        move(target.getLayoutX() + 10, target.getLayoutY() + 15);
+                        move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     }
                 }
@@ -123,7 +123,7 @@ public class Variable extends Expression {
         AnchorPane.setTopAnchor(rect, 0.0);
 
         topCon = new Connector();
-        topCon.setFill(Color.TRANSPARENT);
+        topCon.detouch();
         topCon.setWidth(50);
         topCon.setHeight(10);
         topCon.setHolder(this);
@@ -175,7 +175,7 @@ public class Variable extends Expression {
     }
 
     public static Color getColor() {
-        return Color.TOMATO;
+        return Color.web("FFA70B");
     }
 
     @Override
@@ -223,7 +223,7 @@ public class Variable extends Expression {
                     for (Node n : target.getChildren()) {
                         if (n instanceof Connector) {
                             Connector c = (Connector) n;
-                            c.setFill(Color.TRANSPARENT);
+                            c.detouch();
                             Shape intersect = null;
 
                             // 包含の接触
@@ -241,7 +241,7 @@ public class Variable extends Expression {
                             Connector c = (Connector) n;
                             if (c.getPosition() == Connector.Position.INSIDE_LEFT
                                 || c.getPosition() == Connector.Position.INSIDE_RIGHT) {
-                                c.setFill(Color.TRANSPARENT);
+                                c.detouch();
                                 Shape intersect = null;
                                 // 包含の接触
                                 intersect = Shape.intersect(c, this.topCon);
@@ -259,7 +259,7 @@ public class Variable extends Expression {
                             Connector c = (Connector) n;
                             if (c.getPosition() == Connector.Position.LEFT
                                 || c.getPosition() == Connector.Position.INSIDE_LEFT) {
-                                c.setFill(Color.TRANSPARENT);
+                                c.detouch();
                                 Shape intersect = null;
                                 // 包含の接触
                                 intersect = Shape.intersect(c, this.topCon);
@@ -276,7 +276,7 @@ public class Variable extends Expression {
                         if (n instanceof Connector) {
                             Connector c = (Connector) n;
                             if (c.getPosition() == Connector.Position.INSIDE_LEFT) {
-                                c.setFill(Color.TRANSPARENT);
+                                c.detouch();
                                 Shape intersect = null;
                                 // 包含の接触
                                 intersect = Shape.intersect(c, this.topCon);

@@ -19,7 +19,9 @@ import javafx.scene.shape.Shape;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.While;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_ADDEMBRYO;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_MOVE;
@@ -28,7 +30,7 @@ import jp.ac.aiit.jointry.util.BlockUtil;
 public class Condition extends Expression {
 
     protected final Rectangle rect;
-    public If mother;
+    public CodeBlock mother;
     public Condition me;
     public Connector topCon;
     public Connector bottomCon;
@@ -46,10 +48,13 @@ public class Condition extends Expression {
     public Condition() {
         super();
         me = this;
+
         operation.put("おなじ", " == ");
+        operation.put("ちがう", " != ");
+        operation.put("ちいさい", " < ");
+        operation.put("おおきい", " >");
         operation.put("いじょう", " >= ");
         operation.put("いか", " <= ");
-        operation.put("ちいさい", " < ");
 
         // Use Filter (not Handler) to fire first.
         addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -69,17 +74,15 @@ public class Condition extends Expression {
                 }
 
                 // 内部の接続
-                If target = (If) con.getHolder();
-                target.addEmbryo(me);
-                move(target.getLayoutX() + 50, target.getLayoutY() + 20);
-
+                CodeBlock target = (CodeBlock) con.getHolder();
+                target.accept(me);
                 BlockDialog.sendMessage(M_BLOCK_ADDEMBRYO, me);
             }
         });
 
         rect = new Rectangle();
         rect.setWidth(200);
-        rect.setHeight(50);
+        rect.setHeight(BASIC_HEIGHT + 10);
         rect.setArcWidth(10);
         rect.setArcHeight(10);
         rect.setStroke(Color.GRAY);
@@ -127,7 +130,7 @@ public class Condition extends Expression {
     }
 
     public static Color getColor() {
-        return Color.LIGHTGREEN;
+        return Color.web("E4CD9E");
     }
 
     @Override
@@ -154,7 +157,7 @@ public class Condition extends Expression {
                 if (node == me) {
                     continue;
                 }
-                if (!(node instanceof If)) {
+                if (!(node instanceof If) && !(node instanceof While)) {
                     continue;
                 }
 
@@ -163,7 +166,7 @@ public class Condition extends Expression {
                 for (Node n : target.getChildren()) {
                     if (n instanceof Connector) {
                         Connector c = (Connector) n;
-                        c.setFill(Color.TRANSPARENT);
+                        c.detouch();
                         Shape intersect = null;
 
                         // 内部の接触
@@ -185,7 +188,7 @@ public class Condition extends Expression {
     private void makeConnectors() {
         // Connectors
         this.leftCon = new Connector();
-        leftCon.setFill(Color.TRANSPARENT);
+        leftCon.detouch();
         leftCon.setWidth(10);
         leftCon.setHeight(50);
         leftCon.setHolder(me);
@@ -194,7 +197,7 @@ public class Condition extends Expression {
 
         // Variable
         this.leftVariableCon = new Connector();
-        leftVariableCon.setFill(Color.TRANSPARENT);
+        leftVariableCon.detouch();
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
         leftVariableCon.setHolder(me);
@@ -204,7 +207,7 @@ public class Condition extends Expression {
 
         // Variable
         this.rightVariableCon = new Connector();
-        rightVariableCon.setFill(Color.TRANSPARENT);
+        rightVariableCon.detouch();
         rightVariableCon.setWidth(50);
         rightVariableCon.setHeight(2);
         rightVariableCon.setHolder(me);
@@ -358,12 +361,12 @@ public class Condition extends Expression {
     public void move(double dx, double dy) {
         super.move(dx, dy);
         if (leftVariable != null) {
-            leftVariable.move(dx + 10, dy + 22);
             leftVariable.toFront();
+            leftVariable.move(dx + 10, dy + 22);
         }
         if (rightVariable != null) {
-            rightVariable.move(dx + 140, dy + 22);
             rightVariable.toFront();
+            rightVariable.move(dx + 140, dy + 22);
         }
     }
 }

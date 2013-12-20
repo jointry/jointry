@@ -21,7 +21,7 @@ public class Speech extends Procedure {
 
         this.tf = new TextField();
         tf.setPrefWidth(50.0);
-        AnchorPane.setTopAnchor(tf, 15.0);
+        AnchorPane.setTopAnchor(tf, 10.0);
         AnchorPane.setLeftAnchor(tf, 10.0);
         setChangeListener(tf);
 
@@ -44,7 +44,7 @@ public class Speech extends Procedure {
         variableCon.setHeight(2);
         variableCon.setHolder(this);
         variableCon.setPosition(Connector.Position.INSIDE_LEFT);
-        AnchorPane.setTopAnchor(variableCon, 15.0);
+        AnchorPane.setTopAnchor(variableCon, 10.0);
         AnchorPane.setLeftAnchor(variableCon, 10.0);
         variableCon.toFront();
 
@@ -128,10 +128,10 @@ public class Speech extends Procedure {
 
     @Override
     public void move(double dx, double dy) {
-        super.move(dx, dy);
         if (variable != null) {
-            variable.move(dx + 10, dy + 15);
             variable.toFront();
+            variable.move(dx + 10, dy + 10);
         }
+        super.move(dx, dy);
     }
 }

@@ -13,7 +13,7 @@ public class Continue extends Procedure {
     }
 
     public static Color getColor() {
-        return Color.BLUEVIOLET;
+        return Color.web("CFE2F7");
     }
 
     public Label getLabel() {

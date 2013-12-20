@@ -23,14 +23,17 @@ public class WhileStmnt extends ASTList {
 
     public Object eval(Environment env) {
         Object result = 0;
-        for (;;) {
+        for (int i = 0; i < 30; i++) { // to avoid endless loop
             Object c = ((ASTree) condition()).eval(env);
             if (c instanceof Integer && ((Integer) c).intValue() == FALSE) {
                 return 0;
             }
             result = ((ASTree) body()).eval(env);
 
-            if (result instanceof BreakStmnt) return 0;
+            if (result instanceof BreakStmnt) {
+                return 0;
+            }
         }
+        return result;
     }
 }

@@ -29,7 +29,7 @@ public class Costume extends Procedure {
     }
 
     public static Color getColor() {
-        return Color.AQUA;
+        return Color.web("AEEFEC");
     }
 
     public Label getLabel() {
@@ -43,7 +43,9 @@ public class Costume extends Procedure {
         if (arg == null) {
             arg = "0";
         }
-        sb.append(" " + arg + ";\n");
+        sb.append(" ");
+        sb.append(arg);
+        sb.append(";\n");
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }

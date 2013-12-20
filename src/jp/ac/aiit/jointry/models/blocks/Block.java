@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks;
 
-import java.util.Map;
 import java.util.UUID;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,7 +14,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
@@ -23,6 +21,9 @@ import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_CHANG
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_REMOVE;
 
 public abstract class Block extends AnchorPane {
+
+    public final double BASIC_HEIGHT = 40.0;
+    public final double BASIC_WIDTH = 250.0;
 
     protected double anchorX;
     protected double anchorY;
@@ -57,7 +58,7 @@ public abstract class Block extends AnchorPane {
             public void handle(MouseEvent mouseEvent) {
                 setCursor(Cursor.HAND);
                 if (con != null) {
-                    con.setFill(Color.TRANSPARENT);
+                    con.detouch();
                     setConnector(null);
                 }
             }
