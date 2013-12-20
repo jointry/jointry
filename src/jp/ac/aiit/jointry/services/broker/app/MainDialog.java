@@ -28,10 +28,6 @@ public class MainDialog extends JointryDialogBase {
             case M_MAIN_DISCONNECT:
                 mMainDisconnect(dinfo);
                 break;
-
-            case M_MAIN_REQUEST:
-                mMainRequest();
-                break;
         }
     }
 
@@ -46,8 +42,8 @@ public class MainDialog extends JointryDialogBase {
                 mMainMembers(dinfo);
                 break;
 
-            case M_MAIN_RESPONSE:
-                mMainResponse(dinfo);
+            case M_MAIN_SYNCHRONIZE:
+                mMainSynchronize(dinfo);
                 break;
 
             default:
@@ -59,6 +55,7 @@ public class MainDialog extends JointryDialogBase {
         JointryAccount.addUser(dinfo.get(K_USER_NAME));
         mainController.refreshMembers();
         sendMembers();
+        sendSynchronize();
     }
 
     private void mMainDisconnect(DInfo dinfo) {
@@ -67,23 +64,7 @@ public class MainDialog extends JointryDialogBase {
         sendMembers();
     }
 
-    private void mMainRequest() {
-        List<String> spriteList = new ArrayList();
-        for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
-            String json = null;
-            try {
-                json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
-            } catch (IOException ex) {
-                Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            spriteList.add(json);
-        }
-
-        String response = JsonUtil.convertObjectToJsonString(spriteList);
-        sendMessage(M_MAIN_RESPONSE, response);
-    }
-
-    private void mMainResponse(DInfo dinfo) {
+    private void mMainSynchronize(DInfo dinfo) {
         //一旦画面をクリアしてから同期させる
         mainController.initWindow("load");
         mainController.initWindow("connect");
@@ -116,21 +97,25 @@ public class MainDialog extends JointryDialogBase {
         mainController.refreshMembers();
     }
 
-    private void sendMessage(int event, String main_info) {
+    private void sendSynchronize() {
+        List<String> spriteList = new ArrayList();
+        for (Sprite sprite : mainController.getFrontStageController().getSprites()) {
+            String json = null;
+            try {
+                json = FileManager.convertSpriteToJson(sprite, makeFilePath(""));
+            } catch (IOException ex) {
+                Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            spriteList.add(json);
+        }
+
+        String main_info = JsonUtil.convertObjectToJsonString(spriteList);
+
         DInfo dinfo = new DInfo(D_MAIN);
-        dinfo.set(K_METHOD, event);
+        dinfo.set(K_METHOD, M_MAIN_SYNCHRONIZE);
         dinfo.set(K_MAIN_INFO, main_info);
 
         sendNotify(dinfo);
-    }
-
-    public static void sendMessage(int event, Agent agent) {
-        if (agent != null) {
-            DInfo dinfo = new DInfo(D_MAIN);
-            dinfo.set(K_METHOD, event);
-
-            agent.sendQuery(dinfo);
-        }
     }
 
     public static void sendConnection(int event, Agent agent, String name) {

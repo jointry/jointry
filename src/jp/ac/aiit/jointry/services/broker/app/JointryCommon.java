@@ -27,7 +27,7 @@ public interface JointryCommon extends Common {
     public static final int M_BLOCK_ADDEMBRYO = 0x000108;
     public static final int M_BLOCK_CHANGE_STATE = 0x000109;
     public static final int M_MAIN_REQUEST = 0x001001;
-    public static final int M_MAIN_RESPONSE = 0x001002;
+    public static final int M_MAIN_SYNCHRONIZE = 0x001002;
     public static final int M_MAIN_CONNECT = 0x001003;
     public static final int M_MAIN_DISCONNECT = 0x001004;
     public static final int M_MAIN_MEMBERS = 0x001005;

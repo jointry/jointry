@@ -67,10 +67,7 @@ public class CooperationController implements Initializable, JointryCommon {
         if (agent.open(url.getText(), accessMapping(CHAT_SERVICE, CLIENT, name.getText(), "", null, selectRoom.getRoom().getProxyId()))) {
             agent.startListening(CHAT_TIMEOUT);
             MainDialog.sendConnection(M_MAIN_CONNECT, agent, name.getText());
-            JointryAccount.addUser(name.getText());
             mainController.initWindow("connect");
-            mainController.refreshMembers();
-            MainDialog.sendMessage(M_MAIN_REQUEST, agent);
 
             windowClose();
         }
@@ -137,7 +134,7 @@ public class CooperationController implements Initializable, JointryCommon {
     }
 
     private Map<String, String> accessMapping(String serviceId, String role,
-            String userId, String password, String proxyFQCN, String proxyId) {
+                                              String userId, String password, String proxyFQCN, String proxyId) {
         Map<String, String> paramMap = new HashMap();
         paramMap.put(USER_ROLE, role);
         paramMap.put(SERVICE_ID, serviceId);
