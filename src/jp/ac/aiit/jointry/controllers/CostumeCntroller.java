@@ -15,6 +15,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_COSTUME_SYNC;
 import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.util.ParameterAware;
 import jp.ac.aiit.jointry.util.StageUtil;
@@ -85,6 +86,6 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
 
     private void sendMessage(String name, int num, Image image) {
         Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-        SpriteDialog.sendImage(sprite.getName(), num, name, image);
+        SpriteDialog.sendAllMessage(M_COSTUME_SYNC, sprite);
     }
 }

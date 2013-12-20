@@ -17,6 +17,7 @@ public interface JointryCommon extends Common {
     public static final int M_SPRITE_DRAGGED = 0x000003;
     public static final int M_SPRITE_RELEASD = 0x000004;
     public static final int M_SPRITE_CHANGED = 0x000005;
+    public static final int M_COSTUME_SYNC = 0x000006;
     public static final int M_BLOCK_CREATE = 0x000101;
     public static final int M_BLOCK_VARIABLE_CREATE = 0x000102;
     public static final int M_BLOCK_MOVE = 0x000103;
@@ -38,6 +39,7 @@ public interface JointryCommon extends Common {
     public static final String K_Y2 = "y2";
     public static final String K_ROTATE = "rotate";
     public static final String K_SPEECH = "speech";
+    public static final String K_COSTUME_CURRENT = "costume_current";
     public static final String K_VALUE_POS = "value_pos";
     public static final String K_VALUE = "value";
     public static final String K_LEFT_VALUE = "left_value";
@@ -55,6 +57,7 @@ public interface JointryCommon extends Common {
     public static final String K_PARENT_BLOCK_ID = "parent_block_id";
     //その他
     public static final String K_MAIN_INFO = "main_info";
+    public static final String K_COSTUME_LIST = "costume_list";
     public static final String K_BLOCK_STATUS = "block_status";
     public static final String PROXY_ID = "proxy_id"; // サーバプロキシID
 }

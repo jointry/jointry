@@ -131,7 +131,7 @@ public class MainDialog extends JointryDialogBase {
         }
     }
 
-    public void sendMembers() {
+    private void sendMembers() {
         DInfo dinfo = new DInfo(D_MAIN);
         dinfo.set(K_METHOD, M_MAIN_MEMBERS);
         dinfo.set(K_USER_NAME_LIST, JointryAccount.getUsers().toString());

@@ -5,12 +5,17 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.DInfo;
-import java.awt.image.BufferedImage;
-import javafx.embed.swing.SwingFXUtils;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.effect.Shadow;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Sprite;
+import jp.ac.aiit.jointry.util.JsonUtil;
 
 public class SpriteDialog extends JointryDialogBase {
 
@@ -51,6 +56,10 @@ public class SpriteDialog extends JointryDialogBase {
                 mSpriteChanged(sprite, dinfo);
                 break;
 
+            case M_COSTUME_SYNC:
+                mCostumeSync(sprite, dinfo);
+                break;
+
             default:
                 break;
         }
@@ -62,6 +71,16 @@ public class SpriteDialog extends JointryDialogBase {
         sprite.setName(dinfo.get(K_SPRITE_NAME));
         sprite.setLayoutX(dinfo.getInt(K_X1));
         sprite.setLayoutY(dinfo.getInt(K_Y1));
+
+        String jsonString = dinfo.get(K_COSTUME_LIST);
+        List<Map> list = JsonUtil.convertJsonStringToList(jsonString);
+        try {
+            JsonUtil.parseJSONStringToCostumes(sprite, list, new File(""));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        sprite.setSpriteCostume(dinfo.getInt(K_COSTUME_CURRENT));
 
         mainController.getFrontStageController().addSprite(sprite, false);
     }
@@ -85,32 +104,68 @@ public class SpriteDialog extends JointryDialogBase {
     private void mSpriteChanged(Sprite sprite, DInfo dinfo) {
         sprite.setTranslateX(dinfo.getInt(K_X2));
         sprite.setTranslateY(dinfo.getInt(K_Y2));
+        sprite.setRotate(dinfo.getInt(K_ROTATE));
+        sprite.setSpeechBubble(dinfo.get(K_SPEECH));
     }
 
-    public static void sendMessage(int event, Sprite sprite) {
-        if (mainController.getAgent() != null) {
-            DInfo dinfo = new DInfo(D_SPRITE);
+    private void mCostumeSync(Sprite sprite, DInfo dinfo) {
+        //コスチュームを一旦全削除
+        sprite.clearCostume();
 
-            dinfo.set(K_METHOD, event);
-            dinfo.set(K_SPRITE_NAME, sprite.getName());
-            dinfo.set(K_X1, (int) sprite.getX());
-            dinfo.set(K_Y1, (int) sprite.getY());
-            dinfo.set(K_X2, (int) sprite.getTranslateX());
-            dinfo.set(K_Y2, (int) sprite.getTranslateY());
-            dinfo.set(K_COLOR, Color.RED.toString());
+        String jsonString = dinfo.get(K_COSTUME_LIST);
+        List<Map> list = JsonUtil.convertJsonStringToList(jsonString);
+        try {
+            JsonUtil.parseJSONStringToCostumes(sprite, list, new File(""));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        sprite.setSpriteCostume(dinfo.getInt(K_COSTUME_CURRENT));
+
+        //同一のスプライト編集中は即時更新
+        String name = mainController.getFrontStageController().getCurrentSprite().getName();
+        if (sprite.getName().equals(name)) {
+            mainController.getBackStageController().showCostumes(sprite);
+        }
+    }
+
+    public static void sendSimpleMessage(int event, Sprite sprite) {
+        if (mainController.getAgent() != null) {
+            mainController.getAgent().sendNotify(getSimpleMessage(event, sprite));
+        }
+    }
+
+    public static void sendAllMessage(int event, Sprite sprite) {
+        if (mainController.getAgent() != null) {
+            DInfo dinfo = getSimpleMessage(event, sprite);
+
+            try {
+                String tempFile = new SpriteDialog().makeFilePath("");
+                List costumeList = JsonUtil.processCostumes(sprite, tempFile);
+                String jsonString = JsonUtil.convertObjectToJsonString(costumeList);
+                dinfo.set(K_COSTUME_LIST, jsonString);
+            } catch (IOException ex) {
+                Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             mainController.getAgent().sendNotify(dinfo);
         }
     }
 
-    public static void sendImage(String spriteName, int num, String costumeName, Image image) {
-        if (mainController.getAgent() != null && image != null) {
-            if (costumeName != null) {
-                spriteName = spriteName + "_" + costumeName + "_" + num;
-            }
+    private static DInfo getSimpleMessage(int event, Sprite sprite) {
+        DInfo dinfo = new DInfo(D_SPRITE);
 
-            BufferedImage buf = SwingFXUtils.fromFXImage(image, null);
-            mainController.getAgent().notifyViewImage(spriteName, buf);
-        }
+        dinfo.set(K_METHOD, event);
+        dinfo.set(K_SPRITE_NAME, sprite.getName());
+        dinfo.set(K_X1, (int) sprite.getX());
+        dinfo.set(K_Y1, (int) sprite.getY());
+        dinfo.set(K_X2, (int) sprite.getTranslateX());
+        dinfo.set(K_Y2, (int) sprite.getTranslateY());
+        dinfo.set(K_ROTATE, (int) sprite.getRotate());
+        dinfo.set(K_SPEECH, sprite.getSpeech());
+        dinfo.set(K_COSTUME_CURRENT, sprite.getCostumeNumber());
+        dinfo.set(K_COLOR, Color.RED.toString());
+
+        return dinfo;
     }
 }

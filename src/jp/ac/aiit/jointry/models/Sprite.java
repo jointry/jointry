@@ -93,6 +93,10 @@ public final class Sprite extends HBox {
         return costumes;
     }
 
+    public void clearCostume() {
+        costumes.clear();
+    }
+
     private int getNewNumber() {
         return costumes.size() + 1;
     }
@@ -179,7 +183,7 @@ public final class Sprite extends HBox {
 
                 event.consume(); //イベントストップ
 
-                SpriteDialog.sendMessage(M_SPRITE_SELECT, Sprite.this);
+                SpriteDialog.sendSimpleMessage(M_SPRITE_SELECT, Sprite.this);
             }
         });
 
@@ -191,7 +195,7 @@ public final class Sprite extends HBox {
 
                 event.consume();
 
-                SpriteDialog.sendMessage(M_SPRITE_DRAGGED, Sprite.this);
+                SpriteDialog.sendSimpleMessage(M_SPRITE_DRAGGED, Sprite.this);
             }
         });
 
@@ -206,7 +210,7 @@ public final class Sprite extends HBox {
                 setEffect(null);
                 event.consume();
 
-                SpriteDialog.sendMessage(M_SPRITE_RELEASD, Sprite.this);
+                SpriteDialog.sendSimpleMessage(M_SPRITE_RELEASD, Sprite.this);
             }
         });
     }

@@ -74,7 +74,7 @@ public class SpriteTask extends Task {
         st.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SpriteDialog.sendMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
+                SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
             }
         });
 
@@ -88,7 +88,7 @@ public class SpriteTask extends Task {
     public void stop() {
         if (st != null) {
             st.stop();
-            SpriteDialog.sendMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
+            SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
         }
     }
 }

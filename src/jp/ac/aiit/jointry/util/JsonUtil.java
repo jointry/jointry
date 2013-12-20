@@ -51,8 +51,8 @@ public class JsonUtil {
         }
     }
 
-    public static List<String> convertJsonStringToList(String jsonString) {
-        List<String> list = new ArrayList();
+    public static List convertJsonStringToList(String jsonString) {
+        List list = new ArrayList();
         try {
             list = objectMapper.readValue(jsonString, ArrayList.class);
         } catch (IOException ex) {
@@ -153,23 +153,8 @@ public class JsonUtil {
         }
 
         // load costume
-        ArrayList<Map> costumes = jty.getCostume();
-        for (Map<String, String> costumeMap : costumes) {
-            String title = costumeMap.get("title");
-            String parentPath = file.getParent();
-            File imgFile = new File(parentPath + "/img", costumeMap.get("img_src"));
-
-            if (imgFile.exists()) {
-                sprite.addCostume(title, new Image(imgFile.toURI().toURL().toString()));
-            } else {
-                // decode Base64
-                String value = costumeMap.get("img");
-                List<String> list = new ArrayList();
-                list.addAll(Arrays.asList(value.split("\n")));
-                WritableImage img = SwingFXUtils.toFXImage(ImageUtil.createImage(list), null);
-                sprite.addCostume(title, img);
-            }
-        }
+        List<Map> costumes = jty.getCostume();
+        parseJSONStringToCostumes(sprite, costumes, file);
         sprite.setSpriteCostume(Integer.parseInt(spriteMap.get("costume")));
 
         // load script
@@ -190,6 +175,25 @@ public class JsonUtil {
         }
 
         return sprite;
+    }
+
+    public static void parseJSONStringToCostumes(Sprite sprite, List<Map> costumes, File file) throws MalformedURLException {
+        for (Map<String, String> costumeMap : costumes) {
+            String title = costumeMap.get("title");
+            String parentPath = file.getParent();
+            File imgFile = new File(parentPath + "/img", costumeMap.get("img_src"));
+
+            if (imgFile.exists()) {
+                sprite.addCostume(title, new Image(imgFile.toURI().toURL().toString()));
+            } else {
+                // decode Base64
+                String value = costumeMap.get("img");
+                List<String> list = new ArrayList();
+                list.addAll(Arrays.asList(value.split("\n")));
+                WritableImage img = SwingFXUtils.toFXImage(ImageUtil.createImage(list), null);
+                sprite.addCostume(title, img);
+            }
+        }
     }
 
     private static void parseJSONStringToBlocks(String jsonString, Sprite sprite) {

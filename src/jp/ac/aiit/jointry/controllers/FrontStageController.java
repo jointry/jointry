@@ -119,8 +119,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         stage.getChildren().add(sprite);
 
         if (sendMessage) {
-            SpriteDialog.sendMessage(M_SPRITE_CREATE, sprite);
-            SpriteDialog.sendImage(sprite.getName(), 0, null, sprite.getIcon());
+            SpriteDialog.sendAllMessage(M_SPRITE_CREATE, sprite);
         }
 
         //Spriteが持っている変数を登録
