@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.services.broker.app;
 
 import broker.core.Broker;
@@ -20,10 +16,12 @@ public class JointryBroker extends Broker implements JointryCommon {
         for (ServerProxy sp : spList()) {
             if (sp.canServeTo(hinfo)) {
                 //プロキシIDと一致させ特定のサーバに紐づける
-                int temp_hinfo =  hinfo.getInt(PROXY_ID);
+                int temp_hinfo = hinfo.getInt(PROXY_ID);
                 int temp_sp = sp.getID();
 
-                if (temp_sp == temp_hinfo) return sp;
+                if (temp_sp == temp_hinfo) {
+                    return sp;
+                }
             }
         }
         return null;

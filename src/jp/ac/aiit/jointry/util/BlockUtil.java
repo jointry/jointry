@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -71,7 +67,9 @@ public class BlockUtil {
                 Class clazz = Class.forName(path + className);
                 Block myClass = (Block) clazz.newInstance();
 
-                if (myClass != null) return myClass; //生成出来たら返す
+                if (myClass != null) {
+                    return myClass; //生成出来たら返す
+                }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 continue; //失敗したら次
             }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.util;
 
 import java.io.IOException;
@@ -22,7 +18,9 @@ public class StageUtil<P> {
     private Parent root;
 
     public StageUtil(Stage stage, Window owner, URL fxml, final P resources) {
-        if (stage == null) stage = new Stage();
+        if (stage == null) {
+            stage = new Stage();
+        }
 
         if (owner != null) {
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -41,9 +39,9 @@ public class StageUtil<P> {
 
             controller = loder.getController();
 
-            if (controller instanceof ParameterAware)
+            if (controller instanceof ParameterAware) {
                 ((ParameterAware<P>) controller).setParameter(resources);
-
+            }
 
             this.stage = stage;
         }
@@ -56,7 +54,7 @@ public class StageUtil<P> {
     public Object getController() {
         return controller;
     }
-    
+
     public Parent getParent() {
         return root;
     }

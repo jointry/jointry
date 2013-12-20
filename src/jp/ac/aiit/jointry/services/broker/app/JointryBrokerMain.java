@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.ac.aiit.jointry.services.broker.app;
 
 import java.util.logging.Level;
@@ -14,7 +10,9 @@ public class JointryBrokerMain {
     private static final int PORT = 8081;
 
     public static void main(String[] args) {
-        if (broker != null) return;
+        if (broker != null) {
+            return;
+        }
 
         try {
             broker = new JointryBroker(PORT, "jointry");
