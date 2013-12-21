@@ -41,11 +41,11 @@ public class Variable extends Expression {
     private String name;
     private StringProperty value = new SimpleStringProperty("");
     private final Connector topCon;
-    private Variable me;
+    private Variable myBlock;
 
     public Variable() {
         super();
-        me = this;
+        myBlock = this;
 
         // Use Filter (not Handler) to fire first.
         addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -58,7 +58,7 @@ public class Variable extends Expression {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
-                BlockDialog.sendMessage(M_BLOCK_MOVE, me);
+                BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
 
                 if (getCollision() == null) {
                     return;
@@ -70,46 +70,46 @@ public class Variable extends Expression {
                 if (con.getHolder() instanceof Condition) {
                     Condition target = (Condition) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
-                        target.setLeftVariable(me);
+                        target.setLeftVariable(myBlock);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 22);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
-                        target.setRightVariable(me);
+                        target.setRightVariable(myBlock);
                         move(target.getLayoutX() + 140, target.getLayoutY() + 22);
                         dinfo.set(K_VALUE_POS, K_RIGHT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Assign) {
                     Assign target = (Assign) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
-                        target.setLeftVariable(me);
+                        target.setLeftVariable(myBlock);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_RIGHT) {
-                        target.setRightVariable(me);
+                        target.setRightVariable(myBlock);
                         move(target.getLayoutX() + 90, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_RIGHT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Calculate) {
                     Calculate target = (Calculate) con.getHolder();
                     if (con.getPosition() == Connector.Position.LEFT) {
-                        target.setVariable(me);
+                        target.setVariable(myBlock);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_VALUE);
                     } else if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
-                        target.setLeftVariable(me);
+                        target.setLeftVariable(myBlock);
                         move(target.getLayoutX() + 70, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     }
                 } else if (con.getHolder() instanceof Speech) {
                     Speech target = (Speech) con.getHolder();
                     if (con.getPosition() == Connector.Position.INSIDE_LEFT) {
-                        target.setVariable(me);
+                        target.setVariable(myBlock);
                         move(target.getLayoutX() + 10, target.getLayoutY() + 10);
                         dinfo.set(K_VALUE_POS, K_LEFT_VALUE);
                     }
                 }
 
-                BlockDialog.sendMessage(M_BLOCK_ADDVARIABLE, me, dinfo);
+                BlockDialog.sendMessage(M_BLOCK_ADDVARIABLE, myBlock, dinfo);
             }
         });
 
@@ -144,7 +144,6 @@ public class Variable extends Expression {
             if (c.rightVariable == this) {
                 c.setRightVariable(null);
             }
-
         } else if (mother instanceof Assign) {
             Assign m = (Assign) mother;
             if (m.leftVariable == this) {
@@ -330,5 +329,11 @@ public class Variable extends Expression {
     @Override
     public void show() {
         getSprite().getScriptPane().getChildren().add(this);
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        initializeLink();
     }
 }

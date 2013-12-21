@@ -119,7 +119,12 @@ public class Assign extends Procedure {
 
     @Override
     public String intern() {
-        StringBuilder sb = new StringBuilder(leftVariable.intern());
+        if (leftVariable == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(leftVariable.intern());
         sb.append(" = ");
 
         // right
