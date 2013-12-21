@@ -19,6 +19,9 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -41,6 +44,7 @@ public class MainController implements Initializable {
     private BlocksController blocksController;
     private Agent agent;
     private ListView members = new ListView();
+    private Timer syncTimer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -114,6 +118,12 @@ public class MainController implements Initializable {
                     agent = ctrl.getAgent();
                     if (agent != null) {
                         agent.setMonitor(new MainMonitor());
+
+                        //サーバであれば10秒ごとに同期
+                        if ("s".equals(String.valueOf(agent.mark()))) {
+                            syncTimer = new Timer("10秒同期タイマー");
+                            syncTimer.schedule(new SyncTask(), 0, TimeUnit.SECONDS.toMillis(10));
+                        }
                     }
                 }
                 ctrl.windowClose();
@@ -130,9 +140,12 @@ public class MainController implements Initializable {
             agent = null;
         }
 
+        if (syncTimer != null) {
+            syncTimer.cancel();
+            syncTimer = null;
+        }
+
         initWindow("disconnect");
-        roomEnter.setVisible(true);
-        roomExit.setVisible(false);
     }
 
     public void initWindow(String mode) {
@@ -231,9 +244,21 @@ public class MainController implements Initializable {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    if (syncTimer != null) {
+                        syncTimer.cancel();
+                        syncTimer = null;
+                    }
                     initWindow("disconnect");
                 }
             });
+        }
+    }
+
+    private class SyncTask extends TimerTask {
+
+        @Override
+        public void run() {
+            MainDialog.sendSynchronize();
         }
     }
 }
