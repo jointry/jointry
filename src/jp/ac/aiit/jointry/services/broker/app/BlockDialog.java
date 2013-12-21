@@ -8,7 +8,6 @@ import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
-import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
@@ -124,7 +123,7 @@ public class BlockDialog extends JointryDialogBase {
     }
 
     private void mBlockAddEmbryo(Sprite sprite, Block myBlock, DInfo dinfo) {
-        If mothorBlock = (If) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
+        CodeBlock mothorBlock = (CodeBlock) getTargetBlock(sprite, dinfo.get(K_PARENT_BLOCK_ID));
 
         mothorBlock.addEmbryo((Condition) myBlock);
         myBlock.move(dinfo.getInt(K_X1), dinfo.getInt(K_Y1));
