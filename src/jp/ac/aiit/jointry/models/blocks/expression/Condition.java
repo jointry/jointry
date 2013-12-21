@@ -31,7 +31,7 @@ public class Condition extends Expression {
 
     protected final Rectangle rect;
     public CodeBlock mother;
-    public Condition me;
+    public Condition myBlock;
     public Connector topCon;
     public Connector bottomCon;
     public Connector leftCon;
@@ -47,7 +47,7 @@ public class Condition extends Expression {
 
     public Condition() {
         super();
-        me = this;
+        myBlock = this;
 
         operation.put("おなじ", " == ");
         operation.put("ちがう", " != ");
@@ -67,7 +67,7 @@ public class Condition extends Expression {
                 double dy = mouseEvent.getSceneY() + anchorY;
                 move(dx, dy);
 
-                BlockDialog.sendMessage(M_BLOCK_MOVE, me);
+                BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
 
                 if (getCollision() == null) {
                     return;
@@ -75,8 +75,8 @@ public class Condition extends Expression {
 
                 // 内部の接続
                 CodeBlock target = (CodeBlock) con.getHolder();
-                target.accept(me);
-                BlockDialog.sendMessage(M_BLOCK_ADDEMBRYO, me);
+                target.accept(myBlock);
+                BlockDialog.sendMessage(M_BLOCK_ADDEMBRYO, myBlock);
             }
         });
 
@@ -154,7 +154,7 @@ public class Condition extends Expression {
             // Inside scriptPane
             AnchorPane scriptPane = (AnchorPane) tab.getContent();
             for (Node node : scriptPane.getChildren()) {
-                if (node == me) {
+                if (node == myBlock) {
                     continue;
                 }
                 if (!(node instanceof If) && !(node instanceof While)) {
@@ -170,7 +170,7 @@ public class Condition extends Expression {
                         Shape intersect = null;
 
                         // 内部の接触
-                        intersect = Shape.intersect(c, me.leftCon);
+                        intersect = Shape.intersect(c, myBlock.leftCon);
                         if (intersect.getBoundsInLocal().getWidth() != -1) {
                             if (c.getPosition() == Connector.Position.CENTER) {
                                 connector = c;
@@ -191,7 +191,7 @@ public class Condition extends Expression {
         leftCon.detouch();
         leftCon.setWidth(10);
         leftCon.setHeight(50);
-        leftCon.setHolder(me);
+        leftCon.setHolder(myBlock);
         leftCon.setPosition(Connector.Position.LEFT);
         AnchorPane.setLeftAnchor(leftCon, 0.0);
 
@@ -200,7 +200,7 @@ public class Condition extends Expression {
         leftVariableCon.detouch();
         leftVariableCon.setWidth(50);
         leftVariableCon.setHeight(2);
-        leftVariableCon.setHolder(me);
+        leftVariableCon.setHolder(myBlock);
         leftVariableCon.setPosition(Connector.Position.INSIDE_LEFT);
         AnchorPane.setTopAnchor(leftVariableCon, 22.0);
         AnchorPane.setLeftAnchor(leftVariableCon, 10.0);
@@ -210,7 +210,7 @@ public class Condition extends Expression {
         rightVariableCon.detouch();
         rightVariableCon.setWidth(50);
         rightVariableCon.setHeight(2);
-        rightVariableCon.setHolder(me);
+        rightVariableCon.setHolder(myBlock);
         rightVariableCon.setPosition(Connector.Position.INSIDE_RIGHT);
         AnchorPane.setTopAnchor(rightVariableCon, 22.0);
         AnchorPane.setRightAnchor(rightVariableCon, 10.0);
