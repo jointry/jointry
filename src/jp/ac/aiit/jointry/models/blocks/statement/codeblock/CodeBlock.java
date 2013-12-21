@@ -112,8 +112,6 @@ public abstract class CodeBlock extends Statement {
         }
 
         pHeight = hUpper + hConcave + hLower;
-        setHeight(pHeight);
-
         Double[] polygon = new Double[]{
             0.0, 0.0,
             BASIC_WIDTH, 0.0,
@@ -124,8 +122,18 @@ public abstract class CodeBlock extends Statement {
             BASIC_WIDTH, pHeight,
             0.0, pHeight
         };
+        setHeight(pHeight);
         p.getPoints().clear();
         p.getPoints().addAll(polygon);
+
+        if (nextBlock != null) {
+            nextBlock.move(getLayoutX(), getLayoutY() + pHeight);
+        }
+
+        // Parent
+        if (parentBlock instanceof CodeBlock) {
+            parentBlock.resize();
+        }
 
         // 念のため
         this.toBack();
