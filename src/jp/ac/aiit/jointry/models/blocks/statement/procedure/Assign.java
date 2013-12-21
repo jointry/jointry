@@ -209,4 +209,15 @@ public class Assign extends Procedure {
             rightVariable.show();
         }
     }
+
+    @Override
+    public void toFront() {
+        super.toFront();
+        if (leftVariable != null) {
+            leftVariable.toFront();
+        }
+        if (rightVariable != null) {
+            rightVariable.toFront();
+        }
+    }
 }

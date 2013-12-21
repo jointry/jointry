@@ -134,4 +134,12 @@ public class Speech extends Procedure {
         }
         super.move(dx, dy);
     }
+
+    @Override
+    public void toFront() {
+        super.toFront();
+        if (variable != null) {
+            variable.toFront();
+        }
+    }
 }

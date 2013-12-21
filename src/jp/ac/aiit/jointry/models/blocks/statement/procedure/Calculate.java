@@ -267,4 +267,15 @@ public class Calculate extends Procedure {
             v.mother = this;
         }
     }
+
+    @Override
+    public void toFront() {
+        super.toFront();
+        if (variable != null) {
+            variable.toFront();
+        }
+        if (leftVariable != null) {
+            leftVariable.toFront();
+        }
+    }
 }
