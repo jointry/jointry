@@ -65,14 +65,12 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Continue.class),
                 new Separator(),
-                new MenuItem(Sleep.class)
-        );
+                new MenuItem(Sleep.class));
 
         blockMenuAdv.getChildren().addAll(
                 new Separator(),
                 new MenuItem(Condition.class),
-                new Separator()
-        );
+                new Separator());
     }
 
     public void setMainController(MainController controller) {
@@ -97,13 +95,13 @@ public class BlocksController implements Initializable {
         switch (controller.getSelectedOption()) {
             case YES:
                 String name = controller.getVariableName();
-                addVariable(name);
+                addVariable(name, true);
 
                 break;
         }
     }
 
-    public void addVariable(String name) {
+    public void addVariable(String name, boolean sendMessage) {
         for (Node node : blockMenuAdv.getChildrenUnmodifiable()) {
             if (node instanceof MenuItemAdv) {
                 VariableLabel variable = ((MenuItemAdv) node).getVariableLabel();
@@ -121,6 +119,9 @@ public class BlocksController implements Initializable {
         MenuItemAdv menu = new MenuItemAdv(name);
         menu.addVariableLabel(vl);
         blockMenuAdv.getChildren().add(menu);
-        BlockDialog.sendMessage(M_BLOCK_VARIABLE_CREATE, name);
+
+        if (sendMessage) {
+            BlockDialog.sendMessage(M_BLOCK_VARIABLE_CREATE, name);
+        }
     }
 }

@@ -86,7 +86,7 @@ public class BlockDialog extends JointryDialogBase {
     }
 
     private void mBlockVariableCreate(final DInfo dinfo) {
-        mainController.getBlocksController().addVariable(dinfo.get(K_BLOCK_LABEL_NAME));
+        mainController.getBlocksController().addVariable(dinfo.get(K_BLOCK_LABEL_NAME), false);
     }
 
     private void mBlockRemove(Block myBlock, DInfo dinfo) {

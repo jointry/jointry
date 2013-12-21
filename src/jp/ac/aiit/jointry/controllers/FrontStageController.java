@@ -126,7 +126,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
             if (node instanceof Variable) {
                 Variable block = (Variable) node;
-                mainController.getBlocksController().addVariable(block.getName());
+                mainController.getBlocksController().addVariable(block.getName(), sendMessage);
             }
         }
     }
