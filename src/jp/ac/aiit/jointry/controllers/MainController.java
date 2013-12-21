@@ -27,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_MAIN_DISCONNECT;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
@@ -43,6 +44,7 @@ public class MainController implements Initializable {
     private FrontStageController frontStageController;
     private BlocksController blocksController;
     private Agent agent;
+    private String userName;
     private ListView members = new ListView();
     private Timer syncTimer;
 
@@ -118,6 +120,7 @@ public class MainController implements Initializable {
                     agent = ctrl.getAgent();
                     if (agent != null) {
                         agent.setMonitor(new MainMonitor());
+                        userName = ctrl.getName();
 
                         //サーバであれば10秒ごとに同期
                         if ("s".equals(String.valueOf(agent.mark()))) {
@@ -135,6 +138,8 @@ public class MainController implements Initializable {
 
     @FXML
     protected void endCooperation(ActionEvent event) {
+        MainDialog.sendConnection(M_MAIN_DISCONNECT, agent, userName);
+        
         if (agent != null) {
             agent.close();
             agent = null;

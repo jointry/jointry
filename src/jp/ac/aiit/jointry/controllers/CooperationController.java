@@ -159,6 +159,10 @@ public class CooperationController implements Initializable, JointryCommon {
         return agent;
     }
 
+    public String getName() {
+        return name.getText();
+    }
+
     public void setMainController(MainController controller) {
         this.mainController = controller;
     }
