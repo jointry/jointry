@@ -31,6 +31,7 @@ import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
+import jp.ac.aiit.jointry.models.blocks.expression.Expression;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 import jp.ac.aiit.jointry.services.file.FileManager;
 
@@ -95,15 +96,22 @@ public class JsonUtil {
     public static Map<String, String> processScript(Sprite sprite, String dir) {
         ArrayList<Map> source = new ArrayList();
         for (Node node : sprite.getScriptPane().getChildrenUnmodifiable()) {
-            if (!(node instanceof Statement)) {
-                continue;
-            }
-            Statement procedure = (Statement) node;
-            if (procedure.isTopLevelBlock()) {
-                Map<String, Object> blockInfo = new HashMap();
-                blockInfo.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
-                blockInfo.put("block", BlockUtil.getAllStatus(procedure));
-                source.add(blockInfo);
+            if (node instanceof Statement) {
+                Statement procedure = (Statement) node;
+                if (procedure.isTopLevelBlock()) {
+                    Map<String, Object> blockInfo = new HashMap();
+                    blockInfo.put("coordinate", procedure.getLayoutX() + " " + procedure.getLayoutY());
+                    blockInfo.put("block", BlockUtil.getAllStatus(procedure));
+                    source.add(blockInfo);
+                }
+            } else if (node instanceof Expression) {
+                Expression exp = (Expression) node;
+                if (!exp.hasMother()) {
+                    Map<String, Object> blockInfo = new HashMap();
+                    blockInfo.put("coordinate", exp.getLayoutX() + " " + exp.getLayoutY());
+                    blockInfo.put("block", exp.getStatus());
+                    source.add(blockInfo);
+                }
             }
         }
 
@@ -113,7 +121,6 @@ public class JsonUtil {
         saveScriptFile(dir, name, contents);
         map.put("script_src", name);
         map.put("script", contents);
-
         return map;
     }
 

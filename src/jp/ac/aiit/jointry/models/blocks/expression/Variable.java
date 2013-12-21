@@ -336,4 +336,9 @@ public class Variable extends Expression {
         super.remove();
         initializeLink();
     }
+
+    @Override
+    public boolean hasMother() {
+        return (mother != null);
+    }
 }

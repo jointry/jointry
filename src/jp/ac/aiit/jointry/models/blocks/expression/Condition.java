@@ -377,4 +377,9 @@ public class Condition extends Expression {
             mother.embryo = null;
         }
     }
+
+    @Override
+    public boolean hasMother() {
+        return (mother != null);
+    }
 }
