@@ -28,17 +28,6 @@ public class Calculate extends Procedure {
     public Calculate() {
         super();
 
-        // Use Filter (not Handler) to fire first.
-        addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                // Move
-                double dx = mouseEvent.getSceneX() + anchorX;
-                double dy = mouseEvent.getSceneY() + anchorY;
-                move(dx, dy);
-            }
-        });
-
         rect.setFill(getColor());
 
         tf1 = new TextField();
@@ -249,8 +238,6 @@ public class Calculate extends Procedure {
 
     @Override
     public void move(double dx, double dy) {
-        super.move(dx, dy);
-
         if (variable != null) {
             variable.toFront();
             variable.move(dx + 10, dy + 10);
@@ -259,6 +246,7 @@ public class Calculate extends Procedure {
             leftVariable.toFront();
             leftVariable.move(dx + 70, dy + 10);
         }
+        super.move(dx, dy);
     }
 
     public void setLeftVariable(Variable v) {

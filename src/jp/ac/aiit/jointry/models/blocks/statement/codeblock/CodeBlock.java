@@ -91,7 +91,6 @@ public abstract class CodeBlock extends Statement {
             for (Block b : childBlocks) {
                 b.move(dx + wLeft,
                        dy + hUpper + prevBlockHeight);
-                b.toFront();
                 prevBlockHeight += b.getHeight();
             }
         }
