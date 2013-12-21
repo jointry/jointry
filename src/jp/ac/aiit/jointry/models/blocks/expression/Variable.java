@@ -1,8 +1,6 @@
 package jp.ac.aiit.jointry.models.blocks.expression;
 
 import broker.core.DInfo;
-import java.util.HashSet;
-import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
