@@ -27,18 +27,6 @@ public class While extends CodeBlock {
     }
 
     @Override
-    public void show() {
-        super.show();
-
-        for (Statement state : childBlocks) {
-            if (state.prevBlock == null) {
-                state.show();
-                break;
-            }
-        }
-    }
-
-    @Override
     public Label getLabel() {
         return new Label("くりかえす");
     }

@@ -242,14 +242,14 @@ public class JsonUtil {
                 Status status = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
                 block.setStatus(status);
 
-                block.show();
-
                 String cordinate = (String) blocks_info.get("coordinate");
                 String[] pos = cordinate.split(" ");
 
                 double x = Double.valueOf(pos[0]);
                 double y = Double.valueOf(pos[1]);
                 block.move(x, y); //子要素含めて全ての座標を設定
+
+                block.show();
             }
 
             if (topBlock != null) {
