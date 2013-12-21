@@ -33,6 +33,10 @@ public class JointryAccount extends Account {
         userList.remove(userName); //最初に見つけたユーザのみを削除
     }
 
+    public static void clearUser() {
+        userList.clear();
+    }
+
     public static ObservableList getUsers() {
         return userList;
     }

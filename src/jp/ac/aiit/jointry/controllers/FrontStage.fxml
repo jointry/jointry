@@ -7,7 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="480.0" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="480.0" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
   <children>
     <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="200.0">
       <children>
@@ -26,6 +26,7 @@
       </children>
     </AnchorPane>
     <Button layoutX="14.0" layoutY="402.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
-    <Slider fx:id="speed_slider" layoutX="170.0" layoutY="12.0" max="2000.0" min="10.0" prefWidth="275.0" value="1000.0" />
+    <Slider fx:id="speed_slider" layoutX="121.0" layoutY="14.0" max="2000.0" min="10.0" prefWidth="275.0" value="1000.0" />
+    <Button fx:id="sync" layoutX="411.0" layoutY="8.0" mnemonicParsing="false" onAction="#sync" prefHeight="25.0" prefWidth="48.0" text="同期" visible="false" />
   </children>
 </AnchorPane>

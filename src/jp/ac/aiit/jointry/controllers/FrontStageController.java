@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -18,6 +19,7 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
+import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.util.StageUtil;
 
@@ -29,6 +31,8 @@ public class FrontStageController implements Initializable, JointryCommon {
     private VBox variables;
     @FXML
     private Slider speed_slider;
+    @FXML
+    private Button sync;
     private Sprite currentSprite;
     private MainController mainController;
 
@@ -74,6 +78,15 @@ public class FrontStageController implements Initializable, JointryCommon {
         });
 
         paintStage.getStage().show();
+    }
+
+    @FXML
+    protected void sync(ActionEvent event) {
+        MainDialog.sendSynchronize();
+    }
+
+    public void setSyncVisible(boolean visible) {
+        sync.setVisible(visible);
     }
 
     public void setMainController(MainController controller) {
