@@ -5,7 +5,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javafx.event.EventHandler;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -79,7 +81,6 @@ public abstract class CodeBlock extends Statement {
     @Override
     public void move(double dx, double dy) {
         super.move(dx, dy);
-
         if (embryo != null) {
             embryo.toFront();
             embryo.move(dx + 40, dy + 20);
@@ -94,22 +95,6 @@ public abstract class CodeBlock extends Statement {
                 prevBlockHeight += b.getHeight();
             }
         }
-    }
-
-    /**
-     * ドラッグするブロックを先頭にする.
-     */
-    @Override
-    public void initializeLink() {
-        super.initializeLink();
-        // 親のブロックを外す
-        if (parentBlock != null) {
-            List<Statement> blocks = this.fetchAllNextBlocks();
-            blocks.add(this);
-            parentBlock.childBlocks.removeAll(blocks);
-            parentBlock.resize();
-        }
-        parentBlock = null;
     }
 
     public void addChild(Statement child) {
@@ -241,5 +226,13 @@ public abstract class CodeBlock extends Statement {
             sb.append(nextBlock.intern());
         }
         return sb.toString();
+    }
+
+    @Override
+    public void toFront() {
+        super.toFront();
+        if (embryo != null) {
+            embryo.toFront();
+        }
     }
 }
