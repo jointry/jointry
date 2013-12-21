@@ -13,6 +13,7 @@
       <children>
         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#start" text="じっこう" />
         <Button id="stop" mnemonicParsing="false" onAction="#stop" text="ていし" />
+        <Button mnemonicParsing="false" onAction="#reset" text="りせっと" />
       </children>
     </HBox>
     <AnchorPane layoutX="8.0" layoutY="36.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
@@ -26,7 +27,7 @@
       </children>
     </AnchorPane>
     <Button layoutX="14.0" layoutY="402.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
-    <Slider fx:id="speed_slider" layoutX="121.0" layoutY="14.0" max="2000.0" min="10.0" prefWidth="275.0" value="1000.0" />
-    <Button fx:id="sync" layoutX="411.0" layoutY="8.0" mnemonicParsing="false" onAction="#sync" prefHeight="25.0" prefWidth="48.0" text="同期" visible="false" />
+    <Slider fx:id="speed_slider" layoutX="214.0" layoutY="10.0" max="2000.0" min="10.0" prefWidth="244.0" value="1000.0" />
+    <Button fx:id="sync" layoutX="410.0" layoutY="412.0" mnemonicParsing="false" onAction="#sync" prefHeight="25.0" prefWidth="48.0" text="同期" visible="true" />
   </children>
 </AnchorPane>

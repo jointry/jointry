@@ -85,6 +85,12 @@ public class FrontStageController implements Initializable, JointryCommon {
         MainDialog.sendSynchronize();
     }
 
+    @FXML
+    protected void reset(ActionEvent event) {
+        currentSprite.setTranslateX(0.0);
+        currentSprite.setTranslateY(0.0);
+    }
+
     public void setSyncVisible(boolean visible) {
         sync.setVisible(visible);
     }
