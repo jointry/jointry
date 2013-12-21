@@ -369,4 +369,12 @@ public class Condition extends Expression {
             rightVariable.move(dx + 140, dy + 22);
         }
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        if (mother != null) {
+            mother.embryo = null;
+        }
+    }
 }

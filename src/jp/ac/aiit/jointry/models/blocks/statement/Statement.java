@@ -287,4 +287,10 @@ public abstract class Statement extends Block {
 
         getChildren().addAll(topCon, bottomCon, leftCon, rightCon);
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        initializeLink();
+    }
 }

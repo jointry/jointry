@@ -243,4 +243,12 @@ public abstract class CodeBlock extends Statement {
             embryo.toFront();
         }
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        if (embryo != null) {
+            embryo.initializeLink();
+        }
+    }
 }
