@@ -49,12 +49,12 @@ public class Condition extends Expression {
         super();
         myBlock = this;
 
-        operation.put("おなじ", " == ");
-        operation.put("ちがう", " != ");
-        operation.put("ちいさい", " < ");
-        operation.put("おおきい", " >");
-        operation.put("いじょう", " >= ");
-        operation.put("いか", " <= ");
+        operation.put("==", " == ");
+        operation.put("!=", " != ");
+        operation.put("<", " < ");
+        operation.put(">", " >");
+        operation.put(">=", " >= ");
+        operation.put("<=", " <= ");
 
         // Use Filter (not Handler) to fire first.
         addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -110,8 +110,8 @@ public class Condition extends Expression {
         cb.setItems(FXCollections.observableArrayList(operation.keySet()));
 
         AnchorPane.setTopAnchor(cb, 22.0);
-        AnchorPane.setLeftAnchor(cb, 68.0);
-        cb.setPrefSize(60, 20);
+        AnchorPane.setLeftAnchor(cb, 66.0);
+        cb.setPrefSize(70, 20);
         getChildren().addAll(cb);
         setChangeListener(cb);
 
