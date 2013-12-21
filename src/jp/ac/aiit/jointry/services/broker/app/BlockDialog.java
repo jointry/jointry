@@ -36,20 +36,35 @@ public class BlockDialog extends JointryDialogBase {
         //新規block作成
         switch (event) {
             case M_BLOCK_CREATE:
-                mBlockCreate(sprite, dinfo);
-                break;
+                Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
+                if (newBlock instanceof Statement) {
+                    mBlockCreate(sprite, dinfo); //statement以外はstatementにくっついたとき
+                }
+                return;
             case M_BLOCK_VARIABLE_CREATE:
                 mBlockVariableCreate(dinfo);
-                break;
-            default:
-                break;
+                return;
         }
 
-        //既存blockの操作
-        final Block myBlock = getTargetBlock(sprite, dinfo.get(K_BLOCK_ID));
+        //応用blockの操作
+        Block myBlock = getTargetBlock(sprite, dinfo.get(K_BLOCK_ID));
         if (myBlock == null) {
-            return; //該当なし
+
+            switch (event) {
+                case M_BLOCK_ADDEMBRYO:
+                    myBlock = mBlockCreate(sprite, dinfo);
+                    mBlockAddEmbryo(sprite, myBlock, dinfo);
+                    break;
+                case M_BLOCK_ADDVARIABLE:
+                    myBlock = mBlockCreate(sprite, dinfo);
+                    mBlockAddVariable(sprite, myBlock, dinfo);
+                    break;
+            }
+
+            return;
         }
+
+        //基本blockの操作
         switch (event) {
             case M_BLOCK_REMOVE:
                 mBlockRemove(myBlock, dinfo);
@@ -63,12 +78,6 @@ public class BlockDialog extends JointryDialogBase {
             case M_BLOCK_ADDCHILD:
                 mBlockAddChild(sprite, myBlock, dinfo);
                 break;
-            case M_BLOCK_ADDEMBRYO:
-                mBlockAddEmbryo(sprite, myBlock, dinfo);
-                break;
-            case M_BLOCK_ADDVARIABLE:
-                mBlockAddVariable(sprite, myBlock, dinfo);
-                break;
             case M_BLOCK_CHANGE_STATE:
                 mBlockChangeState(myBlock, dinfo);
                 break;
@@ -77,11 +86,13 @@ public class BlockDialog extends JointryDialogBase {
         }
     }
 
-    private void mBlockCreate(Sprite sprite, DInfo dinfo) {
+    private Block mBlockCreate(Sprite sprite, DInfo dinfo) {
         Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
 
         newBlock.setUUID(dinfo.get(K_BLOCK_ID));
         sprite.getScriptPane().getChildren().add(newBlock);
+
+        return newBlock;
     }
 
     private void mBlockVariableCreate(final DInfo dinfo) {
