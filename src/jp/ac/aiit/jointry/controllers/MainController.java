@@ -19,22 +19,16 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
-import java.awt.image.BufferedImage;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
-import org.xml.sax.SAXException;
 
-public class MainController extends DefaultMonitor implements Initializable {
+public class MainController implements Initializable {
 
     @FXML
     private BorderPane rootPane;
@@ -87,7 +81,7 @@ public class MainController extends DefaultMonitor implements Initializable {
     protected void fsave(ActionEvent event) {
         try {
             new FileManager().save(frontStageController.getSprites());
-        } catch (IOException | ParserConfigurationException | TransformerException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -96,7 +90,7 @@ public class MainController extends DefaultMonitor implements Initializable {
     protected void fopen(ActionEvent event) {
         try {
             new FileManager().load(this);
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -119,9 +113,7 @@ public class MainController extends DefaultMonitor implements Initializable {
                 if (agent == null) {
                     agent = ctrl.getAgent();
                     if (agent != null) {
-                        agent.setMonitor(MainController.this);
-                        roomEnter.setVisible(false);
-                        roomExit.setVisible(true);
+                        agent.setMonitor(new MainMonitor());
                     }
                 }
                 ctrl.windowClose();
@@ -159,7 +151,7 @@ public class MainController extends DefaultMonitor implements Initializable {
                 this.initialize(null, null);
 
                 if (agent != null) {
-                    initWindow("connect");
+                    initWindow("connect"); //協同編集中であればメンバーを表示
                 }
                 break;
 
@@ -170,6 +162,8 @@ public class MainController extends DefaultMonitor implements Initializable {
                 rootPane.setRight(connectFront);
                 refreshMembers();
                 members.setStyle("-fx-border-color: rgb(49, 89, 23)");
+                roomEnter.setVisible(false);
+                roomExit.setVisible(true);
                 break;
 
             case "disconnect":
@@ -179,6 +173,9 @@ public class MainController extends DefaultMonitor implements Initializable {
                 if (disconnectFront instanceof VBox) {
                     rootPane.setRight(((VBox) disconnectFront).getChildren().get(0));
                 }
+
+                roomEnter.setVisible(true);
+                roomExit.setVisible(false);
 
                 break;
 
@@ -225,58 +222,18 @@ public class MainController extends DefaultMonitor implements Initializable {
         return this.agent;
     }
 
-    @Override
-    public void onClose() {
-        agent = null; //agentのclose
+    private class MainMonitor extends DefaultMonitor {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initWindow("disconnect");
-                roomEnter.setVisible(true);
-                roomExit.setVisible(false);
-            }
-        });
-    }
+        @Override
+        public void onClose() {
+            agent = null; //close済みなので参照を外す
 
-    @Override
-    public void viewImage(String title, final BufferedImage bimage) {
-        title = title.substring(0, title.lastIndexOf("."));
-
-        final String[] names = title.split("_");
-
-        for (final Sprite sprite : this.getFrontStageController().getSprites()) {
-            if (sprite.getName().equals(names[0])) {
-                if (names.length <= 1) {
-                    sprite.setIcon(SwingFXUtils.toFXImage(bimage, null));
-                } else {
-                    final int number = Integer.parseInt(names[2]);
-
-                    for (Costume costume : sprite.getCostumes()) {
-                        if (costume.getNumber() == number) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    sprite.updateCostume(number, SwingFXUtils.toFXImage(bimage, null));
-                                    MainController.this.getBackStageController().showCostumes(sprite);
-                                }
-                            });
-
-                            return;
-                        }
-                    }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    initWindow("disconnect");
                 }
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        sprite.addCostume(names[1], SwingFXUtils.toFXImage(bimage, null));
-                        MainController.this.getBackStageController().showCostumes(sprite);
-                    }
-                });
-
-                break;
-            }
+            });
         }
     }
 }

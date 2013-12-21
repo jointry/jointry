@@ -65,9 +65,7 @@ public class MainDialog extends JointryDialogBase {
     }
 
     private void mMainSynchronize(DInfo dinfo) {
-        //一旦画面をクリアしてから同期させる
-        mainController.initWindow("load");
-        mainController.initWindow("connect");
+        mainController.initWindow("load"); //協同編集中のため初期化のみで良い
 
         String main_info = dinfo.get(K_MAIN_INFO);
         final List<String> list = JsonUtil.convertJsonStringToList(main_info);

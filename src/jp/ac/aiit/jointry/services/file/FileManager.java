@@ -8,20 +8,16 @@ import java.io.PrintWriter;
 import java.util.List;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import jp.ac.aiit.jointry.controllers.MainController;
 import jp.ac.aiit.jointry.models.Jty;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.util.JsonUtil;
-import org.xml.sax.SAXException;
 
 public class FileManager {
 
     private static final String JOINTRY_EXTENSION = ".jty";
 
-    public void save(List<Sprite> sprites) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException {
+    public void save(List<Sprite> sprites) throws IOException {
         FileChooser fc = createFileChooser("save");
         fc.getExtensionFilters().add(new ExtensionFilter("All Files", "*")); //ディレクトリを指定
 
@@ -51,7 +47,7 @@ public class FileManager {
         return JsonUtil.convertObjectToJsonString(wrap);
     }
 
-    public void load(MainController mainController) throws ParserConfigurationException, SAXException, IOException {
+    public void load(MainController mainController) throws IOException {
         FileChooser fc = createFileChooser("open");
         fc.getExtensionFilters().add(new ExtensionFilter("jointry設定ファイル", "*" + JOINTRY_EXTENSION));
 
