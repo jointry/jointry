@@ -109,7 +109,7 @@ public class JsonUtil {
                 if (!exp.hasMother()) {
                     Map<String, Object> blockInfo = new HashMap();
                     blockInfo.put("coordinate", exp.getLayoutX() + " " + exp.getLayoutY());
-                    blockInfo.put("block", exp.getStatus());
+                    blockInfo.put("block", BlockUtil.getStatus(exp));
                     source.add(blockInfo);
                 }
             }
@@ -216,21 +216,40 @@ public class JsonUtil {
         for (Map blocks_info : source) {
             Block topBlock = null;
             Block prevBlock = null;
-            ArrayList<Map> blocks = (ArrayList<Map>) blocks_info.get("block");
-            for (Map status_info : blocks) {
+            Object blocks = blocks_info.get("block");
+
+            if (blocks instanceof ArrayList) {
+                for (Map status_info : ((ArrayList<Map>) blocks)) {
+                    Block block = BlockUtil.create(status_info);
+                    block.setSprite(sprite);
+
+                    Status status = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
+                    block.setStatus(status);
+
+                    if (topBlock == null) {
+                        topBlock = block;
+                        prevBlock = topBlock;
+                    } else if (prevBlock != null) {
+                        ((Statement) prevBlock).addLink((Statement) block);
+                        prevBlock = block;
+                    }
+                }
+            } else {
+                Map status_info = ((Map) blocks);
                 Block block = BlockUtil.create(status_info);
                 block.setSprite(sprite);
 
                 Status status = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
                 block.setStatus(status);
 
-                if (topBlock == null) {
-                    topBlock = block;
-                    prevBlock = topBlock;
-                } else if (prevBlock != null) {
-                    ((Statement) prevBlock).addLink((Statement) block);
-                    prevBlock = block;
-                }
+                block.show();
+
+                String cordinate = (String) blocks_info.get("coordinate");
+                String[] pos = cordinate.split(" ");
+
+                double x = Double.valueOf(pos[0]);
+                double y = Double.valueOf(pos[1]);
+                block.move(x, y); //子要素含めて全ての座標を設定
             }
 
             if (topBlock != null) {

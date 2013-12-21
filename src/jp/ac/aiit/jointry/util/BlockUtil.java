@@ -40,7 +40,7 @@ public class BlockUtil {
         return blockList;
     }
 
-    private static Status getStatus(Block procedure) {
+    public static Status getStatus(Block procedure) {
         Status blockStatus = new Status();
         blockStatus.put(procedure.getClass().getSimpleName(), procedure.getStatus());
         return blockStatus;

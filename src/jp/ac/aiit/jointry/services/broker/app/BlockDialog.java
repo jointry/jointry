@@ -36,35 +36,19 @@ public class BlockDialog extends JointryDialogBase {
         //新規block作成
         switch (event) {
             case M_BLOCK_CREATE:
-                Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
-                if (newBlock instanceof Statement) {
-                    mBlockCreate(sprite, dinfo); //statement以外はstatementにくっついたとき
-                }
+                mBlockCreate(sprite, dinfo);
                 return;
             case M_BLOCK_VARIABLE_CREATE:
                 mBlockVariableCreate(dinfo);
                 return;
         }
 
-        //応用blockの操作
+        //基本blockの操作
         Block myBlock = getTargetBlock(sprite, dinfo.get(K_BLOCK_ID));
         if (myBlock == null) {
-
-            switch (event) {
-                case M_BLOCK_ADDEMBRYO:
-                    myBlock = mBlockCreate(sprite, dinfo);
-                    mBlockAddEmbryo(sprite, myBlock, dinfo);
-                    break;
-                case M_BLOCK_ADDVARIABLE:
-                    myBlock = mBlockCreate(sprite, dinfo);
-                    mBlockAddVariable(sprite, myBlock, dinfo);
-                    break;
-            }
-
             return;
         }
 
-        //基本blockの操作
         switch (event) {
             case M_BLOCK_REMOVE:
                 mBlockRemove(myBlock, dinfo);
@@ -80,6 +64,12 @@ public class BlockDialog extends JointryDialogBase {
                 break;
             case M_BLOCK_CHANGE_STATE:
                 mBlockChangeState(myBlock, dinfo);
+                break;
+            case M_BLOCK_ADDEMBRYO:
+                mBlockAddEmbryo(sprite, myBlock, dinfo);
+                break;
+            case M_BLOCK_ADDVARIABLE:
+                mBlockAddVariable(sprite, myBlock, dinfo);
                 break;
             default:
                 break;
