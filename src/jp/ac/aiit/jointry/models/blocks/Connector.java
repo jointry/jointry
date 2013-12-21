@@ -2,6 +2,7 @@ package jp.ac.aiit.jointry.models.blocks;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 
 public class Connector extends Rectangle {
 

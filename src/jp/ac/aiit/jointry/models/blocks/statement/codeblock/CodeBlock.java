@@ -5,9 +5,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
@@ -46,10 +48,22 @@ public abstract class CodeBlock extends Statement {
         connector.setHeight(50);
         connector.setHolder(myBlock);
         connector.setPosition(Connector.Position.CENTER);
-        AnchorPane.setLeftAnchor(connector, 50.0);
+        AnchorPane.setLeftAnchor(connector, 40.0);
         AnchorPane.setTopAnchor(connector, 20.0);
 
-        getChildren().add(connector);
+        Rectangle dip = new Rectangle();
+        dip.setWidth(198);
+        dip.setHeight(48);
+        dip.setFill(Color.web("FAFAFA"));
+        AnchorPane.setLeftAnchor(dip, 41.0);
+        AnchorPane.setTopAnchor(dip, 21.0);
+        InnerShadow innerShadow = new InnerShadow();
+        innerShadow.setOffsetX(2);
+        innerShadow.setOffsetY(2);
+        innerShadow.setColor(Color.web("0x3b596d"));
+        dip.setEffect(innerShadow);
+
+        getChildren().addAll(connector, dip);
     }
 
     public void addEmbryo(Condition block) {
@@ -59,7 +73,7 @@ public abstract class CodeBlock extends Statement {
 
     public void accept(Condition c) {
         addEmbryo(c);
-        c.move(getLayoutX() + 50, getLayoutY() + 20);
+        c.move(getLayoutX() + 40, getLayoutY() + 20);
     }
 
     @Override
@@ -68,7 +82,7 @@ public abstract class CodeBlock extends Statement {
 
         if (embryo != null) {
             embryo.toFront();
-            embryo.move(dx + 50, dy + 20);
+            embryo.move(dx + 40, dy + 20);
         }
 
         double prevBlockHeight = 0;
