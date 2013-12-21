@@ -4,7 +4,6 @@ import jp.ac.aiit.jointry.models.blocks.statement.procedure.Costume;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.If;
 import jp.ac.aiit.jointry.models.blocks.statement.codeblock.While;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rotate;
-import jp.ac.aiit.jointry.models.blocks.statement.procedure.Rebound;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Move;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,8 +57,6 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 //new MenuItem(Rebound.class),
                 //new Separator(),
-                new MenuItem(Condition.class),
-                new Separator(),
                 new MenuItem(Speech.class),
                 new Separator(),
                 new MenuItem(Assign.class),
@@ -68,7 +65,14 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Continue.class),
                 new Separator(),
-                new MenuItem(Sleep.class));
+                new MenuItem(Sleep.class)
+        );
+
+        blockMenuAdv.getChildren().addAll(
+                new Separator(),
+                new MenuItem(Condition.class),
+                new Separator()
+        );
     }
 
     public void setMainController(MainController controller) {
