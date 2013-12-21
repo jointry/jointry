@@ -308,7 +308,7 @@ public class Variable extends Expression {
     public Status getStatus() {
         Status status = new Status();
         status.put("id", this.getUUID());
-        status.put(name, value.getValue());
+        status.put("name", name);
 
         return status;
     }
@@ -318,10 +318,7 @@ public class Variable extends Expression {
         bChangeEnable = false; //一時的にリスナーを無効化
 
         this.setUUID((String) status.get("id"));
-        //key = 変数名
-        Set<String> set = new HashSet(status.keySet());
-        setName(set.toString().substring(1, set.toString().length() - 1));
-        setValue((String) status.get(name));
+        setName((String) status.get("name"));
 
         bChangeEnable = true;
     }
