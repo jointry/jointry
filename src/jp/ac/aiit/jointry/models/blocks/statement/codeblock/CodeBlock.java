@@ -183,11 +183,12 @@ public abstract class CodeBlock extends Statement {
                     Status childStatus = BlockUtil.convertMapToStatus(status_info.get(block.getClass().getSimpleName()));
                     block.setStatus(childStatus);
 
-                    if (preBlock == null) {
-                        preBlock = block;
-                    } else {
+                    if (preBlock != null) {
+                        //子同士の接続
                         ((Statement) preBlock).addLink((Statement) block);
                     }
+
+                    preBlock = block;
 
                     //ブロックの包含接続
                     addChild((Statement) block);
