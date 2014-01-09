@@ -114,9 +114,11 @@ public final class Sprite extends HBox {
             @Override
             public void run() {
                 clearSpeechBubble();
-                saying = new Label(say);
-                saying.getStyleClass().add("speech-bubble");
-                getChildren().add(saying);
+                if (say != null && say.length() > 0) {
+                    saying = new Label(say);
+                    saying.getStyleClass().add("speech-bubble");
+                    getChildren().add(saying);
+                }
             }
         });
     }
@@ -125,6 +127,7 @@ public final class Sprite extends HBox {
         if (saying != null) {
             saying.setVisible(false);
             getChildren().removeAll(saying);
+            saying = null;
         }
     }
 
