@@ -185,7 +185,6 @@ public class BlockDialog extends JointryDialogBase {
             DInfo dinfo = new DInfo(D_BLOCK);
 
             dinfo.set(K_METHOD, event);
-            dinfo.set(K_SPRITE_NAME, mainController.getFrontStageController().getCurrentSprite().getName());
             dinfo.set(K_BLOCK_LABEL_NAME, value);
 
             mainController.getAgent().sendNotify(dinfo);
