@@ -165,6 +165,8 @@ public class Calculate extends Procedure {
             status.put("left", tf1.getText());
         }
 
+        status.put("op", cb.getValue());
+
         if (arg2 != null) {
             status.put("right", arg2.getStatus());
         } else {
@@ -201,6 +203,8 @@ public class Calculate extends Procedure {
 
                     setLeftVariable(val);
                 }
+            } else if (key.equals("op")) {
+                cb.setValue(status.get(key));
             } else if (key.equals("right")) {
                 Object value = status.get(key);
 
