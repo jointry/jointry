@@ -43,7 +43,7 @@ public class Move extends Procedure {
         }
         sb.append(" ");
         sb.append(arg);
-        sb.append(";\n");
+        sb.append("\n");
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
         }

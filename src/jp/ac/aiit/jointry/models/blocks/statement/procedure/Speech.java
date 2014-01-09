@@ -67,7 +67,7 @@ public class Speech extends Procedure {
             content = " \"" + tf.getText() + "\"";
         }
 
-        sb.append("speech ").append(content).append(";\n");
+        sb.append("speech ").append(content).append("\n");
 
         if (nextBlock != null) {
             sb.append(nextBlock.intern());

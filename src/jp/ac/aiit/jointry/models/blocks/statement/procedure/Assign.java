@@ -144,7 +144,7 @@ public class Assign extends Procedure {
         }
 
         sb.append(v.toString());
-        sb.append(";\n");
+        sb.append("\n");
 
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
