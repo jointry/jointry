@@ -1,11 +1,9 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Status;
@@ -33,13 +31,13 @@ public class Calculate extends Procedure {
         tf1 = new TextField();
         tf1.setPrefWidth(50.0);
         AnchorPane.setTopAnchor(tf1, 10.0);
-        AnchorPane.setLeftAnchor(tf1, 70.0);
+        AnchorPane.setLeftAnchor(tf1, 80.0);
         setChangeListener(tf1);
 
         cb = new ChoiceBox(FXCollections.observableArrayList(
                 "+", "-", "×", "÷", "%"));
         AnchorPane.setTopAnchor(cb, 10.0);
-        AnchorPane.setLeftAnchor(cb, 125.0);
+        AnchorPane.setLeftAnchor(cb, 135.0);
 
         tf2 = new TextField();
         tf2.setPrefWidth(50.0);
@@ -47,7 +45,11 @@ public class Calculate extends Procedure {
         AnchorPane.setLeftAnchor(tf2, 190.0);
         setChangeListener(tf2);
 
-        getChildren().addAll(cb, tf1, tf2);
+        Label wa = new Label("は");
+        AnchorPane.setTopAnchor(wa, 15.0);
+        AnchorPane.setLeftAnchor(wa, 63.0);
+
+        getChildren().addAll(wa, tf1, cb, tf2);
         getChildren().remove(lb);
 
         // コネクタを全面に出すために
@@ -78,7 +80,7 @@ public class Calculate extends Procedure {
         leftVariableCon.setHolder(this);
         leftVariableCon.setPosition(Connector.Position.INSIDE_LEFT);
         AnchorPane.setTopAnchor(leftVariableCon, 10.0);
-        AnchorPane.setLeftAnchor(leftVariableCon, 70.0);
+        AnchorPane.setLeftAnchor(leftVariableCon, 80.0);
         leftVariableCon.toFront();
 
         getChildren().addAll(variableCon, leftVariableCon);
@@ -244,7 +246,7 @@ public class Calculate extends Procedure {
         }
         if (leftVariable != null) {
             leftVariable.toFront();
-            leftVariable.move(dx + 70, dy + 10);
+            leftVariable.move(dx + 80, dy + 10);
         }
         super.move(dx, dy);
     }
