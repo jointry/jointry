@@ -16,6 +16,7 @@ import jp.ac.aiit.jointry.util.JsonUtil;
 public class FileManager {
 
     private static final String JOINTRY_EXTENSION = ".jty";
+    private static String targetDirectory = System.getProperty("user.home");
 
     public void save(List<Sprite> sprites) throws IOException {
         FileChooser fc = createFileChooser("save");
@@ -25,6 +26,8 @@ public class FileManager {
         if (chooser == null) {
             return; //保存先が指定されなかった
         }
+        targetDirectory = chooser.getPath(); //指定されれば次回以降はここから
+
         if (!chooser.exists()) {
             chooser.mkdir(); //create project folder
         }
@@ -56,6 +59,8 @@ public class FileManager {
             return; //読込先が指定されなかった
         }
 
+        targetDirectory = file.getParentFile().getParent(); //指定されれば次回以降のパスに書き換え
+
         mainController.initWindow("load"); //読み込む前に画面を一旦クリア
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -77,7 +82,7 @@ public class FileManager {
         FileChooser fc = new FileChooser();
 
         fc.setTitle(title); //title
-        fc.setInitialDirectory(new File(System.getProperty("user.home"))); //home
+        fc.setInitialDirectory(new File(targetDirectory));
 
         return fc;
     }
