@@ -102,6 +102,7 @@ public class SpriteDialog extends JointryDialogBase {
         sprite.setTranslateY(dinfo.getInt(K_Y2));
         sprite.setRotate(dinfo.getInt(K_ROTATE));
         sprite.setSpeechBubble(dinfo.get(K_SPEECH));
+        sprite.setSpriteCostume(dinfo.getInt(K_COSTUME_CURRENT));
     }
 
     private void mCostumeSync(Sprite sprite, DInfo dinfo) {

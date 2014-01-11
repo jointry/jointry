@@ -1,5 +1,7 @@
 package jp.ac.aiit.jointry.models;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.SequentialTransition;
@@ -25,6 +27,7 @@ public class SpriteTask extends Task {
     private Sprite sprite;
     private double speed;
     private SequentialTransition st;
+    private Timer syncTimer;
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
@@ -71,10 +74,14 @@ public class SpriteTask extends Task {
         }
 
         st.play();
+
+        syncTimer = new Timer();
+        syncTimer.schedule(new SyncTask(), 0, 1000 / 60); //1秒間に約60回同期
+
         st.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
+                finish();
             }
         });
 
@@ -85,9 +92,23 @@ public class SpriteTask extends Task {
         this.speed = speed;
     }
 
-    public void stop() {
+    public void finish() {
         if (st != null) {
             st.stop();
+        }
+
+        if (syncTimer != null) {
+            syncTimer.cancel();
+            syncTimer = null;
+        }
+
+        SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
+    }
+
+    private class SyncTask extends TimerTask {
+
+        @Override
+        public void run() {
             SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
         }
     }

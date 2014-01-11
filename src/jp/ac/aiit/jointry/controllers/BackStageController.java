@@ -153,7 +153,7 @@ public class BackStageController {
 
     public void stop() {
         for (SpriteTask task : spriteTasks) {
-            task.stop();
+            task.finish();
         }
 
         spriteTasks.clear();
