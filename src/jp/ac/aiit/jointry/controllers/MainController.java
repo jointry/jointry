@@ -151,8 +151,10 @@ public class MainController implements Initializable {
                 URL path = getClass().getResource("images/sprite_1.gif");
                 Sprite sprite = new Sprite(path.toString());
                 sprite.setMainController(this);
-                URL costume_path = getClass().getResource("images/sprite_2.gif");
-                sprite.addCostume("costume", new Image(costume_path.toString()));
+                URL costume_path2 = getClass().getResource("images/sprite_2.gif");
+                sprite.addCostume("costume", new Image(costume_path2.toString()));
+                URL costume_path3 = getClass().getResource("images/sprite_3.gif");
+                sprite.addCostume("costume", new Image(costume_path3.toString()));
                 frontStageController.showSprite(sprite);
                 break;
 
