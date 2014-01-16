@@ -1,7 +1,5 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,7 +21,7 @@ public class Costume extends Procedure {
         AnchorPane.setTopAnchor(cb, 10.0);
         AnchorPane.setLeftAnchor(cb, 80.0);
         cb.setItems(FXCollections.observableArrayList(
-                "1", "2", "3")); // TODO
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")); // TODO
         getChildren().add(cb);
         setChangeListener(cb);
     }
