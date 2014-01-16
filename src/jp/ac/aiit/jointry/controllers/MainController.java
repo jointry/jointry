@@ -31,7 +31,7 @@ import jp.ac.aiit.jointry.services.file.FileManager;
 import jp.ac.aiit.jointry.util.StageUtil;
 
 public class MainController implements Initializable {
-    
+
     @FXML
     private BorderPane rootPane;
     @FXML
@@ -44,7 +44,7 @@ public class MainController implements Initializable {
     private Agent agent;
     private String userName;
     private ListView members = new ListView();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -74,12 +74,12 @@ public class MainController implements Initializable {
             bc.setMainController(this);
             rootPane.setLeft(blocks);
             setBlocksController(bc);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     protected void fsave(ActionEvent event) {
         try {
@@ -88,7 +88,7 @@ public class MainController implements Initializable {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     protected void fopen(ActionEvent event) {
         try {
@@ -96,20 +96,20 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         MainDialog.sendSynchronize();
     }
-    
+
     @FXML
     protected void startCooperation(ActionEvent event) {
         //協同編集
         Window owner = rootPane.getScene().getWindow(); //画面オーナー
         URL fxml = getClass().getResource("Cooperation.fxml"); //表示するfxml
         final StageUtil stage = new StageUtil(null, owner, fxml, null);
-        
+
         final CooperationController ctrl = (CooperationController) stage.getController();
         ctrl.setMainController(MainController.this);
-        
+
         stage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
@@ -118,7 +118,7 @@ public class MainController implements Initializable {
                     if (agent != null) {
                         agent.setMonitor(new MainMonitor());
                         userName = ctrl.getName();
-                        
+
                         if ("s".equals(String.valueOf(agent.mark()))) {
                             getFrontStageController().setSyncVisible(true);
                         }
@@ -127,43 +127,43 @@ public class MainController implements Initializable {
                 ctrl.windowClose();
             }
         });
-        
+
         stage.getStage().show();
     }
-    
+
     @FXML
     protected void endCooperation(ActionEvent event) {
         MainDialog.sendConnection(M_MAIN_DISCONNECT, agent, userName);
         JointryAccount.clearUser(); //コネクションが切れたらユーザキャッシュをクリア
-        
+
         if (agent != null) {
             agent.close();
             agent = null;
         }
-        
+
         initWindow("disconnect");
     }
-    
+
     public void initWindow(String mode) {
         switch (mode) {
             case "new":
                 //初期スプライト
-                URL path = getClass().getResource("images/scratch_cat1.gif");
+                URL path = getClass().getResource("images/sprite_1.gif");
                 Sprite sprite = new Sprite(path.toString());
                 sprite.setMainController(this);
-                URL costume_path = getClass().getResource("images/scratch_cat2.gif");
+                URL costume_path = getClass().getResource("images/sprite_2.gif");
                 sprite.addCostume("costume", new Image(costume_path.toString()));
                 frontStageController.showSprite(sprite);
                 break;
-            
+
             case "load":
                 this.initialize(null, null);
-                
+
                 if (agent != null) {
                     initWindow("connect"); //協同編集中であればメンバーを表示
                 }
                 break;
-            
+
             case "connect":
                 //参加しているメンバー領域の表示
                 VBox connectFront = new VBox();
@@ -174,66 +174,66 @@ public class MainController implements Initializable {
                 roomEnter.setVisible(false);
                 roomExit.setVisible(true);
                 break;
-            
+
             case "disconnect":
                 //参加しているメンバー領域の非表示
                 Node disconnectFront = rootPane.getRight();
-                
+
                 if (disconnectFront instanceof VBox) {
                     rootPane.setRight(((VBox) disconnectFront).getChildren().get(0));
                 }
-                
+
                 roomEnter.setVisible(true);
                 roomExit.setVisible(false);
                 getFrontStageController().setSyncVisible(false);
-                
+
                 break;
-            
+
             default:
                 break;
         }
     }
-    
+
     public void refreshMembers() {
         members.setItems(JointryAccount.getUsers());
     }
-    
+
     public void windowClose() {
         if (agent != null) {
             agent.close();
         }
     }
-    
+
     public void setBackStageController(BackStageController controller) {
         this.backStageController = controller;
     }
-    
+
     public void setFrontStageController(FrontStageController controller) {
         this.frontStageController = controller;
     }
-    
+
     public void setBlocksController(BlocksController blocksController) {
         this.blocksController = blocksController;
     }
-    
+
     public BackStageController getBackStageController() {
         return this.backStageController;
     }
-    
+
     public FrontStageController getFrontStageController() {
         return this.frontStageController;
     }
-    
+
     public BlocksController getBlocksController() {
         return this.blocksController;
     }
-    
+
     public Agent getAgent() {
         return this.agent;
     }
-    
+
     private class MainMonitor extends DefaultMonitor {
-        
+
         @Override
         public void onClose() {
             agent = null; //close済みなので参照を外す
