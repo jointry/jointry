@@ -49,10 +49,6 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Rotate.class),
                 new Separator(),
-                new MenuItem(While.class),
-                new Separator(),
-                new MenuItem(If.class),
-                new Separator(),
                 new MenuItem(Costume.class),
                 new Separator(),
                 //new MenuItem(Rebound.class),
@@ -65,7 +61,14 @@ public class BlocksController implements Initializable {
                 new Separator(),
                 new MenuItem(Continue.class),
                 new Separator(),
-                new MenuItem(Sleep.class));
+                new MenuItem(Sleep.class),
+                new Separator(),
+                new Separator(),
+                new Separator(),
+                new MenuItem(While.class),
+                new Separator(),
+                new MenuItem(If.class),
+                new Separator());
 
         blockMenuAdv.getChildren().addAll(
                 new Separator(),

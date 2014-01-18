@@ -3,7 +3,6 @@ package jp.ac.aiit.jointry.models.blocks.statement.codeblock;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import jp.ac.aiit.jointry.models.blocks.statement.Statement;
 
 public class While extends CodeBlock {
 

@@ -5,9 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javafx.event.EventHandler;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -25,7 +23,7 @@ public abstract class CodeBlock extends Statement {
     public double hUpper = 80.0;
     public double hConcave = BASIC_HEIGHT;
     public double hLower = 30.0;
-    public double wLeft = 80.0;
+    public double wLeft = 20.0;
     protected double pHeight = hUpper + hConcave + hLower;
     protected Polygon p;
     public Connector connector;
