@@ -46,6 +46,7 @@ public class JointryParser {
             .option(rule().sep("else").ast(block)),
             rule(WhileStmnt.class).sep("while").ast(expr).ast(block),
             rule(BreakStmnt.class).sep("break"),
+            rule(FlipStmnt.class).sep("flip"),
             rule(ContinueStmnt.class).sep("continue"),
             rule(SleepStmnt.class).sep("sleep").ast(expr),
             rule(RotateStmnt.class).sep("rotate").ast(expr),

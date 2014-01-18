@@ -27,6 +27,7 @@ import jp.ac.aiit.jointry.models.blocks.expression.Condition;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Continue;
+import jp.ac.aiit.jointry.models.blocks.statement.procedure.Flip;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Sleep;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
@@ -46,6 +47,8 @@ public class BlocksController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         blockMenu.getChildren().addAll(
                 new MenuItem(Move.class),
+                new Separator(),
+                new MenuItem(Flip.class),
                 new Separator(),
                 new MenuItem(Rotate.class),
                 new Separator(),
