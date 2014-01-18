@@ -1,9 +1,7 @@
 package jp.ac.aiit.jointry.models.blocks.statement.procedure;
 
-import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import jp.ac.aiit.jointry.models.Status;
 
@@ -22,7 +20,12 @@ public class Flip extends Procedure {
 
     @Override
     public String intern() {
-        return "flip\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("flip\n");
+        if (nextBlock != null) {
+            sb.append(nextBlock.intern());
+        }
+        return sb.toString();
     }
 
     @Override
