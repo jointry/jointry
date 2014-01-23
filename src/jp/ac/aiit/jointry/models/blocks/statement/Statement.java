@@ -36,22 +36,10 @@ public abstract class Statement extends Block {
 
         makeConnectors();
 
-        // Use Filter (not Handler) to fire first.
-        addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+        addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(MouseEvent t) {
                 initializeLink();
-
-                // Move
-                double dx = mouseEvent.getSceneX() + anchorX;
-                double dy = mouseEvent.getSceneY() + anchorY;
-                move(dx, dy);
-
-                BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
-
-                if (getCollision() == null) {
-                    return;
-                }
 
                 // 上下の接続
                 if (con.getPosition() == Connector.Position.BOTTOM) {
@@ -85,6 +73,46 @@ public abstract class Statement extends Block {
                         target.resize();
 
                         BlockDialog.sendMessage(M_BLOCK_ADDCHILD, myBlock);
+                    }
+                    return;
+                }
+            }
+        });
+
+        // Use Filter (not Handler) to fire first.
+        addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                initializeLink();
+
+                // Move
+                double dx = mouseEvent.getSceneX() + anchorX;
+                double dy = mouseEvent.getSceneY() + anchorY;
+                move(dx, dy);
+
+                BlockDialog.sendMessage(M_BLOCK_MOVE, myBlock);
+
+                if (getCollision() == null) {
+                    return;
+                }
+
+                // 上下の接続（確認）
+                if (con.getPosition() == Connector.Position.BOTTOM) {
+                    Statement target = (Statement) con.getHolder();
+                    if (target != nextBlock) {
+                        move(target.getLayoutX(),
+                             target.getLayoutY() + target.getHeight());
+                        con.touch();
+                    }
+                }
+
+                // 包含の接続
+                if (con.getPosition() == Connector.Position.RIGHT) {
+                    if (con.getHolder() instanceof CodeBlock) {
+                        CodeBlock target = (CodeBlock) con.getHolder();
+                        move(target.getLayoutX() + target.wLeft,
+                             target.getLayoutY() + target.hUpper);
+                        con.touch();
                     }
                     return;
                 }
@@ -251,7 +279,7 @@ public abstract class Statement extends Block {
         this.leftCon = new Connector();
         this.rightCon = new Connector();
 
-        double connector_width = BASIC_WIDTH - 125;
+        double connector_width = BASIC_WIDTH; //- 125;
         double connector_margin = (BASIC_WIDTH - connector_width) / 2.0;
 
         // TODO: サイズはPaneと連動させないといけない。Observerかなあ？
