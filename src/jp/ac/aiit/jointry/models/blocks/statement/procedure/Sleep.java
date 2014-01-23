@@ -43,7 +43,7 @@ public class Sleep extends Procedure {
         } else {
             sb.append(cb.getValue());
         }
-        sb.append(";\n");
+        sb.append("\n");
 
         if (nextBlock != null) {
             sb.append(nextBlock.intern());

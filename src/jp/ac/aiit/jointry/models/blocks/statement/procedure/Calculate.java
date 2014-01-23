@@ -139,7 +139,7 @@ public class Calculate extends Procedure {
         }
 
         sb.append(v.toString());
-        sb.append(");\n");
+        sb.append(")\n");
 
         if (nextBlock != null) {
             sb.append(nextBlock.intern());
