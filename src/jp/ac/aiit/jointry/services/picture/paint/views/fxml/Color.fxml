@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="44.0" prefWidth="390.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.services.picture.paint.ctrl.ColorController">
+    <children>
+        <ColorPicker fx:id="picker" layoutX="7.0" layoutY="10.0" prefWidth="375.0" onAction="#selectColor" />
+    </children>
+</AnchorPane>

@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Window;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.VariableLabel;
@@ -21,7 +21,7 @@ import jp.ac.aiit.jointry.models.blocks.expression.Variable;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
 import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
-import jp.ac.aiit.jointry.util.StageUtil;
+import jp.ac.aiit.jointry.services.picture.paint.PaintApplication;
 
 public class FrontStageController implements Initializable, JointryCommon {
 
@@ -36,9 +36,6 @@ public class FrontStageController implements Initializable, JointryCommon {
     private Sprite currentSprite;
     private MainController mainController;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
@@ -59,25 +56,19 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        Window owner = stage.getScene().getWindow(); //画面オーナー
-        URL fxml = getClass().getResource("Paint.fxml"); //表示するfxml
-        final StageUtil paintStage = new StageUtil(null, owner, fxml, null);
+        final PaintApplication app = new PaintApplication();
+        Stage paintStage = app.start(null, stage.getScene().getWindow());
 
-        //新規コスチューム追加
-        paintStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
+        paintStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                PaintController ctrl = (PaintController) paintStage.getController();
-
-                if (ctrl.getResult() != null) {
-                    Sprite sprite = new Sprite(ctrl.getResult());
+                if (app.getResult() != null) {
+                    Sprite sprite = new Sprite(app.getResult());
                     sprite.setMainController(mainController);
                     showSprite(sprite);
                 }
             }
         });
-
-        paintStage.getStage().show();
     }
 
     @FXML

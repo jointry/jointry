@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import jp.ac.aiit.jointry.services.picture.paint.views.*?>
+
+<AnchorPane minWidth="650.0" prefHeight="700.0" prefWidth="689.0" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.services.picture.paint.ctrl.PaintController">
+    <children>
+        <AnchorPane fx:id="background" layoutX="190.0" layoutY="24.0" minHeight="350.0" minWidth="450.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color:black;">
+            <children>
+                <Canvas fx:id="canvas" height="345.0" width="445.0" layoutX="2.0" layoutY="2.0" onMouseDragged="#drawing" onMousePressed="#draw" onMouseReleased="#drawing" scaleX="1.0" scaleY="1.0"  />
+            </children>
+        </AnchorPane>
+        <FlowPane layoutX="14.0" layoutY="14.0" prefHeight="248.0" prefWidth="176.0">
+            <children>
+                <PtPencil fx:id="ptool" fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool" optionCard="Pencil.fxml">
+                    <image>
+                        <Image url="@../resource/pencil.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets top="10.0" />
+                    </FlowPane.margin>
+                </PtPencil>
+                <PtEraser fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool" optionCard="Eraser.fxml">
+                    <image>
+                        <Image url="@../resource/eraser.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets left="20.0" top="10.0" />
+                    </FlowPane.margin>
+                </PtEraser>
+                <PtBrush fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool" optionCard="Brush.fxml">
+                    <image>
+                        <Image url="@../resource/brush.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets top="10.0" />
+                    </FlowPane.margin>
+                </PtBrush>
+                <PtFill fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool">
+                    <image>
+                        <Image url="@../resource/fill.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets left="20.0" top="10.0" />
+                    </FlowPane.margin>
+                </PtFill>
+                <PtAirbrush fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool" optionCard="Airbrush.fxml">
+                    <image>
+                        <Image url="@../resource/airbrush.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets top="10.0" />
+                    </FlowPane.margin>
+                </PtAirbrush>
+                <PtSpuit fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool">
+                    <image>
+                        <Image url="@../resource/spuit.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets left="20.0" top="10.0" />
+                    </FlowPane.margin>
+                </PtSpuit>
+                <PtCamera fitHeight="65.0" fitWidth="65.0" onMouseClicked="#selectTool" optionCard="Airbrush.fxml">
+                    <image>
+                        <Image url="@../resource/cam.png" />
+                    </image>
+                    <FlowPane.margin>
+                        <Insets top="10.0" />
+                    </FlowPane.margin>
+                </PtCamera>
+            </children>
+            <padding>
+                <Insets left="10.0" />
+            </padding>
+        </FlowPane>
+        <ScrollPane fx:id="optionCardDeck" layoutX="14.0" layoutY="340.0" prefHeight="200.0" prefWidth="165.0" style="-fx-border-color: black;">
+            <effect>
+                <DropShadow color="GREY" offsetX="1.0" offsetY="1.0" />
+            </effect>
+        </ScrollPane>
+        <Button layoutX="14.0" layoutY="565.0" onAction="#clear" prefHeight="35.0" prefWidth="165.0" text="消す" />
+        <Button layoutX="14.0" layoutY="640.0" onAction="#load" prefHeight="35.0" prefWidth="65.0" text="読込" />
+        <Button layoutX="114.0" layoutY="640.0" onAction="#save" prefHeight="35.0" prefWidth="65.0" text="書出" />
+        <Button layoutX="380.0" layoutY="640.0" onAction="#complete" prefHeight="48.0" prefWidth="165.0" text="完成" />
+        <Button layoutX="569.0" layoutY="640.0" onAction="#cancel" prefHeight="48.0" prefWidth="101.0" text="やめる" />
+        <fx:include layoutX="242.0" layoutY="400.0" source="Color.fxml"/>
+    </children>
+</AnchorPane>

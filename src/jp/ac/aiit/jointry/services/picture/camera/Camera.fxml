@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="594.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.CameraController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="594.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.services.picture.camera.CameraController">
     <children>
-        <ImageView fx:id="camview" fitWidth="450.0" fitHeight="350.0"  layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="camview" fitWidth="445.0" fitHeight="345.0"  layoutX="14.0" layoutY="15.0" />
         <Button layoutX="332.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStartAct" prefHeight="37.0" text="パシャリ" />
         <Button layoutX="420.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleStopAct" prefHeight="37.0" text="終了" />
     </children>

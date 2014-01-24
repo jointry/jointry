@@ -1,4 +1,4 @@
-package jp.ac.aiit.jointry.services.camera;
+package jp.ac.aiit.jointry.services.picture.camera;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

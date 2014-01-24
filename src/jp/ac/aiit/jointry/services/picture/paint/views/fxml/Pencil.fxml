@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import jp.ac.aiit.jointry.services.picture.paint.views.*?>
+
+<VBox prefHeight="180.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <ToolOption fx:id="selectTool" penSize="1" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#selectOption" optionImage="pencil_1">
+            <VBox.margin>
+                <Insets left="30.0" top="20.0" />
+            </VBox.margin>
+        </ToolOption>
+        <ToolOption fitHeight="24.0" fitWidth="24.0" penSize="3" onMouseClicked="#selectOption" optionImage="pencil_2">
+            <VBox.margin>
+                <Insets left="30.0" top="20.0" />
+            </VBox.margin>
+        </ToolOption>
+    </children>
+</VBox>

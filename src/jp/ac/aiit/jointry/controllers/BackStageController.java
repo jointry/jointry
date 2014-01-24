@@ -3,6 +3,8 @@ package jp.ac.aiit.jointry.controllers;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,12 +14,17 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Window;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
 import jp.ac.aiit.jointry.models.blocks.Block;
+import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_COSTUME_SYNC;
+import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
+import jp.ac.aiit.jointry.services.picture.camera.CameraApplication;
+import jp.ac.aiit.jointry.services.picture.paint.PaintApplication;
+import jp.ac.aiit.jointry.services.picture.paint.views.PtCamera;
 import jp.ac.aiit.jointry.util.StageUtil;
 import jp.ac.aiit.jointry.util.StringUtil;
 
@@ -34,25 +41,45 @@ public class BackStageController {
 
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
-        Window owner = costumeList.getScene().getWindow(); //画面オーナー
-        URL fxml = getClass().getResource("Paint.fxml"); //表示するfxml
-        final StageUtil paintStage = new StageUtil(null, owner, fxml, null);
+        final PaintApplication app = new PaintApplication();
+        Stage stage = app.start(null, costumeList.getScene().getWindow());
 
-        //新規コスチューム追加
-        paintStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
+        stage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                PaintController ctrl = (PaintController) paintStage.getController();
-
-                if (ctrl.getResult() != null) {
+                if (app.getResult() != null) {
                     Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
+                    sprite.setSpriteCostume(sprite.addCostume("costume", app.getResult()));
                     showCostumes(sprite);
+
+                    sendMessage();
                 }
             }
         });
+    }
 
-        paintStage.getStage().show();
+    @FXML
+    protected void handleCamBtnAct(ActionEvent event) throws Exception {
+        final CameraApplication app = new CameraApplication();
+
+        try {
+            Stage stage = app.start(costumeList.getScene().getWindow());
+
+            stage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                    if (app.getResult() != null) {
+                        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+                        sprite.setSpriteCostume(sprite.addCostume("costume", app.getResult()));
+                        showCostumes(sprite);
+
+                        sendMessage();
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(PtCamera.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void showCostumes(Sprite sprite) {
@@ -66,29 +93,6 @@ public class BackStageController {
             vbox.getChildren().add(costumeStage.getParent());
         }
         costumeList.setContent(vbox);
-    }
-
-    @FXML
-    protected void handleCamBtnAct(ActionEvent event) throws Exception {
-        Window owner = costumeList.getScene().getWindow(); //画面オーナー
-        URL fxml = getClass().getResource("Camera.fxml"); //表示するfxml
-        final StageUtil cameraStage = new StageUtil(null, owner, fxml, null);
-
-        //新規コスチューム追加
-        cameraStage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                CameraController ctrl = (CameraController) cameraStage.getController();
-
-                if (ctrl.getResult() != null) {
-                    Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
-                    sprite.setSpriteCostume(sprite.addCostume("costume", ctrl.getResult()));
-                    showCostumes(sprite);
-                }
-            }
-        });
-
-        cameraStage.getStage().show();
     }
 
     @FXML
@@ -171,5 +175,10 @@ public class BackStageController {
     public void addBlock(Block block) {
         AnchorPane ap = (AnchorPane) scriptTab.getContent();
         ap.getChildren().add(block);
+    }
+
+    private void sendMessage() {
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        SpriteDialog.sendAllMessage(M_COSTUME_SYNC, sprite);
     }
 }
