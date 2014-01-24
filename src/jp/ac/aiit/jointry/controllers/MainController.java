@@ -95,6 +95,15 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    protected void fSaveAsOverWrite(ActionEvent event) {
+        try {
+            new FileManager().saveAsOverWrite(frontStageController.getSprites());
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
     protected void fopen(ActionEvent event) {
         try {
             new FileManager().load(this);
