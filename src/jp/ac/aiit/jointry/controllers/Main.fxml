@@ -11,16 +11,6 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
-    <Label fx:id="dummylabel"></Label>
-    <bottom>
-        <!--
-        <ImageView fitHeight="51.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/join.png" />
-            </image>
-        </ImageView>
-        -->
-    </bottom>
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
@@ -29,6 +19,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="ファイル">
                     <items>
+                        <MenuItem onAction="#newProject" text="新規作成" />
                         <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
                         <MenuItem mnemonicParsing="false" onAction="#fsave" text="保存" />
                         <MenuItem mnemonicParsing="false" text="閉じる" />

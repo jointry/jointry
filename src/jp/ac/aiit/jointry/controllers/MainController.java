@@ -19,7 +19,6 @@ import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
-import java.util.Timer;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -78,6 +77,12 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    protected void newProject(ActionEvent event) {
+        this.initialize(null, null);
+        initWindow("new");
     }
 
     @FXML
