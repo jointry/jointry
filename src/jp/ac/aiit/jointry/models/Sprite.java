@@ -71,6 +71,22 @@ public final class Sprite extends HBox {
         }
     }
 
+    /**
+     * 該当コスチュームを削除する.
+     */
+    public void deleteCostume(int number) {
+        if (costumes.size() <= 1) {
+            return; //コスチュームは1つ以上必要
+        }
+
+        for (Costume cos : costumes) {
+            if (cos.getNumber() == number) {
+                costumes.remove(cos);
+                break;
+            }
+        }
+    }
+
     public void setSpriteCostume(int number) {
         for (Costume cos : costumes) {
             if (cos.getNumber() == number) {

@@ -61,12 +61,25 @@ public class CostumeCntroller implements Initializable, ParameterAware<Costume> 
 
                     mainController.getBackStageController().showCostumes(sprite);
                     sendMessage("costume", Integer.parseInt(number.getText()), ctrl.getResult());
-
                 }
             }
         });
 
         paintStage.getStage().show();
+    }
+
+    @FXML
+    protected void handleDeleteButtonAction(ActionEvent event) {
+        Sprite sprite = mainController.getFrontStageController().getCurrentSprite();
+        sprite.deleteCostume(Integer.valueOf(number.getText()));
+        mainController.getBackStageController().showCostumes(sprite);
+
+        if (sprite.getCostumeNumber() == Integer.valueOf(number.getText())) {
+            //削除対象のコスチュームの場合、topのコスチュームに合わせる
+            sprite.setSpriteCostume(1);
+        }
+
+        SpriteDialog.sendAllMessage(M_COSTUME_SYNC, sprite);
     }
 
     @Override

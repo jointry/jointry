@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="445.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.CostumeCntroller">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="445.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.CostumeCntroller">
   <children>
     <ImageView id="sprite" fx:id="image" fitHeight="110.0" fitWidth="150.0" layoutX="55.0" layoutY="16.0" onMouseClicked="#handleImageSelected" pickOnBounds="true" preserveRatio="true" />
     <Label layoutX="13.0" layoutY="15.0" text="No." />
     <TextField fx:id="title" layoutX="231.0" layoutY="14.0" prefHeight="22.0" prefWidth="200.0" />
     <Button layoutX="231.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleEditButtonAction" text="編集" />
     <Button layoutX="304.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleCopyButtonAction" text="コピー" />
-    <Button layoutX="376.0" layoutY="99.0" mnemonicParsing="false" text="削除" />
+    <Button layoutX="376.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleDeleteButtonAction" text="削除" />
     <Label id="no" fx:id="number" layoutX="34.0" layoutY="15.0" prefWidth="21.0" text="" />
   </children>
 </AnchorPane>
