@@ -21,7 +21,7 @@
                     <items>
                         <MenuItem onAction="#newProject" text="新規作成" />
                         <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
-                        <MenuItem mnemonicParsing="false" onAction="#fsave" text="保存" />
+                        <MenuItem mnemonicParsing="false" onAction="#fsave" text="名前をつけて保存" />
                         <MenuItem onAction="#fSaveAsOverWrite" text="上書き保存" />
                         <MenuItem mnemonicParsing="false" text="閉じる" />
                     </items>
