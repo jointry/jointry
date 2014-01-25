@@ -86,6 +86,8 @@ public class MainController implements Initializable {
     protected void newProject(ActionEvent event) {
         this.initialize(null, null);
         initWindow("new");
+
+        MainDialog.sendSynchronize();
     }
 
     @FXML
