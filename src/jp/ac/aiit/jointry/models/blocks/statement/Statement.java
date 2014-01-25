@@ -41,6 +41,10 @@ public abstract class Statement extends Block {
             public void handle(MouseEvent t) {
                 initializeLink();
 
+                if (getConnector() == null) {
+                    return;
+                }
+
                 // 上下の接続
                 if (con.getPosition() == Connector.Position.BOTTOM) {
                     Statement target = (Statement) con.getHolder();

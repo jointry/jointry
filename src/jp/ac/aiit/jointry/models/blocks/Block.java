@@ -114,6 +114,10 @@ public abstract class Block extends AnchorPane {
         this.con = con;
     }
 
+    public Connector getConnector() {
+        return this.con;
+    }
+
     protected void setChangeListener(final TextField field) {
         field.textProperty().addListener(new ChangeListener<String>() {
             @Override
