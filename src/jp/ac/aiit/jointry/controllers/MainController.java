@@ -43,6 +43,7 @@ public class MainController implements Initializable {
     private Agent agent;
     private String userName;
     private ListView members = new ListView();
+    private FileManager fileManager;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,6 +78,8 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        fileManager = new FileManager();
     }
 
     @FXML
@@ -88,7 +91,7 @@ public class MainController implements Initializable {
     @FXML
     protected void fsave(ActionEvent event) {
         try {
-            new FileManager().save(frontStageController.getSprites());
+            fileManager.save(frontStageController.getSprites());
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,7 +100,7 @@ public class MainController implements Initializable {
     @FXML
     protected void fSaveAsOverWrite(ActionEvent event) {
         try {
-            new FileManager().saveAsOverWrite(frontStageController.getSprites());
+            fileManager.saveAsOverWrite(frontStageController.getSprites());
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +109,7 @@ public class MainController implements Initializable {
     @FXML
     protected void fopen(ActionEvent event) {
         try {
-            new FileManager().load(this);
+            fileManager.load(this);
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }

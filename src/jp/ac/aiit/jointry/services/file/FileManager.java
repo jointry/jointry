@@ -17,7 +17,7 @@ public class FileManager {
 
     private static final String JOINTRY_EXTENSION = ".jty";
     private static final String DEFAULT_TARGET_DIRECTORY = System.getProperty("user.home");
-    private static String targetDirectory = DEFAULT_TARGET_DIRECTORY;
+    private String targetDirectory = DEFAULT_TARGET_DIRECTORY;
     private String[] matches = {
         ".+\\.jty",
         "sprite\\d+_script",
