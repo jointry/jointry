@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import jp.ac.aiit.jointry.services.picture.paint.views.*?>
 
-<VBox prefHeight="180.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml">
+<VBox fx:id="optionCard" prefHeight="180.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.services.picture.paint.ctrl.OptionController">
     <children>
         <ToolOption fx:id="selectTool" penSize="5" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#selectOption" optionImage="airbrush_1">
             <VBox.margin>

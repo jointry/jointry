@@ -12,7 +12,7 @@ public class PtPencil extends PaintTool {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gc.setStroke(PaintApplication.getModel().getColor());
-        gc.setLineWidth(getOptionController().selectTool.getPenSize());
+        gc.setLineWidth(getOptionController().getSelectTool().getPenSize());
         gc.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
 }

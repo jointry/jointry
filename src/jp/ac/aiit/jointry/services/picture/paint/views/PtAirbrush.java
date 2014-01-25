@@ -17,7 +17,7 @@ public class PtAirbrush extends PaintTool {
         gc.setFill(PaintApplication.getModel().getColor());
         gc.setStroke(PaintApplication.getModel().getColor());
 
-        int r = getOptionController().selectTool.getPenSize();
+        int r = getOptionController().getSelectTool().getPenSize();
         int n = r * AMOUNT_OF_LIQUID; // エアブラシのドット量
         int airbrushRR = r * r;
 

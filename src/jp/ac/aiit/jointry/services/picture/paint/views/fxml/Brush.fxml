@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import jp.ac.aiit.jointry.services.picture.paint.views.*?>
 
-<GridPane prefHeight="180.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml">
+<GridPane fx:id="optionCard" prefHeight="180.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.services.picture.paint.ctrl.OptionController">
     <children>
         <ToolOption fx:id="selectTool" shape="circle" penSize="7" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#selectOption" optionImage="brush_00" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <ToolOption shape="circle" penSize="5" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#selectOption" optionImage="brush_01" GridPane.columnIndex="1" GridPane.rowIndex="0" />

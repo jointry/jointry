@@ -13,10 +13,10 @@ public class PtBrush extends PaintTool {
         gc.setFill(PaintApplication.getModel().getColor());
         gc.setStroke(PaintApplication.getModel().getColor());
 
-        int size = getOptionController().selectTool.getPenSize();
+        int size = getOptionController().getSelectTool().getPenSize();
         Point2D sBounds = calcBounds(start, Math.abs(size), size);
 
-        switch (getOptionController().selectTool.getShape()) {
+        switch (getOptionController().getSelectTool().getShape()) {
             case "square":
                 gc.fillRect(sBounds.getX(), sBounds.getY(), size, size);
                 break;
