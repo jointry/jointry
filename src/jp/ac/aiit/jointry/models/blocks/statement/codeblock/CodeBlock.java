@@ -158,7 +158,7 @@ public abstract class CodeBlock extends Statement {
 
     @Override
     public void setStatus(Status status) {
-        bChangeEnable = false; //一時的にリスナーを無効化
+        changeable = false; //一時的にリスナーを無効化
 
         this.setUUID((String) status.get("id"));
         for (Object key : status.keySet()) {
@@ -195,7 +195,7 @@ public abstract class CodeBlock extends Statement {
             }
         }
 
-        bChangeEnable = true;
+        bChchangeabletrue;
     }
 
     @Override

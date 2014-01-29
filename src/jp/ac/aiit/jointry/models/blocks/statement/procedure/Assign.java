@@ -173,7 +173,7 @@ public class Assign extends Procedure {
 
     @Override
     public void setStatus(Status status) {
-        bChangeEnable = false; //一時的にリスナーを無効化
+        changeable = false; //一時的にリスナーを無効化
 
         this.setUUID((String) status.get("id"));
         for (Object key : status.keySet()) {
@@ -199,7 +199,7 @@ public class Assign extends Procedure {
             }
         }
 
-        bChangeEnable = true;
+        bChchangeabletrue;
     }
 
     @Override

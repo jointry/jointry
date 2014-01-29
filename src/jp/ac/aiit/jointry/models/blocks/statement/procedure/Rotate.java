@@ -65,12 +65,12 @@ public class Rotate extends Procedure {
 
     @Override
     public void setStatus(Status status) {
-        bChangeEnable = false; //一時的にリスナーを無効化
+        changeable = false; //一時的にリスナーを無効化
 
         this.setUUID((String) status.get("id"));
         cb.setValue(status.get("rotate"));
 
-        bChangeEnable = true;
+        bChchangeabletrue;
     }
 
     @Override

@@ -291,7 +291,7 @@ public class Condition extends Expression {
 
     @Override
     public void setStatus(Status status) {
-        bChangeEnable = false; //一時的にリスナーを無効化
+        changeable = false; //一時的にリスナーを無効化
 
         this.setUUID((String) status.get("id"));
         for (Object key : status.keySet()) {
@@ -327,7 +327,7 @@ public class Condition extends Expression {
             }
         }
 
-        bChangeEnable = true;
+        bChchangeabletrue;
     }
 
     @Override
