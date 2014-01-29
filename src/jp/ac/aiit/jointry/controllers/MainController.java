@@ -126,12 +126,12 @@ public class MainController implements Initializable {
         //協同編集
         Window owner = rootPane.getScene().getWindow(); //画面オーナー
         URL fxml = getClass().getResource("Cooperation.fxml"); //表示するfxml
-        final StageUtil stage = new StageUtil(null, owner, fxml, null);
+        final StageUtil su = new StageUtil(null, owner, fxml, null);
 
-        final CooperationController ctrl = (CooperationController) stage.getController();
+        final CooperationController ctrl = (CooperationController) su.getController();
         ctrl.setMainController(MainController.this);
 
-        stage.getStage().setOnHidden(new EventHandler<WindowEvent>() {
+        su.getStage().setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 if (agent == null) {
@@ -149,7 +149,7 @@ public class MainController implements Initializable {
             }
         });
 
-        stage.getStage().show();
+        su.getStage().show();
     }
 
     @FXML
