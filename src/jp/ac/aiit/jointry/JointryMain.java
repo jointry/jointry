@@ -33,6 +33,7 @@ import org.comtel.javafx.robot.RobotFactory;
 public class JointryMain extends Application {
 
     private KeyBoardPopup popup;
+    private boolean enableKeyboard = true;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -52,6 +53,8 @@ public class JointryMain extends Application {
                 Platform.exit();
             }
         });
+
+        controller.setJointryMain(this);
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -76,7 +79,6 @@ public class JointryMain extends Application {
             public void changed(ObservableValue<? extends Node> value, Node n1, Node n2) {
                 if (n2 != null && n2 instanceof TextInputControl) {
                     setPopupVisible(true, (TextInputControl) n2);
-
                 } else {
                     setPopupVisible(false, null);
                 }
@@ -103,6 +105,10 @@ public class JointryMain extends Application {
     }
 
     private void setPopupVisible(final boolean b, final TextInputControl textNode) {
+        if (!isEnableKeyboard()) {
+            return;
+        }
+
         Platform.runLater(new Runnable() {
             private Animation fadeAnimation;
 
@@ -167,5 +173,19 @@ public class JointryMain extends Application {
 
             }
         });
+    }
+
+    /**
+     * @return the enableKeyboard
+     */
+    public boolean isEnableKeyboard() {
+        return enableKeyboard;
+    }
+
+    /**
+     * @param enableKeyboard the enableKeyboard to set
+     */
+    public void setEnableKeyboard(boolean enableKeyboard) {
+        this.enableKeyboard = enableKeyboard;
     }
 }

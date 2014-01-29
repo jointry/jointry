@@ -23,6 +23,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import jp.ac.aiit.jointry.JointryMain;
 import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_MAIN_DISCONNECT;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
@@ -44,6 +45,7 @@ public class MainController implements Initializable {
     private String userName;
     private ListView members = new ListView();
     private FileManager fileManager;
+    private JointryMain jointryMain;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -251,6 +253,14 @@ public class MainController implements Initializable {
 
     public Agent getAgent() {
         return this.agent;
+    }
+
+    public void setJointryMain(JointryMain jm) {
+        this.jointryMain = jm;
+    }
+
+    public JointryMain getJointryMain() {
+        return this.jointryMain;
     }
 
     private class MainMonitor extends DefaultMonitor {

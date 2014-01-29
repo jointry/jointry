@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -143,5 +144,15 @@ public class FrontStageController implements Initializable, JointryCommon {
 
     void addVariable(VariableLabel vl) {
         variables.getChildren().add(vl);
+    }
+
+    @FXML
+    void keyboard(ActionEvent event) {
+        CheckBox chk = (CheckBox) event.getSource();
+        if (chk.isSelected()) {
+            mainController.getJointryMain().setEnableKeyboard(true);
+        } else {
+            mainController.getJointryMain().setEnableKeyboard(false);
+        }
     }
 }

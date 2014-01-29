@@ -9,11 +9,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="480.0" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
   <children>
-    <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="200.0">
+    <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="233.0">
       <children>
-        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#start" text="じっこう" />
-        <Button id="stop" mnemonicParsing="false" onAction="#stop" text="ていし" />
-        <Button mnemonicParsing="false" onAction="#reset" text="りせっと" />
+        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#start" prefWidth="89.0" text="じっこう" />
+        <Button id="stop" mnemonicParsing="false" onAction="#stop" prefWidth="79.0" text="ていし" />
+        <Button mnemonicParsing="false" onAction="#reset" prefWidth="86.0" text="りせっと" />
       </children>
     </HBox>
     <AnchorPane layoutX="8.0" layoutY="36.0" minHeight="345.0" prefHeight="350.0" prefWidth="450.0" style="-fx-border-color: rgb(49, 89, 23);">
@@ -26,8 +26,9 @@
         </AnchorPane>
       </children>
     </AnchorPane>
-    <Button layoutX="14.0" layoutY="402.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
-    <Slider fx:id="speed_slider" layoutX="214.0" layoutY="10.0" max="2000.0" min="10.0" prefWidth="244.0" value="1000.0" />
-    <Button fx:id="sync" layoutX="410.0" layoutY="412.0" mnemonicParsing="false" onAction="#sync" prefHeight="25.0" prefWidth="48.0" text="同期" visible="true" />
+    <Button layoutX="8.0" layoutY="401.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
+    <Slider fx:id="speed_slider" layoutX="247.0" layoutY="10.0" max="2000.0" min="10.0" prefWidth="211.0" value="1000.0" />
+    <Button fx:id="sync" layoutX="386.0" layoutY="402.0" mnemonicParsing="false" onAction="#sync" prefHeight="44.0" prefWidth="72.0" text="どうき" visible="true" />
+    <CheckBox layoutX="224.0" layoutY="402.0" mnemonicParsing="false" onAction="#keyboard" prefHeight="43.0" prefWidth="170.0" selected="true" text="キーボードをつかう" />
   </children>
 </AnchorPane>
