@@ -40,7 +40,7 @@ public class Flip extends Procedure {
     public void setStatus(Status status) {
         changeable = false; //一時的にリスナーを無効化
         this.setUUID((String) status.get("id"));
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

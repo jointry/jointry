@@ -199,7 +199,7 @@ public class Assign extends Procedure {
             }
         }
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

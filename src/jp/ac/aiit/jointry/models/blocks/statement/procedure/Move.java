@@ -72,7 +72,7 @@ public class Move extends Procedure {
         this.setUUID((String) status.get("id"));
         cb_distance.setValue(status.get("move"));
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

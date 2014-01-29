@@ -73,6 +73,6 @@ public class Sleep extends Procedure {
         this.setUUID((String) status.get("id"));
         cb.setValue(status.get("sleep"));
 
-        bChchangeabletrue;
+        changeable = true;
     }
 }

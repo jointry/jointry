@@ -195,7 +195,7 @@ public abstract class CodeBlock extends Statement {
             }
         }
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

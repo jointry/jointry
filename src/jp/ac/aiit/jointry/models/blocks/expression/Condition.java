@@ -327,7 +327,7 @@ public class Condition extends Expression {
             }
         }
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

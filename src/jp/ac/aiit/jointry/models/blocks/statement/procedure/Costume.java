@@ -72,6 +72,6 @@ public class Costume extends Procedure {
         this.setUUID((String) status.get("id"));
         cb.setValue(status.get("costume"));
 
-        bChchangeabletrue;
+        changeable = true;
     }
 }

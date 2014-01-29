@@ -219,7 +219,7 @@ public class Calculate extends Procedure {
             }
         }
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

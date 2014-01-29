@@ -70,7 +70,7 @@ public class Rotate extends Procedure {
         this.setUUID((String) status.get("id"));
         cb.setValue(status.get("rotate"));
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

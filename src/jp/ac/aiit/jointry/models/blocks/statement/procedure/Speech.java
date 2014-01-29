@@ -107,7 +107,7 @@ public class Speech extends Procedure {
             setVariable(variable);
         }
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override

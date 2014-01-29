@@ -318,7 +318,7 @@ public class Variable extends Expression {
         this.setUUID((String) status.get("id"));
         setName((String) status.get("name"));
 
-        bChchangeabletrue;
+        changeable = true;
     }
 
     @Override
