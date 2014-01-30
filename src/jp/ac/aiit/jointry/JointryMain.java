@@ -71,7 +71,7 @@ public class JointryMain extends Application {
         stage.getScene().getStylesheets().add(css);
 
         // initialize
-        popup = KeyBoardPopupBuilder.create().initScale(1.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
+        popup = KeyBoardPopupBuilder.create().initScale(2.0).initLocale(Locale.ENGLISH).addIRobot(RobotFactory.createFXRobot()).build();
 
         // add keyboard scene listener to all text components
         stage.getScene().focusOwnerProperty().addListener(new ChangeListener<Node>() {
