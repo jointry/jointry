@@ -149,11 +149,13 @@ public class MainDialog extends JointryDialogBase {
         }
     }
 
-    public static void sendEvent(int event) {
-        DInfo dinfo = new DInfo(D_MAIN);
-        dinfo.set(K_METHOD, event);
+    public static void sendEvent(Agent agent, int event) {
+        if (agent != null) {
+            DInfo dinfo = new DInfo(D_MAIN);
+            dinfo.set(K_METHOD, event);
 
-        mainController.getAgent().sendNotify(dinfo);
+            agent.sendNotify(dinfo);
+        }
     }
 
     private void sendMembers() {

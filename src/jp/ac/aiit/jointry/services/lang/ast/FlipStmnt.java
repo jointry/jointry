@@ -18,12 +18,16 @@ public class FlipStmnt extends ASTList {
         SequentialTransition st = env.getSequentialTransition();
         ScaleTransition t = new ScaleTransition();
 
-        double scale = sprite.getScaleX();
-        t.setFromX(scale);
-        t.setToX(scale * -1);
+        int fromDirection = sprite.getDirection();
+        t.setFromX(fromDirection);
 
-        t.setNode(sprite);
-        st.getChildren().add(t);
+        int toDirection = fromDirection * -1;
+        t.setToX(toDirection);
+ 
+         t.setNode(sprite);
+         st.getChildren().add(t);
+
+        sprite.setDirection(toDirection);
         return null;
     }
 }
