@@ -1,13 +1,9 @@
 package jp.ac.aiit.jointry.models;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.SequentialTransition;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.controllers.BackStageController;
 import jp.ac.aiit.jointry.services.lang.ast.ASTree;
@@ -19,15 +15,12 @@ import jp.ac.aiit.jointry.services.lang.parser.Lexer;
 import jp.ac.aiit.jointry.services.lang.parser.ParseException;
 import jp.ac.aiit.jointry.services.lang.parser.Token;
 import jp.ac.aiit.jointry.models.blocks.statement.Statement;
-import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
-import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 
 public class SpriteTask extends Task {
 
     private Sprite sprite;
     private double speed;
     private SequentialTransition st;
-    private Timer syncTimer;
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
@@ -75,16 +68,6 @@ public class SpriteTask extends Task {
 
         st.play();
 
-        syncTimer = new Timer();
-        syncTimer.schedule(new SyncTask(), 0, 1000 / 60); //1秒間に約60回同期
-
-        st.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                finish();
-            }
-        });
-
         return retval;
     }
 
@@ -95,21 +78,6 @@ public class SpriteTask extends Task {
     public void finish() {
         if (st != null) {
             st.stop();
-        }
-
-        if (syncTimer != null) {
-            syncTimer.cancel();
-            syncTimer = null;
-        }
-
-        SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
-    }
-
-    private class SyncTask extends TimerTask {
-
-        @Override
-        public void run() {
-            SpriteDialog.sendSimpleMessage(JointryCommon.M_SPRITE_CHANGED, sprite);
         }
     }
 }

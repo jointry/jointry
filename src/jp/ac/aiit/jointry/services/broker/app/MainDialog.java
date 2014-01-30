@@ -46,8 +46,28 @@ public class MainDialog extends JointryDialogBase {
                 mMainSynchronize(dinfo);
                 break;
 
+            case M_MAIN_SCRIPT_EXECUTE:
+                mScriptExecute();
+                break;
+
+            case M_MAIN_SCRIPT_STOP:
+                mScriptStop();
+                break;
+
             default:
                 break;
+        }
+    }
+
+    private void mScriptExecute() {
+        mainController.getBackStageController().start();
+    }
+
+    private void mScriptStop() {
+        try {
+            mainController.getBackStageController().stop();
+        } catch (Exception ex) {
+            Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -127,6 +147,13 @@ public class MainDialog extends JointryDialogBase {
 
             agent.sendQuery(dinfo);
         }
+    }
+
+    public static void sendEvent(int event) {
+        DInfo dinfo = new DInfo(D_MAIN);
+        dinfo.set(K_METHOD, event);
+
+        mainController.getAgent().sendNotify(dinfo);
     }
 
     private void sendMembers() {

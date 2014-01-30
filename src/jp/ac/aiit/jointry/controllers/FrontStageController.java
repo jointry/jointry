@@ -42,8 +42,9 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     @FXML
-    protected void start(ActionEvent event) {
+    public void start(ActionEvent event) {
         this.mainController.getBackStageController().start();
+        MainDialog.sendEvent(M_MAIN_SCRIPT_EXECUTE);
     }
 
     public double getSpeed() {
@@ -51,8 +52,9 @@ public class FrontStageController implements Initializable, JointryCommon {
     }
 
     @FXML
-    protected void stop(ActionEvent event) throws Exception {
+    public void stop(ActionEvent event) throws Exception {
         this.mainController.getBackStageController().stop();
+        MainDialog.sendEvent(M_MAIN_SCRIPT_STOP);
     }
 
     @FXML
