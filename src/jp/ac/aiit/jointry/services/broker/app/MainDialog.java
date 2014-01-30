@@ -20,6 +20,10 @@ public class MainDialog extends JointryDialogBase {
 
     @Override
     public void onQuery(int event, DInfo dinfo) {
+        if (mainController == null) {
+            return;
+        }
+
         switch (event) {
             case M_MAIN_CONNECT:
                 mMainConnect(dinfo);
