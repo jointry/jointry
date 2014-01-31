@@ -60,4 +60,8 @@ public interface JointryCommon extends Common {
     public static final String K_COSTUME_LIST = "costume_list";
     public static final String K_BLOCK_STATUS = "block_status";
     public static final String PROXY_ID = "proxy_id"; // サーバプロキシID
+    /**
+     * ルーム状況を取得するためのダミーネーム
+     */
+    public static final String DUMMY_AGENT_NAME = "dummyAgent";
 }

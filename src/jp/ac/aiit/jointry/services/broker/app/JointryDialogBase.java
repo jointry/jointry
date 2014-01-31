@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
+import static broker.core.Common.V_OK;
 import broker.core.DInfo;
 import broker.core.DialogBase;
 import javafx.application.Platform;
@@ -49,10 +50,9 @@ public abstract class JointryDialogBase extends DialogBase implements JointryCom
             @Override
             public void run() {
                 onQuery(getEvent(dinfo), dinfo);
+                sendAnswer(dinfo, V_OK);
             }
         });
-
-        sendAnswer(dinfo, V_OK);
     }
 
     @Override

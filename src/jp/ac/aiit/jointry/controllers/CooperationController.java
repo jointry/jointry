@@ -41,10 +41,6 @@ public class CooperationController implements Initializable, JointryCommon {
     private RoomController selectRoom;
     private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
     private MainController mainController;
-    /**
-     * ルーム状況を取得するためのダミーネーム
-     */
-    public static final String DUMMY_AGENT_NAME = "dummyAgent";
 
     @FXML
     protected void createRoom(ActionEvent event) {
@@ -87,6 +83,11 @@ public class CooperationController implements Initializable, JointryCommon {
     }
 
     private void connect(String server) {
+        if(dummyAgent != null) {
+            return;
+        }
+        
+        roomList.getChildren().clear();
         dummyAgent = new Agent();
 
         //立ち上がっているサーバー一覧を取得する
@@ -94,6 +95,9 @@ public class CooperationController implements Initializable, JointryCommon {
             dummyAgent.startListening(CHAT_TIMEOUT);
 
             DInfo info = dummyAgent.query(K_SERVER_INFO);
+            dummyAgent.close();
+            dummyAgent = null;
+
             String[] serverList = info.get(K_SERVER_INFO).split(":");
 
             int roomId = 1; //部屋番号

@@ -29,6 +29,16 @@ public class JointryAccount extends Account {
         }
     }
 
+    @Override
+    public boolean isActiveUser(String name) {
+        boolean result = super.isActiveUser(name);
+        if (result && JointryCommon.DUMMY_AGENT_NAME.equals(name)) {
+            return false;
+        }
+
+        return result;
+    }
+
     public static void removeUser(String userName) {
         userList.remove(userName); //最初に見つけたユーザのみを削除
     }

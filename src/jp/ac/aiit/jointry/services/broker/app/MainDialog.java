@@ -120,6 +120,12 @@ public class MainDialog extends JointryDialogBase {
             dinfo.set(K_MAIN_INFO, main_info);
 
             mainController.getAgent().sendNotify(dinfo);
+
+            dinfo = new DInfo(D_MAIN);
+            dinfo.set(K_METHOD, M_MAIN_MEMBERS);
+            dinfo.set(K_USER_NAME_LIST, JointryAccount.getUsers().toString());
+
+            mainController.getAgent().sendNotify(dinfo);
         }
     }
 
