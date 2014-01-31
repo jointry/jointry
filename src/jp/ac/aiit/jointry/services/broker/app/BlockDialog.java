@@ -11,6 +11,7 @@ import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
+import static jp.ac.aiit.jointry.services.broker.app.JointryDialogBase.mainController;
 import jp.ac.aiit.jointry.util.BlockUtil;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
@@ -28,6 +29,14 @@ public class BlockDialog extends JointryDialogBase {
 
     @Override
     public void onNotify(int event, DInfo dinfo) {
+        if(mainController == null) {
+            return;
+        }
+
+        if (event == M_BLOCK_VARIABLE_CREATE) {
+            mBlockVariableCreate(dinfo);
+        }
+
         final Sprite sprite = getTargetSprite(dinfo);
         if (sprite == null) {
             return; //該当なし
@@ -37,9 +46,6 @@ public class BlockDialog extends JointryDialogBase {
         switch (event) {
             case M_BLOCK_CREATE:
                 mBlockCreate(sprite, dinfo);
-                return;
-            case M_BLOCK_VARIABLE_CREATE:
-                mBlockVariableCreate(dinfo);
                 return;
         }
 
