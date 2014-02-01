@@ -1,5 +1,6 @@
 package jp.ac.aiit.jointry.controllers;
 
+import jp.ac.aiit.jointry.models.RoomView;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,14 +17,14 @@ import javafx.stage.Stage;
 import jp.ac.aiit.jointry.models.Room;
 import broker.core.Agent;
 import broker.core.DInfo;
+import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
 import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
-import jp.ac.aiit.jointry.util.StageUtil;
 
 public class CooperationController implements Initializable, JointryCommon {
-
+    
     @FXML
     private TextField name;
     @FXML
@@ -38,41 +39,41 @@ public class CooperationController implements Initializable, JointryCommon {
     private RadioButton custom_server;
     private Agent agent;
     private Agent dummyAgent;
-    private RoomController selectRoom;
+    private RoomView selectRoom;
     private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
     private MainController mainController;
-
+    
     @FXML
     protected void createRoom(ActionEvent event) {
         agent = new Agent();
-
+        
         if (agent.open(url.getText(), CHAT_SERVICE, SERVER, name.getText(), "", null)) {
             agent.startListening(CHAT_TIMEOUT);
             JointryAccount.addUser(name.getText());
             mainController.initWindow("connect");
-
+            
             windowClose();
         }
     }
-
+    
     @FXML
     protected void participationRoom(ActionEvent event) {
         agent = new Agent();
-
+        
         if (agent.open(url.getText(), accessMapping(CHAT_SERVICE, CLIENT, name.getText(), "", null, selectRoom.getRoom().getProxyId()))) {
             agent.startListening(CHAT_TIMEOUT);
             MainDialog.sendConnection(M_MAIN_CONNECT, agent, name.getText());
             mainController.initWindow("connect");
-
+            
             windowClose();
         }
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         connect(DEFAULT_SERVER);
     }
-
+    
     @FXML
     protected void connect(ActionEvent event) {
         if (custom_server.isSelected()) {
@@ -81,9 +82,9 @@ public class CooperationController implements Initializable, JointryCommon {
             connect(DEFAULT_SERVER);
         }
     }
-
+    
     private void connect(String server) {
-        if(dummyAgent != null) {
+        if (dummyAgent != null) {
             return;
         }
         
@@ -93,49 +94,46 @@ public class CooperationController implements Initializable, JointryCommon {
         //立ち上がっているサーバー一覧を取得する
         if (dummyAgent.open(server, CHAT_SERVICE, SERVER, DUMMY_AGENT_NAME, "", null)) {
             dummyAgent.startListening(CHAT_TIMEOUT);
-
+            
             DInfo info = dummyAgent.query(K_SERVER_INFO);
-            dummyAgent.close();
-            dummyAgent = null;
-
             String[] serverList = info.get(K_SERVER_INFO).split(":");
-
+            
             int roomId = 1; //部屋番号
             for (String s : serverList) {
                 Room room = new Room(s);
                 if (room.getName().equals(DUMMY_AGENT_NAME)) {
                     continue;
                 }
-
+                
                 addRoom(roomId++, room);//部屋登録
             }
         } else {
             messages.setText("協同編集用サーバーに接続出来ません。");
         }
+        
+        dummyAgent.close();
+        dummyAgent = null;
     }
-
+    
     private void addRoom(int roomId, Room room) {
-        URL fxml = getClass().getResource("Room.fxml"); //表示するfxml
-        final StageUtil roomStage = new StageUtil(null, null, fxml, null);
-
-        final RoomController ctrl = (RoomController) roomStage.getController();
-        ctrl.setRoom(roomId, room);
-
-        ctrl.getBackground().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        final RoomView roomView = new RoomView(roomId, room);
+        
+        roomView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 if (selectRoom != null) {
-                    selectRoom.getBackground().setStyle("-fx-border-color: white;");
+                    selectRoom.setStyle("-fx-border-color: white;");
                 }
-
-                ctrl.getBackground().setStyle("-fx-border-color: red;");
-                selectRoom = ctrl;
+                
+                roomView.setStyle("-fx-border-color: red;");
+                selectRoom = roomView;
             }
         });
-
-        roomList.getChildren().add(roomStage.getParent());
+        
+        FlowPane.setMargin(roomView, new Insets(20, 0, 0, 40));
+        roomList.getChildren().add(roomView);
     }
-
+    
     private Map<String, String> accessMapping(String serviceId, String role,
                                               String userId, String password, String proxyFQCN, String proxyId) {
         Map<String, String> paramMap = new HashMap();
@@ -147,10 +145,10 @@ public class CooperationController implements Initializable, JointryCommon {
         if (proxyFQCN != null) {
             paramMap.put(PROXY_FQCN, proxyFQCN);
         }
-
+        
         return paramMap;
     }
-
+    
     public void windowClose() {
         if (dummyAgent != null) {
             dummyAgent.close();
@@ -158,15 +156,15 @@ public class CooperationController implements Initializable, JointryCommon {
         Stage stage = (Stage) roomList.getScene().getWindow();
         stage.close();
     }
-
+    
     public Agent getAgent() {
         return agent;
     }
-
+    
     public String getName() {
         return name.getText();
     }
-
+    
     public void setMainController(MainController controller) {
         this.mainController = controller;
     }
