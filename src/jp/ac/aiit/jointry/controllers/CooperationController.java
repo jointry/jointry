@@ -19,6 +19,7 @@ import broker.core.Agent;
 import broker.core.DInfo;
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
 import jp.ac.aiit.jointry.services.broker.app.JointryAccount;
 import jp.ac.aiit.jointry.services.broker.app.JointryCommon;
 import jp.ac.aiit.jointry.services.broker.app.MainDialog;
@@ -116,7 +117,7 @@ public class CooperationController implements Initializable, JointryCommon {
     }
     
     private void addRoom(int roomId, Room room) {
-        final RoomView roomView = new RoomView(roomId, room);
+        final RoomView roomView = new RoomView(roomId, room, new Image(getClass().getResource("images/room.png").toString()));
         
         roomView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
