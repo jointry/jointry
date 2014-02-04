@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.controllers;
 
-import jp.ac.aiit.jointry.models.RoomView;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,7 +116,7 @@ public class CooperationController implements Initializable, JointryCommon {
     }
     
     private void addRoom(int roomId, Room room) {
-        final RoomView roomView = new RoomView(roomId, room, new Image(getClass().getResource("images/room.png").toString()));
+        final RoomView roomView = new RoomView(roomId, room);
         
         roomView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

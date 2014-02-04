@@ -1,5 +1,6 @@
-package jp.ac.aiit.jointry.models;
+package jp.ac.aiit.jointry.controllers;
 
+import java.net.URL;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -7,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import jp.ac.aiit.jointry.JointryMain;
+import jp.ac.aiit.jointry.models.Room;
 
 /**
  * http://iconhoihoi.oops.jp/ 素材はこちらからお借りしました.
@@ -17,7 +20,7 @@ public class RoomView extends AnchorPane {
     private Label id;
     private Room room;
 
-    public RoomView(int roomId, Room room, Image img) {
+    public RoomView(int roomId, Room room) {
         this.room = room;
 
         this.setPrefWidth(260.0);
@@ -40,7 +43,7 @@ public class RoomView extends AnchorPane {
         id.setFont(new Font(36.0));
         id.setTextFill(Color.WHITE);
 
-        ImageView imageview = new ImageView(img);
+        ImageView imageview = new ImageView(getClass().getResource("images/room.png").toString());
         imageview.setFitWidth(258.0);
         imageview.setFitHeight(38.0);
         imageview.setLayoutX(1.0);
