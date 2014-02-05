@@ -185,9 +185,18 @@ public final class Sprite extends HBox {
     }
 
     private void setMouseEvent() {
+        setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                startFullDrag();
+            }
+        });
+
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                setMouseTransparent(true);
+
                 getMainController().getFrontStageController().setCurrentSprite(Sprite.this);
                 mouseX = event.getSceneX() - getTranslateX();
                 mouseY = event.getSceneY() - getTranslateY();
@@ -221,6 +230,8 @@ public final class Sprite extends HBox {
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                setMouseTransparent(false);
+
                 if (!isInsideDragRange(event.getSceneX(), event.getSceneY())) {
                     setTranslateX(pressX);
                     setTranslateY(pressY);

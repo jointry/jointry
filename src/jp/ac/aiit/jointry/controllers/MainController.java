@@ -20,7 +20,6 @@ import jp.ac.aiit.jointry.models.Sprite;
 import broker.core.Agent;
 import broker.core.DefaultMonitor;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import jp.ac.aiit.jointry.JointryMain;
@@ -34,6 +33,8 @@ public class MainController implements Initializable {
 
     @FXML
     private BorderPane rootPane;
+    @FXML
+    private VBox rightPane;
     @FXML
     private MenuItem roomEnter;
     @FXML
@@ -58,7 +59,7 @@ public class MainController implements Initializable {
             Parent front = (Parent) ld.load();
             FrontStageController fsc = ld.<FrontStageController>getController();
             fsc.setMainController(this);
-            rootPane.setRight(front);
+            rightPane.getChildren().add(front);
             setFrontStageController(fsc);
 
             // BackStage
@@ -177,6 +178,10 @@ public class MainController implements Initializable {
                 URL costume_path3 = getClass().getResource("images/sprite_3.gif");
                 sprite.addCostume("costume", new Image(costume_path3.toString()));
                 frontStageController.showSprite(sprite);
+
+                if (agent != null) {
+                    initWindow("connect"); //協同編集中であればメンバーを表示
+                }
                 break;
 
             case "load":
@@ -189,27 +194,18 @@ public class MainController implements Initializable {
 
             case "connect":
                 //参加しているメンバー領域の表示
-                VBox connectFront = new VBox();
-                connectFront.getChildren().addAll(rootPane.getRight(), members);
-                rootPane.setRight(connectFront);
+                rightPane.getChildren().add(members);
                 refreshMembers();
-                members.setStyle("-fx-border-color: rgb(49, 89, 23)");
                 roomEnter.setVisible(false);
                 roomExit.setVisible(true);
                 break;
 
             case "disconnect":
                 //参加しているメンバー領域の非表示
-                Node disconnectFront = rootPane.getRight();
-
-                if (disconnectFront instanceof VBox) {
-                    rootPane.setRight(((VBox) disconnectFront).getChildren().get(0));
-                }
-
+                rightPane.getChildren().remove(members);
                 roomEnter.setVisible(true);
                 roomExit.setVisible(false);
                 getFrontStageController().setSyncVisible(false);
-
                 break;
 
             default:

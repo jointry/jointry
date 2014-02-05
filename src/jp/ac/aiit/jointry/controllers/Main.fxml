@@ -9,40 +9,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import jp.ac.aiit.jointry.controllers.*?>
 
-<BorderPane fx:id="rootPane" center="$null" prefHeight="768.0" prefWidth="1024.0" right="$null" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
-    <stylesheets>
-        <URL value="@style.css" />
-    </stylesheets>
-    <top>
-        <MenuBar fx:id="menu" useSystemMenuBar="true">
-            <menus>
-                <Menu mnemonicParsing="false" text="ファイル">
-                    <items>
-                        <MenuItem onAction="#newProject" text="新規作成" />
-                        <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
-                        <MenuItem mnemonicParsing="false" onAction="#fsave" text="名前をつけて保存" />
-                        <MenuItem onAction="#fSaveAsOverWrite" text="上書き保存" />
-                        <MenuItem mnemonicParsing="false" text="閉じる" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="編集">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="削除" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="共同編集">
-                    <items>
-                        <MenuItem fx:id="roomEnter" mnemonicParsing="false" onAction="#startCooperation" text="みんなと遊ぶ" visible="true" />
-                        <MenuItem fx:id="roomExit" mnemonicParsing="false" onAction="#endCooperation" text="部屋を退出" visible="false" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="ヘルプ">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="バージョン情報" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-    </top>
+<BorderPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.MainController">
+  <right>
+    <VBox fx:id="rightPane" style="-fx-border-color: rgb(49, 89, 23);" />
+  </right>
+  <stylesheets>
+    <URL value="@style.css" />
+  </stylesheets>
+  <top>
+    <MenuBar fx:id="menu" useSystemMenuBar="true">
+      <menus>
+        <Menu mnemonicParsing="false" text="ファイル">
+          <items>
+            <MenuItem onAction="#newProject" text="新規作成" />
+            <MenuItem mnemonicParsing="false" onAction="#fopen" text="開く" fx:id="fopen" />
+            <MenuItem mnemonicParsing="false" onAction="#fsave" text="名前をつけて保存" />
+            <MenuItem onAction="#fSaveAsOverWrite" text="上書き保存" />
+            <MenuItem mnemonicParsing="false" text="閉じる" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="編集">
+          <items>
+            <MenuItem mnemonicParsing="false" text="削除" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="共同編集">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#startCooperation" text="みんなと遊ぶ" visible="true" fx:id="roomEnter" />
+            <MenuItem mnemonicParsing="false" onAction="#endCooperation" text="部屋を退出" visible="false" fx:id="roomExit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="ヘルプ">
+          <items>
+            <MenuItem mnemonicParsing="false" text="バージョン情報" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
 </BorderPane>

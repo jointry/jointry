@@ -6,8 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import jp.ac.aiit.jointry.controllers.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="480.0" style="-fx-border-color: rgb(49, 89, 23);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.FrontStageController">
   <children>
     <HBox layoutX="14.0" layoutY="7.0" prefHeight="24.0" prefWidth="233.0">
       <children>
@@ -30,5 +31,10 @@
     <Slider fx:id="speed_slider" layoutX="247.0" layoutY="10.0" max="2000.0" min="10.0" prefWidth="211.0" value="1000.0" />
     <Button fx:id="sync" layoutX="386.0" layoutY="402.0" mnemonicParsing="false" onAction="#sync" prefHeight="44.0" prefWidth="72.0" text="どうき" visible="true" />
     <CheckBox layoutX="224.0" layoutY="402.0" mnemonicParsing="false" onAction="#keyboard" prefHeight="43.0" prefWidth="170.0" selected="true" text="キーボードをつかう" />
+    <TrashBox fitHeight="84.5" fitWidth="92.0" layoutX="367.0" layoutY="462.0">
+      <image>
+        <Image url="@images/TrashBox.png" />
+      </image>
+    </TrashBox>
   </children>
 </AnchorPane>
