@@ -13,9 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import jp.ac.aiit.jointry.controllers.ResizePane;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.models.blocks.Block;
 import jp.ac.aiit.jointry.models.blocks.Connector;
@@ -147,12 +149,13 @@ public class Condition extends Expression {
             if (tab == null) {
                 continue;
             }
-            if (!"scriptPane".equals(tab.getContent().getId())) {
+            if (!"scriptContent".equals(tab.getContent().getId())) {
                 continue;
             }
 
             // Inside scriptPane
-            AnchorPane scriptPane = (AnchorPane) tab.getContent();
+            ResizePane pane = (ResizePane) tab.getContent();
+            Pane scriptPane = (Pane) pane.getContent();
             for (Node node : scriptPane.getChildren()) {
                 if (node == myBlock) {
                     continue;

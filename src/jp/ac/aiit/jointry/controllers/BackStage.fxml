@@ -9,10 +9,15 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import jp.ac.aiit.jointry.controllers.*?>
 
-<TabPane prefHeight="422.0" prefWidth="387.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="jp.ac.aiit.jointry.controllers.BackStageController">
+<TabPane prefHeight="422.0" prefWidth="387.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml" fx:controller="jp.ac.aiit.jointry.controllers.BackStageController">
   <tabs>
-    <Tab fx:id="scriptTab" content="$null" text="スクリプト" />
+   <Tab text="スクリプト">
+            <content>
+                <ResizePane fx:id="scriptContent" content="$null" prefHeight="200.0" prefWidth="200.0" />
+           </content>
+       </Tab>
     <Tab onSelectionChanged="#handleCodeSelected" text="コード">
       <content>
         <ScrollPane id="codeTab" fx:id="codetab">

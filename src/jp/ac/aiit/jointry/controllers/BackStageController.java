@@ -11,15 +11,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jp.ac.aiit.jointry.models.Costume;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.SpriteTask;
-import jp.ac.aiit.jointry.models.blocks.Block;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_COSTUME_SYNC;
 import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.services.picture.camera.CameraApplication;
@@ -33,7 +30,7 @@ public class BackStageController {
     @FXML
     private ScrollPane costumeList;
     @FXML
-    private Tab scriptTab;
+    private ResizePane scriptContent;
     @FXML
     private Label codeArea;
     private MainController mainController;
@@ -169,12 +166,7 @@ public class BackStageController {
 
     private void showBlocks(Sprite sprite) {
         //組み立てたブロックを表示
-        scriptTab.setContent(sprite.getScriptPane());
-    }
-
-    public void addBlock(Block block) {
-        AnchorPane ap = (AnchorPane) scriptTab.getContent();
-        ap.getChildren().add(block);
+        scriptContent.setContent(sprite.getScriptPane());
     }
 
     private void sendMessage() {

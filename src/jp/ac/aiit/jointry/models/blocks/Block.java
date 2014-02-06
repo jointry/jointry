@@ -14,6 +14,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.Status;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
@@ -24,7 +25,6 @@ public abstract class Block extends AnchorPane {
 
     public final double BASIC_HEIGHT = 40.0;
     public final double BASIC_WIDTH = 250.0;
-
     protected double anchorX;
     protected double anchorY;
     protected boolean changeable = true;
@@ -74,14 +74,9 @@ public abstract class Block extends AnchorPane {
     }
 
     public void remove() {
-        BorderPane root = (BorderPane) getScene().getRoot();
-        TabPane centerPane = (TabPane) root.getCenter();
-        for (Tab t : centerPane.getTabs()) {
-            if ("scriptPane".equals(t.getContent().getId())) {
-                AnchorPane ap = (AnchorPane) t.getContent();
-                ap.getChildren().remove(this);
-            }
-        }
+        Pane parent = (Pane) this.getParent();
+        parent.getChildren().remove(this);
+
         setVisible(false);
     }
 

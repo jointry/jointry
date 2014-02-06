@@ -22,7 +22,7 @@ public final class Sprite extends HBox {
 
     private String name = "";
     private List<Costume> costumes = new ArrayList<>();
-    private AnchorPane scriptPane;
+    private AnchorPane scriptPane = new AnchorPane();
     private double mouseX, mouseY; //マウス位置 x, y
     private double pressX, pressY; //スプライトがクリックされた時の位置
     private Node dragRange; //ドラッグ範囲をノードで指定
@@ -34,9 +34,6 @@ public final class Sprite extends HBox {
 
     public Sprite() {
         //値初期化
-        this.scriptPane = new AnchorPane();
-        scriptPane.setId("scriptPane");
-
         icon = new ImageView();
         getChildren().add(this.icon);
 

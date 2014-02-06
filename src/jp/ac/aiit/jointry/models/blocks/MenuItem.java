@@ -11,8 +11,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jp.ac.aiit.jointry.controllers.ResizePane;
 import jp.ac.aiit.jointry.services.broker.app.BlockDialog;
 import static jp.ac.aiit.jointry.services.broker.app.JointryCommon.M_BLOCK_CREATE;
 
@@ -94,8 +96,9 @@ public class MenuItem extends AnchorPane {
         BorderPane root = (BorderPane) getScene().getRoot();
         TabPane centerPane = (TabPane) root.getCenter();
         for (Tab t : centerPane.getTabs()) {
-            if ("scriptPane".equals(t.getContent().getId())) {
-                AnchorPane ap = (AnchorPane) t.getContent();
+            if ("scriptContent".equals(t.getContent().getId())) {
+                ResizePane pane = (ResizePane) t.getContent();
+                Pane ap = (Pane) pane.getContent();
                 ap.getChildren().add(block);
             }
         }
