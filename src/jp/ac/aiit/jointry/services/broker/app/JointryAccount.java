@@ -1,6 +1,6 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
-import broker.core.Account;
+import jp.ac.aiit.jointry.services.broker.core.Account;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

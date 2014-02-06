@@ -1,7 +1,7 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
-import broker.core.Agent;
-import broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.core.Agent;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
-import broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import javafx.scene.Node;
 import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.models.blocks.Block;
@@ -29,7 +29,7 @@ public class BlockDialog extends JointryDialogBase {
 
     @Override
     public void onNotify(int event, DInfo dinfo) {
-        if(mainController == null) {
+        if (mainController == null) {
             return;
         }
 

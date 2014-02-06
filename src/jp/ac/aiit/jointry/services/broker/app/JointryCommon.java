@@ -1,7 +1,7 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
 //協同編集アプリケーションインタフェース
-import broker.core.Common;
+import jp.ac.aiit.jointry.services.broker.core.Common;
 
 public interface JointryCommon extends Common {
 

@@ -1,8 +1,10 @@
-package jp.ac.aiit.jointry.services.broker.app;
+package jp.ac.aiit.jointry.services.broker;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import broker.core.Broker;
+import jp.ac.aiit.jointry.services.broker.app.JointryBroker;
+import jp.ac.aiit.jointry.services.broker.app.JointryDialogBase;
+import jp.ac.aiit.jointry.services.broker.core.Broker;
 
 public class JointryBrokerMain {
 

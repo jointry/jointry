@@ -14,8 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import jp.ac.aiit.jointry.models.Room;
-import broker.core.Agent;
-import broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.core.Agent;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -180,7 +180,7 @@ public class CooperationController implements Initializable, JointryCommon {
         String jar = System.getProperty("java.class.path");
         StringBuilder sb = new StringBuilder("java -classpath ");
         sb.append(jar);
-        sb.append(" jp.ac.aiit.jointry.services.broker.app.JointryBrokerMain");
+        sb.append(" jp.ac.aiit.jointry.services.broker.JointryBrokerMain");
         try {
             System.out.println(sb.toString());
             Process p = r.exec(sb.toString());

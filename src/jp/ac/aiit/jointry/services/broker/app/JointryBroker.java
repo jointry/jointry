@@ -1,8 +1,8 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
-import broker.core.Broker;
-import broker.core.HttpInfo;
-import broker.core.ServerProxy;
+import jp.ac.aiit.jointry.services.broker.core.Broker;
+import jp.ac.aiit.jointry.services.broker.core.HttpInfo;
+import jp.ac.aiit.jointry.services.broker.core.ServerProxy;
 
 public class JointryBroker extends Broker implements JointryCommon {
 

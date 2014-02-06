@@ -1,8 +1,8 @@
 package jp.ac.aiit.jointry.services.broker.app;
 
-import static broker.core.Common.V_OK;
-import broker.core.DInfo;
-import broker.core.DialogBase;
+import static jp.ac.aiit.jointry.services.broker.core.Common.V_OK;
+import jp.ac.aiit.jointry.services.broker.core.DInfo;
+import jp.ac.aiit.jointry.services.broker.core.DialogBase;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import jp.ac.aiit.jointry.controllers.MainController;

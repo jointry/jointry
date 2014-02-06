@@ -1,7 +1,7 @@
 package jp.ac.aiit.jointry.util;
 
-import broker.util.Base64;
-import broker.util.ImageUtil;
+import jp.ac.aiit.jointry.services.broker.util.Base64;
+import jp.ac.aiit.jointry.services.broker.util.ImageUtil;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
