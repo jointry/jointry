@@ -81,6 +81,7 @@ public class FrontStageController implements Initializable, JointryCommon {
     protected void reset(ActionEvent event) {
         currentSprite.setTranslateX(0.0);
         currentSprite.setTranslateY(0.0);
+        currentSprite.clearSpeechBubble();
     }
 
     public void setSyncVisible(boolean visible) {
