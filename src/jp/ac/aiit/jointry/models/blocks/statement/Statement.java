@@ -41,8 +41,6 @@ public abstract class Statement extends Block {
         addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
-                initializeLink();
-
                 if (getConnector() == null) {
                     return;
                 }
