@@ -1,6 +1,5 @@
 package jp.ac.aiit.jointry.controllers;
 
-import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -11,6 +10,8 @@ import javafx.scene.layout.Pane;
 public class ResizePane extends ScrollPane {
 
     private Pane content;
+    private double contentHeight = 0;
+    private double contentWidth = 0;
 
     public void setContent(Pane content) {
         this.content = content;
@@ -25,25 +26,44 @@ public class ResizePane extends ScrollPane {
         this.setContent((Node) content);
     }
 
-    private void resizeContent() {
-        double maxWidth = 0;
-        double maxHeight = 0;
-
+    public void resizeContent() {
         for (Node node : content.getChildrenUnmodifiable()) {
             Bounds bounds = node.getLayoutBounds();
 
             double width = node.getLayoutX() + bounds.getWidth();
-            if (maxWidth < width) {
-                maxWidth = width;
+            if (getContentWidth() < width) {
+                setContentWidth(width);
             }
 
             double height = node.getLayoutY() + bounds.getHeight();
-            if (maxHeight < height) {
-                maxHeight = height;
+            if (getContentHeight() < height) {
+                setContentHeight(height);
             }
         }
 
-        content.setPrefWidth(maxWidth);
-        content.setPrefHeight(maxHeight);
+        content.setPrefWidth(getContentWidth());
+        content.setPrefHeight(getContentHeight());
+
+        setHvalue(getContentWidth());
+        setVvalue(getContentHeight());
+    }
+
+    /**
+     * @return the contentHeight
+     */
+    public double getContentHeight() {
+        return contentHeight;
+    }
+
+    public void setContentHeight(double h) {
+        this.contentHeight = h;
+    }
+
+    public double getContentWidth() {
+        return contentWidth;
+    }
+
+    public void setContentWidth(double x) {
+        this.contentWidth = x;
     }
 }

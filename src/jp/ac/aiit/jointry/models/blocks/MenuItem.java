@@ -99,6 +99,15 @@ public class MenuItem extends AnchorPane {
             if ("scriptContent".equals(t.getContent().getId())) {
                 ResizePane pane = (ResizePane) t.getContent();
                 Pane ap = (Pane) pane.getContent();
+
+                if (pane.getContentHeight() != 0) {
+                    block.setLayoutY(pane.getContentHeight());
+                }
+
+                double h = pane.getContentHeight() + block.getHeight() + 10;
+                pane.setContentHeight(h);
+                pane.resizeContent();
+
                 ap.getChildren().add(block);
             }
         }
