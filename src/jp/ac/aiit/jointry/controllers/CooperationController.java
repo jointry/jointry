@@ -176,11 +176,22 @@ public class CooperationController implements Initializable, JointryCommon {
 
     @FXML
     public void runBroker(ActionEvent event) {
+
+        String pathes = System.getProperty("java.class.path");
+        String jarpath = "";
+        for (String path : pathes.split(";")) {
+            if (path.matches(".*jointry.jar")) {
+                jarpath = new File(path).getParent();
+                break;
+            }
+        }
+
+        String sp = System.getProperty("file.separator");
+        String brokerpath = jarpath + sp + "lib" + sp + "jointry-broker.jar";
+
         Runtime r = Runtime.getRuntime();
-        String jar = System.getProperty("java.class.path");
-        StringBuilder sb = new StringBuilder("java -classpath ");
-        sb.append(jar);
-        sb.append(" jp.ac.aiit.jointry.services.broker.JointryBrokerMain");
+        StringBuilder sb = new StringBuilder("java -jar ");
+        sb.append(brokerpath);
         try {
             System.out.println(sb.toString());
             Process p = r.exec(sb.toString());
