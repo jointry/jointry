@@ -18,32 +18,40 @@ public class FileManager {
     private static final String JOINTRY_EXTENSION = ".jty";
     private static final String DEFAULT_TARGET_DIRECTORY = System.getProperty("user.home");
     private String targetDirectory = DEFAULT_TARGET_DIRECTORY;
-    private String[] matches = {
+    private final String[] matches = {
         ".+\\.jty",
         "sprite\\d+_script",
         "sprite\\d+_costume\\d+\\.png"};
 
     public void save(List<Sprite> sprites) throws IOException {
         FileChooser fc = createFileChooser("save");
-        fc.getExtensionFilters().add(new ExtensionFilter("All Files", "*")); //ディレクトリを指定
+        fc.getExtensionFilters().add(new ExtensionFilter("jointry設定ファイル", "*" + JOINTRY_EXTENSION));
 
         File chooser = fc.showSaveDialog(null);
         if (chooser == null) {
             return; //保存先が指定されなかった
         }
-        targetDirectory = chooser.getPath(); //指定されれば次回以降はここから
 
-        if (!chooser.exists()) {
-            chooser.mkdir(); //create project folder
-        }
-        File file = new File(chooser.getPath(), chooser.getName() + JOINTRY_EXTENSION);
+        int extensionPoint = chooser.toString().lastIndexOf(".");
+        if (extensionPoint != -1 && chooser.exists()) {
+            //ダブルクリック等による上書き保存
+            targetDirectory = chooser.getParent();
+            saveAsOverWrite(sprites);
+        } else {
+            targetDirectory = chooser.getPath();
 
-        try (PrintWriter script = new PrintWriter(file)) {
-            for (Sprite sprite : sprites) {
-                script.print(convertSpriteToJson(sprite, file.getParent()));
-                script.print("\n");
+            if (!chooser.exists()) {
+                chooser.mkdir(); //create project folder
             }
-            script.flush();
+            File file = new File(chooser.getPath(), chooser.getName() + JOINTRY_EXTENSION);
+
+            try (PrintWriter script = new PrintWriter(file)) {
+                for (Sprite sprite : sprites) {
+                    script.print(convertSpriteToJson(sprite, file.getParent()));
+                    script.print("\n");
+                }
+                script.flush();
+            }
         }
     }
 
