@@ -44,7 +44,7 @@ public class MainController implements Initializable {
     private Agent agent;
     private String userName;
     private ListView members = new ListView();
-    private FileManager fileManager;
+    private FileManager fileManager = new FileManager();
     private JointryMain jointryMain;
 
     @Override
@@ -80,14 +80,13 @@ public class MainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        fileManager = new FileManager();
     }
 
     @FXML
     protected void newProject(ActionEvent event) {
         this.initialize(null, null);
         initWindow("new");
+        fileManager = new FileManager();
 
         MainDialog.sendSynchronize();
     }
