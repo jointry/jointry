@@ -33,6 +33,8 @@ public class CooperationController implements Initializable, JointryCommon {
     @FXML
     private TextField name;
     @FXML
+    private TextField owner_name;
+    @FXML
     private TextField url;
     @FXML
     private FlowPane roomList;
@@ -52,9 +54,9 @@ public class CooperationController implements Initializable, JointryCommon {
     protected void createRoom(ActionEvent event) {
         agent = new Agent();
 
-        if (agent.open(url.getText(), CHAT_SERVICE, SERVER, name.getText(), "", null)) {
+        if (agent.open(url.getText(), CHAT_SERVICE, SERVER, owner_name.getText(), "", null)) {
             agent.startListening(CHAT_TIMEOUT);
-            JointryAccount.addUser(name.getText());
+            JointryAccount.addUser(owner_name.getText());
             mainController.initWindow("connect");
 
             windowClose();

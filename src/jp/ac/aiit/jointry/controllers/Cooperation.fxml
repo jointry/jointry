@@ -22,11 +22,21 @@
             <Label layoutX="15.0" layoutY="273.0" prefHeight="30.0" prefWidth="74.0" text="ユーザ名" />
             <TextField fx:id="name" layoutX="89.0" layoutY="273.0" prefHeight="30.0" prefWidth="236.0" text="Takashi" />
             <PasswordField fx:id="password" layoutX="15.0" layoutY="293.0" prefHeight="30.0" prefWidth="281.0" text="" visible="false" />
-            <Button layoutX="608.0" layoutY="273.0" onAction="#createRoom" prefHeight="30.0" prefWidth="100.0" text="部屋を作る" />
             <Button layoutX="348.0" layoutY="273.0" onAction="#participationRoom" prefHeight="30.0" prefWidth="100.0" text="参加" />
             <FlowPane fx:id="roomList" layoutX="14.0" layoutY="63.0" prefHeight="200.0" prefWidth="694.0" style="-fx-border-color: blue;" />
             <Label fx:id="messages" font="$x1" layoutX="318.0" layoutY="14.0" prefHeight="49.0" prefWidth="390.0" textFill="RED" />
-            <Button layoutX="143.0" layoutY="28.0" mnemonicParsing="false" onAction="#connect" prefWidth="118.0" text="せつぞく" />
+            <Button layoutX="143.0" layoutY="28.0" mnemonicParsing="false" onAction="#connect" prefWidth="118.0" text="更新" />
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="ルーム作成">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <Button layoutX="480.0" layoutY="148.0" onAction="#createRoom" prefHeight="30.0" prefWidth="100.0" text="作る" />
+            <TextField fx:id="owner_name" layoutX="133.0" layoutY="152.0" prefWidth="272.0" />
+            <Label layoutX="418.0" layoutY="155.0" prefWidth="87.0" text="の部屋を" />
           </children>
         </AnchorPane>
       </content>
@@ -44,6 +54,7 @@
             <RadioButton fx:id="custom_server" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="せってい" toggleGroup="$server_radio" />
             <Button layoutX="441.0" layoutY="180.0" mnemonicParsing="false" onAction="#connect" prefWidth="174.0" text="せつぞく" />
             <Button fx:id="broker" layoutX="52.0" layoutY="40.0" mnemonicParsing="false" onAction="#runBroker" prefWidth="146.0" text="Brokerki起動" />
+            <Button layoutX="214.0" layoutY="41.0" mnemonicParsing="false" prefWidth="146.0" text="Broker停止" />
           </children>
         </AnchorPane>
       </content>
