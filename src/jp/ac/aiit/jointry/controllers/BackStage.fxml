@@ -58,7 +58,7 @@
                 </Button>
               </children>
             </HBox>
-            <ScrollPane fx:id="costumeList" content="$null" prefHeight="361.0" prefWidth="228.0" />
+            <ScrollPane fx:id="costumeList" content="$null" prefHeight="1000.0" prefWidth="228.0" />
           </children>
         </VBox>
       </content>
