@@ -17,9 +17,7 @@ import jp.ac.aiit.jointry.models.Room;
 import jp.ac.aiit.jointry.services.broker.core.Agent;
 import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
@@ -49,6 +47,7 @@ public class CooperationController implements Initializable, JointryCommon {
     private RoomView selectRoom;
     private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
     private MainController mainController;
+    private Process broker_process;
 
     @FXML
     protected void createRoom(ActionEvent event) {
@@ -178,7 +177,6 @@ public class CooperationController implements Initializable, JointryCommon {
 
     @FXML
     public void runBroker(ActionEvent event) {
-
         String pathes = System.getProperty("java.class.path");
         String jarpath = "";
         for (String path : pathes.split(";")) {
@@ -196,9 +194,14 @@ public class CooperationController implements Initializable, JointryCommon {
         sb.append(brokerpath);
         try {
             System.out.println(sb.toString());
-            Process p = r.exec(sb.toString());
+            broker_process = r.exec(sb.toString());
         } catch (IOException ex) {
             Logger.getLogger(CooperationController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    public void stopBroker() {
+        broker_process.destroy();
     }
 }

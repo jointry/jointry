@@ -54,7 +54,7 @@
             <RadioButton fx:id="custom_server" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="せってい" toggleGroup="$server_radio" />
             <Button layoutX="441.0" layoutY="180.0" mnemonicParsing="false" onAction="#connect" prefWidth="174.0" text="せつぞく" />
             <Button fx:id="broker" layoutX="52.0" layoutY="40.0" mnemonicParsing="false" onAction="#runBroker" prefWidth="146.0" text="Brokerki起動" />
-            <Button layoutX="214.0" layoutY="41.0" mnemonicParsing="false" prefWidth="146.0" text="Broker停止" />
+            <Button layoutX="214.0" layoutY="41.0" mnemonicParsing="false" onAction="#stopBroker" prefWidth="146.0" text="Broker停止" />
           </children>
         </AnchorPane>
       </content>
