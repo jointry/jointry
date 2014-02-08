@@ -43,9 +43,6 @@ public class ResizePane extends ScrollPane {
 
         content.setPrefWidth(getContentWidth());
         content.setPrefHeight(getContentHeight());
-
-        setHvalue(getContentWidth());
-        setVvalue(getContentHeight());
     }
 
     /**
