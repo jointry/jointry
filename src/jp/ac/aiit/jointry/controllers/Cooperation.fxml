@@ -30,17 +30,6 @@
         </AnchorPane>
       </content>
     </Tab>
-    <Tab text="ルーム作成">
-      <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-          <children>
-            <Button layoutX="480.0" layoutY="148.0" onAction="#createRoom" prefHeight="30.0" prefWidth="100.0" text="作る" />
-            <TextField fx:id="owner_name" layoutX="133.0" layoutY="152.0" prefWidth="272.0" />
-            <Label layoutX="418.0" layoutY="155.0" prefWidth="87.0" text="の部屋を" />
-          </children>
-        </AnchorPane>
-      </content>
-    </Tab>
     <Tab text="コンフィグ">
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -52,9 +41,19 @@
               </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="custom_server" layoutX="52.0" layoutY="183.0" mnemonicParsing="false" text="せってい" toggleGroup="$server_radio" />
-            <Button layoutX="441.0" layoutY="180.0" mnemonicParsing="false" onAction="#connect" prefWidth="174.0" text="せつぞく" />
             <Button fx:id="broker" layoutX="52.0" layoutY="40.0" mnemonicParsing="false" onAction="#runBroker" prefWidth="146.0" text="Brokerki起動" />
             <Button layoutX="214.0" layoutY="41.0" mnemonicParsing="false" onAction="#stopBroker" prefWidth="146.0" text="Broker停止" />
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="ルーム作成">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <Button layoutX="480.0" layoutY="148.0" onAction="#createRoom" prefHeight="30.0" prefWidth="100.0" text="作る" />
+            <TextField fx:id="owner_name" layoutX="133.0" layoutY="152.0" prefWidth="272.0" />
+            <Label layoutX="418.0" layoutY="155.0" prefWidth="87.0" text="の部屋を" />
           </children>
         </AnchorPane>
       </content>

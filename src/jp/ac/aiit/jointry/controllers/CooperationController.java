@@ -18,6 +18,8 @@ import jp.ac.aiit.jointry.services.broker.core.Agent;
 import jp.ac.aiit.jointry.services.broker.core.DInfo;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
@@ -45,7 +47,6 @@ public class CooperationController implements Initializable, JointryCommon {
     private Agent agent;
     private Agent dummyAgent;
     private RoomView selectRoom;
-    private final String DEFAULT_SERVER = "http://localhost:8081/index.html";
     private MainController mainController;
     private Process broker_process;
 
@@ -77,7 +78,19 @@ public class CooperationController implements Initializable, JointryCommon {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        connect(DEFAULT_SERVER);
+        try {
+            InetAddress hst = InetAddress.getLocalHost();
+            StringBuilder sb = new StringBuilder();
+            sb.append("http://");
+            sb.append(hst.getHostAddress());
+            sb.append(":8081");
+            sb.append("/index.html");
+
+            this.url.setText(sb.toString());
+            connect(sb.toString());
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(CooperationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -85,7 +98,7 @@ public class CooperationController implements Initializable, JointryCommon {
         if (custom_server.isSelected()) {
             connect(this.url.getText());
         } else {
-            connect(DEFAULT_SERVER);
+            connect(this.url.getText());
         }
     }
 
