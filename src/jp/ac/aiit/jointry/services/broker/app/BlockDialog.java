@@ -86,6 +86,11 @@ public class BlockDialog extends JointryDialogBase {
         Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
 
         newBlock.setUUID(dinfo.get(K_BLOCK_ID));
+        
+        if(newBlock instanceof Variable) {
+            ((Variable) newBlock).setName(dinfo.get(K_BLOCK_LABEL_NAME));
+        }
+        
         sprite.getScriptPane().getChildren().add(newBlock);
 
         return newBlock;
