@@ -27,6 +27,9 @@ public class ResizePane extends ScrollPane {
     }
 
     public void resizeContent() {
+        setContentHeight(0);
+        setContentWidth(0);
+
         for (Node node : content.getChildrenUnmodifiable()) {
             Bounds bounds = node.getLayoutBounds();
 
