@@ -103,8 +103,9 @@ public class Speech extends Procedure {
             //変数ブロック
             Variable val = (Variable) BlockUtil.create("Variable");
             val.setStatus(BlockUtil.convertMapToStatus(value));
+            val.setSprite(getSprite());
 
-            setVariable(variable);
+            setVariable(val);
         }
 
         changeable = true;
