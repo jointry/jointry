@@ -122,6 +122,14 @@ public final class Sprite extends HBox {
         return x * this.direction;
     }
 
+    public int getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     public void setSpeechBubble(final String say) {
         Platform.runLater(new Runnable() {
             @Override

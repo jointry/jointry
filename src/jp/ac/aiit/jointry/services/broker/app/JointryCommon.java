@@ -16,8 +16,7 @@ public interface JointryCommon extends Common {
     public static final int M_SPRITE_SELECT = 0x000002;
     public static final int M_SPRITE_DRAGGED = 0x000003;
     public static final int M_SPRITE_RELEASD = 0x000004;
-    public static final int M_SPRITE_CHANGED = 0x000005;
-    public static final int M_COSTUME_SYNC = 0x000006;
+    public static final int M_COSTUME_SYNC = 0x000005;
     public static final int M_BLOCK_CREATE = 0x000101;
     public static final int M_BLOCK_VARIABLE_CREATE = 0x000102;
     public static final int M_BLOCK_MOVE = 0x000103;
@@ -32,6 +31,8 @@ public interface JointryCommon extends Common {
     public static final int M_MAIN_CONNECT = 0x001003;
     public static final int M_MAIN_DISCONNECT = 0x001004;
     public static final int M_MAIN_MEMBERS = 0x001005;
+    public static final int M_MAIN_SCRIPT_EXECUTE = 0x001006;
+    public static final int M_MAIN_SCRIPT_STOP = 0x001007;
     //位置情報
     public static final String K_X1 = "x1";
     public static final String K_Y1 = "y1";
