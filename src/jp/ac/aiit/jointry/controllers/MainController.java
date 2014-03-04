@@ -261,6 +261,10 @@ public class MainController implements Initializable {
     public JointryMain getJointryMain() {
         return this.jointryMain;
     }
+    
+    public String getUserName() {
+        return userName;
+    }
 
     private class MainMonitor extends DefaultMonitor {
 

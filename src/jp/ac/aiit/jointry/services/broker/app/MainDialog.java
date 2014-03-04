@@ -137,12 +137,14 @@ public class MainDialog extends JointryDialogBase {
 
             DInfo dinfo = new DInfo(D_MAIN);
             dinfo.set(K_METHOD, M_MAIN_SYNCHRONIZE);
+            dinfo.set(USER_ID, mainController.getUserName());
             dinfo.set(K_MAIN_INFO, main_info);
 
             mainController.getAgent().sendNotify(dinfo);
 
             dinfo = new DInfo(D_MAIN);
             dinfo.set(K_METHOD, M_MAIN_MEMBERS);
+            dinfo.set(USER_ID, mainController.getUserName());
             dinfo.set(K_USER_NAME_LIST, JointryAccount.getUsers().toString());
 
             mainController.getAgent().sendNotify(dinfo);
@@ -153,6 +155,7 @@ public class MainDialog extends JointryDialogBase {
         if (agent != null) {
             DInfo dinfo = new DInfo(D_MAIN);
             dinfo.set(K_METHOD, event);
+            dinfo.set(USER_ID, mainController.getUserName());
             dinfo.set(K_USER_NAME, name);
 
             agent.sendQuery(dinfo);
@@ -163,6 +166,7 @@ public class MainDialog extends JointryDialogBase {
         if (agent != null) {
             DInfo dinfo = new DInfo(D_MAIN);
             dinfo.set(K_METHOD, event);
+            dinfo.set(USER_ID, mainController.getUserName());
 
             agent.sendNotify(dinfo);
         }
@@ -171,6 +175,7 @@ public class MainDialog extends JointryDialogBase {
     private void sendMembers() {
         DInfo dinfo = new DInfo(D_MAIN);
         dinfo.set(K_METHOD, M_MAIN_MEMBERS);
+        dinfo.set(USER_ID, mainController.getUserName());
         dinfo.set(K_USER_NAME_LIST, JointryAccount.getUsers().toString());
 
         sendNotify(dinfo);

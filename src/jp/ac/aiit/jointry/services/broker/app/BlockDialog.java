@@ -11,7 +11,6 @@ import jp.ac.aiit.jointry.models.blocks.statement.codeblock.CodeBlock;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Speech;
-import static jp.ac.aiit.jointry.services.broker.app.JointryDialogBase.mainController;
 import jp.ac.aiit.jointry.util.BlockUtil;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
@@ -86,11 +85,11 @@ public class BlockDialog extends JointryDialogBase {
         Block newBlock = BlockUtil.create(dinfo.get(K_BLOCK_CLASS_NAME));
 
         newBlock.setUUID(dinfo.get(K_BLOCK_ID));
-        
-        if(newBlock instanceof Variable) {
+
+        if (newBlock instanceof Variable) {
             ((Variable) newBlock).setName(dinfo.get(K_BLOCK_LABEL_NAME));
         }
-        
+
         sprite.getScriptPane().getChildren().add(newBlock);
 
         return newBlock;
@@ -196,6 +195,7 @@ public class BlockDialog extends JointryDialogBase {
             DInfo dinfo = new DInfo(D_BLOCK);
 
             dinfo.set(K_METHOD, event);
+            dinfo.set(USER_ID, mainController.getUserName());
             dinfo.set(K_BLOCK_LABEL_NAME, value);
 
             mainController.getAgent().sendNotify(dinfo);
@@ -213,6 +213,7 @@ public class BlockDialog extends JointryDialogBase {
             }
 
             dinfo.set(K_METHOD, event);
+            dinfo.set(USER_ID, mainController.getUserName());
             dinfo.set(K_SPRITE_NAME, mainController.getFrontStageController().getCurrentSprite().getName());
             dinfo.set(K_BLOCK_CLASS_NAME, block.getClass().getSimpleName());
             dinfo.set(K_BLOCK_ID, block.getUUID());

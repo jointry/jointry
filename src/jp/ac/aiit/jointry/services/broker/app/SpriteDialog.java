@@ -14,23 +14,23 @@ import jp.ac.aiit.jointry.models.Sprite;
 import jp.ac.aiit.jointry.util.JsonUtil;
 
 public class SpriteDialog extends JointryDialogBase {
-    
+
     @Override
     public void onAnswer(int event, DInfo dinfo) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void onQuery(int event, DInfo dinfo) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void onNotify(int event, DInfo dinfo) {
         if (event == M_SPRITE_CREATE && mainController != null) {
             mSpriteCreate(dinfo);
         }
-        
+
         Sprite sprite = getTargetSprite(dinfo);
         if (sprite == null) {
             return; //該当なし
@@ -39,31 +39,31 @@ public class SpriteDialog extends JointryDialogBase {
             case M_SPRITE_SELECT:
                 mSpriteSelect(sprite, dinfo);
                 break;
-            
+
             case M_SPRITE_DRAGGED:
                 mSpriteDragged(sprite, dinfo);
                 break;
-            
+
             case M_SPRITE_RELEASD:
                 mSpriteReleasd(sprite, dinfo);
                 break;
-            
+
             case M_COSTUME_SYNC:
                 mCostumeSync(sprite, dinfo);
                 break;
-            
+
             default:
                 break;
         }
     }
-    
+
     private void mSpriteCreate(DInfo dinfo) {
         Sprite sprite = new Sprite();
         sprite.setMainController(mainController);
         sprite.setName(dinfo.get(K_SPRITE_NAME));
         sprite.setLayoutX(dinfo.getInt(K_X1));
         sprite.setLayoutY(dinfo.getInt(K_Y1));
-        
+
         String jsonString = dinfo.get(K_COSTUME_LIST);
         List<Map> list = JsonUtil.convertJsonStringToList(jsonString);
         try {
@@ -71,32 +71,32 @@ public class SpriteDialog extends JointryDialogBase {
         } catch (MalformedURLException ex) {
             Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         sprite.setSpriteCostume(dinfo.getInt(K_COSTUME_CURRENT));
-        
+
         mainController.getFrontStageController().addSprite(sprite, false);
     }
-    
+
     private void mSpriteSelect(Sprite sprite, DInfo dinfo) {
         sprite.setEffect(new Shadow(4.0f, Color.valueOf(dinfo.get(K_COLOR))));
     }
-    
+
     private void mSpriteDragged(Sprite sprite, DInfo dinfo) {
         sprite.setTranslateX(dinfo.getInt(K_X2));
         sprite.setTranslateY(dinfo.getInt(K_Y2));
     }
-    
+
     private void mSpriteReleasd(Sprite sprite, DInfo dinfo) {
         sprite.setTranslateX(dinfo.getInt(K_X2));
         sprite.setTranslateY(dinfo.getInt(K_Y2));
-        
+
         sprite.setEffect(null);
     }
 
     private void mCostumeSync(Sprite sprite, DInfo dinfo) {
         //コスチュームを一旦全削除
         sprite.clearCostume();
-        
+
         String jsonString = dinfo.get(K_COSTUME_LIST);
         List<Map> list = JsonUtil.convertJsonStringToList(jsonString);
         try {
@@ -104,7 +104,7 @@ public class SpriteDialog extends JointryDialogBase {
         } catch (MalformedURLException ex) {
             Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         sprite.setSpriteCostume(dinfo.getInt(K_COSTUME_CURRENT));
 
         //同一のスプライト編集中は即時更新
@@ -113,17 +113,17 @@ public class SpriteDialog extends JointryDialogBase {
             mainController.getBackStageController().showCostumes(sprite);
         }
     }
-    
+
     public static void sendSimpleMessage(int event, Sprite sprite) {
         if (mainController.getAgent() != null) {
             mainController.getAgent().sendNotify(getSimpleMessage(event, sprite));
         }
     }
-    
+
     public static void sendAllMessage(int event, Sprite sprite) {
         if (mainController.getAgent() != null) {
             DInfo dinfo = getSimpleMessage(event, sprite);
-            
+
             try {
                 String tempFile = new SpriteDialog().makeFilePath("");
                 List costumeList = JsonUtil.processCostumes(sprite, tempFile);
@@ -132,15 +132,16 @@ public class SpriteDialog extends JointryDialogBase {
             } catch (IOException ex) {
                 Logger.getLogger(SpriteDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             mainController.getAgent().sendNotify(dinfo);
         }
     }
-    
+
     private static DInfo getSimpleMessage(int event, Sprite sprite) {
         DInfo dinfo = new DInfo(D_SPRITE);
-        
+
         dinfo.set(K_METHOD, event);
+        dinfo.set(USER_ID, mainController.getUserName());
         dinfo.set(K_SPRITE_NAME, sprite.getName());
         dinfo.set(K_X1, (int) sprite.getX());
         dinfo.set(K_Y1, (int) sprite.getY());
@@ -150,7 +151,7 @@ public class SpriteDialog extends JointryDialogBase {
         dinfo.set(K_SPEECH, sprite.getSpeech());
         dinfo.set(K_COSTUME_CURRENT, sprite.getCostumeNumber());
         dinfo.set(K_COLOR, Color.RED.toString());
-        
+
         return dinfo;
     }
 }
