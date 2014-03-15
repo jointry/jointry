@@ -17,6 +17,7 @@ public interface JointryCommon extends Common {
     public static final int M_SPRITE_DRAGGED = 0x000003;
     public static final int M_SPRITE_RELEASD = 0x000004;
     public static final int M_COSTUME_SYNC = 0x000005;
+    public static final int M_SPRITE_RESET = 0x000006;
     public static final int M_BLOCK_CREATE = 0x000101;
     public static final int M_BLOCK_VARIABLE_CREATE = 0x000102;
     public static final int M_BLOCK_MOVE = 0x000103;

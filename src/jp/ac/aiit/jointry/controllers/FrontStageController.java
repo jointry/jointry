@@ -25,7 +25,7 @@ import jp.ac.aiit.jointry.services.broker.app.SpriteDialog;
 import jp.ac.aiit.jointry.services.picture.paint.PaintApplication;
 
 public class FrontStageController implements Initializable, JointryCommon {
-
+    
     @FXML
     private AnchorPane stage;
     @FXML
@@ -36,32 +36,32 @@ public class FrontStageController implements Initializable, JointryCommon {
     private Button sync;
     private Sprite currentSprite;
     private MainController mainController;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-
+    
     @FXML
     public void start(ActionEvent event) {
         this.mainController.getBackStageController().start();
         MainDialog.sendEvent(mainController.getAgent(), M_MAIN_SCRIPT_EXECUTE);
     }
-
+    
     public double getSpeed() {
         return (speed_slider.getMax() + 10) - speed_slider.getValue();
     }
-
+    
     @FXML
     public void stop(ActionEvent event) throws Exception {
         this.mainController.getBackStageController().stop();
         MainDialog.sendEvent(mainController.getAgent(), M_MAIN_SCRIPT_STOP);
     }
-
+    
     @FXML
     protected void handlePaintBtnAct(ActionEvent event) throws Exception {
         final PaintApplication app = new PaintApplication();
         Stage paintStage = app.start(null, stage.getScene().getWindow());
-
+        
         paintStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
@@ -73,12 +73,12 @@ public class FrontStageController implements Initializable, JointryCommon {
             }
         });
     }
-
+    
     @FXML
     protected void sync(ActionEvent event) {
         MainDialog.sendSynchronize();
     }
-
+    
     @FXML
     protected void reset(ActionEvent event) {
         currentSprite.setTranslateX(0.0);
@@ -86,16 +86,17 @@ public class FrontStageController implements Initializable, JointryCommon {
         currentSprite.setRotate(0.0);
         currentSprite.setScaleX(1.0);
         currentSprite.clearSpeechBubble();
+        SpriteDialog.sendSimpleMessage(M_SPRITE_RESET, currentSprite);
     }
 
     public void setSyncVisible(boolean visible) {
         sync.setVisible(visible);
     }
-
+    
     public void setMainController(MainController controller) {
         this.mainController = controller;
     }
-
+    
     public List<Sprite> getSprites() {
         List<Sprite> sprites = new ArrayList<>();
         for (Node i : stage.getChildren()) {
@@ -105,21 +106,21 @@ public class FrontStageController implements Initializable, JointryCommon {
         }
         return sprites;
     }
-
+    
     public Sprite getCurrentSprite() {
         return currentSprite;
     }
-
+    
     public void setCurrentSprite(Sprite sprite) {
         currentSprite = sprite;
         mainController.getBackStageController().setCurrentSprite(sprite);
     }
-
+    
     public void showSprite(Sprite sprite) {
         this.addSprite(sprite, true);
         this.setCurrentSprite(sprite);
     }
-
+    
     public void addSprite(Sprite sprite, boolean sendMessage) {
         int number = 1;
         for (Node i : stage.getChildren()) {
@@ -133,7 +134,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         sprite.setName("sprite" + number);
         sprite.setDragRange(stage);
         stage.getChildren().add(sprite);
-
+        
         if (sendMessage) {
             SpriteDialog.sendAllMessage(M_SPRITE_CREATE, sprite);
         }
@@ -146,11 +147,11 @@ public class FrontStageController implements Initializable, JointryCommon {
             }
         }
     }
-
+    
     void addVariable(VariableLabel vl) {
         variables.getChildren().add(vl);
     }
-
+    
     @FXML
     void keyboard(ActionEvent event) {
         CheckBox chk = (CheckBox) event.getSource();
