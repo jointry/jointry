@@ -52,6 +52,10 @@ public class SpriteDialog extends JointryDialogBase {
                 mCostumeSync(sprite, dinfo);
                 break;
 
+            case M_SPRITE_RESET:
+                mSpriteReset(sprite);
+                break;
+
             default:
                 break;
         }
@@ -91,6 +95,14 @@ public class SpriteDialog extends JointryDialogBase {
         sprite.setTranslateY(dinfo.getInt(K_Y2));
 
         sprite.setEffect(null);
+    }
+
+    private void mSpriteReset(Sprite sprite) {
+        sprite.setTranslateX(0.0);
+        sprite.setTranslateY(0.0);
+        sprite.setRotate(0.0);
+        sprite.setScaleX(1.0);
+        sprite.clearSpeechBubble();
     }
 
     private void mCostumeSync(Sprite sprite, DInfo dinfo) {
