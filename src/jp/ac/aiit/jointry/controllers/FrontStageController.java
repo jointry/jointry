@@ -85,6 +85,7 @@ public class FrontStageController implements Initializable, JointryCommon {
         currentSprite.setTranslateY(0.0);
         currentSprite.setRotate(0.0);
         currentSprite.setScaleX(1.0);
+        currentSprite.setDirection(1);
         currentSprite.clearSpeechBubble();
         SpriteDialog.sendSimpleMessage(M_SPRITE_RESET, currentSprite);
     }

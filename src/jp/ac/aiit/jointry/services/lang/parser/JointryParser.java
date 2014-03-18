@@ -32,6 +32,7 @@ public class JointryParser {
                 rule().identifier(Name.class, reserved),
                 rule().string(StringLiteral.class));
     Parser factor = rule().or(rule(NegativeExpr.class).sep("-").ast(primary),
+                              rule(ReboundStmnt.class).sep("rebound"),
                               primary);
     Parser expr = expr0.expression(BinaryExpr.class, factor, operators);
     Parser statement0 = rule();

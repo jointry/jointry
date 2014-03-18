@@ -1,15 +1,9 @@
 package jp.ac.aiit.jointry.services.lang.ast;
 
 import java.util.List;
-import javafx.animation.Animation;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
-import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
-import javafx.util.Duration;
-import static jp.ac.aiit.jointry.services.lang.ast.ASTree.TRUE;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import jp.ac.aiit.jointry.services.lang.parser.Environment;
 import jp.ac.aiit.jointry.models.Sprite;
 
@@ -31,23 +25,18 @@ public class ReboundStmnt extends ASTList {
     @Override
     public Object eval(Environment env) {
 
-        //TODO
+        Sprite sprite = env.getSprite();
+        Bounds spriteBounds = sprite.getBoundsInLocal();
+        Pane parent = (AnchorPane) sprite.getParent();
 
-        /*
-         // 端っこにぶつかったとき！
-         if (!sprite.isInsideDragRange(b.getMaxX(), b.getMaxY())
-         || !sprite.isInsideDragRange(b.getMinX(), b.getMinY())
-         || !sprite.isInsideDragRange(b.getMaxX(), b.getMinY())
-         || !sprite.isInsideDragRange(b.getMinX(), b.getMaxY())) {
+        //x軸への動きしか想定しない
+        double rCollision = parent.getWidth() - sprite.getTranslateX() - env.getX() - spriteBounds.getWidth();
+        double lCollision = sprite.getTranslateX() + env.getX();
 
-         TranslateTransition tt =
-         new TranslateTransition(Duration.millis(100), sprite);
-         sprite.changeDirection();
-         tt.setByX(sprite.moveBy(sprite.getImage().getWidth() + 50));
-         st.getChildren().add(tt);
-         }
-         */
+        if (rCollision < 0 || lCollision < 0) {
+            return TRUE;
+        }
 
-        return null;
+        return FALSE;
     }
 }

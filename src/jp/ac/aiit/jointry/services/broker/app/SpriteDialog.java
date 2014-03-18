@@ -102,6 +102,7 @@ public class SpriteDialog extends JointryDialogBase {
         sprite.setTranslateY(0.0);
         sprite.setRotate(0.0);
         sprite.setScaleX(1.0);
+        sprite.setDirection(1);
         sprite.clearSpeechBubble();
     }
 

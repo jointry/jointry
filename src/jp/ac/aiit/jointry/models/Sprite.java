@@ -239,7 +239,7 @@ public final class Sprite extends HBox {
         });
     }
 
-    private boolean isInsideDragRange(double sceneX, double sceneY) {
+    public boolean isInsideDragRange(double sceneX, double sceneY) {
         if (dragRange == null) {
             return true;
         }

@@ -142,7 +142,7 @@ public abstract class CodeBlock extends Statement {
 
         status.put("id", this.getUUID());
         if (embryo != null) {
-            status.put("embryo", embryo.getStatus());
+            status.put("embryo", BlockUtil.getStatus(embryo));
         }
 
         for (Statement state : childBlocks) {
@@ -164,7 +164,8 @@ public abstract class CodeBlock extends Statement {
         for (Object key : status.keySet()) {
             if (key.equals("embryo")) {
                 // 変数ブロック
-                Condition emb = new Condition();
+                Map embryoStatus = (Map) status.get(key);
+                Condition emb = (Condition) BlockUtil.create(embryoStatus);
                 emb.setSprite(getSprite());
                 emb.setStatus(BlockUtil.convertMapToStatus(status.get(key)));
 

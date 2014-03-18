@@ -24,6 +24,7 @@ import jp.ac.aiit.jointry.models.VariableLabel;
 import jp.ac.aiit.jointry.models.blocks.MenuItem;
 import jp.ac.aiit.jointry.models.blocks.MenuItemAdv;
 import jp.ac.aiit.jointry.models.blocks.expression.Condition;
+import jp.ac.aiit.jointry.models.blocks.expression.Rebound;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Assign;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Calculate;
 import jp.ac.aiit.jointry.models.blocks.statement.procedure.Continue;
@@ -74,6 +75,8 @@ public class BlocksController implements Initializable {
                 new Separator());
 
         blockMenuAdv.getChildren().addAll(
+                new Separator(),
+                new MenuItem(Rebound.class),
                 new Separator(),
                 new MenuItem(Condition.class),
                 new Separator());
