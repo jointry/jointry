@@ -29,6 +29,7 @@
     <Button layoutX="8.0" layoutY="401.0" mnemonicParsing="false" onAction="#handlePaintBtnAct" prefHeight="44.0" prefWidth="200.0" text="あたらしいスプライト" />
     <Slider fx:id="speed_slider" layoutX="247.0" layoutY="10.0" max="2000.0" min="10.0" prefWidth="211.0" value="1000.0" />
     <Button fx:id="sync" layoutX="386.0" layoutY="402.0" mnemonicParsing="false" onAction="#sync" prefHeight="44.0" prefWidth="72.0" text="どうき" visible="true" />
-    <CheckBox layoutX="224.0" layoutY="402.0" mnemonicParsing="false" onAction="#keyboard" prefHeight="43.0" prefWidth="170.0" selected="true" text="キーボードをつかう" />
+    <CheckBox layoutX="224.0" layoutY="391.0" mnemonicParsing="false" onAction="#keyboard" prefHeight="43.0" prefWidth="170.0" selected="true" text="キーボードをつかう" />
+    <CheckBox layoutX="224.0" layoutY="427.0" mnemonicParsing="false" onAction="#hideScript" text="スクリプトを隠す" />
   </children>
 </AnchorPane>
